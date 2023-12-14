@@ -1,0 +1,9 @@
+<view class="tabs {{shadow ? 'shadow' : ''}}" style="top: {{top}}px">
+  <view class="tabs-bar">
+    <block a:for="{{tabs}}">
+      <view class="tabs-bar-tab" data-index="{{index}}" onTap="onTabBarTap">
+        <view class="tabs-bar-tab-title {{activeTab === index ? 'active' : ''}}">{{item}}</view>
+      </view>
+    </block>
+  </view>
+</view>

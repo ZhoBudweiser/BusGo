@@ -1,0 +1,21 @@
+<view class="list-wrap">
+  <view class="list-container">
+    <!--<view class="list-container" style="{{ transform: 'translate3d(' +(-activeTab * 100) + 'vw, 0, 0)' }}"> -->
+    <!--<view class="list" style="{{ height: activeTab === 0 ? 'auto' : 0 }}"><block a:for="{{basicComponentList}}" a:for-item="list"><list className="list-item"><view slot="header" class="list-header">{{list.type}}</view><block a:for="{{list.list}}"><list-item arrow="{{true}}" multipleLine="{{false}}" key="items-{{item.name}}" last="{{true}}" data-url="{{item.path}}" onClick="openPage"><view style="display: flex; align-items: center"><image src="{{item.thumb}}" class="thumb"  mode="aspectFit" /><text class="component-name">{{item.name}}</text><text class="component-brief">{{item.nameEn}}</text></view></list-item></block></list></block></view> -->
+    <swiper
+      style="height: 100%"
+      class="demo-swiper"
+      previousMargin="10px"
+      nextMargin="10px"
+      current="{{activeTab}}"
+      indicator-dots="{{false}}"
+      autoplay="{{false}}"
+      vertical="{{false}}"
+      circular="{{true}}"
+    >
+      <swiper-item a:for="{{background}}" key="swiper-item-{{index}}">
+        <view class="swiper-item bc_{{item.color}}">{{item.text}}</view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

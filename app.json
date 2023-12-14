@@ -3,7 +3,7 @@
     "pages/index/index"
   ],
   "window": {
-    "defaultTitle": "My App"
+    "defaultTitle": "校车行"
   },
   "behavior": {
     "requestReferrerStrategy": "page",

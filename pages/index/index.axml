@@ -1,4 +1,8 @@
-
-<view>
-  this is a blank page
+<view class="container">
+  <schoolmap class="schoolmap"></schoolmap>
+  <view class="previa">
+    <searchbar></searchbar>
+    <tabs activeTab={{activeIndex}} handleActive={{handleActive}}></tabs>
+    <overview activeTab={{activeIndex}}></overview>
+  </view>
 </view>

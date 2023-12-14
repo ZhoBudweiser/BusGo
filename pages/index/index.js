@@ -1,4 +1,15 @@
 Page({
+  data: {
+    activeIndex: 0
+  },
+  method: {
+    handleActive: (id) => {
+      console.log(id);
+      this.setData({
+        activeIndex: id
+      });
+    }
+  },
   onLoad(query) {
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);

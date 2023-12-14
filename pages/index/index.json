@@ -1,1 +1,8 @@
-{}
+{
+  "usingComponents": {
+    "schoolmap":"/components/map/map",
+    "searchbar": "/components/searchbar/searchbar",
+    "tabs": "/components/tabs/tabs",
+    "overview": "/components/overview/overview"
+  }
+}
