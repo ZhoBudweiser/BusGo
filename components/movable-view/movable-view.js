@@ -1,20 +1,50 @@
 Component({
   data: {
-    x: 0,
-    y: 0,
+    currentState: 0,
+    currentY: 0,
+    stateHeights: [],
+    stateBoders: []
   },
-  onButtonTap() {
-    const { x, y } = this.data;
-    if (x === 30) {
-      this.setData({
-        x: x + 1,
-        y: y + 1,
+  didMount() {
+    let contentHeight;
+    my.createSelectorQuery()
+      .select('#content').boundingClientRect().exec((ret) => {
+        contentHeight = ret[0].height;
+        this.setData({
+          contentHeight
+        });
+      })
+    my.createSelectorQuery()
+      .selectViewport().boundingClientRect().exec((ret) => {
+        const height = ret[0].height;
+        this.setData({
+          height,
+          currentY: height - contentHeight,
+          stateHeights: [0, height - contentHeight, height],
+          stateBoders: [(height - contentHeight)/2, (height+(height - contentHeight)/2)/2],
+        });
       });
-    } else {
+  },
+  methods: {
+    onMove(e) {
+      const {
+        y
+      } = e.detail;
+      const newState = this.changeState(y);
+      console.log(this.data.currentY);
       this.setData({
-        x: 30,
-        y: 30
+        currentY: this.data.stateHeights[newState] + Math.random(),
+        currentState: newState,
       });
+    },
+    changeState(targetY) {
+      // console.log(this.data.stateBoders);
+      for (let i = this.data.stateBoders.length-1; i >= 0; --i) {
+        if (targetY > this.data.stateBoders[i]) {
+          return i+1;
+        }
+      }
+      return 0;
     }
-  },
+  }
 });

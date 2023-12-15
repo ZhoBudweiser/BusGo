@@ -1,9 +1,12 @@
 <movable-area>
   <movable-view
-  direction="vertical"
-  friction="10"
-  inertia="true"
-  animation="true"
+    y="{{currentY}}"
+    direction="vertical"
+    friction="1"
+    inertia="true"
+    animation="true"
+    damping="50"
+    onChangeEnd="onMove"
   >
     <slot>
       <view>default slot & default value</view>
