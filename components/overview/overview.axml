@@ -7,14 +7,17 @@
       class="demo-swiper"
       previousMargin="10px"
       nextMargin="10px"
-      current="{{activeTab}}"
+      current={{activeTab}}
       indicator-dots="{{false}}"
       autoplay="{{false}}"
       vertical="{{false}}"
       circular="{{true}}"
+      onChange="onChange"
     >
       <swiper-item a:for="{{background}}" key="swiper-item-{{index}}">
-        <view class="swiper-item bc_{{item.color}}">{{item.text}}</view>
+        <view class="swiper-item bc_{{item.color}}">
+          
+        </view>
       </swiper-item>
     </swiper>
   </view>

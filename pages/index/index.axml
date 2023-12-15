@@ -1,8 +1,8 @@
 <view class="container">
   <schoolmap class="schoolmap"></schoolmap>
-  <view class="previa">
+  <movable class="previa">
     <searchbar></searchbar>
-    <tabs activeTab={{activeIndex}} handleActive={{handleActive}}></tabs>
-    <overview activeTab={{activeIndex}}></overview>
-  </view>
+    <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
+    <overview activeTab={{activeIndex}} onActive="onActive"></overview>
+  </movable>
 </view>

@@ -1,14 +1,19 @@
 Page({
   data: {
-    activeIndex: 0
+    activeIndex: 0,
+    currentState: 0,
+    STATE: {
+      init: 0,
+      map: 1,
+      
+    }
   },
   method: {
-    handleActive: (id) => {
-      console.log(id);
-      this.setData({
-        activeIndex: id
-      });
-    }
+  },
+  onActive(id) {
+    this.setData({
+      activeIndex: id
+    });
   },
   onLoad(query) {
     // 页面加载

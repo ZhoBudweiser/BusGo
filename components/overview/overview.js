@@ -9,12 +9,15 @@ Component({
   },
   props: {
     activeTab: 1,
-    handleActive: () => {},
+    onActive: () => {},
   },
   didMount() {},
   didUpdate() {},
   didUnmount() {},
   methods: {
-
+    onChange(e) {
+      const {current} = e.detail;
+      this.props.onActive(current);
+    }
   },
 });

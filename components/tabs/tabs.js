@@ -7,7 +7,7 @@ Component({
   props: {
     tabs: ['坐校车', '坐小白', '坐巴士'],
     activeTab: 1,
-    handleActive: (d) => {console.log('dd')},
+    onActive: () => {console.log('dd')},
   },
   didMount() {},
   didUpdate() {},
@@ -17,10 +17,7 @@ Component({
       const {
         index
       } = e.target.dataset
-      this.setData({
-        activeTab: index,
-      });
-      this.props.handleActive(index);
+      this.props.onActive(index);
     },
   },
 });

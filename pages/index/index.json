@@ -1,8 +1,10 @@
 {
   "usingComponents": {
+    "scroll":"/components/scroll-view/scroll-view",
     "schoolmap":"/components/map/map",
     "searchbar": "/components/searchbar/searchbar",
     "tabs": "/components/tabs/tabs",
-    "overview": "/components/overview/overview"
+    "overview": "/components/overview/overview",
+    "movable": "/components/movable-view/movable-view"
   }
 }
