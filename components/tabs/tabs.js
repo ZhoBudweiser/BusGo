@@ -5,7 +5,7 @@ Component({
     shadow: false,
   },
   props: {
-    tabs: ['坐校车', '坐小白', '坐巴士'],
+    tabs: ['校区间', '校内'],
     activeTab: 1,
     onActive: () => {console.log('dd')},
   },

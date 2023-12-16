@@ -1,5 +1,5 @@
 <view class="list-wrap">
-  <view class="list-container">
+  <view class="list-container" style="height: {{containerHeight}}">
     <!--<view class="list-container" style="{{ transform: 'translate3d(' +(-activeTab * 100) + 'vw, 0, 0)' }}"> -->
     <!--<view class="list" style="{{ height: activeTab === 0 ? 'auto' : 0 }}"><block a:for="{{basicComponentList}}" a:for-item="list"><list className="list-item"><view slot="header" class="list-header">{{list.type}}</view><block a:for="{{list.list}}"><list-item arrow="{{true}}" multipleLine="{{false}}" key="items-{{item.name}}" last="{{true}}" data-url="{{item.path}}" onClick="openPage"><view style="display: flex; align-items: center"><image src="{{item.thumb}}" class="thumb"  mode="aspectFit" /><text class="component-name">{{item.name}}</text><text class="component-brief">{{item.nameEn}}</text></view></list-item></block></list></block></view> -->
     <swiper
@@ -15,8 +15,51 @@
       onChange="onChange"
     >
       <swiper-item a:for="{{background}}" key="swiper-item-{{index}}">
-        <view class="swiper-item bc_{{item.color}}">
-          
+        <view class="swiper-container">
+          <view class="swiper-item swiper-item-overview bc_{{item.color}}">
+            <view class="item-header">
+              <view class="item-destinations">
+                开往
+                <view class="item-destination-name">
+                  玉泉
+                </view>
+              </view>
+              <view class="item-switch-direction">
+                换向
+              </view>
+            </view>
+            <view class="item-body-main">
+              
+            </view>
+          </view>
+          <view class="swiper-item swiper-item-line">
+            <view class="item-header">
+              <view class="item-bus-name">
+                教师1号
+              </view>
+              <view class="item-bus-line">
+                <view class="item-destination-name">
+                  紫金港
+                </view>
+                <view class="item-destination-arrow"> </view>
+                <view class="item-destination-name">
+                  玉泉
+                </view>
+              </view>
+              <view class="item-bus-time">
+                17:37-18:17
+              </view>
+            </view>
+            <view class="item-body-child">
+              <view class="item-bus-left">
+                <progress-ring/>
+              </view>
+              <view class="item-bus-line-detail">
+                <steps></steps>
+              </view>
+            </view>
+          </view>
+          <view style="height:10rpx"></view>
         </view>
       </swiper-item>
     </swiper>

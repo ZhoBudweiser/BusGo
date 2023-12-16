@@ -1,0 +1,12 @@
+<view class="am-hor-steps" capture-catchTouchStart="onTap">
+  <view class="am-hor-step" a:for="{{items}}" style="width: 20%">
+    <view class="am-hor-step-line {{index < activeIndex - 1 ? 'is-active' : ''}} {{index >= items.length - 1 ? 'is-last' : ''}}">
+      <view class="am-hor-step-icon {{index <= activeIndex - 1 ? 'is-active' : ''}}"></view>
+    </view>
+    <view class="am-hor-step-text">
+      <view class="am-hor-step-title">
+        <text>{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+</view>

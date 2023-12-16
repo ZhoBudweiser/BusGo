@@ -1,10 +1,10 @@
 <view class="container">
   <schoolmap class="schoolmap"></schoolmap>
-  <movable class="previa">
+  <movable class="previa" onStateChange="onStateChange">
     <view id="content">
       <searchbar></searchbar>
       <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
-      <overview activeTab={{activeIndex}} onActive="onActive"></overview>
+      <overview activeTab={{activeIndex}} onActive="onActive" state={{currentState}}></overview>
     </view>
   </movable>
 </view>

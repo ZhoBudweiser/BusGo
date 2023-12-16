@@ -1,0 +1,212 @@
+.am-hor-steps {
+  padding: 0 20rpx;
+  overflow: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.am-hor-step {
+  display: inline-block;
+  white-space: normal;
+  text-align: center;
+  vertical-align: top;
+  line-height: normal
+}
+
+.am-hor-step-line {
+  position: relative;
+  margin: 6px 0;
+  height: 1px;
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
+
+.am-hor-step-line.is-active {
+  background-color: #1677ff;
+  background-color: var(--am-steps-color, #1677ff)
+}
+
+.am-hor-step-line.is-last {
+  background-color: transparent
+}
+
+.am-hor-step-icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50vh;
+  border-radius: var(--am-steps-icon-border-radius, 50vh);
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
+
+.am-hor-step-icon.is-active {
+  background-color: #1677ff;
+  background-color: var(--am-steps-color, #1677ff)
+}
+
+.am-hor-step-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+  max-width: 90px;
+  transform: translateX(-50%)
+}
+
+.am-hor-step-title {
+  font-size: 12px;
+  font-size: var(--am-steps-horizontal-title-size, 12px);
+  color: #333;
+  color: var(--am-steps-title-color, #333);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+
+}
+
+.am-hor-step-description {
+  margin-top: 2px;
+  font-size: 12px;
+  font-size: var(--am-steps-horizontal-description-size, 12px);
+  color: #999;
+  color: var(--am-steps-description-color, #999)
+}
+
+.am-vertical-steps {
+  padding: 20px 30px 20px 30px;
+  background-color: #fff;
+  background-color: var(--am-steps-bg-color, #fff)
+}
+
+.am-vertical-step {
+  display: flex
+}
+
+.am-vertical-step-left {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  margin-right: 20px
+}
+
+.am-vertical-step-line {
+  position: relative;
+  top: 10px;
+  width: 1px;
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
+
+.am-vertical-step-line-top {
+  flex: 1
+}
+
+.am-vertical-step-line-bottom {
+  height: 30px;
+  width: 1px;
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
+
+.am-vertical-step-line.is-active {
+  background-color: #1677ff;
+  background-color: var(--am-steps-color, #1677ff)
+}
+
+.am-vertical-step-icon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50vh;
+  border-radius: var(--am-steps-icon-border-radius, 50vh)
+}
+
+.am-vertical-step-active-image,
+.am-vertical-step-image {
+  width: 24px;
+  border-radius: 50vh;
+  border-radius: var(--am-steps-icon-border-radius, 50vh)
+}
+
+.am-vertical-step-active-image {
+  background-color: #1677ff;
+  background-color: var(--am-steps-color, #1677ff)
+}
+
+.am-vertical-step-image {
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
+
+.am-vertical-step-icon.is-normal {
+  top: 5px;
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5);
+  width: 8px;
+  height: 8px
+}
+
+.am-vertical-step-icon.is-active,
+.am-vertical-step-icon.is-fail {
+  display: flex;
+  background-color: #fff;
+  background-color: var(--am-steps-bg-color, #fff)
+}
+
+.am-vertical-step-right {
+  flex: 1;
+  margin-bottom: 12px
+}
+
+.am-vertical-step-right-last {
+  margin-bottom: 0
+}
+
+.am-vertical-step-title {
+  margin-bottom: 4px;
+  font-size: 17px;
+  font-size: var(--am-steps-vertical-title-size, 17px);
+  color: #333;
+  color: var(--am-steps-title-color, #333)
+}
+
+.am-vertical-step-title.is-active {
+  color: #1677ff;
+  color: var(--am-steps-vertical-title-active-color, #1677ff)
+}
+
+.am-vertical-step-title.is-fail {
+  color: #ff3b30;
+  color: var(--am-steps-vertical-warning-color, #ff3b30)
+}
+
+.am-vertical-step-description {
+  font-size: 15px;
+  font-size: var(--am-steps-vertical-description-size, 15px);
+  color: #999;
+  color: var(--am-steps-description-color, #999)
+}
+
+.am-vertical-placeholder {
+  height: 20px
+}
+
+.am-vertical-placeholder-line {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: 1px;
+  background-color: #e5e5e5;
+  background-color: var(--am-steps-bg-color, #e5e5e5)
+}
