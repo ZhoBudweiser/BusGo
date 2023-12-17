@@ -7,10 +7,10 @@ Component({
   didUnmount() {},
   methods: {
     onSearchBarTap() {
-      console.log("searchbar");
-      // my.navigateTo({
-      //   url: '/page/common/search/search',
-      // });
+      // console.log("searchbar");
+      my.navigateTo({
+        url: '/pages/search/search',
+      });
     },
   },
 });

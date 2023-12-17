@@ -146,16 +146,9 @@ Component({
   mixins: [],
   data: {
     containerHeight: 300,
-    background: [{
-        color: 'blue',
-        text: '支付宝'
-      },
-      {
-        color: 'red',
-        text: '小程序'
-      }
-    ],
-    lines: [0,0,0,0,0,0,0,0,],
+    vehicles: [0, 0],
+    // 站点数据
+    lines: [0, 0, 0, 0, 0, 0, 0, 0, ],
     line_alias: data_normal.line_alias,
     duration: data_normal.start_time.replace(/:\d{2}$/, '') + '-' + data_normal.arrive_time.replace(/:\d{2}$/, ''),
     start_address: data_normal.start_address.replace(/校区/g, ''),
@@ -167,6 +160,16 @@ Component({
         "station_alias": res ? res[1] : item.station_alias
       }
     }),
+    // 概览数据
+    dist_car: '10%',
+    dist_flag: '40%',
+    dist_human: '80%',
+    human_dir_right: false,
+    time_left_car: 3,
+    time_left_human_walk: 4,
+    time_left_human_run: 2,
+    nearest_stop_name: '风雨操场',
+    human_run: true,
   },
   props: {
     activeTab: 1,
@@ -191,9 +194,17 @@ Component({
         current
       } = e.detail;
       this.props.onActive(current);
+    },
+    onTap(e) {
+      // console.log(e)
+    },
+    onSwitchDirection(e) {
+      console.log("switch tapped");
+    },
+    onChangeHumanRun(e) {
+      this.setData({
+        human_run: !this.data.human_run
+      });
     }
   },
-  onTap(e) {
-    console.log(e)
-  }
 });

@@ -14,9 +14,9 @@
       circular="{{true}}"
       onChange="onChange"
     >
-      <swiper-item a:for="{{background}}" key="swiper-item-{{index}}">
+      <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
-          <view class="swiper-item swiper-item-overview bc_{{item.color}}">
+          <view class="swiper-item swiper-item-overview">
             <view class="item-header">
               <view class="item-destinations">
                 开往
@@ -24,12 +24,32 @@
                   玉泉
                 </view>
               </view>
-              <view class="item-switch-direction">
+              <view class="item-switch-direction" onTap="onSwitchDirection">
                 换向
               </view>
             </view>
             <view class="item-body-main">
-
+              <view class="item-bus-object" style="left: {{dist_car}}">
+                <view class="item-bus-icon item-bus-icon-car">
+                </view>
+                <view class="item-bus-caption">
+                  {{time_left_car}} 分钟
+                </view>
+              </view>
+              <view class="item-bus-object" style="left: {{dist_flag}}">
+                <view class="item-bus-icon item-bus-icon-flag">
+                </view>
+                <view class="item-bus-caption">
+                  {{nearest_stop_name}}
+                </view>
+              </view>
+              <view class="item-bus-object" style="left: {{dist_human}}" onTap="onChangeHumanRun">
+                <view class="item-bus-icon {{human_run ? 'item-bus-icon-human-run' : 'item-bus-icon-human-walk'}}" style="transform: {{human_dir_right ? 'rotateY(0)' : 'rotateY(180deg)'}};">
+                </view>
+                <view class="item-bus-caption">
+                  {{human_run ? time_left_human_run : time_left_human_walk}} 分钟
+                </view>
+              </view>
             </view>
           </view>
           <view class="scroll-container" capture-catchTouchStart="onTap">
@@ -64,6 +84,7 @@
                 </view>
               </view>
             </block>
+            <footer type="end"></footer>
           </view>
           <view style="height:10rpx"></view>
         </view>

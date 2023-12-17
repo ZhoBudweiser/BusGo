@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "place-picker": "/components/picker/picker"
+  },
+  "styleIsolation": "apply-shared"
+}

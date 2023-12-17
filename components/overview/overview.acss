@@ -37,6 +37,8 @@
   justify-content: space-around;
 }
 
+/* -----overview-------- */
+
 .item-destinations {
   display: flex;
   align-items: center;
@@ -77,6 +79,65 @@
   background-size: contain;
 }
 
+.item-body-main {
+  position: relative;
+  height: 85%;
+  margin: 15rpx;
+  border-bottom: solid gray 5rpx;
+  box-sizing: content-box;
+}
+
+.item-bus-object {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-bus-caption {
+  position: absolute;
+  bottom: 80rpx;
+  font-size: 26rpx;
+  white-space: nowrap;
+  
+}
+
+.item-bus-icon {
+  content: "";
+  display: inline-block;
+  background-size: contain;
+}
+
+.item-bus-icon-car {
+  background-image: url('/images/shuttle.svg');
+  width: 120rpx;
+  height: 120rpx;
+  translate: 0 40rpx;
+}
+
+.item-bus-icon-flag {
+  background-image: url('/images/flag.svg');
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.item-bus-icon-human-walk {
+  background-image: url('/images/walk.svg');
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.item-bus-icon-human-run {
+  background-image: url('/images/run.svg');
+  width: 70rpx;
+  height: 70rpx;
+  translate: 0 10rpx;
+}
+
+/* -------line------- */
+
 .item-bus-line {
   display: flex;
   align-items: center;
@@ -101,3 +162,4 @@
   height: 920rpx;
   overflow: auto;
 }
+

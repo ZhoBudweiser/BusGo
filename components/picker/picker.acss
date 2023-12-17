@@ -1,0 +1,73 @@
+.date-radio {
+  padding: 26rpx;
+}
+
+.date-radio label + label {
+  margin-left: 20rpx;
+}
+
+
+.row {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+}
+
+.row-title {
+  flex: 1;
+  padding-top: 28rpx;
+  padding-bottom: 28rpx;
+  padding-left: 50rpx;
+  font-size: 32rpx;
+  color: #000;
+}
+
+.row-extra {
+  flex-basis: initial;
+  font-size: 32rpx;
+  color: #888;
+  padding-right: 60rpx;
+}
+
+.picker-container {
+  position: relative;
+  border: gray 5rpx solid;
+  border-radius: 15rpx;
+  margin: 20rpx;
+}
+
+.picker-destinations {
+  position: relative;
+}
+
+/* 创建起点和终点的圆形 */  
+.row::before {  
+  content: '';  
+  position: absolute; 
+  display: block; 
+  width: 20rpx;  
+  height: 20rpx;  
+  border-radius: 50%;
+}  
+  
+/* 起点圆形 */  
+.row-start::before {
+  background-color: green;  
+}  
+  
+/* 终点圆形 */  
+.row-end::before {
+  background-color: red;  
+}  
+  
+/* 创建连接线 */  
+.picker-destinations::before {  
+  content: '';  
+  position: absolute;  
+  width: 4rpx;  
+  height: 40rpx;  
+  background-color: gray;  
+  top: 50%;  
+  left: 35rpx;  
+  transform: translateY(-20rpx);  
+}  

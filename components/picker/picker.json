@@ -1,0 +1,6 @@
+{
+  "defaultTitle": "Picker",
+  "component": true,
+  "styleIsolation": "apply-shared"
+
+}
