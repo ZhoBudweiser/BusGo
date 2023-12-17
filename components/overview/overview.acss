@@ -25,7 +25,7 @@
   padding: 5rpx;
   border: gray solid 5rpx;
   border-radius: 15rpx;
-  height: 255rpx;
+  height: 240rpx;
 }
 
 .swiper-item-overview {}
@@ -85,7 +85,7 @@
 
 .item-body-child {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
   height: 100%;
 }
@@ -93,4 +93,11 @@
 .item-bus-line-detail {
   width: 65%;
   overflow-y: auto;
+  margin-top: 20rpx;
+}
+
+.scroll-container {
+  /* TODO: adapt to size */
+  height: 920rpx;
+  overflow: auto;
 }

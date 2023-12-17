@@ -3,7 +3,8 @@
     "pages/index/index"
   ],
   "window": {
-    "defaultTitle": "校车行"
+    "defaultTitle": "校车行",
+    "v8WorkerPlugins": "gcanvas_runtime"
   },
   "behavior": {
     "requestReferrerStrategy": "page",

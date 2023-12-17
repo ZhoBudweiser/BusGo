@@ -1,5 +1,4 @@
-const data_stations = [
-  {
+const data_stations = [{
     "station_sort_no": 1,
     "station_alias_no": "1001",
     "station_alias": "紫金港校区云峰西侧",
@@ -97,22 +96,20 @@ const data_normal = {
   "is_now": "true",
   "is_end": "0",
   "memo": "",
-  "runBusInfo": [
-    {
-      "vehi_num": "浙A9R971",
-      "near_distance": "2",
-      "about_minute": "15",
-      "about_rice": "4143",
-      "next_station": "2002",
-      "late_state": "1",
-      "car_broken": null,
-      "px": 120.119283,
-      "py": 30.283445,
-      "online_state": "1",
-      "speed": 36,
-      "speed_time": "2023-12-16T09:31:38.000+00:00"
-    }
-  ],
+  "runBusInfo": [{
+    "vehi_num": "浙A9R971",
+    "near_distance": "2",
+    "about_minute": "15",
+    "about_rice": "4143",
+    "next_station": "2002",
+    "late_state": "1",
+    "car_broken": null,
+    "px": 120.119283,
+    "py": 30.283445,
+    "online_state": "1",
+    "speed": 36,
+    "speed_time": "2023-12-16T09:31:38.000+00:00"
+  }],
   "line_alias": "教师8号班车"
 };
 
@@ -128,22 +125,20 @@ const data_delay = {
   "is_now": "true",
   "is_end": "0",
   "memo": "",
-  "runBusInfo": [
-    {
-      "vehi_num": "浙A9R971",
-      "near_distance": "0",
-      "about_minute": null,
-      "about_rice": "100000",
-      "next_station": "2002",
-      "late_state": "1",
-      "car_broken": null,
-      "px": 120.119698,
-      "py": 30.278214,
-      "online_state": "1",
-      "speed": 43,
-      "speed_time": "2023-12-16T09:34:28.000+00:00"
-    }
-  ],
+  "runBusInfo": [{
+    "vehi_num": "浙A9R971",
+    "near_distance": "0",
+    "about_minute": null,
+    "about_rice": "100000",
+    "next_station": "2002",
+    "late_state": "1",
+    "car_broken": null,
+    "px": 120.119698,
+    "py": 30.278214,
+    "online_state": "1",
+    "speed": 43,
+    "speed_time": "2023-12-16T09:34:28.000+00:00"
+  }],
   "line_alias": "教师8号班车"
 };
 
@@ -160,6 +155,18 @@ Component({
         text: '小程序'
       }
     ],
+    lines: [0,0,0,0,0,0,0,0,],
+    line_alias: data_normal.line_alias,
+    duration: data_normal.start_time.replace(/:\d{2}$/, '') + '-' + data_normal.arrive_time.replace(/:\d{2}$/, ''),
+    start_address: data_normal.start_address.replace(/校区/g, ''),
+    end_address: data_normal.end_address.replace(/校区/g, ''),
+    stations: data_stations.map(item => {
+      const res = item.station_alias.match(/校区(.+)/);
+      return {
+        ...item,
+        "station_alias": res ? res[1] : item.station_alias
+      }
+    }),
   },
   props: {
     activeTab: 1,
@@ -186,4 +193,7 @@ Component({
       this.props.onActive(current);
     }
   },
+  onTap(e) {
+    console.log(e)
+  }
 });

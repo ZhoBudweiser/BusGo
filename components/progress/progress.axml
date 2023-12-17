@@ -1,7 +1,12 @@
 <view class="progress-ring">
-  <canvas id="canvas" type="2d" onReady="onCanvasReady" width="{{diameter}}" height="{{diameter}}">
+  <canvas id="canvas{{index}}" type="2d" onReady="onCanvasReady">
   </canvas>
-  <text class="progress-text" style="font-size: {{textSize}}rpx; color: {{textColor}};">
-    {{progress}}%
+  <text class="progress-text">
+    <text class="progress-text-num">
+      {{progress}}
+    </text>
+    <text class="progress-text-word">
+      站
+    </text>
   </text>
 </view>

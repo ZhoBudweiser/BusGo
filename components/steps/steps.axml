@@ -5,7 +5,7 @@
     </view>
     <view class="am-hor-step-text">
       <view class="am-hor-step-title">
-        <text>{{item.description}}</text>
+        <text>{{item.station_alias}}</text>
       </view>
     </view>
   </view>

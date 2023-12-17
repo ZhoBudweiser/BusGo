@@ -6,9 +6,18 @@ Component({
   data: {
     toView: 'red',
     scrollTop: 100,
+    containerHeight: 300,
   },
   didMount() {
     this.scroll = debounce(this.scroll.bind(this), 100);
+    my.createSelectorQuery()
+      .selectViewport().boundingClientRect().exec((ret) => {
+        const height = ret[0].height;
+        console.log(height)
+        this.setData({
+          containerHeight: height // TODO: adapt to above height
+        });
+      });
   },
   upper(e) {
     console.log(e);

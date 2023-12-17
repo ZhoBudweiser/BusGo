@@ -1,14 +1,11 @@
 <scroll-view
   scroll-y="{{true}}"
-  style="height: 100%;"
+  style="height: {{containerHeight}}"
   onScrollToUpper="upper"
   onScrollToLower="lower"
   onScroll="scroll"
   scroll-into-view="{{toView}}"
   scroll-top="{{scrollTop}}"
 >
-  <view id="blue" class="scroll-view-item bc_blue"></view>
-  <view id="red" class="scroll-view-item bc_red"></view>
-  <view id="yellow" class="scroll-view-item bc_yellow"></view>
-  <view id="green" class="scroll-view-item bc_green"></view>
+  <slot></slot>
 </scroll-view>

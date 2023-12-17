@@ -4,9 +4,23 @@
   height: 180rpx;
 }
 
+#canvas {
+  width: 100%;
+  height: 100%;
+}
+
 .progress-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.progress-text-num {
+  font-size: 45rpx;
+}
+
+.progress-text-word {
+  font-size: 32rpx;
+  margin-left: 3rpx;
 }
