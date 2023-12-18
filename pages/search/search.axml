@@ -1,4 +1,38 @@
 <view>
   <place-picker>
   </place-picker>
+  <block a:for="{{ lines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
+    <view class="swiper-item swiper-item-line">
+      <view class="item-header">
+        <view class="item-bus-name">
+          {{item.busName}}
+        </view>
+        <view class="item-bus-line">
+          <view class="item-destination-name">
+            {{item.startStationName}}
+          </view>
+          <view class="item-destination-arrow"></view>
+          <view class="item-destination-name">
+            {{item.endStationName}}
+          </view>
+        </view>
+        <view class="item-bus-time">
+          {{item.startTime+'-'+item.endTime}}
+        </view>
+        <view class="item-bus-day">
+          {{item.isWeekend ? "周末" : "工作日"}}
+        </view>
+      </view>
+      <view class="item-body-child">
+        <view class="item-bus-line-detail">
+          <steps items="{{stations[jndex]}}" activeIndex="{{stations[jndex].length}}">
+
+          </steps>
+          <view class="item-bus-remark">
+            {{item.remark}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>

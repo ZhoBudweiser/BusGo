@@ -1,38 +1,44 @@
 Component({
   data: {
-    array: ['中国', '美国', '巴西', '日本'],
-    objectArray: [{
-        id: 0,
-        name: '美国',
-      },
-      {
-        id: 1,
-        name: '中国',
-      },
-      {
-        id: 2,
-        name: '巴西',
-      },
-      {
-        id: 3,
-        name: '日本',
-      },
+    stationOptions: [
+      "紫金港校区",
+      "玉泉校区教二",
+      "玉泉校区（4舍南侧）",
+      "玉泉校区教十二北面",
+      "西溪校区",
+      "华家池校区",
+      "之江校区",
+      "湖滨",
+      "紫金文苑西",
+      "紫金文苑北",
+      "雅仕苑",
+      "丰谭路高教二期",
+      "南都德加东",
+      "城市心境",
+      "高教一期",
+      "恩济花园",
+      "高教二期",
+      "丰谭中学"
     ],
-    arrIndex: 0,
-    index: 0
+    startIndex: null,
+    endIndex: null,
   },
   methods: {
     bindPickerChange(e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value);
       this.setData({
-        index: e.detail.value,
+        startIndex: e.detail.value,
       });
     },
     bindObjPickerChange(e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value);
       this.setData({
-        arrIndex: e.detail.value,
+        endIndex: e.detail.value,
       });
     },
+    onSwitchAddress() {
+      this.setData({
+        startIndex: this.data.endIndex,
+        endIndex: this.data.startIndex
+      });
+    }
   }
 });

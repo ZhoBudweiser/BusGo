@@ -26,7 +26,7 @@
   flex-basis: initial;
   font-size: 32rpx;
   color: #888;
-  padding-right: 60rpx;
+  padding-right: 40rpx;
 }
 
 .picker-container {
@@ -37,7 +37,14 @@
 }
 
 .picker-destinations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.picker-address {
   position: relative;
+  flex: 5;
 }
 
 /* 创建起点和终点的圆形 */  
@@ -61,7 +68,7 @@
 }  
   
 /* 创建连接线 */  
-.picker-destinations::before {  
+.picker-address::before {  
   content: '';  
   position: absolute;  
   width: 4rpx;  
@@ -71,3 +78,24 @@
   left: 35rpx;  
   transform: translateY(-20rpx);  
 }  
+
+.picker-switch {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 40rpx;
+  background-image: url('/images/switch.svg');
+  background-size: contain;
+  transform: rotateZ(90deg);
+}
+
+
+.picker-switch {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 40rpx;
+  background-image: url('/images/switch.svg');
+  background-size: contain;
+  transform: rotateZ(90deg);
+}

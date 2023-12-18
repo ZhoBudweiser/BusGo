@@ -1,17 +1,25 @@
 <view class="picker-container">
   <view class="picker-destinations">
-    <picker onChange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="row row-start">
-        <view class="row-title">起点</view>
-        <view class="row-extra">{{array[index]}}</view>
-      </view>
-    </picker>
-    <picker onChange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="row row-end">
-        <view class="row-title">终点</view>
-        <view class="row-extra">{{array[index]}}</view>
-      </view>
-    </picker>
+    <view class="picker-address">
+      <picker onChange="bindPickerChange" value="{{startIndex}}" range="{{stationOptions}}">
+        <view class="row row-start">
+          <view class="row-title">起点</view>
+          <view class="row-extra">{{startIndex!==null ? stationOptions[startIndex] : "请选择起点"}}</view>
+        </view>
+      </picker>
+      <picker onChange="bindObjPickerChange" value="{{endIndex}}" range="{{stationOptions}}">
+        <view class="row row-end">
+          <view class="row-title">终点</view>
+          <view class="row-extra">{{endIndex!==null ? stationOptions[endIndex] : "请选择终点"}}</view>
+        </view>
+      </picker>      
+    </view>
+    <view class="picker-switch" onTap="onSwitchAddress">
+      
+    </view>
+    <view class="picker-submit" onTap="onSubmit">
+      
+    </view>
   </view>
   <view class="picker-filter">
 
