@@ -1,4 +1,11 @@
 <view class="picker-container">
+  <!-- <notice
+    show="{{closeShow}}"
+    type="error"
+    mode="closable"
+    onClickLeft="linkActionClick">
+    请输入地点信息
+  </notice> -->
   <view class="picker-destinations">
     <view class="picker-address">
       <picker onChange="bindPickerChange" value="{{startIndex}}" range="{{stationOptions}}">
@@ -14,14 +21,15 @@
         </view>
       </picker>      
     </view>
-    <view class="picker-switch" onTap="onSwitchAddress">
-      
-    </view>
-    <view class="picker-submit" onTap="onSubmit">
-      
+    <view class="picker-operation">
+      <view class="picker-switch" onTap="onSwitchAddress">
+        
+      </view>
+      <view class="picker-submit" onTap="onSubmit">
+      </view>      
     </view>
   </view>
   <view class="picker-filter">
-
+    现在出发
   </view>
 </view>

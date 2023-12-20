@@ -1,5 +1,6 @@
 Component({
   data: {
+    // 地点
     stationOptions: [
       "紫金港校区",
       "玉泉校区教二",
@@ -23,6 +24,9 @@ Component({
     startIndex: null,
     endIndex: null,
   },
+  props: {
+    onSubmitQuery: ()=>{console.log('defalut')}
+  },
   methods: {
     bindPickerChange(e) {
       this.setData({
@@ -38,6 +42,19 @@ Component({
       this.setData({
         startIndex: this.data.endIndex,
         endIndex: this.data.startIndex
+      });
+    },
+    onSubmit() {
+      // if (this.data.startIndex === null || this.data.endIndex === null) {
+      //   my.showToast({
+      //     content: '请填写地点信息',
+      //     duration: 1000,
+      //   });
+      //   return;
+      // }
+      this.props.onSubmitQuery({
+        startId: this.data.startIndex,
+        endId: this.data.endIndex,
       });
     }
   }
