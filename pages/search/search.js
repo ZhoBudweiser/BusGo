@@ -1,135 +1,51 @@
-const query_lines = [{
-    "cycle": "1,2,3,4,5",
-    "endStationId": "9",
-    "sort": "25",
-    "remark": "此趟次玉泉校区只停靠教十二北面，此趟次学生请勿搭乘",
-    "busId": "2",
-    "state": "1",
-    "endTime": "1850",
-    "startStationId": "6",
-    "id": "31",
-    "startTime": "1737",
-    "busName": "教师2号班车",
-    "endStationName": "之江校区",
-    "carNumber": "浙A.2F260",
-    "lineName": "2号紫玉之江",
-    "busLineId": "166",
-    "startStationName": "紫金港校区"
-  },
-  {
-    "cycle": "1,2,3,4,5",
-    "endStationId": "9",
-    "sort": "107",
-    "remark": "此趟次紫金港校区只停靠生活区、理工组团西和风雨操场，之江校区乘客优先，此趟次学生请勿搭乘",
-    "busId": "16",
-    "state": "1",
-    "endTime": "830",
-    "startStationId": "6",
-    "id": "114",
-    "startTime": "700",
-    "busName": "教师16号班车",
-    "endStationName": "之江校区",
-    "carNumber": "测试",
-    "lineName": "16号班车紫-文西-高一-西溪-玉-之江",
-    "busLineId": "61",
-    "startStationName": "紫金港校区"
-  }
-];
-
-const query_stations = [
-  [{
-      "id": 6,
-      "time": 1737,
-      "name": "紫金港校区",
-      "state": 1
-    },
-    {
-      "id": 16,
-      "time": "",
-      "name": "玉泉校区教十二北面",
-      "state": 1
-    },
-    {
-      "id": 9,
-      "time": 1850,
-      "name": "之江校区",
-      "state": 1
-    }
-  ],
-  [{
-      "id": 6,
-      "time": 700,
-      "name": "紫金港校区",
-      "state": 1
-    },
-    {
-      "id": 5,
-      "time": "",
-      "name": "紫金文苑西",
-      "state": 1
-    },
-    {
-      "id": 13,
-      "time": "",
-      "name": "高教一期",
-      "state": 1
-    },
-    {
-      "id": 8,
-      "time": 745,
-      "name": "西溪校区",
-      "state": 1
-    },
-    {
-      "id": 16,
-      "time": 755,
-      "name": "玉泉校区教十二北面",
-      "state": 1
-    },
-    {
-      "id": 9,
-      "time": 830,
-      "name": "之江校区",
-      "state": 1
-    }
-  ]
-]
-
 Page({
   data: {
-    query_info: {
-      startId: 0,
-      endId: 0,
-    },
-    lines: query_lines.map(item => {
-      return {
-        ...item,
-        startTime: item.startTime.slice(0, -2) + ":" + item.startTime.slice(-2),
-        endTime: item.endTime.slice(0, -2) + ":" + item.endTime.slice(-2),
-        startStationName: item.startStationName.replace(/校区/g, ''),
-        endStationName: item.endStationName.replace(/校区/g, ''),
-        isWeekend: item.cycle.indexOf('7') === -1,
-      };
-    }),
-    stations: query_stations.map(item => {
-      const mapped = item.map(jtem => {
-        const res = jtem.name.match(/校区(.+)/);
-        const str = String(jtem.time);
-        const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
-        return {
-          ...jtem,
-          "station_alias": res ? res[1] : jtem.name,
-          "time": t
-        }
-      });
-      return mapped;
-    }),
+    query_info: null,
+    lines: [],
   },
   onLoad() {},
+  async onSubmitQueryCloud(info) {
+    var self = this;
+    var context = await my.getCloudContext();
+    context.callFunction({
+      name: "queryBusLinesByAddresses",
+      data: info,
+      success: function (res) {
+        console.log(res);
+        self.setData({
+          lines: res.result.data.map(item => {
+            const stations = item["stations"];
+            const startTime = "" + item.startTime,
+              endTime = "" + item.endTime;
+            return {
+              ...item,
+              startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
+              endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
+              startStationName: item.startStation.replace(/校区(.*)/g, ''),
+              endStationName: item.endStation.replace(/校区(.*)/g, ''),
+              isWeekend: item.cycle.indexOf('7') === -1,
+              stations: stations.map(jtem => {
+                const res = jtem.name.match(/校区(.+)/);
+                const str = String(jtem.time);
+                const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
+                return {
+                  ...jtem,
+                  "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
+                  "time": t
+                }
+              })
+            };
+          }),
+        })
+      },
+      fail: function (err) {}
+    });
+  },
   onSubmitQuery(info) {
     this.setData({
       query_info: info,
     });
+    this.onSubmitQueryCloud(info);
     console.log("receive: ", info);
     // my.request({
     //   url: 'http://www.life.zju.edu.cn/_web/_apps/lightapp/shuttlebus/busflight/api/lists.rst',
@@ -159,28 +75,32 @@ Page({
     //     my.alert({ content: 'complete' });
     //   },
     // });
-    my.request({
-      url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getNearStation',
-      method: 'POST',
-      data: {
-        lat: 30.297108,
-        lon: 120.089626
-      },
-      headers: {
-        'content-type': 'application/json', //默认值
-      },
-      dataType: 'json',
-      success: function (res) {
-        my.alert({ content: 'success' });
-        console.log(res);
-      },
-      fail: function (error) {
-        console.error('fail: ', JSON.stringify(error));
-      },
-      complete: function (res) {
-        my.hideLoading();
-        my.alert({ content: 'complete' });
-      },
-    });
+    // my.request({
+    //   url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getNearStation',
+    //   method: 'POST',
+    //   data: {
+    //     lat: 30.297108,
+    //     lon: 120.089626
+    //   },
+    //   headers: {
+    //     'content-type': 'application/json', //默认值
+    //   },
+    //   dataType: 'json',
+    //   success: function (res) {
+    //     my.alert({
+    //       content: 'success'
+    //     });
+    //     console.log(res);
+    //   },
+    //   fail: function (error) {
+    //     console.error('fail: ', JSON.stringify(error));
+    //   },
+    //   complete: function (res) {
+    //     my.hideLoading();
+    //     my.alert({
+    //       content: 'complete'
+    //     });
+    //   },
+    // });
   }
 });

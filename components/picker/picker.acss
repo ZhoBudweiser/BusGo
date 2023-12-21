@@ -106,11 +106,21 @@
 }
 
 .picker-filter {
+  display: flex;
   height: 50rpx;
   margin: 0 30rpx;
   border-top: rgb(202, 199, 199) 5rpx solid;
   align-items: center;
+  justify-content: center;
   line-height: 50rpx;
   font-size: 32rpx;
   color: #888;
+}
+
+.picker-time {
+  margin-left: 80rpx;
+}
+
+.picker-day {
+  margin-left: 50rpx;
 }

@@ -1,3 +1,5 @@
 {
-  "format": 2
+  "format": 2,
+  "miniprogramRoot": "./",
+  "cloudbaseRoot": "cloud"
 }

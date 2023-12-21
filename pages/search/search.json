@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "place-picker": "/components/picker/picker",
-      "steps": "/components/steps/steps"
+      "steps": "/components/steps/steps",
+      "footer": "/components/footer/index"
   },
   "styleIsolation": "apply-shared"
 }

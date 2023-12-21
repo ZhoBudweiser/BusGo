@@ -1,35 +1,46 @@
 <view class="picker-container">
-  <!-- <notice
+  <!--<notice
     show="{{closeShow}}"
     type="error"
     mode="closable"
     onClickLeft="linkActionClick">
-    请输入地点信息
-  </notice> -->
+    请输入地点信息</notice> -->
   <view class="picker-destinations">
     <view class="picker-address">
       <picker onChange="bindPickerChange" value="{{startIndex}}" range="{{stationOptions}}">
         <view class="row row-start">
           <view class="row-title">起点</view>
-          <view class="row-extra">{{startIndex!==null ? stationOptions[startIndex] : "请选择起点"}}</view>
+          <view class="row-extra">
+            {{startIndex!==null ? stationOptions[startIndex] : "请选择起点"}}
+          </view>
         </view>
       </picker>
       <picker onChange="bindObjPickerChange" value="{{endIndex}}" range="{{stationOptions}}">
         <view class="row row-end">
           <view class="row-title">终点</view>
-          <view class="row-extra">{{endIndex!==null ? stationOptions[endIndex] : "请选择终点"}}</view>
+          <view class="row-extra">
+            {{endIndex!==null ? stationOptions[endIndex] : "请选择终点"}}
+          </view>
         </view>
-      </picker>      
+      </picker>
     </view>
     <view class="picker-operation">
       <view class="picker-switch" onTap="onSwitchAddress">
-        
+
       </view>
       <view class="picker-submit" onTap="onSubmit">
-      </view>      
+      </view>
     </view>
   </view>
   <view class="picker-filter">
-    现在出发
+    <view class="picker-filter-title">
+      出发时间
+    </view>
+    <view class="picker-time" onTap="onTimePick">
+      {{startTime}}
+    </view>
+    <view class="picker-day" onTap="onDayPick">
+      {{isWeekend ? "周末" : "工作日"}}
+    </view>
   </view>
 </view>

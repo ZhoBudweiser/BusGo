@@ -1,11 +1,20 @@
 App({
-  onLaunch(options) {
-    // 第一次打开
-    // options.query == {number:1}
-    console.info('App onLaunch');
+  async onLaunch(options) {
+    console.log("小程序启动")
+    //使用function的方式进行初始化
+    my.getCloudContext  = async function(){
+      if(my.fncontext){
+        return  my.fncontext;
+      }else{
+        const context = await my.cloud.createCloudContext({
+          env: 'env-00jx4wwu6o82'
+        });
+        await context.init();
+        my.fncontext = context;
+      }
+      return my.fncontext;
+    }
   },
   onShow(options) {
-    // 从后台被 scheme 重新打开
-    // options.query == {number:1}
   },
 });

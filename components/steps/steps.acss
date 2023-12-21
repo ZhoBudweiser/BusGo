@@ -1,8 +1,11 @@
 .am-hor-steps {
-  padding: 0 20rpx;
-  overflow: auto;
+  padding: 0 30rpx;
+  overflow-y: hidden;
+  overflow-x: auto;
   white-space: nowrap;
   width: 100%;
+  height: 100%;
+  max-height: 200rpx;
 }
 
 .am-hor-step {
@@ -10,7 +13,8 @@
   white-space: normal;
   text-align: center;
   vertical-align: top;
-  line-height: normal
+  line-height: normal;
+  overflow: visible;
 }
 
 .am-hor-step-line {
@@ -53,27 +57,30 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 12px;
-  padding: 0 5px;
-  max-width: 90px;
-  transform: translateX(-50%)
+  padding: 0 10rpx;
+  max-width: 90rpx;
+  transform: translateX(-50%);
+  margin-left: -5rpx;
+  margin-top: 25rpx;
 }
 
 .am-hor-step-title {
-  font-size: 12px;
-  font-size: var(--am-steps-horizontal-title-size, 12px);
+  padding-top: 25rpx;
+  font-size: 24rpx;
+  font-size: var(--am-steps-horizontal-title-size, 24rpx);
   color: #333;
   color: var(--am-steps-title-color, #333);
   writing-mode: vertical-rl;
-  text-orientation: upright;
+  transform-origin: left top;  
+  transform: rotate(-45deg);  
   white-space: nowrap;
 
 }
 
 .am-hor-step-description {
-  margin-top: 2px;
-  font-size: 12px;
-  font-size: var(--am-steps-horizontal-description-size, 12px);
+  margin-top: 4rpx;
+  font-size: 24rpx;
+  font-size: var(--am-steps-horizontal-description-size, 24rpx);
   color: #999;
   color: var(--am-steps-description-color, #999)
 }
