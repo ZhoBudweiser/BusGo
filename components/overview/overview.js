@@ -175,6 +175,7 @@ Component({
     activeTab: 1,
     state: 1,
     onActive: () => {},
+    busLines: [],
   },
   didMount() {
     my.createSelectorQuery()

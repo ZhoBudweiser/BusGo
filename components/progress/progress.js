@@ -11,14 +11,14 @@ Component({
         const ctx = canvas.getContext('2d')
 
         // 画一个辅助圆形并填充颜色
-        ctx.arc(50, 50, 40, 0, 2 * Math.PI)
+        ctx.arc(40, 40, 30, 0, 2 * Math.PI)
         ctx.fillStyle = '#f7f7f7'
         ctx.fill()
 
         // 画一段圆弧
         ctx.beginPath()
         ctx.lineWidth = 5
-        ctx.arc(50, 50, 40, -0.5 * Math.PI, this.props.percent * 2 * Math.PI-0.5 * Math.PI)
+        ctx.arc(40, 40, 30, -0.5 * Math.PI, this.props.percent * 2 * Math.PI-0.5 * Math.PI)
         ctx.strokeStyle = 'red'
         ctx.stroke()
       })

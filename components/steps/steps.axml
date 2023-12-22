@@ -6,7 +6,7 @@
     <view class="am-hor-step-text">
       <view class="am-hor-step-title">
         <text>{{item.station_alias}}</text>
-        <view class="am-hor-step-description">
+        <view class="am-hor-step-description" style="visibility: {{close ? 'hidden' : ''}}">
           <text>{{item.time ? item.time : "停靠"}}</text>
         </view>
       </view>

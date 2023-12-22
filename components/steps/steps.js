@@ -1,5 +1,6 @@
 Component({
   props: {
+    close: false,
     className: '',
     activeIndex: 5,
     failIndex: 0,
@@ -18,7 +19,7 @@ Component({
   },
   methods: {
     onTap(e) {
-      // console.log(this.props.items);
+      console.log(this.props.items);
     }
   }
 });

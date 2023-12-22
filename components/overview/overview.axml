@@ -53,23 +53,23 @@
             </view>
           </view>
           <view class="scroll-container" capture-catchTouchStart="onTap">
-            <block a:for="{{ lines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
+            <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
               <view class="swiper-item swiper-item-line">
                 <view class="item-header">
                   <view class="item-bus-name">
-                    {{line_alias}}
+                    {{item.line_alias}}
                   </view>
                   <view class="item-bus-line">
                     <view class="item-destination-name">
-                      {{start_address}}
+                      {{item.start_address}}
                     </view>
                     <view class="item-destination-arrow"></view>
                     <view class="item-destination-name">
-                      {{end_address}}
+                      {{item.end_address}}
                     </view>
                   </view>
                   <view class="item-bus-time">
-                    {{duration}}
+                    {{item.duration}}
                   </view>
                 </view>
                 <view class="item-body-child">
@@ -77,10 +77,13 @@
                     <progress-ring index={{index+'-'+jndex}}></progress-ring>
                   </view>
                   <view class="item-bus-line-detail">
-                    <steps items="{{stations}}">
+                    <steps items="{{item.stations}}" close="{{true}}" activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}">
 
                     </steps>
                   </view>
+                </view>
+                <view class="item-bus-remark">
+                  {{item.remark}}
                 </view>
               </view>
             </block>

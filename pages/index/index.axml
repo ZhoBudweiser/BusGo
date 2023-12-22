@@ -4,7 +4,7 @@
     <view id="content">
       <searchbar></searchbar>
       <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
-      <overview activeTab={{activeIndex}} onActive="onActive" state={{currentState}}></overview>
+      <overview activeTab={{activeIndex}} onActive="onActive" state={{currentState}} busLines={{busLines}}></overview>
     </view>
   </movable>
 </view>

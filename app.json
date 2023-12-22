@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/search/search",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/search/search"
   ],
   "window": {
     "defaultTitle": "校车行",
