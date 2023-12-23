@@ -1,12 +1,18 @@
 <view class="progress-ring">
   <canvas id="canvas{{index}}" type="2d" onReady="onCanvasReady">
   </canvas>
-  <text class="progress-text">
+  <text a:if="{{ lauch }}" class="progress-text">
     <text class="progress-text-num">
       {{progress}}
     </text>
     <text class="progress-text-word">
       站
+    </text>
+  </text>
+  <text a:else class="progress-text">
+    <text class="progress-text-word">
+      暂未
+      发车
     </text>
   </text>
 </view>

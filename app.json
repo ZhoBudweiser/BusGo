@@ -12,5 +12,6 @@
     "requestReferrerStyle": "full",
     "requestDefaultEnableCookie": true,
     "connectSocketDefaultMultiple": true
-  }
+  },
+  "useDynamicPlugins": true
 }

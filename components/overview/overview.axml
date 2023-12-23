@@ -29,13 +29,15 @@
               </view>
             </view>
             <view class="item-body-main">
-              <view class="item-bus-object" style="left: {{dist_car}}">
-                <view class="item-bus-icon item-bus-icon-car">
+              <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
+                <view class="item-bus-object" style="left: {{item.runBusInfo[0].about_minute > 30 ? 0 : (50 - item.runBusInfo[0].about_minute / 60 * 100 ) + '%'}}" onTap="onActiveTime" data-i="{{jndex}}">
+                  <view class="item-bus-icon item-bus-icon-car">
+                  </view>
+                  <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
+                    {{item.runBusInfo[0].about_minute}} 分钟
+                  </view>
                 </view>
-                <view class="item-bus-caption">
-                  {{time_left_car}} 分钟
-                </view>
-              </view>
+              </block>
               <view class="item-bus-object" style="left: {{dist_flag}}">
                 <view class="item-bus-icon item-bus-icon-flag">
                 </view>
@@ -74,10 +76,10 @@
                 </view>
                 <view class="item-body-child">
                   <view class="item-bus-left">
-                    <progress-ring index={{index+'-'+jndex}}></progress-ring>
+                    <progress-ring index={{index+'-'+jndex}} lauch={{item.runBusInfo !== null}} progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}}></progress-ring>
                   </view>
                   <view class="item-bus-line-detail">
-                    <steps items="{{item.stations}}" close="{{true}}" activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}">
+                    <steps items="{{item.stations}}" close="{{true}}" activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}" flagIndex="{{1+item.station_map[nearest_stop_id]}}">
 
                     </steps>
                   </view>

@@ -1,8 +1,9 @@
 Component({
   props: {
     progress: 10,
-    percent: 0.5,
+    percent: 1.0,
     index: 0,
+    lauch: false
   },
   methods: {
     onCanvasReady() {
@@ -19,7 +20,7 @@ Component({
         ctx.beginPath()
         ctx.lineWidth = 5
         ctx.arc(40, 40, 30, -0.5 * Math.PI, this.props.percent * 2 * Math.PI-0.5 * Math.PI)
-        ctx.strokeStyle = 'red'
+        ctx.strokeStyle = this.props.lauch ? 'red' : 'green';
         ctx.stroke()
       })
     }

@@ -1,5 +1,8 @@
 {
   "format": 2,
   "miniprogramRoot": "./",
-  "cloudbaseRoot": "cloud"
+  "cloudbaseRoot": "cloud",
+  "compileOptions": {
+    "component2": true
+  }
 }

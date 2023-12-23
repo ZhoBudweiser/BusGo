@@ -3,7 +3,7 @@ Component({
     close: false,
     className: '',
     activeIndex: 5,
-    failIndex: 0,
+    flagIndex: 2,
     size: 0,
     direction: 'horizontal',
     items: [{

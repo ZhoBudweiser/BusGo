@@ -144,38 +144,39 @@ const data_delay = {
 
 Component({
   mixins: [],
+  options: {
+    observers: true,
+  },
   data: {
     containerHeight: 300,
     vehicles: [0, 0],
-    // 站点数据
-    lines: [0, 0, 0, 0, 0, 0, 0, 0, ],
-    line_alias: data_normal.line_alias,
-    duration: data_normal.start_time.replace(/:\d{2}$/, '') + '-' + data_normal.arrive_time.replace(/:\d{2}$/, ''),
-    start_address: data_normal.start_address.replace(/校区/g, ''),
-    end_address: data_normal.end_address.replace(/校区/g, ''),
-    stations: data_stations.map(item => {
-      const res = item.station_alias.match(/校区(.+)/);
-      return {
-        ...item,
-        "station_alias": res ? res[1] : item.station_alias
-      }
-    }),
     // 概览数据
     dist_car: '10%',
-    dist_flag: '40%',
+    dist_flag: '50%',
     dist_human: '80%',
     human_dir_right: false,
     time_left_car: 3,
     time_left_human_walk: 4,
     time_left_human_run: 2,
-    nearest_stop_name: '风雨操场',
     human_run: true,
+    coming_lines: [],
+    activeTimeIndex: 0,
   },
   props: {
     activeTab: 1,
     state: 1,
     onActive: () => {},
     busLines: [],
+    nearest_stop_id: "1007",
+    nearest_stop_name: '风雨操场',
+  },
+  observers: {
+    'busLines': function() {
+      console.log(this.props.busLines);
+      this.setData({
+        coming_lines: this.props.busLines.filter(item => item.runBusInfo),
+      })
+    },
   },
   didMount() {
     my.createSelectorQuery()
@@ -185,10 +186,14 @@ Component({
           containerHeight: height - 110 // TODO: adapt to above height
         });
       });
-
   },
-  didUpdate() {},
-  didUnmount() {},
+  deriveDataFromProps(nextProps) {
+    if (nextProps.busLines !== this.props.busLines) {
+      this.setData({
+        coming_lines: this.props.busLines.filter(item => item.runBusInfo),
+      })
+    }
+  },
   methods: {
     onChange(e) {
       const {
@@ -197,7 +202,7 @@ Component({
       this.props.onActive(current);
     },
     onTap(e) {
-      // console.log(e)
+      console.log(this.data.coming_lines)
     },
     onSwitchDirection(e) {
       console.log("switch tapped");
@@ -205,6 +210,13 @@ Component({
     onChangeHumanRun(e) {
       this.setData({
         human_run: !this.data.human_run
+      });
+    },
+    onActiveTime(e) {
+      const i = e.currentTarget.dataset.i;
+      console.log(i);
+      this.setData({
+        activeTimeIndex: i
       });
     }
   },

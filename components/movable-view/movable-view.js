@@ -23,8 +23,8 @@ Component({
         const height = ret[0].height;
         this.setData({
           height,
-          // currentY: height - contentHeight,
-          currentY: 0,
+          currentY: height - contentHeight,
+          // currentY: 0,
           stateHeights: [0, height - contentHeight, height],
           stateBoders: [(height - contentHeight) / 2, (height + (height - contentHeight) / 2) / 2],
         });

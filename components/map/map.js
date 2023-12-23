@@ -108,21 +108,63 @@ Component({
     scale: 14,
     includePoints,
   },
+  options: {
+    observers: true,
+  },
   props: {
     longitude,
     latitude,
   },
-  didMount() {
-    console.log("init");
-    // 使用 my.createMapContext 获取 map 上下文
+  observers: {
+    'longitude, latitude': function() {
+      console.log('longitude, latitude');
+      this.mapCtx.showsCompass({
+        isShowsCompass: true
+      });
+      this.demoMarkerLabel([{
+        id: 2,
+        latitude: this.props.latitude,
+        longitude: this.props.longitude,
+        width: 19,
+        height: 31,
+        iconPath: '/images/mark_bs.png',
+        label: {
+          content: "当前位置",
+          color: "#a2a2a2",
+          fontSize: 14,
+          borderRadius: 3,
+          bgColor: "#ffffff",
+          padding: 5,
+        },
+        markerLevel: 2
+      }]);
+    },
+  },
+  onInit() {
     this.mapCtx = my.createMapContext('map');
+  },
+  didMount() {
+    this.mapCtx.showsCompass({
+      isShowsCompass: true
+    });
+    this.demoMarkerAnimation([{
+      id: 0,
+      latitude: this.props.latitude,
+      longitude: this.props.longitude,
+      width: 19,
+      height: 31,
+      iconPath: '/images/mark_bs.png',
+      callout: {
+        content: '当前位置',
+      },
+    }]);
   },
   methods: {
     demoResetMap() {
       this.setData({
         scale: 14,
-        longitude,
-        latitude,
+        longitude: this.props.longitude,
+        latitude: this.props.latitude,
         includePoints,
         'ground-overlays': [],
         circles: [],
@@ -146,7 +188,7 @@ Component({
     demoMoveToLocation() {
       this.mapCtx.moveToLocation();
     },
-    demoMarkerAnimation() {
+    demoMarkerAnimation(markers) {
       if (!my.canIUse('createMapContext.return.updateComponents')) {
         my.alert({
           title: '客户端版本过低',
@@ -155,7 +197,7 @@ Component({
         return;
       }
       this.mapCtx.updateComponents({
-        'markers': animMarker,
+        'markers': markers,
       });
       this.mapCtx.updateComponents({
         command: {
@@ -166,7 +208,7 @@ Component({
         }
       });
     },
-    demoMarkerLabel() {
+    demoMarkerLabel(markers) {
       if (!my.canIUse('createMapContext.return.updateComponents')) {
         my.alert({
           title: '客户端版本过低',
@@ -175,11 +217,11 @@ Component({
         return;
       }
       this.mapCtx.updateComponents({
-        scale: 14,
-        longitude,
-        latitude,
-        includePoints,
-        'markers': labelMarker,
+        scale: 16,
+        longitude: this.props.longitude,
+        latitude: this.props.latitude,
+        // includePoints,
+        'markers': markers,
       });
     },
     demoMarkerCustomCallout() {
@@ -323,5 +365,4 @@ Component({
       console.log('callout tap', e);
     },
   },
-
 });

@@ -1,4 +1,4 @@
 {
-  "defaultTitle": "Map",
-  "component": true
+  "component": true,
+  "styleIsolation": "apply-shared"
 }

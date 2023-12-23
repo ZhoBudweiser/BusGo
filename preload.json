@@ -1,0 +1,12 @@
+[
+  {
+    "fetchType": "jsapiPre",
+    "params": {
+      "jsapi": "my.getLocation",
+      "data": {              
+        "cacheTimeout": 30,
+        "type": 1
+      }
+    }
+  }
+]
