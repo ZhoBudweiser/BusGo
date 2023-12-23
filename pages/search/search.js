@@ -31,7 +31,8 @@ Page({
                 return {
                   ...jtem,
                   "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
-                  "time": t
+                  "time": t,
+                  "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
                 }
               })
             };

@@ -25,7 +25,7 @@
       </view>
       <view class="item-body-child">
         <view class="item-bus-line-detail">
-          <steps items="{{item.stations}}" activeIndex="{{item.stations.length}}">
+          <steps items="{{item.stations}}" activeIndex="{{item.stations.length}}" flagIndex="{{}}">
 
           </steps>
         </view>
