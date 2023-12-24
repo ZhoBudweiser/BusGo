@@ -1,5 +1,5 @@
 <view class="container">
-  <schoolmap class="schoolmap" longitude="{{longitude}}" latitude="{{latitude}}"></schoolmap>
+  <schoolmap class="schoolmap" longitude="{{longitude}}" latitude="{{latitude}}" stops="{{stops}}" onSelectedStop="onSelectedStop" selectedStop="{{selectedStop}}" lines="{{busLines}}"></schoolmap>
   <movable class="previa" onStateChange="onStateChange">
     <view id="content">
       <searchbar></searchbar>

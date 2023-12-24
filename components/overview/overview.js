@@ -187,13 +187,6 @@ Component({
         });
       });
   },
-  deriveDataFromProps(nextProps) {
-    if (nextProps.busLines !== this.props.busLines) {
-      this.setData({
-        coming_lines: this.props.busLines.filter(item => item.runBusInfo),
-      })
-    }
-  },
   methods: {
     onChange(e) {
       const {

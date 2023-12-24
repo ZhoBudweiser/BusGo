@@ -1,12 +1,20 @@
 <view class="progress-ring">
-  <canvas id="canvas{{index}}" type="2d" onReady="onCanvasReady">
-  </canvas>
+  <!-- <canvas id="canvas{{index}}" type="2d" onReady="onCanvasReady">
+  </canvas> -->
+  <view class="progress-circle" style="border-color: {{lauch ? 'red' : 'green'}}">
+    
+  </view>
   <text a:if="{{ lauch }}" class="progress-text">
-    <text class="progress-text-num">
-      {{progress}}
+    <text a:if="{{progress > 0}}">
+      <text class="progress-text-num">
+        {{progress}}
+      </text>
+      <text class="progress-text-word">
+        站
+      </text>
     </text>
-    <text class="progress-text-word">
-      站
+    <text a:else class="progress-text-word">
+      过站
     </text>
   </text>
   <text a:else class="progress-text">

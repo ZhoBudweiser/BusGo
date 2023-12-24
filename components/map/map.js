@@ -1,87 +1,3 @@
-const markers = [{
-  id: 0,
-  latitude: 30.266786,
-  longitude: 120.10675,
-  width: 19,
-  height: 31,
-  iconPath: '/image/mark_bs.png',
-  callout: {
-    content: 'callout',
-  },
-}];
-
-const animMarker = [{
-  id: 1,
-  latitude: 30.266786,
-  longitude: 120.10675,
-  width: 19,
-  height: 31,
-
-  iconPath: '/image/mark_bs.png',
-
-  fixedPoint: {
-    originX: 200,
-    originY: 150,
-  },
-  markerLevel: 2
-}];
-
-const labelMarker = [{
-  id: 2,
-  latitude: 30.266786,
-  longitude: 120.10675,
-  width: 19,
-  height: 31,
-  iconPath: '/image/mark_bs.png',
-  label: {
-    content: "Hello Label",
-    color: "#00FF00",
-    fontSize: 14,
-    borderRadius: 3,
-    bgColor: "#ffffff",
-    padding: 10,
-  },
-  markerLevel: 2
-}];
-const customCalloutMarker = [{
-  id: 3,
-  latitude: 30.266786,
-  longitude: 120.10675,
-  width: 19,
-  height: 31,
-  iconPath: '/image/mark_bs.png',
-  "customCallout": {
-    "type": 2,
-    "descList": [{
-      "desc": "预计",
-      "descColor": "#333333"
-    }, {
-      "desc": "5分钟",
-      "descColor": "#108EE9"
-    }, {
-      "desc": "到达",
-      "descColor": "#333333"
-    }],
-    "isShow": 1
-  },
-  markerLevel: 2
-}];
-
-const iconAppendStrMarker = [{
-  id: 34,
-  latitude: 30.266786,
-  longitude: 120.10675,
-  width: 19,
-  height: 31,
-  iconAppendStr: "iconAppendStr",
-  markerLevel: 2
-}];
-
-var myTrafficEnabled = 0;
-var myCompassEnabled = 0;
-var myScaleEnabled = 0;
-var myGestureEnabled = 0;
-
 const longitude = 120.10675;
 const latitude = 30.266786;
 const includePoints = [{
@@ -89,24 +5,11 @@ const includePoints = [{
   longitude: 120.10675,
 }];
 
-// Component({
-//   mixins: [], // mixins 方便复用代码
-//   data: { x: 1 }, // 组件内部数据
-//   props: { y: 1 }, // 可给外部传入的属性添加默认值
-//   didMount(){}, // 生命周期函数
-//   didUpdate(){},
-//   didUnmount(){},
-//   methods: {   // 自定义方法
-//     handleTap() {
-//       this.setData({ x: this.data.x + 1}); // 可使用 setData 改变内部属性
-//     }, 
-//   },
-// });
-
 Component({
   data: {
     scale: 14,
     includePoints,
+    stops_labels: []
   },
   options: {
     observers: true,
@@ -114,100 +17,75 @@ Component({
   props: {
     longitude,
     latitude,
+    onSelectedStop: () => {},
+    stops: [],
+    selectedStop: "1007",
+    lines: []
   },
   observers: {
-    'longitude, latitude': function() {
-      console.log('longitude, latitude');
+    'stops': function () {
       this.mapCtx.showsCompass({
         isShowsCompass: true
       });
-      this.demoMarkerLabel([{
-        id: 2,
-        latitude: this.props.latitude,
-        longitude: this.props.longitude,
-        width: 19,
-        height: 31,
-        iconPath: '/images/mark_bs.png',
-        label: {
-          content: "当前位置",
-          color: "#a2a2a2",
-          fontSize: 14,
-          borderRadius: 3,
-          bgColor: "#ffffff",
-          padding: 5,
-        },
-        markerLevel: 2
-      }]);
+      this.mapCtx.updateComponents({
+        scale: 16,
+      });
+      const stops = this.props.stops.map(item => {
+        return {
+          ...item,
+          id: item.station_alias_no,
+          latitude: item.station_lat,
+          longitude: item.station_long,
+          width: 19,
+          height: 31,
+          iconPath: this.props.selectedStop === item.station_alias_no ? '/images/mark_stop.png' : '/images/mark_bs.png',
+          label: {
+            content: item.station_alias.replace(/.*校区(?=\S)/g, ''),
+            color: "#a2a2a2",
+            fontSize: 14,
+            borderRadius: 3,
+            bgColor: "#ffffff",
+            padding: 5,
+          },
+          markerLevel: 2
+        }
+      });
+      this.setData({
+        stops_labels: stops
+      });
+      this.demoMarkerLabel(stops);
     },
+    'selectedStop': function () {
+      const stops_labels = this.data.stops_labels.map(item => {
+        if (item.id === this.props.selectedStop) {
+          return {
+            ...item,
+            iconPath: '/images/mark_stop.png'
+          }
+        } else {
+          return {
+            ...item,
+            iconPath: '/images/mark_bs.png'
+          };
+        }
+      });
+      this.setData({
+        stops_labels: stops_labels
+      });
+      this.mapCtx.changeMarkers({
+        update: stops_labels
+      });
+    },
+    'lines': function() {
+      this.mapCtx.clearRoute();
+      this.props.lines.forEach(item=>item.runBusInfo ? this.drawStops(item.stations) : '');
+      this.mapCtx.moveToLocation();
+    }
   },
   onInit() {
     this.mapCtx = my.createMapContext('map');
   },
-  didMount() {
-    this.mapCtx.showsCompass({
-      isShowsCompass: true
-    });
-    this.demoMarkerAnimation([{
-      id: 0,
-      latitude: this.props.latitude,
-      longitude: this.props.longitude,
-      width: 19,
-      height: 31,
-      iconPath: '/images/mark_bs.png',
-      callout: {
-        content: '当前位置',
-      },
-    }]);
-  },
   methods: {
-    demoResetMap() {
-      this.setData({
-        scale: 14,
-        longitude: this.props.longitude,
-        latitude: this.props.latitude,
-        includePoints,
-        'ground-overlays': [],
-        circles: [],
-        polygon: [],
-        polyline: [],
-      });
-      this.mapCtx.clearRoute();
-    },
-    demoGetCenterLocation() {
-      this.mapCtx.getCenterLocation({
-        success: (res) => {
-          my.alert({
-            content: 'longitude:' + res.longitude + '\nlatitude:' + res.latitude + '\nscale:' + res.scale,
-          });
-          console.log(res.longitude);
-          console.log(res.latitude);
-          console.log(res.scale);
-        },
-      });
-    },
-    demoMoveToLocation() {
-      this.mapCtx.moveToLocation();
-    },
-    demoMarkerAnimation(markers) {
-      if (!my.canIUse('createMapContext.return.updateComponents')) {
-        my.alert({
-          title: '客户端版本过低',
-          content: 'this.mapCtx.updateComponents 需要 10.1.35 及以上版本'
-        });
-        return;
-      }
-      this.mapCtx.updateComponents({
-        'markers': markers,
-      });
-      this.mapCtx.updateComponents({
-        command: {
-          markerAnim: [{
-            markerId: 1,
-            type: 0
-          }, ],
-        }
-      });
-    },
     demoMarkerLabel(markers) {
       if (!my.canIUse('createMapContext.return.updateComponents')) {
         my.alert({
@@ -217,136 +95,11 @@ Component({
         return;
       }
       this.mapCtx.updateComponents({
-        scale: 16,
+        // scale: 16,
         longitude: this.props.longitude,
         latitude: this.props.latitude,
         // includePoints,
         'markers': markers,
-      });
-    },
-    demoMarkerCustomCallout() {
-      this.mapCtx.updateComponents({
-        scale: 14,
-        longitude,
-        latitude,
-        includePoints,
-        'markers': customCalloutMarker,
-      });
-    },
-    demoMarkerAppendStr() {
-      this.mapCtx.updateComponents({
-        scale: 14,
-        longitude,
-        latitude,
-        includePoints,
-        'markers': iconAppendStrMarker,
-      });
-    },
-    demoTrafficOverlay() {
-      if (!my.canIUse('createMapContext.return.updateComponents')) {
-        my.alert({
-          title: '客户端版本过低',
-          content: 'this.mapCtx.updateComponents 需要 10.1.35 及以上版本'
-        });
-        return;
-      }
-      myTrafficEnabled = (myTrafficEnabled + 1) % 2;
-      this.mapCtx.updateComponents({
-        setting: {
-          trafficEnabled: myTrafficEnabled
-        }
-      });
-    },
-    demoShowRoute() {
-      this.mapCtx.showRoute({
-        startLat: 30.257839,
-        startLng: 120.062726,
-        endLat: 30.256718,
-        endLng: 120.059985,
-        zIndex: 4,
-        routeColor: '#FFB90F',
-        iconPath: "/image/map_alr.png",
-        iconWidth: 10,
-        routeWidth: 10
-      });
-    },
-    demoCompass() {
-      myCompassEnabled = (myCompassEnabled + 1) % 2;
-      this.mapCtx.showsCompass({
-        isShowsCompass: myCompassEnabled
-      });
-    },
-    demoScale() {
-      myScaleEnabled = (myScaleEnabled + 1) % 2;
-      this.mapCtx.showsScale({
-        isShowsScale: myScaleEnabled
-      });
-    },
-    demoGesture() {
-      myGestureEnabled = (myGestureEnabled + 1) % 2;
-      this.mapCtx.gestureEnable({
-        isGestureEnable: myGestureEnabled
-      });
-    },
-    demoPolyline() {
-      this.setData({
-        scale: 16,
-        longitude,
-        latitude,
-        polyline: [{
-          points: [{ // 右上
-            latitude: 30.264786,
-            longitude: 120.10775,
-          }, { // 左下
-            latitude: 30.268786,
-            longitude: 120.10575,
-          }],
-          color: '#FF0000DD',
-          width: 10,
-          dottedLine: false,
-          iconPath: "/image/map_alr.png",
-          iconWidth: 10,
-        }],
-      });
-    },
-    demoPolygon() {
-      this.setData({
-        scale: 16,
-        longitude,
-        latitude,
-        polygon: [{
-          points: [{ // 右上
-            latitude: 30.264786,
-            longitude: 120.10775,
-          }, { // 右下
-            latitude: 30.268786,
-            longitude: 120.10775,
-          }, { // 左下
-            latitude: 30.268786,
-            longitude: 120.10575,
-          }, { // 左上
-            latitude: 30.264786,
-            longitude: 120.10575,
-          }],
-          fillColor: '#BB0000DD',
-          width: 5,
-        }],
-      });
-
-    },
-    demoCircle() {
-      this.setData({
-        scale: 16,
-        longitude,
-        latitude,
-        circles: [{
-          longitude,
-          latitude,
-          color: '#BB76FF88',
-          fillColor: '#BB76FF33',
-          radius: 100,
-          strokeWidth: 3,
-        }]
       });
     },
     regionchange(e) {
@@ -354,6 +107,65 @@ Component({
     },
     markertap(e) {
       console.log('marker tap', e);
+      if (e.markerId === this.props.selectedStop) {
+        const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
+        this.mapCtx.showRoute({
+          startLat: this.props.latitude,
+          startLng: this.props.longitude,
+          endLat: stops[0].station_lat,
+          endLng: stops[0].station_long,
+          zIndex: 4,
+          routeColor: '#FFB90F',
+          iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+          iconWidth: 10,
+          routeWidth: 10
+        });
+      } else {
+        this.mapCtx.clearRoute();
+        this.props.onSelectedStop(e.markerId);
+      }
+    },
+    drawStops(stops) {
+      const points = stops.map(item => {
+        return {
+          lng: item.station_long,
+          lat: item.station_lat
+        };
+      });
+      this.mapCtx.showRoute({
+        startLat: stops[0].station_lat,
+        startLng: stops[0].station_long,
+        endLat: stops[stops.length-1].station_lat,
+        endLng: stops[stops.length-1].station_long,
+        zIndex: 4,
+        searchType: 'drive',
+        throughPoints: points,
+        routeColor: '#FFB90F',
+        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+        iconWidth: 5,
+        routeWidth: 5
+      });  
+    },
+    drawBuses(buses) {
+      const points = buses.map(item => {
+        return {
+          lng: item.station_long,
+          lat: item.station_lat
+        };
+      });
+      this.mapCtx.showRoute({
+        startLat: buses[0].station_lat,
+        startLng: buses[0].station_long,
+        endLat: buses[buses.length-1].station_lat,
+        endLng: buses[buses.length-1].station_long,
+        zIndex: 4,
+        searchType: 'drive',
+        throughPoints: points,
+        routeColor: '#FFB90F',
+        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+        iconWidth: 5,
+        routeWidth: 5
+      });  
     },
     controltap(e) {
       console.log('control tap', e);

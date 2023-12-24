@@ -15,18 +15,23 @@
       onChange="onChange"
     >
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
-        <view class="swiper-container">
+        <view a:if="{{ index === 0 }}" class="swiper-container">
           <view class="swiper-item swiper-item-overview">
             <view class="item-header">
-              <view class="item-destinations">
+              <view a:if="{{ coming_lines.length }}" class="item-destinations">
                 开往
-                <view class="item-destination-name">
-                  玉泉
-                </view>
+                <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-destinations-{{jndex}}">
+                  <view class="item-destination-name">
+                    {{item.end_address}}
+                  </view>
+                </block>
               </view>
-              <view class="item-switch-direction" onTap="onSwitchDirection">
+              <view a:else class="item-destinations">
+                暂无经过班车
+              </view>
+              <!-- <view class="item-switch-direction" onTap="onSwitchDirection">
                 换向
-              </view>
+              </view> -->
             </view>
             <view class="item-body-main">
               <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
@@ -41,7 +46,7 @@
               <view class="item-bus-object" style="left: {{dist_flag}}">
                 <view class="item-bus-icon item-bus-icon-flag">
                 </view>
-                <view class="item-bus-caption">
+                <view class="item-stop-caption">
                   {{nearest_stop_name}}
                 </view>
               </view>
@@ -76,7 +81,7 @@
                 </view>
                 <view class="item-body-child">
                   <view class="item-bus-left">
-                    <progress-ring index={{index+'-'+jndex}} lauch={{item.runBusInfo !== null}} progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}}></progress-ring>
+                    <progress-ring index={{item.bid+'-'+index+'-'+jndex}} lauch={{item.runBusInfo !== null}} progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}}></progress-ring>
                   </view>
                   <view class="item-bus-line-detail">
                     <steps items="{{item.stations}}" close="{{true}}" activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}" flagIndex="{{1+item.station_map[nearest_stop_id]}}">
@@ -92,6 +97,9 @@
             <footer type="end"></footer>
           </view>
           <view style="height:10rpx"></view>
+        </view>
+        <view a:else class="swiper-container" style="padding:30rpx; font-size: 36rpx; line-height: 46rpx; margin: 0 40%; align-items: center; white-space: nowrap;">
+          敬请期待
         </view>
       </swiper-item>
     </swiper>

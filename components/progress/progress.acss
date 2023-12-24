@@ -24,3 +24,10 @@
   font-size: 28rpx;
   margin-left: 3rpx;
 }
+
+.progress-circle {
+  width: 140rpx;  
+  height: 140rpx;  
+  border: 10rpx solid #f00; /* 这里的10px表示圆环的宽度，#f00是颜色 */  
+  border-radius: 50%; /* 50%的border-radius会将正方形变为圆形 */  
+}

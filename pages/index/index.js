@@ -6,11 +6,32 @@ Page({
     timer: null,
     selectedStop: "1007",
     selectedStopName: "",
+    stops: []
+  },
+  options: {
+    observers: true,
   },
   method: {},
+  observers: {
+    'selectedStop': function() {
+      this.setData({
+        selectedStopName: this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias
+      });
+    }
+  },
   onActive(id) {
     this.setData({
       activeIndex: id
+    });
+  },
+  onSelectedStop(id) {
+    this.setData({
+      selectedStop: id
+    });
+    this.onQueryBusLinesByStop({
+      bid: '',
+      stopId: id,
+      obj: this
     });
   },
   onStateChange(s) {
@@ -222,10 +243,10 @@ Page({
                     name = item.station_alias;
                   }
                 });
-                console.log(target_id);
+                console.log(poses);
                 client.setData({
                   selectedStop: target_id,
-                  selectedStopName: name
+                  stops: poses
                 });
                 client.onQueryBusLinesByStop({
                   bid: '',

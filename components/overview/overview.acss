@@ -104,6 +104,15 @@
   
 }
 
+
+.item-stop-caption {
+  position: absolute;
+  bottom: 110rpx;
+  font-size: 26rpx;
+  white-space: nowrap;
+  
+}
+
 .item-bus-icon {
   content: "";
   display: inline-block;
