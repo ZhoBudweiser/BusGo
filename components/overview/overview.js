@@ -153,13 +153,14 @@ Component({
     // 概览数据
     dist_car: '10%',
     dist_flag: '50%',
-    dist_human: '80%',
+    dist_human: '5%',
     human_dir_right: false,
     time_left_car: 3,
-    time_left_human_walk: 4,
     time_left_human_run: 2,
-    human_run: true,
+    human_run: false,
     coming_lines: [],
+    endAddresses: [],
+    filterAddress: '',
     activeTimeIndex: 0,
   },
   props: {
@@ -169,14 +170,23 @@ Component({
     busLines: [],
     nearest_stop_id: "1007",
     nearest_stop_name: '风雨操场',
+    time_left_human_walk: -1,
   },
   observers: {
     'busLines': function() {
       console.log(this.props.busLines);
       this.setData({
-        coming_lines: this.props.busLines.filter(item => item.runBusInfo),
+        // coming_lines: this.props.busLines.filter(item => item.runBusInfo),
+        coming_lines: this.props.busLines,
+        endAddresses: Array.from(new Set(this.props.busLines.map(item => item.end_address)))
       })
     },
+    'time_left_human_walk': function() {
+      if (this.props.time_left_human_walk < 0) return;
+      this.setData({
+        dist_human: this.calTimeToPercentage(this.props.time_left_human_walk)
+      });
+    }
   },
   didMount() {
     my.createSelectorQuery()
@@ -195,15 +205,15 @@ Component({
       this.props.onActive(current);
     },
     onTap(e) {
-      console.log(this.data.coming_lines)
+      // console.log(this.data.coming_lines)
     },
     onSwitchDirection(e) {
       console.log("switch tapped");
     },
     onChangeHumanRun(e) {
-      this.setData({
-        human_run: !this.data.human_run
-      });
+      // this.setData({
+      //   human_run: !this.data.human_run
+      // });
     },
     onActiveTime(e) {
       const i = e.currentTarget.dataset.i;
@@ -211,6 +221,21 @@ Component({
       this.setData({
         activeTimeIndex: i
       });
+    },
+    onEndFilter(e) {
+      const end = e.currentTarget.dataset.end;
+      this.setData({
+        filterAddress: end === this.data.filterAddress ? '' : end
+      });
+    },
+    calTimeToPercentage(t) {
+      const tt = Number(t);
+      if (tt > 15) {
+        return '5%';
+      } else {
+        const percentage = (45 - tt/30 * 100).toFixed(1) + '%';
+        return percentage;
+      }
     }
   },
 });

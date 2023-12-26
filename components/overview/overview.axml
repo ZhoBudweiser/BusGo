@@ -20,9 +20,9 @@
             <view class="item-header">
               <view a:if="{{ coming_lines.length }}" class="item-destinations">
                 开往
-                <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-destinations-{{jndex}}">
-                  <view class="item-destination-name">
-                    {{item.end_address}}
+                <block a:for="{{ endAddresses }}" a:for-index="jndex" key="bus-destinations-{{jndex}}">
+                  <view class="{{`item-destination-name ${item===filterAddress ? 'end-active' : ''}`}}" data-end={{item}} onTap="onEndFilter">
+                    {{item}}
                   </view>
                 </block>
               </view>
@@ -35,11 +35,11 @@
             </view>
             <view class="item-body-main">
               <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
-                <view class="item-bus-object" style="left: {{item.runBusInfo[0].about_minute > 30 ? 0 : (50 - item.runBusInfo[0].about_minute / 60 * 100 ) + '%'}}" onTap="onActiveTime" data-i="{{jndex}}">
+                <view class="item-bus-object" style="left: {{calTimeToPercentage(item.runBusInfo[0].about_minute)}}" onTap="onActiveTime" data-i="{{jndex}}">
                   <view class="item-bus-icon item-bus-icon-car">
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
-                    {{item.runBusInfo[0].about_minute}} 分钟
+                    {{`${item.runBusInfo[0].about_minute ? item.runBusInfo[0].about_minute + ' 分钟' : '暂未发车'}`}}
                   </view>
                 </view>
               </block>
@@ -50,18 +50,18 @@
                   {{nearest_stop_name}}
                 </view>
               </view>
-              <view class="item-bus-object" style="left: {{dist_human}}" onTap="onChangeHumanRun">
+              <view class="item-bus-object" style="right: {{dist_human}}" onTap="onChangeHumanRun">
                 <view class="item-bus-icon {{human_run ? 'item-bus-icon-human-run' : 'item-bus-icon-human-walk'}}" style="transform: {{human_dir_right ? 'rotateY(0)' : 'rotateY(180deg)'}};">
                 </view>
-                <view class="item-bus-caption">
-                  {{human_run ? time_left_human_run : time_left_human_walk}} 分钟
+                <view a:if="{{ time_left_human_walk >= 0 }}" class="item-bus-caption">
+                  {{human_run ? (time_left_human_walk/2.5).toFixed(1) : time_left_human_walk}} 分钟
                 </view>
               </view>
             </view>
           </view>
           <view class="scroll-container" capture-catchTouchStart="onTap">
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-              <view class="swiper-item swiper-item-line">
+              <view a:if="{{ filterAddress === '' || item.end_address ===  filterAddress}}" class="swiper-item swiper-item-line">
                 <view class="item-header">
                   <view class="item-bus-name">
                     {{item.line_alias}}

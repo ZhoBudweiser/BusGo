@@ -54,6 +54,10 @@
   font-size: small;
 }
 
+.item-destination-name.end-active {
+  background-color: #e5e5e5;
+}
+
 .item-destination-arrow::before {
   content: "";
   display: inline-block;

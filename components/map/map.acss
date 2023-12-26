@@ -1,3 +1,17 @@
 .container {
   height: 100%;
 }
+
+.flag-switch {
+  width: 60rpx;
+  height: 60rpx;
+  position: fixed;
+  float: left;
+  bottom: 40%;
+  left: 10rpx;
+  background-color: white;
+  border: gray solid 5rpx;
+  border-radius: 15rpx;
+  background-size: contain;
+}
+

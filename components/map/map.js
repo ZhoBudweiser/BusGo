@@ -9,7 +9,8 @@ Component({
   data: {
     scale: 14,
     includePoints,
-    stops_labels: []
+    stops_labels: [],
+    display_mode: true
   },
   options: {
     observers: true,
@@ -20,7 +21,8 @@ Component({
     onSelectedStop: () => {},
     stops: [],
     selectedStop: "1007",
-    lines: []
+    lines: [],
+    onSetTimeCost: () => {}
   },
   observers: {
     'stops': function () {
@@ -53,11 +55,18 @@ Component({
       this.setData({
         stops_labels: stops
       });
-      this.demoMarkerLabel(stops);
+      this.mapCtx.updateComponents({
+        // longitude: this.props.longitude,
+        // latitude: this.props.latitude,
+        'markers': stops,
+      });
     },
     'selectedStop': function () {
+      let lat, lon;
       const stops_labels = this.data.stops_labels.map(item => {
         if (item.id === this.props.selectedStop) {
+          lat = item.latitude;
+          lon = item.longitude;
           return {
             ...item,
             iconPath: '/images/mark_stop.png'
@@ -75,33 +84,53 @@ Component({
       this.mapCtx.changeMarkers({
         update: stops_labels
       });
+      this.mapCtx.updateComponents({
+        longitude: lon,
+        latitude: lat,
+      });
     },
-    'lines': function() {
+    'lines': function () {
       this.mapCtx.clearRoute();
-      this.props.lines.forEach(item=>item.runBusInfo ? this.drawStops(item.stations) : '');
-      this.mapCtx.moveToLocation();
+      const buses = [];
+      this.props.lines.forEach(item => {
+        if (item.runBusInfo) {
+          this.drawStops(item.stations);
+          buses.push({
+            // 图片路径
+            iconPath: '/images/map_bus.png',
+            // 标记点 id
+            id: item.runBusInfo[0].vehi_num,
+            // 纬度
+            latitude:  item.runBusInfo[0].py,
+            // 经度
+            longitude:  item.runBusInfo[0].px,
+            // 标记宽度
+            width: 50,
+            // 标记高度
+            height: 30,
+            markerLevel: 3
+          });
+        }
+      });
+      this.drawBusPos(buses);
+      // this.mapCtx.moveToLocation();
+    },
+    'display_mode': function () {
+      if (this.data.display_mode) {
+        this.mapCtx.updateComponents({
+          'markers': this.data.stops_labels,
+        });
+      } else {
+        this.mapCtx.updateComponents({
+          'markers': [],
+        });
+      }
     }
   },
   onInit() {
     this.mapCtx = my.createMapContext('map');
   },
   methods: {
-    demoMarkerLabel(markers) {
-      if (!my.canIUse('createMapContext.return.updateComponents')) {
-        my.alert({
-          title: '客户端版本过低',
-          content: 'this.mapCtx.updateComponents 需要 10.1.35 及以上版本'
-        });
-        return;
-      }
-      this.mapCtx.updateComponents({
-        // scale: 16,
-        longitude: this.props.longitude,
-        latitude: this.props.latitude,
-        // includePoints,
-        'markers': markers,
-      });
-    },
     regionchange(e) {
       console.log('regionchange', e);
     },
@@ -118,33 +147,78 @@ Component({
           routeColor: '#FFB90F',
           iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
           iconWidth: 10,
-          routeWidth: 10
+          routeWidth: 10,
+          success: (res) => {
+            // console.log(res, `总路程 ${res.distance} 米, 预计耗时 ${res.duration} 秒`);
+            this.props.onSetTimeCost(res.duration);
+          },
+          fail: (error) => {
+            console.log(error);
+          },
         });
       } else {
         this.mapCtx.clearRoute();
         this.props.onSelectedStop(e.markerId);
+        this.props.onSetTimeCost(-61);
       }
     },
     drawStops(stops) {
       const points = stops.map(item => {
         return {
-          lng: item.station_long,
-          lat: item.station_lat
+          longitude: item.station_long,
+          latitude: item.station_lat
         };
       });
-      this.mapCtx.showRoute({
-        startLat: stops[0].station_lat,
-        startLng: stops[0].station_long,
-        endLat: stops[stops.length-1].station_lat,
-        endLng: stops[stops.length-1].station_long,
-        zIndex: 4,
-        searchType: 'drive',
-        throughPoints: points,
-        routeColor: '#FFB90F',
-        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-        iconWidth: 5,
-        routeWidth: 5
-      });  
+      // this.mapCtx.showRoute({
+      //   startLat: stops[0].station_lat,
+      //   startLng: stops[0].station_long,
+      //   endLat: stops[stops.length - 1].station_lat,
+      //   endLng: stops[stops.length - 1].station_long,
+      //   zIndex: 4,
+      //   searchType: 'drive',
+      //   throughPoints: points,
+      //   routeColor: '#FFB90F',
+      //   iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+      //   iconWidth: 5,
+      //   routeWidth: 5,
+      // });
+      // console.log(points);
+      // this.mapCtx.smoothDrawPolyline({
+      //   // 折线 id
+      //   polylineId: 10,
+      //   // 经纬度数组，指定绘制路径
+      //   points: points,
+      //   // 线路颜色
+      //   color: '#00FF00',
+      //   // 是否虚线
+      //   dottedLine: false,
+      //   // 动画执行时间
+      //   duration: 40000,
+      //   success: res => {
+      //     console.log('success' + JSON.stringify(res))
+      //   },
+      //   fail: err => {
+      //     console.log('err' + JSON.stringify(err))
+      //   }
+      // });
+    },
+    drawBusPos(bus) {
+      console.log(bus);
+      this.mapCtx.changeMarkers({
+        add: bus,
+        success: res => {
+          console.log(res);
+        },
+        fail: error => {
+          console.log(error);
+        },
+        complete: res => {
+          console.log(res);
+        }
+      });
+      // this.mapCtx.updateComponents({
+      //   'markers': bus,
+      // });
     },
     drawBuses(buses) {
       const points = buses.map(item => {
@@ -156,8 +230,8 @@ Component({
       this.mapCtx.showRoute({
         startLat: buses[0].station_lat,
         startLng: buses[0].station_long,
-        endLat: buses[buses.length-1].station_lat,
-        endLng: buses[buses.length-1].station_long,
+        endLat: buses[buses.length - 1].station_lat,
+        endLng: buses[buses.length - 1].station_long,
         zIndex: 4,
         searchType: 'drive',
         throughPoints: points,
@@ -165,16 +239,21 @@ Component({
         iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
         iconWidth: 5,
         routeWidth: 5
-      });  
+      });
     },
     controltap(e) {
-      console.log('control tap', e);
+      // console.log('control tap', e);
     },
     tap() {
-      console.log('tap');
+      // console.log('tap');
     },
     callouttap(e) {
-      console.log('callout tap', e);
+      // console.log('callout tap', e);
     },
+    onSwitchMode() {
+      this.setData({
+        display_mode: !this.data.display_mode
+      });
+    }
   },
 });

@@ -6,7 +6,8 @@ Page({
     timer: null,
     selectedStop: "1007",
     selectedStopName: "",
-    stops: []
+    stops: [],
+    timeCost: -1,
   },
   options: {
     observers: true,
@@ -22,6 +23,11 @@ Page({
   onActive(id) {
     this.setData({
       activeIndex: id
+    });
+  },
+  onSetTimeCost(time) {
+    this.setData({
+      timeCost: (time/60).toFixed(1)
     });
   },
   onSelectedStop(id) {
@@ -254,11 +260,11 @@ Page({
                   obj: client
                 });
                 // this.onQueryBusLinesByStop.bind(this)
-                // this.timer = setInterval(this.onQueryBusLinesByStop, 60000, {
-                //   bid: '',
-                //   stopId: 1005,
-                //   obj: this
-                // });
+                client.timer = setInterval(client.onQueryBusLinesByStop, 10000, {
+                  bid: '',
+                  stopId: target_id,
+                  obj: client
+                });
               },
               fail: function (error) {
                 console.error('fail: ', JSON.stringify(error));
@@ -284,6 +290,7 @@ Page({
   },
   onUnload() {
     // 页面被关闭
+    clearInterval(this.timer);
   },
   onTitleClick() {
     // 标题被点击
