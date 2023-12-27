@@ -94,7 +94,7 @@ Component({
       const buses = [];
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
-          this.drawStops(item.stations);
+          // this.drawStops(item.stations);
           buses.push({
             // 图片路径
             iconPath: '/images/map_bus.png',
@@ -105,9 +105,9 @@ Component({
             // 经度
             longitude:  item.runBusInfo[0].px,
             // 标记宽度
-            width: 50,
+            width: 30,
             // 标记高度
-            height: 30,
+            height: 40,
             markerLevel: 3
           });
         }
@@ -165,23 +165,23 @@ Component({
     drawStops(stops) {
       const points = stops.map(item => {
         return {
-          longitude: item.station_long,
-          latitude: item.station_lat
+          lng: item.station_long,
+          lat: item.station_lat
         };
       });
-      // this.mapCtx.showRoute({
-      //   startLat: stops[0].station_lat,
-      //   startLng: stops[0].station_long,
-      //   endLat: stops[stops.length - 1].station_lat,
-      //   endLng: stops[stops.length - 1].station_long,
-      //   zIndex: 4,
-      //   searchType: 'drive',
-      //   throughPoints: points,
-      //   routeColor: '#FFB90F',
-      //   iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-      //   iconWidth: 5,
-      //   routeWidth: 5,
-      // });
+      this.mapCtx.showRoute({
+        startLat: stops[0].station_lat,
+        startLng: stops[0].station_long,
+        endLat: stops[stops.length - 1].station_lat,
+        endLng: stops[stops.length - 1].station_long,
+        zIndex: 4,
+        searchType: 'drive',
+        throughPoints: points,
+        routeColor: '#FFB90F',
+        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+        iconWidth: 5,
+        routeWidth: 5,
+      });
       // console.log(points);
       // this.mapCtx.smoothDrawPolyline({
       //   // 折线 id
@@ -203,18 +203,11 @@ Component({
       // });
     },
     drawBusPos(bus) {
-      console.log(bus);
+      this.mapCtx.changeMarkers({
+        remove: bus,
+      });
       this.mapCtx.changeMarkers({
         add: bus,
-        success: res => {
-          console.log(res);
-        },
-        fail: error => {
-          console.log(error);
-        },
-        complete: res => {
-          console.log(res);
-        }
       });
       // this.mapCtx.updateComponents({
       //   'markers': bus,

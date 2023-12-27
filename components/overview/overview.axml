@@ -35,7 +35,7 @@
             </view>
             <view class="item-body-main">
               <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
-                <view class="item-bus-object" style="left: {{calTimeToPercentage(item.runBusInfo[0].about_minute)}}" onTap="onActiveTime" data-i="{{jndex}}">
+                <view class="item-bus-object" a:if="{{item.runBusInfo[0].about_minute}}" style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (45 - item.runBusInfo[0].about_minute/30 * 100) + '%'}}" onTap="onActiveTime" data-i="{{jndex}}">
                   <view class="item-bus-icon item-bus-icon-car">
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
@@ -81,7 +81,7 @@
                 </view>
                 <view class="item-body-child">
                   <view class="item-bus-left">
-                    <progress-ring index={{item.bid+'-'+index+'-'+jndex}} lauch={{item.runBusInfo !== null}} progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}}></progress-ring>
+                    <progress-ring index={{item.bid+'-'+index+'-'+jndex}} lauch={{item.runBusInfo !== null}} progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}} remark="{{item.runBusInfo[0].vehi_num}}"></progress-ring>
                   </view>
                   <view class="item-bus-line-detail">
                     <steps items="{{item.stations}}" close="{{true}}" activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}" flagIndex="{{1+item.station_map[nearest_stop_id]}}">

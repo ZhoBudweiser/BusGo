@@ -3,7 +3,8 @@ Component({
     progress: 10,
     percent: 1.0,
     index: 0,
-    lauch: false
+    lauch: false,
+    remark: 'vehi_num'
   },
   methods: {
     onCanvasReady() {

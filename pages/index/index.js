@@ -18,6 +18,21 @@ Page({
       this.setData({
         selectedStopName: this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias
       });
+      my.showLoading({
+        content: '查询中...'
+      });
+      if (this.timer)
+        clearInterval(this.timer);
+      this.onQueryBusLinesByStop({
+        bid: '',
+        stopId: this.data.selectedStop,
+        obj: this
+      });
+      this.timer = setInterval(this.onQueryBusLinesByStop, 10000, {
+        bid: '',
+        stopId: this.data.selectedStop,
+        obj: this
+      });
     }
   },
   onActive(id) {
@@ -115,12 +130,13 @@ Page({
         client.setData({
           busLines: results
         });
+        my.hideLoading();
       },
       fail: function (error) {
         console.error('fail: ', JSON.stringify(error));
       },
       complete: function (res) {
-        my.hideLoading();
+        
       },
     });
   },
@@ -249,22 +265,21 @@ Page({
                     name = item.station_alias;
                   }
                 });
-                console.log(poses);
                 client.setData({
                   selectedStop: target_id,
                   stops: poses
                 });
-                client.onQueryBusLinesByStop({
-                  bid: '',
-                  stopId: target_id,
-                  obj: client
-                });
-                // this.onQueryBusLinesByStop.bind(this)
-                client.timer = setInterval(client.onQueryBusLinesByStop, 10000, {
-                  bid: '',
-                  stopId: target_id,
-                  obj: client
-                });
+                // client.onQueryBusLinesByStop({
+                //   bid: '',
+                //   stopId: target_id,
+                //   obj: client
+                // });
+                // // this.onQueryBusLinesByStop.bind(this)
+                // client.timer = setInterval(client.onQueryBusLinesByStop, 10000, {
+                //   bid: '',
+                //   stopId: target_id,
+                //   obj: client
+                // });
               },
               fail: function (error) {
                 console.error('fail: ', JSON.stringify(error));

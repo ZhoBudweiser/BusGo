@@ -31,3 +31,16 @@
   border: 10rpx solid #f00; /* 这里的10px表示圆环的宽度，#f00是颜色 */  
   border-radius: 50%; /* 50%的border-radius会将正方形变为圆形 */  
 }
+
+.progress-con {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-remark {
+  font-size: 22rpx;
+  color: gray;
+  white-space: nowrap;
+}

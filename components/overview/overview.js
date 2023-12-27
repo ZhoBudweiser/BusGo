@@ -230,6 +230,7 @@ Component({
     },
     calTimeToPercentage(t) {
       const tt = Number(t);
+      console.log(tt);
       if (tt > 15) {
         return '5%';
       } else {
