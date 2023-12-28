@@ -174,7 +174,7 @@ Component({
   },
   observers: {
     'busLines': function() {
-      console.log(this.props.busLines);
+      // console.log(this.props.busLines);
       this.setData({
         // coming_lines: this.props.busLines.filter(item => item.runBusInfo),
         coming_lines: this.props.busLines,
@@ -234,7 +234,7 @@ Component({
       if (tt > 15) {
         return '5%';
       } else {
-        const percentage = (45 - tt/30 * 100).toFixed(1) + '%';
+        const percentage = (40 - tt/40 * 100).toFixed(1) + '%';
         return percentage;
       }
     }

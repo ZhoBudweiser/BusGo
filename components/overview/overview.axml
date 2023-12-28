@@ -1,7 +1,5 @@
 <view class="list-wrap">
   <view class="list-container" style="height: {{containerHeight}}">
-    <!--<view class="list-container" style="{{ transform: 'translate3d(' +(-activeTab * 100) + 'vw, 0, 0)' }}"> -->
-    <!--<view class="list" style="{{ height: activeTab === 0 ? 'auto' : 0 }}"><block a:for="{{basicComponentList}}" a:for-item="list"><list className="list-item"><view slot="header" class="list-header">{{list.type}}</view><block a:for="{{list.list}}"><list-item arrow="{{true}}" multipleLine="{{false}}" key="items-{{item.name}}" last="{{true}}" data-url="{{item.path}}" onClick="openPage"><view style="display: flex; align-items: center"><image src="{{item.thumb}}" class="thumb"  mode="aspectFit" /><text class="component-name">{{item.name}}</text><text class="component-brief">{{item.nameEn}}</text></view></list-item></block></list></block></view> -->
     <swiper
       style="height: 100%"
       class="demo-swiper"
@@ -35,7 +33,7 @@
             </view>
             <view class="item-body-main">
               <block a:for="{{ coming_lines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
-                <view class="item-bus-object" a:if="{{item.runBusInfo[0].about_minute}}" style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (45 - item.runBusInfo[0].about_minute/30 * 100) + '%'}}" onTap="onActiveTime" data-i="{{jndex}}">
+                <view class="item-bus-object" a:if="{{item.runBusInfo[0].about_minute}}" style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (40 - item.runBusInfo[0].about_minute/40 * 100) + '%'}}" onTap="onActiveTime" data-i="{{jndex}}">
                   <view class="item-bus-icon item-bus-icon-car">
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">

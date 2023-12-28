@@ -1,15 +1,11 @@
-const longitude = 120.10675;
-const latitude = 30.266786;
-const includePoints = [{
-  latitude: 30.266786,
-  longitude: 120.10675,
-}];
+const longitude = 120.090178;
+const latitude = 30.303975;
 
 Component({
   data: {
     scale: 14,
-    includePoints,
     stops_labels: [],
+    buses: [],
     display_mode: true
   },
   options: {
@@ -56,8 +52,6 @@ Component({
         stops_labels: stops
       });
       this.mapCtx.updateComponents({
-        // longitude: this.props.longitude,
-        // latitude: this.props.latitude,
         'markers': stops,
       });
     },
@@ -94,35 +88,27 @@ Component({
       const buses = [];
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
-          // this.drawStops(item.stations);
           buses.push({
-            // 图片路径
             iconPath: '/images/map_bus.png',
-            // 标记点 id
             id: item.runBusInfo[0].vehi_num,
-            // 纬度
-            latitude:  item.runBusInfo[0].py,
-            // 经度
-            longitude:  item.runBusInfo[0].px,
-            // 标记宽度
+            latitude: item.runBusInfo[0].py,
+            longitude: item.runBusInfo[0].px,
             width: 30,
-            // 标记高度
             height: 40,
             markerLevel: 3
           });
         }
       });
       this.drawBusPos(buses);
-      // this.mapCtx.moveToLocation();
     },
     'display_mode': function () {
       if (this.data.display_mode) {
-        this.mapCtx.updateComponents({
-          'markers': this.data.stops_labels,
+        this.mapCtx.changeMarkers({
+          add: this.data.stops_labels,
         });
       } else {
-        this.mapCtx.updateComponents({
-          'markers': [],
+        this.mapCtx.changeMarkers({
+          remove: this.data.stops_labels,
         });
       }
     }
@@ -131,11 +117,7 @@ Component({
     this.mapCtx = my.createMapContext('map');
   },
   methods: {
-    regionchange(e) {
-      console.log('regionchange', e);
-    },
     markertap(e) {
-      console.log('marker tap', e);
       if (e.markerId === this.props.selectedStop) {
         const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
         this.mapCtx.showRoute({
@@ -162,6 +144,11 @@ Component({
         this.props.onSetTimeCost(-61);
       }
     },
+    onSwitchMode() {
+      this.setData({
+        display_mode: !this.data.display_mode
+      });
+    },
     drawStops(stops) {
       const points = stops.map(item => {
         return {
@@ -182,71 +169,30 @@ Component({
         iconWidth: 5,
         routeWidth: 5,
       });
-      // console.log(points);
-      // this.mapCtx.smoothDrawPolyline({
-      //   // 折线 id
-      //   polylineId: 10,
-      //   // 经纬度数组，指定绘制路径
-      //   points: points,
-      //   // 线路颜色
-      //   color: '#00FF00',
-      //   // 是否虚线
-      //   dottedLine: false,
-      //   // 动画执行时间
-      //   duration: 40000,
-      //   success: res => {
-      //     console.log('success' + JSON.stringify(res))
-      //   },
-      //   fail: err => {
-      //     console.log('err' + JSON.stringify(err))
-      //   }
-      // });
     },
-    drawBusPos(bus) {
+    drawBusPos(buses) {
+      if (this.data.buses && this.data.buses.length !== buses.length) {
+        this.mapCtx.changeMarkers({
+          remove: this.data.buses,
+        });
+      }
       this.mapCtx.changeMarkers({
-        remove: bus,
+        add: buses,
       });
-      this.mapCtx.changeMarkers({
-        add: bus,
+      buses.forEach(item => {
+        this.mapCtx.translateMarker({
+          markerId: item.id,
+          destination: {
+            longitude: item.longitude,
+            latitude: item.latitude,
+          },
+          autoRotate: true,
+          duration: 9000,
+        });
       });
-      // this.mapCtx.updateComponents({
-      //   'markers': bus,
-      // });
-    },
-    drawBuses(buses) {
-      const points = buses.map(item => {
-        return {
-          lng: item.station_long,
-          lat: item.station_lat
-        };
-      });
-      this.mapCtx.showRoute({
-        startLat: buses[0].station_lat,
-        startLng: buses[0].station_long,
-        endLat: buses[buses.length - 1].station_lat,
-        endLng: buses[buses.length - 1].station_long,
-        zIndex: 4,
-        searchType: 'drive',
-        throughPoints: points,
-        routeColor: '#FFB90F',
-        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-        iconWidth: 5,
-        routeWidth: 5
-      });
-    },
-    controltap(e) {
-      // console.log('control tap', e);
-    },
-    tap() {
-      // console.log('tap');
-    },
-    callouttap(e) {
-      // console.log('callout tap', e);
-    },
-    onSwitchMode() {
       this.setData({
-        display_mode: !this.data.display_mode
+        buses: buses
       });
-    }
+    },
   },
 });
