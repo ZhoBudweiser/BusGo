@@ -90,9 +90,10 @@ Component({
         if (item.runBusInfo) {
           buses.push({
             iconPath: '/images/map_bus.png',
-            id: item.runBusInfo[0].vehi_num,
-            latitude: item.runBusInfo[0].py,
-            longitude: item.runBusInfo[0].px,
+            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')),
+            // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
+            latitude: Number(item.runBusInfo[0].py),
+            longitude: Number(item.runBusInfo[0].px),
             width: 30,
             height: 40,
             markerLevel: 3
@@ -118,6 +119,9 @@ Component({
   },
   methods: {
     markertap(e) {
+      if (/[\u4E00-\u9FFF]/.test(e.markerId)) return;
+      // if (e.markerId.indexOf("BUS") != -1) return;
+      // console.log(e.markerId);
       if (e.markerId === this.props.selectedStop) {
         const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
         this.mapCtx.showRoute({
@@ -175,19 +179,32 @@ Component({
         this.mapCtx.changeMarkers({
           remove: this.data.buses,
         });
+        this.mapCtx.changeMarkers({
+          add: buses,
+        });
       }
-      this.mapCtx.changeMarkers({
-        add: buses,
-      });
       buses.forEach(item => {
+        console.log(item.id);
         this.mapCtx.translateMarker({
           markerId: item.id,
           destination: {
-            longitude: item.longitude,
-            latitude: item.latitude,
+            longitude: Number(item.longitude),
+            latitude: Number(item.latitude),
           },
           autoRotate: true,
           duration: 9000,
+          animationEnd: () => {
+              // console.log('animation end');
+          },
+          success: (res) => {
+              // console.log(res);
+          },
+          fail: (error) => {
+              console.log(error);
+          },
+          complete: () => {
+
+          }
         });
       });
       this.setData({

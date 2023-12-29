@@ -37,7 +37,8 @@ Page({
               })
             };
           }),
-        })
+        });
+        my.hideLoading();
       },
       fail: function (err) {}
     });
@@ -45,6 +46,9 @@ Page({
   onSubmitQuery(info) {
     this.setData({
       query_info: info,
+    });
+    my.showLoading({
+      content: '查询中...'
     });
     this.onSubmitQueryCloud(info);
     console.log("receive: ", info);

@@ -35,5 +35,5 @@
       </view>
     </view>
   </block>
-  <footer content="{{query_info === null ? '--- 请输入查询信息 ---' : lines.length === 0 ? '--- 暂无线路 ---' : '--- 已经到底了 ---'}}"></footer>
+  <footer content="{{query_info === null ? '--- 请输入查询信息 ---' : '--- 已经到底了 ---'}}"></footer>
 </view>
