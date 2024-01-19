@@ -2,16 +2,24 @@
   height: 100%;
 }
 
-.flag-switch {
+.float-icon {
   width: 60rpx;
   height: 60rpx;
   position: fixed;
   float: left;
-  bottom: 40%;
-  left: 10rpx;
   background-color: white;
   border: gray solid 5rpx;
   border-radius: 15rpx;
   background-size: contain;
 }
 
+.see-mode {
+  bottom: 40%;
+  left: 10rpx;
+}
+
+.qr-code {
+  bottom: 40%;
+  right: 10rpx;
+  background-image: url('/images/buscode.svg');
+}

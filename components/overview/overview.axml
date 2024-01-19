@@ -37,7 +37,7 @@
                   <view class="item-bus-icon item-bus-icon-car">
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
-                    {{`${item.runBusInfo[0].about_minute ? item.runBusInfo[0].about_minute + ' 分钟' : '暂未发车'}`}}
+                    {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' : item.end_address}`}}
                   </view>
                 </view>
               </block>
