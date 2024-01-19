@@ -17,6 +17,9 @@ Component({
       },
     ]
   },
+  didMount() {
+    
+  },
   methods: {
     onTap(e) {
       console.log(this.props.items);
