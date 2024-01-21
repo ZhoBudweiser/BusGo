@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "scroll":"/components/scroll-view/scroll-view",
+    "notice":"/components/notice/index",
     "schoolmap":"/components/map/map",
     "searchbar": "/components/searchbar/searchbar",
     "tabs": "/components/tabs/tabs",

@@ -1,4 +1,14 @@
 <view class="container">
+  <notice
+    class="notice"
+    show="{{noticeShow}}"
+    type="active"
+    mode="closable"
+    onClick="actionClick"
+    onClickLeft="linkActionClick"
+  >
+    班车调整|关于调整元旦期间班车运行的通知
+  </notice>
   <schoolmap
     class="schoolmap"
     longitude="{{longitude}}"

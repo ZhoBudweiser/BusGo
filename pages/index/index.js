@@ -10,7 +10,8 @@ Page({
     selectedStopName: "",
     stops: [],
     timeCost: -1,
-    stationsBuffers: {}
+    stationsBuffers: {},
+    noticeShow: true
   },
   options: {
     observers: true,
@@ -60,6 +61,16 @@ Page({
   onStateChange(s) {
     this.setData({
       currentState: s
+    });
+  },
+  linkActionClick() {
+    my.navigateTo({
+      url: '/pages/news/news',
+    });
+  },
+  actionClick() {
+    this.setData({
+      noticeShow: false
     });
   },
   async onQueryBusStopsByBid(bid) {
