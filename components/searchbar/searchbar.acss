@@ -5,9 +5,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: #fff0;
   border-radius: 50rpx;
-  box-shadow: rgba(153, 153, 153, 0.24) 0 2px 7px;
+  box-shadow: rgba(153, 153, 153, 0) 0 2px 7px;
 }
 
 .icon {
@@ -16,6 +16,6 @@
 
 .placeholder {
   margin-left: 12rpx;
-  color: rgba(153, 153, 153, 0.89);
+  color: rgba(153, 153, 153, 0);
   font-size: 28rpx;
 }

@@ -153,6 +153,16 @@ Component({
         display_mode: !this.data.display_mode
       });
     },
+    onJumpNotice() {
+      my.navigateTo({
+        url: '/pages/news/news',
+      });
+    },
+    onJumpSearch() {
+      my.navigateTo({
+        url: '/pages/search/search',
+      });
+    },
     drawStops(stops) {
       const points = stops.map(item => {
         return {

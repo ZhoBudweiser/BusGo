@@ -18,8 +18,14 @@
   left: 10rpx;
 }
 
-.qr-code {
+.loc-search{
   bottom: 40%;
   right: 10rpx;
-  background-image: url('/images/buscode.svg');
+  background-image: url('/images/search.png');
+}
+
+.news-notice {
+  bottom: 50%;
+  right: 10rpx;
+  background-image: url('/images/notice.png');
 }
