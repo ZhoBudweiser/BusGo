@@ -13,7 +13,7 @@
       onChange="onChange"
     >
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
-        <view a:if="{{ index === 0 }}" class="swiper-container">
+        <view class="swiper-container">
           <view class="swiper-item swiper-item-overview">
             <view class="item-header">
               <view a:if="{{ coming_lines.length }}" class="item-destinations">
@@ -95,9 +95,6 @@
             <footer type="end"></footer>
           </view>
           <view style="height:10rpx"></view>
-        </view>
-        <view a:else class="swiper-container" style="padding:30rpx; font-size: 36rpx; line-height: 46rpx; margin: 0 40%; align-items: center; white-space: nowrap;">
-          敬请期待
         </view>
       </swiper-item>
     </swiper>
