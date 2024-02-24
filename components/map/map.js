@@ -194,7 +194,7 @@ Component({
         });
       }
       buses.forEach(item => {
-        console.log(item.id);
+        // console.log(item.id);
         this.mapCtx.translateMarker({
           markerId: item.id,
           destination: {

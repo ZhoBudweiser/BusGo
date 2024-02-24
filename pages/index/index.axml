@@ -4,8 +4,7 @@
     show="{{noticeShow}}"
     type="active"
     mode="closable"
-    onClick="actionClick"
-    onClickLeft="linkActionClick"
+    onClick="noticeClick"
   >
     班车调整|关于调整元旦期间班车运行的通知
   </notice>

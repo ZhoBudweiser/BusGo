@@ -1,4 +1,6 @@
-import { authGuideLocation, getNearestStop } from "/util/maphelper"
+import {
+  locate
+} from "/util/maphelper"
 const longitude = 120.090178;
 const latitude = 30.303975;
 
@@ -18,7 +20,7 @@ Page({
     observers: true,
   },
   observers: {
-    'selectedStop': function() {
+    'selectedStop': function () {
       this.setData({
         selectedStopName: this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias
       });
@@ -37,6 +39,10 @@ Page({
         stopId: this.data.selectedStop,
         obj: this
       });
+    },
+    'activeIndex': function () {
+      console.log("changed");
+      locate(this, this.data.activeIndex);
     }
   },
   onActive(id) {
@@ -46,7 +52,7 @@ Page({
   },
   onSetTimeCost(time) {
     this.setData({
-      timeCost: (time/60).toFixed(1)
+      timeCost: (time / 60).toFixed(1)
     });
   },
   onSelectedStop(id) {
@@ -64,12 +70,7 @@ Page({
       currentState: s
     });
   },
-  linkActionClick() {
-    my.navigateTo({
-      url: '/pages/news/news',
-    });
-  },
-  actionClick() {
+  noticeClick() {
     this.setData({
       noticeShow: false
     });
@@ -99,7 +100,6 @@ Page({
       },
       dataType: 'json',
       success: async function (res) {
-        // console.log(client);
         const queryRes = await res.data.data.map(async item => {
           try {
             let stations;
@@ -110,7 +110,6 @@ Page({
               stations = stations.data.data;
               client.data.stationsBuffers[item.bid] = stations;
             }
-            // console.log(stations);
             return {
               ...item,
               line_alias: item.line_alias,
@@ -144,42 +143,16 @@ Page({
         console.error('fail: ', JSON.stringify(error));
       },
       complete: function (res) {
-        
+
       },
     });
+  },
+  onShow() {
+    locate(this, this.data.activeIndex);
   },
   onLoad(query) {
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
-  },
-  onShow() {
-
-    const client = this;
-
-    authGuideLocation().then(res => {
-      if (res === true) {
-        my.getLocation({
-          type: 1, 
-          success: (res) => {
-            const lat = res.latitude,
-              lon = res.longitude;
-            client.setData({
-              longitude: lon,
-              latitude: lat
-            });
-            getNearestStop(client, lat, lon);
-          },
-          fail: (res) => {
-            my.alert({
-              title: '定位失败',
-              content: JSON.stringify(res)
-            });
-          }
-        });
-      } else {
-        getNearestStop(client, latitude, longitude);
-      }
-    });
   },
   onShareAppMessage() {
     // 返回自定义分享信息
