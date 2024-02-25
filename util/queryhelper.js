@@ -131,16 +131,14 @@ export const getStopsByBusLines = async (client, busLines) => {
         'content-type': 'application/json',
       },
       dataType: 'json',
-      success: async function (res) {
-        return await fmtBusLine(res.data.data, client);
-      },
+      success: res => res,
       fail: function (error) {
         console.error('fail: ', JSON.stringify(error));
       },
       complete: function (res) {
   
       },
-    }).then(res => res.data.data[0]);
+    }).then(res => fmtBusLine(res.data.data[0], client));
   });
   const results = await Promise.all(queryRes);
   console.log(results);
