@@ -28,6 +28,7 @@
         onActive="onActive"
         state={{currentState}}
         busLines={{busLines}}
+        destinations={{stops}}
         nearest_stop_id={{selectedStop}}
         nearest_stop_name={{selectedStopName}}
         time_left_human_walk={{timeCost}}

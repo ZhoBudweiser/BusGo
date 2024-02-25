@@ -47,6 +47,7 @@
 
 .item-destination-name {
   margin-left: 10rpx;
+  margin-right: 10rpx;
   padding: 5rpx;
   border: gray solid 3rpx;
   border-radius: 10rpx;

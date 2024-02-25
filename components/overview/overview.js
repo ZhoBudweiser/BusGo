@@ -1,6 +1,16 @@
+const calTimeToPercentage = (t) => {
+  const tt = Number(t);
+  console.log(tt);
+  if (tt > 15) {
+    return '5%';
+  } else {
+    const percentage = (40 - tt / 40 * 100).toFixed(1) + '%';
+    return percentage;
+  }
+};
+
 
 Component({
-  mixins: [],
   options: {
     observers: true,
   },
@@ -20,18 +30,20 @@ Component({
     filterAddress: '',
     activeTimeIndex: 0,
     showTime: true,
+    selectedEnd: '',
   },
   props: {
     activeTab: 1,
     state: 1,
     onActive: () => {},
+    destinations: [],
     busLines: [],
     nearest_stop_id: "1007",
     nearest_stop_name: '风雨操场',
     time_left_human_walk: -1,
   },
   observers: {
-    'busLines': function() {
+    'busLines': function () {
       // console.log(this.props.busLines);
       this.setData({
         // coming_lines: this.props.busLines.filter(item => item.runBusInfo),
@@ -39,10 +51,10 @@ Component({
         endAddresses: Array.from(new Set(this.props.busLines.map(item => item.end_address)))
       })
     },
-    'time_left_human_walk': function() {
+    'time_left_human_walk': function () {
       if (this.props.time_left_human_walk < 0) return;
       this.setData({
-        dist_human: this.calTimeToPercentage(this.props.time_left_human_walk)
+        dist_human: calTimeToPercentage(this.props.time_left_human_walk)
       });
     }
   },
@@ -62,44 +74,27 @@ Component({
       } = e.detail;
       this.props.onActive(current);
     },
-    onTap(e) {
-      // console.log(this.data.coming_lines)
-    },
-    onSwitchDirection(e) {
-      console.log("switch tapped");
-    },
-    onChangeHumanRun(e) {
-      // this.setData({
-      //   human_run: !this.data.human_run
-      // });
-    },
     onActiveTime(e) {
       const i = e.currentTarget.dataset.i;
       if (this.data.activeTimeIndex === i) {
         this.setData({
           showTime: !this.data.showTime
-        }); 
+        });
       } else {
         this.setData({
           activeTimeIndex: i
-        });        
+        });
       }
     },
-    onEndFilter(e) {
-      const end = e.currentTarget.dataset.end;
-      this.setData({
-        filterAddress: end === this.data.filterAddress ? '' : end
-      });
+    onSelectEnd(e) {
+      // const end = e.currentTarget.dataset.end;
+      // this.setData({
+      //   filterAddress: end === this.data.filterAddress ? '' : end
+      // });
+      console.log("select end", this.props.destinations);
     },
-    calTimeToPercentage(t) {
-      const tt = Number(t);
-      console.log(tt);
-      if (tt > 15) {
-        return '5%';
-      } else {
-        const percentage = (40 - tt/40 * 100).toFixed(1) + '%';
-        return percentage;
-      }
-    }
+    fetchAllAvailableStations() {
+
+    },
   },
 });

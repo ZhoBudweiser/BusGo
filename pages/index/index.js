@@ -1,8 +1,10 @@
 import {
   locate
-} from "/util/maphelper"
-const longitude = 120.090178;
-const latitude = 30.303975;
+} from "/util/maphelper";
+import {
+  queryBusLinesByStop,
+  getAvailableDestinations,
+} from "/util/queryhelper";
 
 Page({
   data: {
@@ -12,6 +14,7 @@ Page({
     selectedStop: "1007",
     selectedStopName: "",
     stops: [],
+    destinations: [],
     timeCost: -1,
     stationsBuffers: {},
     noticeShow: true
@@ -29,21 +32,23 @@ Page({
       });
       if (this.timer)
         clearInterval(this.timer);
-      this.onQueryBusLinesByStop({
+      queryBusLinesByStop({
         bid: '',
         stopId: this.data.selectedStop,
         obj: this
       });
-      this.timer = setInterval(this.onQueryBusLinesByStop, 10000, {
+      this.timer = setInterval(queryBusLinesByStop, 10000, {
         bid: '',
         stopId: this.data.selectedStop,
         obj: this
       });
     },
     'activeIndex': function () {
-      console.log("changed");
       locate(this, this.data.activeIndex);
-    }
+    },
+    'selectedStopName': function () {
+      getAvailableDestinations(this);
+    },
   },
   onActive(id) {
     this.setData({
@@ -59,7 +64,7 @@ Page({
     this.setData({
       selectedStop: id
     });
-    this.onQueryBusLinesByStop({
+    queryBusLinesByStop({
       bid: '',
       stopId: id,
       obj: this
@@ -73,78 +78,6 @@ Page({
   noticeClick() {
     this.setData({
       noticeShow: false
-    });
-  },
-  async onQueryBusStopsByBid(bid) {
-    try {
-      let result = await my.request({
-        url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcStationList?bid=' + bid,
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json', //默认值  
-        },
-        dataType: 'json',
-      });
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  onQueryBusLinesByStop(parm) {
-    const client = parm.obj;
-    my.request({
-      url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + parm.bid + '&stationName=' + parm.stopId,
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json', //默认值
-      },
-      dataType: 'json',
-      success: async function (res) {
-        const queryRes = await res.data.data.map(async item => {
-          try {
-            let stations;
-            if (client.data.stationsBuffers.hasOwnProperty(item.bid)) {
-              stations = client.data.stationsBuffers[item.bid];
-            } else {
-              stations = await client.onQueryBusStopsByBid(item.bid);
-              stations = stations.data.data;
-              client.data.stationsBuffers[item.bid] = stations;
-            }
-            return {
-              ...item,
-              line_alias: item.line_alias,
-              station_map: stations ? stations.map(item => item.station_alias_no).reduce((acc, currentValue, index) => {
-                acc[currentValue] = index;
-                return acc;
-              }, {}) : null,
-              duration: item.start_time.replace(/:\d{2}$/, '') + '-' + (item.arrive_time ? item.arrive_time.replace(/:\d{2}$/, '') : "22:40"),
-              start_address: item.start_address.replace(/校区(.*)/g, ''),
-              end_address: item.end_address.replace(/校区(.*)/g, ''),
-              remark: item.memo,
-              stations: stations ? stations.map(item => {
-                const res = item.station_alias.match(/校区(.+)/);
-                return {
-                  ...item,
-                  "station_alias": res ? res[1] : item.station_alias
-                }
-              }) : null,
-            };
-          } catch (err) {
-            console.log(err);
-          }
-        });
-        const results = await Promise.all(queryRes);
-        client.setData({
-          busLines: results
-        });
-        my.hideLoading();
-      },
-      fail: function (error) {
-        console.error('fail: ', JSON.stringify(error));
-      },
-      complete: function (res) {
-
-      },
     });
   },
   onShow() {
