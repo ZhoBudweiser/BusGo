@@ -3,6 +3,7 @@ import {
 } from "/util/maphelper";
 import {
   queryBusLinesByStop,
+  getStopsByBusLines,
 } from "/util/queryhelper";
 
 Page({
@@ -23,8 +24,9 @@ Page({
   },
   observers: {
     'selectedStop': function () {
+      const newStopName = this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias;
       this.setData({
-        selectedStopName: this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias
+        selectedStopName: newStopName
       });
       my.showLoading({
         content: '查询中...'
@@ -45,14 +47,12 @@ Page({
     'activeIndex': function () {
       locate(this, this.data.activeIndex);
     },
-    'selectedStopName': function () {
-      
-    },
   },
   onActive(id) {
     this.setData({
       activeIndex: id
     });
+    // console.log(this.data.busLines);
   },
   onSetTimeCost(time) {
     this.setData({
@@ -81,6 +81,13 @@ Page({
   },
   onShow() {
     locate(this, this.data.activeIndex);
+  },
+  onSetBusLines(newBusLines) {
+    console.log("setBusLines");
+    my.showLoading({
+      content: '查询中...'
+    });
+    getStopsByBusLines(this, newBusLines);
   },
   onLoad(query) {
     // 页面加载

@@ -1,6 +1,7 @@
 import {
   replaceKeys,
-  toCampus
+  toCampus,
+  fmtBusLine,
 } from "/util/fmtUnit";
 import {
   endAddresses
@@ -101,14 +102,15 @@ const getAllAvailableDestinationsByStart = (client) => {
 }
 
 export const getAvailableBusLineByStart = (client) => {
-  const currentLocation = toCampus(client.data.selectedStopName);
-  const availableDestinations = my.request({
+  const currentLocation = toCampus(client.props.nearest_stop_name);
+  const endLocation = toCampus(client.data.selectedEnd);
+  my.request({
     url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/searchLine',
     method: 'POST',
     data: {
       begin_station: currentLocation,
-      end_station: client.data.selectedEnd,
-      data: '00',
+      end_station: endLocation,
+      date: '00',
       time: '00',
     },
     headers: {
@@ -117,7 +119,35 @@ export const getAvailableBusLineByStart = (client) => {
     dataType: 'json',
     success: (res) => res,
     fail: (error) => console.error('fail: ', JSON.stringify(error)),
-  }).then(res => res.data.data);
+  }).then(res => client.props.onSetBusLines(res.data.data));
+}
+
+export const getStopsByBusLines = async (client, busLines) => {
+  const queryRes = await busLines.map(async item => {
+    return my.request({
+      url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + item.bid + '&stationName=',
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      dataType: 'json',
+      success: async function (res) {
+        return await fmtBusLine(res.data.data, client);
+      },
+      fail: function (error) {
+        console.error('fail: ', JSON.stringify(error));
+      },
+      complete: function (res) {
+  
+      },
+    }).then(res => res.data.data[0]);
+  });
+  const results = await Promise.all(queryRes);
+  console.log(results);
+  client.setData({
+    busLines: results
+  });
+  my.hideLoading();
 }
 
 
@@ -138,6 +168,7 @@ const queryBusStopsByBid = async (bid) => {
     console.log(error);
   }
 }
+
 export const queryBusLinesByStop = (parm) => {
   const client = parm.obj;
   my.request({

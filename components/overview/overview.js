@@ -1,5 +1,6 @@
 import { endAddresses } from "/util/data";
 import { toCampus } from "/util/fmtUnit";
+import { getAvailableBusLineByStart } from "/util/queryhelper";
 
 const calTimeToPercentage = (t) => {
   const tt = Number(t);
@@ -33,7 +34,8 @@ Component({
     filterAddress: '',
     activeTimeIndex: 0,
     showTime: true,
-    selectedEndIndex: -1,
+    selectedEnd: '',
+    preSelectedCampus: '',
     destinations: [],
   },
   props: {
@@ -42,12 +44,12 @@ Component({
     onActive: () => {},
     busLines: [],
     nearest_stop_id: "1007",
-    nearest_stop_name: '风雨操场',
+    nearest_stop_name: "风雨操场",
     time_left_human_walk: -1,
+    onSetBusLines: () => {},
   },
   observers: {
     'busLines': function () {
-      // console.log(this.props.busLines);
       this.setData({
         // coming_lines: this.props.busLines.filter(item => item.runBusInfo),
         coming_lines: this.props.busLines,
@@ -61,10 +63,17 @@ Component({
       });
     },
     'nearest_stop_name': function (curval){
-      if (!curval) return;
+      if (!curval || this.data.preSelectedCampus === toCampus(curval)) return;
+      const curSelectedCampus = toCampus(curval);
       this.setData({
-        destinations: endAddresses.filter(item => toCampus(item) !== toCampus(curval))
+        destinations: endAddresses.filter(item => toCampus(item) !== curSelectedCampus),
+        preSelectedCampus: curSelectedCampus,
+        selectedEnd: '',
       });
+    },
+    'selectedEnd': function (end) {
+      if (!end) return;
+      getAvailableBusLineByStart(this);
     }
   },
   didMount() {

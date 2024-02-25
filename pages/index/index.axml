@@ -32,6 +32,7 @@
         nearest_stop_id={{selectedStop}}
         nearest_stop_name={{selectedStopName}}
         time_left_human_walk={{timeCost}}
+        onSetBusLines="onSetBusLines"
       >
       </overview>
     </view>
