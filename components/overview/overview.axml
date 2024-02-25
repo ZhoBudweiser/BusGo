@@ -15,13 +15,12 @@
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
           <view class="swiper-item swiper-item-overview">
-            <picker class="item-header" onChange="onSelectEnd">
-              <view
-                a:if="{{selectedEnd}}"
-                class="item-destinations"
-                value="{{selectedEnd}}"
-                range="{{stops}}"
-              >
+            <picker
+              class="item-header"
+              onChange="onSelectEnd"
+              range="{{destinations}}"
+            >
+              <view a:if="{{selectedEnd}}" class="item-destinations">
                 去往
                 <view class="item-destination-name">
                   {{selectedEnd}}

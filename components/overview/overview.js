@@ -1,3 +1,6 @@
+import { endAddresses } from "/util/data";
+import { toCampus } from "/util/fmtUnit";
+
 const calTimeToPercentage = (t) => {
   const tt = Number(t);
   console.log(tt);
@@ -30,13 +33,13 @@ Component({
     filterAddress: '',
     activeTimeIndex: 0,
     showTime: true,
-    selectedEnd: '',
+    selectedEndIndex: -1,
+    destinations: [],
   },
   props: {
     activeTab: 1,
     state: 1,
     onActive: () => {},
-    destinations: [],
     busLines: [],
     nearest_stop_id: "1007",
     nearest_stop_name: '风雨操场',
@@ -55,6 +58,12 @@ Component({
       if (this.props.time_left_human_walk < 0) return;
       this.setData({
         dist_human: calTimeToPercentage(this.props.time_left_human_walk)
+      });
+    },
+    'nearest_stop_name': function (curval){
+      if (!curval) return;
+      this.setData({
+        destinations: endAddresses.filter(item => toCampus(item) !== toCampus(curval))
       });
     }
   },
@@ -87,14 +96,9 @@ Component({
       }
     },
     onSelectEnd(e) {
-      // const end = e.currentTarget.dataset.end;
-      // this.setData({
-      //   filterAddress: end === this.data.filterAddress ? '' : end
-      // });
-      console.log("select end", this.props.destinations);
-    },
-    fetchAllAvailableStations() {
-
+      this.setData({
+        selectedEnd: this.data.destinations[e.detail.value]
+      });
     },
   },
 });

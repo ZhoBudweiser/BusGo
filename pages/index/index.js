@@ -3,7 +3,6 @@ import {
 } from "/util/maphelper";
 import {
   queryBusLinesByStop,
-  getAvailableDestinations,
 } from "/util/queryhelper";
 
 Page({
@@ -47,7 +46,7 @@ Page({
       locate(this, this.data.activeIndex);
     },
     'selectedStopName': function () {
-      getAvailableDestinations(this);
+      
     },
   },
   onActive(id) {

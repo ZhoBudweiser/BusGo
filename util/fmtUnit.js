@@ -97,5 +97,5 @@ export const replaceKeys = (obj) => {
 };
 
 export const toCampus = (name) => {
-  return name.replace(/校区(.*)/g, '');
+  return name.indexOf("华家池") === -1 ? name.replace(/校区(.*)/g, '') : "华家池";
 }

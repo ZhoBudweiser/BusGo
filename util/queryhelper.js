@@ -1,5 +1,10 @@
-import { replaceKeys, toCampus } from "/util/fmtUnit";
-import { endAddresses } from "/util/data";
+import {
+  replaceKeys,
+  toCampus
+} from "/util/fmtUnit";
+import {
+  endAddresses
+} from "/util/data";
 
 const getNearestStop = (poses, lat, lon) => {
   let min_dist = 9999,
@@ -55,7 +60,7 @@ export const getShuttleStops = (client, lat, lon) => {
           } else {
             visits.add(station.station_alias_no);
             return pres.concat([station]);
-          }          
+          }
         }, []));
       }, []);
       const stopid = getNearestStop(stations, lat, lon);
@@ -73,7 +78,7 @@ export const getShuttleStops = (client, lat, lon) => {
   });
 };
 
-export const getAvailableDestinations = (client) => {
+const getAllAvailableDestinationsByStart = (client) => {
   const currentLocation = toCampus(client.data.selectedStopName);
   const availableDestinations = endAddresses.map(end => my.request({
     url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/searchLine',
@@ -90,9 +95,29 @@ export const getAvailableDestinations = (client) => {
     dataType: 'json',
     success: (res) => res,
     fail: (error) => console.error('fail: ', JSON.stringify(error)),
-  }).then(res => res));
+  }).then(res => res.data.data));
   Promise.all(availableDestinations).then(res => console.log(res));
   // console.log(Promise.all(availableDestinations));
+}
+
+export const getAvailableBusLineByStart = (client) => {
+  const currentLocation = toCampus(client.data.selectedStopName);
+  const availableDestinations = my.request({
+    url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/searchLine',
+    method: 'POST',
+    data: {
+      begin_station: currentLocation,
+      end_station: client.data.selectedEnd,
+      data: '00',
+      time: '00',
+    },
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    dataType: 'json',
+    success: (res) => res,
+    fail: (error) => console.error('fail: ', JSON.stringify(error)),
+  }).then(res => res.data.data);
 }
 
 
