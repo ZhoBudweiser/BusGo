@@ -87,6 +87,12 @@ Page({
   },
   onSetBusLines(newBusLines) {
     console.log("setBusLines", newBusLines);
+    if (!newBusLines.length) {
+      my.showToast({
+        content: '暂无班车信息',
+        duration: 1500,
+      });
+    }
     getStopsByBusLines(this, newBusLines).then(fmtLines => this.onSetStopsByBusLines(fmtLines.map(item => item.stations)));
   },
   onSetStopsByBusLines(formatBusLines) {

@@ -31,7 +31,7 @@
                 <view class="item-destination-name">
                   此处
                 </view>
-                选择去往的目的地
+                选择目的地
               </view>
             </picker>
             <view class="item-body-main">
