@@ -25,6 +25,9 @@
                 <view class="item-destination-name">
                   {{selectedEnd}}
                 </view>
+                <view class="item-destination-cancel">
+                  x
+                </view>
               </view>
               <view a:else class="item-destinations">
                 请点击

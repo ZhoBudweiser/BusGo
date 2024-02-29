@@ -55,6 +55,17 @@
   font-size: small;
 }
 
+.item-destination-cancel {
+  width: 15rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  padding: 5rpx;
+  border: #cfcfcf dashed 3rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: small;
+}
+
 .item-destination-name.end-active {
   background-color: #e5e5e5;
 }
