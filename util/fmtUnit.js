@@ -135,3 +135,18 @@ export const fmtBusLine = async function (item, client) {
     console.log(err);
   }
 }
+
+export function distinctStops(lines) {
+  const visits = new Set();
+  console.log(lines);
+  return lines.reduce((pre_stations, cur_list) => {
+    return pre_stations.concat(cur_list.reduce((pres, station) => {
+      if (visits.has(station.station_alias_no)) {
+        return pres;
+      } else {
+        visits.add(station.station_alias_no);
+        return pres.concat([station]);
+      }
+    }, []));
+  }, []);
+}

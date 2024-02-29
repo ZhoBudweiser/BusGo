@@ -2,6 +2,7 @@ import {
   replaceKeys,
   toCampus,
   fmtBusLine,
+  distinctStops,
 } from "/util/fmtUnit";
 import {
   endAddresses
@@ -31,7 +32,6 @@ export const getBusStops = (client, lat, lon) => {
     success: function (res) {
       const poses = res.data.data;
       const stopid = getNearestStop(poses, lat, lon);
-      console.log(stopid);
       client.setData({
         selectedStop: stopid,
         stops: poses
@@ -53,17 +53,7 @@ export const getShuttleStops = (client, lat, lon) => {
     dataType: 'json',
     success: function (res) {
       const lines = replaceKeys(res.data.data);
-      const visits = new Set();
-      const stations = lines.map(item => item.station_list).reduce((pre_stations, cur_list) => {
-        return pre_stations.concat(cur_list.reduce((pres, station) => {
-          if (visits.has(station.station_alias_no)) {
-            return pres;
-          } else {
-            visits.add(station.station_alias_no);
-            return pres.concat([station]);
-          }
-        }, []));
-      }, []);
+      const stations = distinctStops(lines.map(item => item.station_list));
       const stopid = getNearestStop(stations, lat, lon);
       client.setData({
         selectedStop: stopid,
@@ -102,6 +92,9 @@ const getAllAvailableDestinationsByStart = (client) => {
 }
 
 export const getAvailableBusLineByStart = (client) => {
+  my.showLoading({
+    content: '查询中...'
+  });
   const currentLocation = toCampus(client.props.nearest_stop_name);
   const endLocation = toCampus(client.data.selectedEnd);
   my.request({
@@ -145,7 +138,7 @@ export const getStopsByBusLines = async (client, busLines) => {
   client.setData({
     busLines: results
   });
-  my.hideLoading();
+  return results;
 }
 
 

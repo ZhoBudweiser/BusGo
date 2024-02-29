@@ -22,6 +22,7 @@ Component({
   },
   observers: {
     'stops': function () {
+      console.log(this.props.stops);
       this.mapCtx.showsCompass({
         isShowsCompass: true
       });
@@ -48,11 +49,14 @@ Component({
           markerLevel: 2
         }
       });
+      this.data.stops_labels && this.mapCtx.changeMarkers({
+        remove: this.data.stops_labels,
+      });
+      this.mapCtx.changeMarkers({
+        add: stops,
+      });
       this.setData({
         stops_labels: stops
-      });
-      this.mapCtx.updateComponents({
-        'markers': stops,
       });
     },
     'selectedStop': function () {

@@ -5,6 +5,9 @@ import {
   queryBusLinesByStop,
   getStopsByBusLines,
 } from "/util/queryhelper";
+import {
+  distinctStops
+} from "/util/fmtUnit";
 
 Page({
   data: {
@@ -83,11 +86,15 @@ Page({
     locate(this, this.data.activeIndex);
   },
   onSetBusLines(newBusLines) {
-    console.log("setBusLines");
-    my.showLoading({
-      content: '查询中...'
+    console.log("setBusLines", newBusLines);
+    getStopsByBusLines(this, newBusLines).then(fmtLines => this.onSetStopsByBusLines(fmtLines.map(item => item.stations)));
+  },
+  onSetStopsByBusLines(formatBusLines) {
+    const newStops = distinctStops(formatBusLines);
+    this.setData({
+      stops: newStops,
     });
-    getStopsByBusLines(this, newBusLines);
+    my.hideLoading();
   },
   onLoad(query) {
     // 页面加载
