@@ -144,7 +144,7 @@ export const getStopsByBusLines = async (client, busLines) => {
 
 // ------------------------------
 
-const queryBusStopsByBid = async (bid) => {
+export const queryBusStopsByBid = async (bid) => {
   try {
     let result = await my.request({
       url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcStationList?bid=' + bid,
