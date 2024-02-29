@@ -170,39 +170,7 @@ export const queryBusLinesByStop = (parm) => {
     },
     dataType: 'json',
     success: async function (res) {
-      const queryRes = await res.data.data.map(async item => {
-        try {
-          let stations;
-          if (client.data.stationsBuffers.hasOwnProperty(item.bid)) {
-            stations = client.data.stationsBuffers[item.bid];
-          } else {
-            stations = await queryBusStopsByBid(item.bid);
-            stations = stations.data.data;
-            client.data.stationsBuffers[item.bid] = stations;
-          }
-          return {
-            ...item,
-            line_alias: item.line_alias,
-            station_map: stations ? stations.map(item => item.station_alias_no).reduce((acc, currentValue, index) => {
-              acc[currentValue] = index;
-              return acc;
-            }, {}) : null,
-            duration: item.start_time.replace(/:\d{2}$/, '') + '-' + (item.arrive_time ? item.arrive_time.replace(/:\d{2}$/, '') : "22:40"),
-            start_address: item.start_address.replace(/校区(.*)/g, ''),
-            end_address: item.end_address.replace(/校区(.*)/g, ''),
-            remark: item.memo,
-            stations: stations ? stations.map(item => {
-              const res = item.station_alias.match(/校区(.+)/);
-              return {
-                ...item,
-                "station_alias": res ? res[1] : item.station_alias
-              }
-            }) : null,
-          };
-        } catch (err) {
-          console.log(err);
-        }
-      });
+      const queryRes = await res.data.data.map(async item => fmtBusLine(item, client));
       const results = await Promise.all(queryRes);
       client.setData({
         busLines: results
