@@ -15,6 +15,7 @@ Page({
     activeIndex: 0,
     currentState: 1,
     busLines: [],
+    queriedLines: [],
     longitude: 120.090178,
     latitude: 30.303975,
     selectedStop: "1007",
@@ -30,6 +31,9 @@ Page({
     observers: true,
   },
   observers: {
+    'activeIndex': function () {
+      locate(this, this.data.activeIndex);
+    },
     'stops': function (curval) {
       const stopid = getNearestStop(curval, this.data.latitude, this.data.longitude);
       this.setData({
@@ -57,15 +61,11 @@ Page({
         obj: this
       });
     },
-    'activeIndex': function () {
-      locate(this, this.data.activeIndex);
-    },
   },
   onActive(id) {
     this.setData({
       activeIndex: id
     });
-    // console.log(this.data.busLines);
   },
   onSetTimeCost(time) {
     this.setData({
@@ -99,21 +99,27 @@ Page({
     if (!newBusLines.length) {
       my.showToast({
         content: '暂无班车信息',
-        duration: 1500,
+        duration: 2000,
       });
     }
-    getFormatedBusLines(this, newBusLines).then(fmtLines => this.onSetStopsByBusLines(fmtLines.map(item => item.stations)));
+    getFormatedBusLines(this, newBusLines).then(fmtLines => {
+      this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
+      this.setData({
+        queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
+      });
+      my.hideLoading();
+    });
   },
   onSetStopsByBusLines(formatBusLines) {
     const newStops = distinctStops(formatBusLines);
     this.setData({
       stops: newStops,
     });
-    my.hideLoading();
   },
   onRollback() {
     this.setData({
-      stops: this.data.allstops
+      stops: this.data.allstops,
+      queriedLines: [],
     });
   },
   onLoad(query) {

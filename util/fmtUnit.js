@@ -1,4 +1,6 @@
-import { queryBusStopsByBid } from "/util/queryhelper"
+import {
+  queryBusStopsByBid
+} from "/util/queryhelper"
 
 var jsUnitRpx = 'false';
 /* eslint-disable no-continue, prefer-spread */
@@ -76,11 +78,11 @@ export const timeFormat = (time, fmt = 'YYYY-MM-DD hh:mm:ss') => {
 }
 
 const convertNameStyle = (str) => {
-  let temp = str.replace(/[A-Z]/g, function(i) {
-      return '_' + i.toLowerCase();
+  let temp = str.replace(/[A-Z]/g, function (i) {
+    return '_' + i.toLowerCase();
   })
-  if (temp.slice(0,1) === '_') {
-      temp = temp.slice(1);
+  if (temp.slice(0, 1) === '_') {
+    temp = temp.slice(1);
   }
   return temp;
 }
@@ -140,7 +142,7 @@ export async function getFormatedBusLines(client, res) {
   const queryRes = await res.map(async item => fmtBusLine(client, item));
   const results = await Promise.all(queryRes);
   client.setData({
-    busLines: results
+    busLines: results.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
   });
   my.hideLoading();
   return results;
