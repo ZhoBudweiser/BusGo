@@ -150,3 +150,18 @@ export const queryBusLinesByStop = (parm) => {
     },
   });
 }
+
+export const setTimer = (client) => {
+  if (client.timer)
+    clearInterval(client.timer);
+  queryBusLinesByStop({
+    bid: '',
+    stopId: client.data.selectedStop,
+    obj: client
+  });
+  client.timer = setInterval(queryBusLinesByStop, client.data.queryFrequency, {
+    bid: '',
+    stopId: client.data.selectedStop,
+    obj: client
+  });
+}

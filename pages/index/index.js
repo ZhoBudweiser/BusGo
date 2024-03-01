@@ -4,6 +4,7 @@ import {
 import {
   queryBusLinesByStop,
   getNearestStop,
+  setTimer,
 } from "/util/queryhelper";
 import {
   distinctStops,
@@ -16,6 +17,7 @@ Page({
     currentState: 1,
     busLines: [],
     queriedLines: [],
+    queryFrequency: 20000,
     longitude: 120.090178,
     latitude: 30.303975,
     selectedStop: "1007",
@@ -48,18 +50,10 @@ Page({
       my.showLoading({
         content: '查询中...'
       });
-      if (this.timer)
-        clearInterval(this.timer);
-      queryBusLinesByStop({
-        bid: '',
-        stopId: this.data.selectedStop,
-        obj: this
-      });
-      this.timer = setInterval(queryBusLinesByStop, 10000, {
-        bid: '',
-        stopId: this.data.selectedStop,
-        obj: this
-      });
+      setTimer(this);
+    },
+    'queryFrequency': function () {
+      setTimer(this);
     },
   },
   onActive(id) {
@@ -96,17 +90,21 @@ Page({
     locate(this, this.data.activeIndex);
   },
   onSetBusLines(newBusLines) {
+    let freq = 20000;
     if (!newBusLines.length) {
       my.showToast({
         content: '暂无班车信息',
         duration: 2000,
       });
+      freq = 600000;
     }
     getFormatedBusLines(this, newBusLines).then(fmtLines => {
       this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
       this.setData({
         queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
       });
+      fmtLines.forEach(item => item.runBusInfo !== null && (freq = 5000));
+      this.setData({ queryFrequency: freq });
       my.hideLoading();
     });
   },
