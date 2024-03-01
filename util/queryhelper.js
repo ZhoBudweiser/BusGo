@@ -1,7 +1,7 @@
 import {
   replaceKeys,
   toCampus,
-  fmtBusLine,
+  getFormatedBusLines,
   distinctStops,
 } from "/util/fmtUnit";
 import {
@@ -115,32 +115,6 @@ export const getAvailableBusLineByStart = (client) => {
   }).then(res => client.props.onSetBusLines(res.data.data));
 }
 
-export const getStopsByBusLines = async (client, busLines) => {
-  const queryRes = await busLines.map(async item => {
-    return my.request({
-      url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + item.bid + '&stationName=',
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      dataType: 'json',
-      success: res => res,
-      fail: function (error) {
-        console.error('fail: ', JSON.stringify(error));
-      },
-      complete: function (res) {
-  
-      },
-    }).then(res => fmtBusLine(res.data.data[0], client));
-  });
-  const results = await Promise.all(queryRes);
-  console.log(results);
-  client.setData({
-    busLines: results
-  });
-  return results;
-}
-
 
 // ------------------------------
 
@@ -169,19 +143,12 @@ export const queryBusLinesByStop = (parm) => {
       'content-type': 'application/json', //默认值
     },
     dataType: 'json',
-    success: async function (res) {
-      const queryRes = await res.data.data.map(async item => fmtBusLine(item, client));
-      const results = await Promise.all(queryRes);
-      client.setData({
-        busLines: results
-      });
-      my.hideLoading();
-    },
+    success: async (res) => getFormatedBusLines(client, res.data.data),
     fail: function (error) {
       console.error('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
-
+      my.hideLoading();
     },
   });
 }

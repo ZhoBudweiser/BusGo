@@ -102,7 +102,7 @@ export const toCampus = (name) => {
   return name.indexOf("华家池") === -1 ? name.replace(/校区(.*)/g, '') : "华家池";
 }
 
-export const fmtBusLine = async function (item, client) {
+const fmtBusLine = async function (client, item) {
   try {
     let stations;
     if (client.data.stationsBuffers.hasOwnProperty(item.bid)) {
@@ -136,9 +136,18 @@ export const fmtBusLine = async function (item, client) {
   }
 }
 
+export async function getFormatedBusLines(client, res) {
+  const queryRes = await res.map(async item => fmtBusLine(client, item));
+  const results = await Promise.all(queryRes);
+  client.setData({
+    busLines: results
+  });
+  my.hideLoading();
+  return results;
+}
+
 export function distinctStops(lines) {
   const visits = new Set();
-  console.log(lines);
   return lines.reduce((pre_stations, cur_list) => {
     return pre_stations.concat(cur_list.reduce((pres, station) => {
       if (visits.has(station.station_alias_no)) {
