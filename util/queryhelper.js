@@ -8,7 +8,7 @@ import {
   endAddresses
 } from "/util/data";
 
-const getNearestStop = (poses, lat, lon) => {
+export const getNearestStop = (poses, lat, lon) => {
   let min_dist = 9999,
     target_id = "1007";
   poses.forEach(item => {
@@ -31,9 +31,7 @@ export const getBusStops = (client, lat, lon) => {
     dataType: 'json',
     success: function (res) {
       const poses = res.data.data;
-      const stopid = getNearestStop(poses, lat, lon);
       client.setData({
-        selectedStop: stopid,
         stops: poses,
         allstops: poses,
       });
@@ -55,9 +53,7 @@ export const getShuttleStops = (client, lat, lon) => {
     success: function (res) {
       const lines = replaceKeys(res.data.data);
       const stations = distinctStops(lines.map(item => item.station_list));
-      const stopid = getNearestStop(stations, lat, lon);
       client.setData({
-        selectedStop: stopid,
         stops: stations,
         allstops: stations,
       });

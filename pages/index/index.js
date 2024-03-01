@@ -1,8 +1,9 @@
 import {
-  locate
+  locate,
 } from "/util/maphelper";
 import {
   queryBusLinesByStop,
+  getNearestStop,
 } from "/util/queryhelper";
 import {
   distinctStops,
@@ -14,6 +15,8 @@ Page({
     activeIndex: 0,
     currentState: 1,
     busLines: [],
+    longitude: 120.090178,
+    latitude: 30.303975,
     selectedStop: "1007",
     selectedStopName: "",
     stops: [],
@@ -27,8 +30,14 @@ Page({
     observers: true,
   },
   observers: {
+    'stops': function (curval) {
+      const stopid = getNearestStop(curval, this.data.latitude, this.data.longitude);
+      this.setData({
+        selectedStop: stopid
+      });
+    },
     'selectedStop': function () {
-      const newStopName = this.data.stops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias;
+      const newStopName = this.data.allstops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias;
       this.setData({
         selectedStopName: newStopName
       });
