@@ -41,12 +41,13 @@ Component({
   props: {
     activeTab: 1,
     state: 1,
-    onActive: () => {},
-    busLines: [],
     nearest_stop_id: "1007",
     nearest_stop_name: "风雨操场",
     time_left_human_walk: -1,
+    busLines: [],
+    onActive: () => {},
     onSetBusLines: () => {},
+    onRollback: () => {},
   },
   observers: {
     'busLines': function () {
@@ -107,6 +108,12 @@ Component({
     onSelectEnd(e) {
       this.setData({
         selectedEnd: this.data.destinations[e.detail.value]
+      });
+    },
+    onRollback() {
+      this.props.onRollback();
+      this.setData({
+        selectedEnd: ""
       });
     },
   },

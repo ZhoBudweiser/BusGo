@@ -60,8 +60,8 @@
   margin-left: 10rpx;
   margin-right: 10rpx;
   padding: 5rpx;
-  border: #cfcfcf dashed 3rpx;
-  border-radius: 20rpx;
+  border: gray dashed 3rpx;
+  border-radius: 15rpx;
   text-align: center;
   font-size: small;
 }

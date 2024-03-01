@@ -33,6 +33,7 @@
         nearest_stop_name={{selectedStopName}}
         time_left_human_walk={{timeCost}}
         onSetBusLines="onSetBusLines"
+        onRollback="onRollback"
       >
       </overview>
     </view>

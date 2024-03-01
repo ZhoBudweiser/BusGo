@@ -15,28 +15,34 @@
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
           <view class="swiper-item swiper-item-overview">
-            <picker
-              class="item-header"
-              onChange="onSelectEnd"
-              range="{{destinations}}"
-            >
+            <view class="item-header">
               <view a:if="{{selectedEnd}}" class="item-destinations">
                 去往
-                <view class="item-destination-name">
-                  {{selectedEnd}}
-                </view>
-                <view class="item-destination-cancel">
+                <picker
+                  onChange="onSelectEnd"
+                  range="{{destinations}}"
+                >
+                  <view class="item-destination-name">
+                    {{selectedEnd}}
+                  </view>
+                </picker>
+                <view class="item-destination-cancel" onTap="onRollback">
                   x
                 </view>
               </view>
               <view a:else class="item-destinations">
                 请点击
-                <view class="item-destination-name">
-                  此处
-                </view>
+                <picker
+                  onChange="onSelectEnd"
+                  range="{{destinations}}"
+                >
+                  <view class="item-destination-name">
+                    此处
+                  </view>
+                </picker>
                 选择目的地
               </view>
-            </picker>
+            </view>
             <view class="item-body-main">
               <block
                 a:for="{{ coming_lines }}"

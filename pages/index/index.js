@@ -17,6 +17,7 @@ Page({
     selectedStop: "1007",
     selectedStopName: "",
     stops: [],
+    allstops: [],
     destinations: [],
     timeCost: -1,
     stationsBuffers: {},
@@ -100,6 +101,11 @@ Page({
       stops: newStops,
     });
     my.hideLoading();
+  },
+  onRollback() {
+    this.setData({
+      stops: this.data.allstops
+    });
   },
   onLoad(query) {
     // 页面加载

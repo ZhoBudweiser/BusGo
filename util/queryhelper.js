@@ -34,7 +34,8 @@ export const getBusStops = (client, lat, lon) => {
       const stopid = getNearestStop(poses, lat, lon);
       client.setData({
         selectedStop: stopid,
-        stops: poses
+        stops: poses,
+        allstops: poses,
       });
     },
     fail: function (error) {
@@ -57,7 +58,8 @@ export const getShuttleStops = (client, lat, lon) => {
       const stopid = getNearestStop(stations, lat, lon);
       client.setData({
         selectedStop: stopid,
-        stops: stations
+        stops: stations,
+        allstops: stations,
       });
     },
     fail: function (error) {
