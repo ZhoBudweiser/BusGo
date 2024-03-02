@@ -53,7 +53,9 @@ export const getShuttleStops = (client, lat, lon) => {
     success: function (res) {
       const lines = replaceKeys(res.data.data);
       const stations = distinctStops(lines.map(item => item.station_list));
+      console.log(lines);
       client.setData({
+        shuttleLines: lines,
         stops: stations,
         allstops: stations,
       });

@@ -1,6 +1,7 @@
-import { endAddresses } from "/util/data";
+import { busEndAddresses, shuttleEndAddresses } from "/util/data";
 import { toCampus } from "/util/fmtUnit";
 import { getAvailableBusLineByStart } from "/util/queryhelper";
+import { findShttleLines } from "/util/shuttlehelper";
 
 const calTimeToPercentage = (t) => {
   const tt = Number(t);
@@ -37,6 +38,7 @@ Component({
     nearest_stop_name: "风雨操场",
     time_left_human_walk: -1,
     busLines: [],
+    shuttleLines: [],
     onActive: () => {},
     onSetBusLines: () => {},
     onSetSelectedBusLine: () => {},
@@ -44,6 +46,7 @@ Component({
   },
   observers: {
     'busLines': function (lines) {
+      console.log(lines);
       if (lines.length !== this.data.activeCards.length) {
         this.setData({
           activeCards: lines.map((item, i) => i === 0 || item.runBusInfo !== null),
@@ -60,7 +63,8 @@ Component({
       if (!curval || this.data.preSelectedCampus === toCampus(curval)) return;
       const curSelectedCampus = toCampus(curval);
       this.setData({
-        destinations: endAddresses.filter(item => toCampus(item) !== curSelectedCampus),
+        destinations: this.props.activeTab == 0 ? 
+            busEndAddresses.filter(item => toCampus(item) !== curSelectedCampus) : shuttleEndAddresses.filter(item => item !== curval),
         preSelectedCampus: curSelectedCampus,
         selectedEnd: '',
       });
@@ -68,7 +72,7 @@ Component({
     },
     'selectedEnd': function (end) {
       if (!end) return;
-      getAvailableBusLineByStart(this);
+      this.props.activeTab === 0 ? getAvailableBusLineByStart(this) : findShttleLines(this);
       this.props.onSetSelectedBusLine("");
     }
   },

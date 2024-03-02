@@ -9,13 +9,15 @@ import {
 import {
   distinctStops,
   getFormatedBusLines,
+  getFormatedShuttleLines,
 } from "/util/fmtUnit";
 
 Page({
   data: {
-    activeIndex: 0,
+    activeIndex: 1,
     currentState: 1,
     busLines: [],
+    shuttleLines: [],
     queriedLines: [],
     queryFrequency: 20000,
     longitude: 120.090178,
@@ -98,7 +100,7 @@ Page({
     locate(this, this.data.activeIndex);
   },
   onSetBusLines(newBusLines) {
-    getFormatedBusLines(this, newBusLines).then(fmtLines => {
+    const setting = (fmtLines) => {
       this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
       this.setData({
         queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
@@ -110,7 +112,10 @@ Page({
           duration: 2000,
         });
       }
-    });
+    }
+    this.data.activeIndex === 0 ? 
+    getFormatedBusLines(this, newBusLines).then(fmtLines => setting(fmtLines)) : 
+    setting(getFormatedShuttleLines(newBusLines));
   },
   onSetStopsByBusLines(formatBusLines) {
     const newStops = distinctStops(formatBusLines);

@@ -1,4 +1,4 @@
-export const endAddresses = [
+export const busEndAddresses = [
   "紫金港校区",
   "玉泉校区",
   "西溪校区",
@@ -14,4 +14,21 @@ export const endAddresses = [
   "恩济花园",
   "高教二期",
   "丰谭中学"
+];
+
+export const shuttleEndAddresses = [
+  "青溪东侧",
+  "东区生活区",
+  "东教学区",
+  "农生环组团",
+  "医药组团",
+  "成均苑",
+  "成章楼",
+  "海纳苑",
+  "和同苑",
+  "段永平教学楼",
+  "西教学区",
+  "化学楼北往南",
+  "化学楼南往北",
+  "云峰北侧",
 ];

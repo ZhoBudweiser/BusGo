@@ -161,3 +161,11 @@ export function distinctStops(lines) {
     }, []));
   }, []);
 }
+
+export function getFormatedShuttleLines(client, res) {
+  client.setData({
+    busLines: res.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
+  });
+  my.hideLoading();
+  return res;
+}

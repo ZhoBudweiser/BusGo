@@ -29,6 +29,7 @@
         onActive="onActive"
         state={{currentState}}
         busLines={{busLines}}
+        shuttleLines={{shuttleLines}}
         destinations={{stops}}
         nearest_stop_id={{selectedStop}}
         nearest_stop_name={{selectedStopName}}
