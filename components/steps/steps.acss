@@ -30,6 +30,13 @@
   background-color: var(--am-steps-color, #1677ff)
 }
 
+.am-hor-step-line.is-active-last {
+  width: 150%;
+  z-index: 9;
+  background-color: #1677ff;
+  background-color: var(--am-steps-color, #1677ff)
+}
+
 .am-hor-step-line.is-last {
   background-color: transparent
 }
@@ -76,8 +83,8 @@
   color: #333;
   color: var(--am-steps-title-color, #333);
   writing-mode: vertical-rl;
-  transform-origin: left top;  
-  transform: rotate(-45deg);  
+  transform-origin: left top;
+  transform: rotate(-45deg);
   white-space: nowrap;
 
 }

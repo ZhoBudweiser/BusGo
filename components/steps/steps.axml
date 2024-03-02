@@ -5,7 +5,7 @@ capture-catchTouchStart="onTap"
 scroll-into-view="{{"point"+(flagIndex - 3 >= 0 ? flagIndex - 3 : 0)}}"
 >
   <view class="am-hor-step" a:for="{{items}}" style="width: 20%">
-    <view class="am-hor-step-line {{index < activeIndex - 1 ? 'is-active' : ''}} {{index >= items.length - 1 ? 'is-last' : ''}}">
+    <view class="am-hor-step-line {{index < activeIndex - 1 ? index === activeIndex - 2 && index < items.length - 2 ? 'is-active-last' : 'is-active' : ''}} {{index >= items.length - 1 ? 'is-last' : ''}}">
       <view id="{{"point"+index}}" class="am-hor-step-icon {{index <= activeIndex - 1 ? 'is-active' : ''}}  {{index == flagIndex - 1 || item.active ? 'is-flag' : ''}}"></view>
     </view>
     <view class="am-hor-step-text">
