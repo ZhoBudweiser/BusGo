@@ -14,7 +14,7 @@
     >
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
-          <view class="swiper-item">
+          <view class="swiper-item first">
             <!-- 目的地选择 -->
             <view class="item-header">
               <view a:if="{{selectedEnd}}" class="item-destinations">
@@ -42,7 +42,7 @@
             <view class="item-body-main">
               <!-- 校车 -->
               <block
-                a:for="{{ coming_lines }}"
+                a:for="{{ busLines }}"
                 a:for-index="jndex"
                 key="bus-coming-line-{{jndex}}"
               >
@@ -81,9 +81,17 @@
           <!-- 班车路线 -->
           <view class="scroll-container">
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-              <view class="swiper-item" style="{{`border-color: ${item.runBusInfo === null?'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red'}`}}">
+              <view class="swiper-item" style="{{`
+                border-color: ${
+                item.runBusInfo === null?
+                'gray': 
+                item.runBusInfo[0].near_distance > 0 ? 
+                'orange' : 'red'
+              }; 
+                height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : '50rpx'}
+              `}}">
                 <!-- 班车基本信息 -->
-                <view class="item-header">
+                <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
                   <!-- 班车名称 -->
                   <view class="item-bus-name">
                     {{item.runBusInfo !== null ? item.runBusInfo[0].vehi_num : item.line_alias}}

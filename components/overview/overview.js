@@ -21,22 +21,18 @@ Component({
   data: {
     containerHeight: 300,
     vehicles: [0, 0],
-    // 概览数据
     dist_car: '10%',
     dist_human: '5%',
-    human_dir_right: false,
-    time_left_car: 3,
     coming_lines: [],
-    endAddresses: [],
     activeTimeIndex: 0,
     showTime: true,
     selectedEnd: '',
     preSelectedCampus: '',
+    activeCards: [],
     destinations: [],
   },
   props: {
     activeTab: 1,
-    state: 1,
     nearest_stop_id: "1007",
     nearest_stop_name: "风雨操场",
     time_left_human_walk: -1,
@@ -47,12 +43,12 @@ Component({
     onRollback: () => {},
   },
   observers: {
-    'busLines': function () {
-      this.setData({
-        // coming_lines: this.props.busLines.filter(item => item.runBusInfo),
-        coming_lines: this.props.busLines,
-        endAddresses: Array.from(new Set(this.props.busLines.map(item => item.end_address)))
-      })
+    'busLines': function (lines) {
+      if (lines.length !== this.data.activeCards.length) {
+        this.setData({
+          activeCards: lines.map((item, i) => i === 0 || item.runBusInfo !== null),
+        });
+      }
     },
     'time_left_human_walk': function () {
       if (this.props.time_left_human_walk < 0) return;
@@ -96,7 +92,7 @@ Component({
       const i = e.currentTarget.dataset.i;
       if (this.data.activeTimeIndex === i) {
         if (this.data.showTime) {
-          this.props.onSetSelectedBusLine(this.data.coming_lines[i].bid);
+          this.props.onSetSelectedBusLine(this.props.busLines[i].bid);
         }
         this.setData({
           showTime: !this.data.showTime
@@ -116,6 +112,14 @@ Component({
       this.props.onRollback();
       this.setData({
         selectedEnd: ""
+      });
+    },
+    onToggleCard(e) {
+      const i = e.currentTarget.dataset.i;
+      const cards = this.data.activeCards.concat();
+      cards[i] = !cards[i];
+      this.setData({
+        activeCards: cards,
       });
     },
   },

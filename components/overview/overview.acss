@@ -28,6 +28,11 @@
   border-radius: 15rpx;
   height: 240rpx;
   overflow: hidden;
+  transition: all 0.5s;
+}
+
+.swiper-item.first {
+  margin-bottom: 30rpx;
 }
 
 .item-header {
