@@ -54,7 +54,7 @@ Page({
     },
     'busLines': function (fmtLines) {
       if (!fmtLines) return;
-      let freq = fmtLines.length ? 20000 : 600000;
+      let freq = fmtLines.length ? 60000 : 600000;
       fmtLines.forEach(item => item.runBusInfo !== null && (freq = 10000));
       if (freq !== this.data.queryFrequency) this.setData({ queryFrequency: freq });
     },
