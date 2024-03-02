@@ -22,6 +22,7 @@ Page({
     latitude: 30.303975,
     selectedStop: "0",
     selectedStopName: "",
+    selectedBusLine: "-1",
     stops: [],
     allstops: [],
     destinations: [],
@@ -37,6 +38,7 @@ Page({
       locate(this, this.data.activeIndex);
     },
     'stops': function (curval) {
+      if (!curval || !curval.length) return;
       const stopid = getNearestStop(curval, this.data.latitude, this.data.longitude);
       this.setData({
         selectedStop: stopid
@@ -114,6 +116,11 @@ Page({
     const newStops = distinctStops(formatBusLines);
     this.setData({
       stops: newStops,
+    });
+  },
+  onSetSelectedBusLine(bid) {
+    this.setData({
+      selectedBusLine: bid,
     });
   },
   onRollback() {

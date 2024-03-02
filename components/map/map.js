@@ -18,13 +18,13 @@ Component({
     latitude: data_latitude,
     stops: [],
     selectedStop: "0",
+    selectedBusLine: "-1",
     lines: [],
     onSelectedStop: () => {},
     onSetTimeCost: () => {}
   },
   observers: {
     'stops': function () {
-      console.log(this.props.stops);
       this.mapCtx.showsCompass({
         isShowsCompass: true
       });
@@ -91,8 +91,13 @@ Component({
         latitude: lat,
       });
     },
-    'lines': function () {
+    'selectedBusLine': function (bid) {
       this.mapCtx.clearRoute();
+      const line = this.props.lines.filter(item => item.bid === bid);
+      if (line.length)
+        this.drawRoute(line[0].stations)
+    },
+    'lines': function () {
       const buses = [];
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
@@ -183,13 +188,14 @@ Component({
         url: '/pages/search/search',
       });
     },
-    drawStops(stops) {
+    drawRoute(stops) {
       const points = stops.map(item => {
         return {
           lng: item.station_long,
           lat: item.station_lat
         };
       });
+      console.log("Route");
       this.mapCtx.showRoute({
         startLat: stops[0].station_lat,
         startLng: stops[0].station_long,

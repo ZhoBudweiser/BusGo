@@ -13,10 +13,11 @@
     longitude="{{longitude}}"
     latitude="{{latitude}}"
     stops="{{stops}}"
+    lines="{{busLines}}"
+    selectedStop="{{selectedStop}}"
+    selectedBusLine="{{selectedBusLine}}"
     onSelectedStop="onSelectedStop"
     onSetTimeCost="onSetTimeCost"
-    selectedStop="{{selectedStop}}"
-    lines="{{busLines}}"
   >
   </schoolmap>
   <movable class="previa" onStateChange="onStateChange">
@@ -33,6 +34,7 @@
         nearest_stop_name={{selectedStopName}}
         time_left_human_walk={{timeCost}}
         onSetBusLines="onSetBusLines"
+        onSetSelectedBusLine="onSetSelectedBusLine"
         onRollback="onRollback"
       >
       </overview>

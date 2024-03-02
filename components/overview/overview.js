@@ -43,6 +43,7 @@ Component({
     busLines: [],
     onActive: () => {},
     onSetBusLines: () => {},
+    onSetSelectedBusLine: () => {},
     onRollback: () => {},
   },
   observers: {
@@ -67,10 +68,12 @@ Component({
         preSelectedCampus: curSelectedCampus,
         selectedEnd: '',
       });
+      this.props.onSetSelectedBusLine("");
     },
     'selectedEnd': function (end) {
       if (!end) return;
       getAvailableBusLineByStart(this);
+      this.props.onSetSelectedBusLine("");
     }
   },
   didMount() {
@@ -92,6 +95,9 @@ Component({
     onActiveTime(e) {
       const i = e.currentTarget.dataset.i;
       if (this.data.activeTimeIndex === i) {
+        if (this.data.showTime) {
+          this.props.onSetSelectedBusLine(this.data.coming_lines[i].bid);
+        }
         this.setData({
           showTime: !this.data.showTime
         });
