@@ -14,10 +14,10 @@ Component({
   props: {
     longitude,
     latitude,
-    onSelectedStop: () => {},
     stops: [],
     selectedStop: "1007",
     lines: [],
+    onSelectedStop: () => {},
     onSetTimeCost: () => {}
   },
   observers: {
@@ -124,8 +124,6 @@ Component({
   methods: {
     markertap(e) {
       if (/[\u4E00-\u9FFF]/.test(e.markerId)) return;
-      // if (e.markerId.indexOf("BUS") != -1) return;
-      // console.log(e.markerId);
       if (e.markerId === this.props.selectedStop) {
         const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
         this.mapCtx.showRoute({

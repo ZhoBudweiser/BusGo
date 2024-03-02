@@ -49,7 +49,7 @@
                 <view
                   a:if="{{item.runBusInfo[0].about_minute}}"
                   class="item-bus-object"
-                  style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (40 - item.runBusInfo[0].about_minute/40 * 100) + '%'}}"
+                  style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (35 - item.runBusInfo[0].about_minute/35 * 100) + '%'}}"
                   onTap="onActiveTime"
                   data-i="{{jndex}}"
                 >

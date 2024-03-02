@@ -8,7 +8,7 @@ const calTimeToPercentage = (t) => {
   if (tt > 15) {
     return '5%';
   } else {
-    const percentage = (40 - tt / 40 * 100).toFixed(1) + '%';
+    const percentage = (35 - tt / 35 * 100).toFixed(1) + '%';
     return percentage;
   }
 };

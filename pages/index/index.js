@@ -52,6 +52,12 @@ Page({
       });
       setTimer(this);
     },
+    'busLines': function (fmtLines) {
+      if (!fmtLines) return;
+      let freq = fmtLines.length ? 20000 : 600000;
+      fmtLines.forEach(item => item.runBusInfo !== null && (freq = 10000));
+      if (freq !== this.data.queryFrequency) this.setData({ queryFrequency: freq });
+    },
     'queryFrequency': function () {
       setTimer(this);
     },
@@ -90,22 +96,18 @@ Page({
     locate(this, this.data.activeIndex);
   },
   onSetBusLines(newBusLines) {
-    let freq = 20000;
-    if (!newBusLines.length) {
-      my.showToast({
-        content: '暂无班车信息',
-        duration: 2000,
-      });
-      freq = 600000;
-    }
     getFormatedBusLines(this, newBusLines).then(fmtLines => {
       this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
       this.setData({
         queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
       });
-      fmtLines.forEach(item => item.runBusInfo !== null && (freq = 5000));
-      this.setData({ queryFrequency: freq });
       my.hideLoading();
+      if (!newBusLines.length) {
+        my.showToast({
+          content: '暂无班车信息',
+          duration: 2000,
+        });
+      }
     });
   },
   onSetStopsByBusLines(formatBusLines) {
