@@ -20,17 +20,15 @@
 
 .swiper-item {
   display: flex;
+  position: relative;
   flex-direction: column;
   margin: 5rpx 20rpx;
   padding: 5rpx;
   border: gray solid 5rpx;
   border-radius: 15rpx;
   height: 240rpx;
+  overflow: hidden;
 }
-
-.swiper-item-overview {}
-
-.swiper-item-line {}
 
 .item-header {
   display: flex;
@@ -154,13 +152,6 @@
   height: 60rpx;
 }
 
-.item-bus-icon-human-run {
-  background-image: url('/images/run.svg');
-  width: 70rpx;
-  height: 70rpx;
-  translate: 0 10rpx;
-}
-
 /* -------line------- */
 
 .item-bus-line {
@@ -169,22 +160,16 @@
   justify-content: center;
 }
 
-.item-body-child {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  height: 100%;
-}
-
 .item-bus-left {
   margin-right: -100rpx;
 }
 
 .item-bus-line-detail {
-  width: 65%;
+  height: 100%;
+  width: 100%;
   overflow-y: auto;
   margin-top: 20rpx;
-  padding: 0 40rpx;
+  padding: 0 20rpx;
 }
 
 .scroll-container {

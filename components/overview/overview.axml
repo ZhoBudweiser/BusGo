@@ -14,14 +14,12 @@
     >
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
-          <view class="swiper-item swiper-item-overview">
+          <view class="swiper-item">
+            <!-- 目的地选择 -->
             <view class="item-header">
               <view a:if="{{selectedEnd}}" class="item-destinations">
                 去往
-                <picker
-                  onChange="onSelectEnd"
-                  range="{{destinations}}"
-                >
+                <picker onChange="onSelectEnd" range="{{destinations}}">
                   <view class="item-destination-name">
                     {{selectedEnd}}
                   </view>
@@ -32,10 +30,7 @@
               </view>
               <view a:else class="item-destinations">
                 请点击
-                <picker
-                  onChange="onSelectEnd"
-                  range="{{destinations}}"
-                >
+                <picker onChange="onSelectEnd" range="{{destinations}}">
                   <view class="item-destination-name">
                     此处
                   </view>
@@ -43,7 +38,9 @@
                 选择目的地
               </view>
             </view>
+            <!-- 校车进展 -->
             <view class="item-body-main">
+              <!-- 校车 -->
               <block
                 a:for="{{ coming_lines }}"
                 a:for-index="jndex"
@@ -59,43 +56,39 @@
                   <view class="item-bus-icon item-bus-icon-car">
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
-                    {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' : item.end_address}`}}
+                    {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' : item.runBusInfo[0].vehi_num}`}}
                   </view>
                 </view>
               </block>
-              <view class="item-bus-object" style="left: {{dist_flag}}">
+              <!-- 站点 -->
+              <view class="item-bus-object" style="left: 50%">
                 <view class="item-bus-icon item-bus-icon-flag">
                 </view>
                 <view class="item-stop-caption">
                   {{nearest_stop_name}}
                 </view>
               </view>
-              <view
-                class="item-bus-object"
-                style="right: {{dist_human}}"
-                onTap="onChangeHumanRun"
-              >
-                <view
-                  class="item-bus-icon {{human_run ? 'item-bus-icon-human-run' : 'item-bus-icon-human-walk'}}"
-                  style="transform: {{human_dir_right ? 'rotateY(0)' : 'rotateY(180deg)'}};"
-                >
+              <!-- 用户 -->
+              <view class="item-bus-object" style="right: {{dist_human}}">
+                <view class="item-bus-icon item-bus-icon-human-walk">
                 </view>
                 <view a:if="{{ time_left_human_walk >= 0 }}" class="item-bus-caption">
-                  {{human_run ? (time_left_human_walk/2.5).toFixed(1) : time_left_human_walk}} 分钟
+                  {{time_left_human_walk}} 分钟
                 </view>
               </view>
             </view>
           </view>
+          <!-- 班车路线 -->
           <view class="scroll-container" capture-catchTouchStart="onTap">
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-              <view
-                a:if="{{ filterAddress === '' || item.end_address ===  filterAddress}}"
-                class="swiper-item swiper-item-line"
-              >
+              <view class="swiper-item" style="{{`border-color: ${item.runBusInfo === null?'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red'}`}}">
+                <!-- 班车基本信息 -->
                 <view class="item-header">
+                  <!-- 班车名称 -->
                   <view class="item-bus-name">
-                    {{item.line_alias}}
+                    {{item.runBusInfo !== null ? item.runBusInfo[0].vehi_num : item.line_alias}}
                   </view>
+                  <!-- 班车去向 -->
                   <view class="item-bus-line">
                     <view class="item-destination-name">
                       {{item.start_address}}
@@ -105,31 +98,22 @@
                       {{item.end_address}}
                     </view>
                   </view>
+                  <!-- 班车时间 -->
                   <view class="item-bus-time">
                     {{item.duration}}
                   </view>
                 </view>
-                <view class="item-body-child">
-                  <view class="item-bus-left">
-                    <progress-ring
-                      index={{item.bid+'-'+index+'-'+jndex}}
-                      lauch={{item.runBusInfo !== null}}
-                      progress={{item.runBusInfo ? item.runBusInfo[0].near_distance : 0}}
-                      remark="{{item.runBusInfo[0].vehi_num}}"
-                    >
-                    </progress-ring>
-                  </view>
-                  <view class="item-bus-line-detail">
-                    <steps
-                      items="{{item.stations}}"
-                      close="{{true}}"
-                      activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}"
-                      flagIndex="{{1+item.station_map[nearest_stop_id]}}"
-                    >
-
-                    </steps>
-                  </view>
+                <!-- 详细站点 -->
+                <view class="item-bus-line-detail">
+                  <steps
+                    items="{{item.stations}}"
+                    close="{{true}}"
+                    activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}"
+                    flagIndex="{{1+item.station_map[nearest_stop_id]}}"
+                  >
+                  </steps>
                 </view>
+                <!-- 班车备注 -->
                 <view class="item-bus-remark">
                   {{item.remark}}
                 </view>

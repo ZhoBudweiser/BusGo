@@ -6,6 +6,8 @@
   width: 60rpx;
   height: 60rpx;
   position: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
   float: left;
   background-color: white;
   border: gray solid 5rpx;
