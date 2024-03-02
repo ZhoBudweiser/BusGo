@@ -1,21 +1,23 @@
-const longitude = 120.090178;
-const latitude = 30.303975;
+const data_longitude = 120.090178;
+const data_latitude = 30.303975;
 
 Component({
   data: {
     scale: 14,
     stops_labels: [],
     buses: [],
-    display_mode: true
+    display_mode: true,
+    stop_lon: data_longitude,
+    stop_lat: data_latitude,
   },
   options: {
     observers: true,
   },
   props: {
-    longitude,
-    latitude,
+    longitude: data_longitude,
+    latitude: data_latitude,
     stops: [],
-    selectedStop: "1007",
+    selectedStop: "0",
     lines: [],
     onSelectedStop: () => {},
     onSetTimeCost: () => {}
@@ -77,7 +79,9 @@ Component({
         }
       });
       this.setData({
-        stops_labels: stops_labels
+        stops_labels: stops_labels,
+        stop_lat: lat,
+        stop_lon: lon,
       });
       this.mapCtx.changeMarkers({
         update: stops_labels
@@ -105,6 +109,20 @@ Component({
         }
       });
       this.drawBusPos(buses);
+    },
+    'stop_lat, stop_lon, longitude, latitude': function () {
+      my.calculateRoute({
+        startLat: this.props.latitude,
+        startLng: this.props.longitude,
+        endLat: this.data.stop_lat,
+        endLng: this.data.stop_lon,
+        success: (res) => {
+          this.props.onSetTimeCost(res.duration);
+        },
+        fail: (error) => {
+          console.log(error);
+        },
+      });
     },
     'display_mode': function () {
       if (this.data.display_mode) {
@@ -206,13 +224,13 @@ Component({
           autoRotate: true,
           duration: 9000,
           animationEnd: () => {
-              // console.log('animation end');
+            // console.log('animation end');
           },
           success: (res) => {
-              // console.log(res);
+            // console.log(res);
           },
           fail: (error) => {
-              console.log(error);
+            console.log(error);
           },
           complete: () => {
 

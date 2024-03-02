@@ -1,8 +1,6 @@
 <view class="container">
   <map
     id="map"
-    longitude="{{longitude}}"
-    latitude="{{latitude}}"
     scale="{{scale}}"
     markers="{{markers}}"
     onMarkerTap="markertap"

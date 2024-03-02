@@ -20,7 +20,7 @@ Page({
     queryFrequency: 20000,
     longitude: 120.090178,
     latitude: 30.303975,
-    selectedStop: "1007",
+    selectedStop: "0",
     selectedStopName: "",
     stops: [],
     allstops: [],

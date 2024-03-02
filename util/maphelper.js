@@ -101,6 +101,24 @@ const locationService = (func) => {
   });
 }
 
+const autoLocate = (parm) => {
+  const { client } = parm;
+  my.getLocation({
+    type: 0, 
+    success: (res) => {
+      client.setData({
+        longitude: res.longitude,
+        latitude: res.latitude,
+      });
+    },
+    fail: (res) => {
+      console.log({
+        title: '定位失败',
+        content: JSON.stringify(res)
+      });
+    }
+  });
+}
 
 const longitude = 120.090178;
 const latitude = 30.303975;
@@ -120,6 +138,7 @@ export const locate = (client, activeIndex) => {
     }
     if (res === true) {
       locationService((lon, lat) => setting(lon, lat));
+      setInterval(autoLocate, 5000, { client });
     } else {
       setting(longitude, latitude);
     }
