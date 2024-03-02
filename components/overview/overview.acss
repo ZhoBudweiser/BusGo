@@ -53,15 +53,30 @@
   font-size: small;
 }
 
+
+.item-destination-title-name {
+  height: 32rpx;
+  font-size: 30rpx;
+  line-height: 32rpx;
+  font-weight: bolder;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  padding: 5rpx;
+  border: gray solid 3rpx;
+  border-radius: 10rpx;
+  text-align: center;
+}
+
 .item-destination-cancel {
-  width: 15rpx;
+  height: 28rpx;
+  font-size: 26rpx;
+  line-height: 28rpx;
   margin-left: 10rpx;
   margin-right: 10rpx;
   padding: 5rpx;
   border: gray dashed 3rpx;
-  border-radius: 15rpx;
+  border-radius: 10rpx;
   text-align: center;
-  font-size: small;
 }
 
 .item-destination-name.end-active {
@@ -73,7 +88,7 @@
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
-  margin-left: 10rpx;
+  margin-left: 5rpx;
   background-image: url('/images/arrow.svg');
   background-size: contain;
 }

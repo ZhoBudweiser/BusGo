@@ -20,7 +20,7 @@
               <view a:if="{{selectedEnd}}" class="item-destinations">
                 去往
                 <picker onChange="onSelectEnd" range="{{destinations}}">
-                  <view class="item-destination-name">
+                  <view class="item-destination-title-name">
                     {{selectedEnd}}
                   </view>
                 </picker>
@@ -31,7 +31,7 @@
               <view a:else class="item-destinations">
                 请点击
                 <picker onChange="onSelectEnd" range="{{destinations}}">
-                  <view class="item-destination-name">
+                  <view class="item-destination-title-name">
                     此处
                   </view>
                 </picker>
@@ -79,7 +79,7 @@
             </view>
           </view>
           <!-- 班车路线 -->
-          <view class="scroll-container" capture-catchTouchStart="onTap">
+          <view class="scroll-container">
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
               <view class="swiper-item" style="{{`border-color: ${item.runBusInfo === null?'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red'}`}}">
                 <!-- 班车基本信息 -->

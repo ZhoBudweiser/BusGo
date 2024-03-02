@@ -1,7 +1,7 @@
 <scroll-view
 class="am-hor-steps"
 scroll-x="{{true}}"
-capture-catchTouchStart="onTap"
+capture-catchTouchMove="onMove"
 scroll-into-view="{{"point"+(flagIndex - 3 >= 0 ? flagIndex - 3 : 0)}}"
 >
   <view class="am-hor-step" a:for="{{items}}" style="width: 20%">
