@@ -16,6 +16,7 @@
     lines="{{busLines}}"
     selectedStop="{{selectedStop}}"
     selectedBusLine="{{selectedBusLine}}"
+    showPath={{showPath}}
     onSelectedStop="onSelectedStop"
     onSetTimeCost="onSetTimeCost"
   >
@@ -36,6 +37,7 @@
         time_left_human_walk={{timeCost}}
         onSetBusLines="onSetBusLines"
         onSetSelectedBusLine="onSetSelectedBusLine"
+        onSetShowPath="onSetShowPath"
         onRollback="onRollback"
       >
       </overview>

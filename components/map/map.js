@@ -19,6 +19,7 @@ Component({
     stops: [],
     selectedStop: "0",
     selectedBusLine: "-1",
+    showPath: false,
     lines: [],
     onSelectedStop: () => {},
     onSetTimeCost: () => {}
@@ -102,7 +103,7 @@ Component({
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
           buses.push({
-            iconPath: item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === "2" ? '/images/map_shuttle.png':'/images/map_babybus.png') : '/images/map_bus.png',
+            iconPath: item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === "2" ? '/images/map_shuttle.png' : '/images/map_babybus.png') : '/images/map_bus.png',
             id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')),
             // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
             latitude: Number(item.runBusInfo[0].py),
@@ -139,6 +140,27 @@ Component({
           remove: this.data.stops_labels,
         });
       }
+    },
+    'showPath': function (val) {
+      if (val) {
+        this.mapCtx.showRoute({
+          startLat: this.props.latitude,
+          startLng: this.props.longitude,
+          endLat: this.data.stop_lat,
+          endLng: this.data.stop_lon,
+          zIndex: 4,
+          routeColor: '#FFB90F',
+          iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+          iconWidth: 10,
+          routeWidth: 10,
+          success: (res) => {},
+          fail: (error) => {
+            console.log(error);
+          },
+        });
+      } else {
+        this.mapCtx.clearRoute();
+      }
     }
   },
   onInit() {
@@ -146,32 +168,11 @@ Component({
   },
   methods: {
     markertap(e) {
-      if (/[\u4E00-\u9FFF]/.test(e.markerId) || ((""+e.markerId).length < 4 &&
-       e.markerId !== "233" && e.markerId !== "32")) return;
-      if (e.markerId === this.props.selectedStop) {
-        const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
-        this.mapCtx.showRoute({
-          startLat: this.props.latitude,
-          startLng: this.props.longitude,
-          endLat: stops[0].station_lat,
-          endLng: stops[0].station_long,
-          zIndex: 4,
-          routeColor: '#FFB90F',
-          iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-          iconWidth: 10,
-          routeWidth: 10,
-          success: (res) => {
-            // console.log(res, `总路程 ${res.distance} 米, 预计耗时 ${res.duration} 秒`);
-            this.props.onSetTimeCost(res.duration);
-          },
-          fail: (error) => {
-            console.log(error);
-          },
-        });
-      } else {
+      if (/[\u4E00-\u9FFF]/.test(e.markerId) || (("" + e.markerId).length < 4 &&
+          e.markerId !== "233" && e.markerId !== "32")) return;
+      if (e.markerId !== this.props.selectedStop) {
         this.mapCtx.clearRoute();
         this.props.onSelectedStop(e.markerId);
-        this.props.onSetTimeCost(-61);
       }
     },
     onSwitchMode() {
@@ -218,8 +219,8 @@ Component({
       });
     },
     drawBusPos(buses) {
-      if (this.data.buses && 
-        (this.data.buses.length !== buses.length || 
+      if (this.data.buses &&
+        (this.data.buses.length !== buses.length ||
           (buses.length && this.data.buses[0].id !== buses[0].id))) {
         this.mapCtx.changeMarkers({
           remove: this.data.buses,

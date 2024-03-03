@@ -48,9 +48,9 @@ const authGuideLocation = async () => {
   // 若用户未开启系统定位或未授权支付宝使用定位，则跳转至系统设置页
   const showAuthGuideIfNeeded = async () => {
     if (!(await isLocationEnabled())) {
-      my.showAuthGuide({
-        authType: "LBS"
-      });
+      // my.showAuthGuide({
+      //   authType: "LBS"
+      // });
       return false;
     }
     return true;
@@ -64,9 +64,10 @@ const authGuideLocation = async () => {
 
   // 若用户未授权当前小程序使用定位，则引导用户跳转至小程序设置页开启定位权限
   const requestLocationPermission = async () => {
-    await myAlert("打开定位以获取更好的查询服务");
-    const openSettingInfo = await myOpenSetting();
-    return openSettingInfo.authSetting.location;
+    await myAlert("当前定位未开启");
+    return false;
+    // const openSettingInfo = await myOpenSetting();
+    // return openSettingInfo.authSetting.location;
   };
 
   try {
@@ -116,12 +117,17 @@ const autoLocate = (parm) => {
         title: '定位失败',
         content: JSON.stringify(res)
       });
+      if (posTimer) {
+        clearInterval(posTimer);
+        posTimer = null;
+      }
     }
   });
 }
 
 const longitude = 120.090178;
 const latitude = 30.303975;
+let posTimer = null;
 
 export const locate = (client, activeIndex) => {
   authGuideLocation().then(res => {
@@ -138,7 +144,7 @@ export const locate = (client, activeIndex) => {
     }
     if (res === true) {
       locationService((lon, lat) => setting(lon, lat));
-      setInterval(autoLocate, 5000, { client });
+      posTimer = setInterval(autoLocate, 5000, { client });
     } else {
       setting(longitude, latitude);
     }

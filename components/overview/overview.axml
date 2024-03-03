@@ -65,7 +65,7 @@
               </block>
               <!-- 站点 -->
               <view class="item-bus-object" style="left: 50%">
-                <view class="item-bus-icon item-bus-icon-flag">
+                <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
                 </view>
                 <view class="item-stop-caption">
                   {{nearest_stop_name}}

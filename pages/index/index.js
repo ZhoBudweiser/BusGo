@@ -14,7 +14,7 @@ import {
 
 Page({
   data: {
-    activeIndex: 1,
+    activeIndex: 0,
     currentState: 1,
     busLines: [],
     shuttleLines: [],
@@ -25,6 +25,7 @@ Page({
     selectedStop: "0",
     selectedStopName: "",
     selectedBusLine: "-1",
+    showPath: false,
     stops: [],
     allstops: [],
     destinations: [],
@@ -38,6 +39,10 @@ Page({
   observers: {
     'activeIndex': function () {
       locate(this, this.data.activeIndex);
+      my.setStorageSync({
+        key: 'activeIndex',
+        data: this.data.activeIndex,
+      });
     },
     'stops': function (curval) {
       if (!curval || !curval.length) return;
@@ -60,7 +65,9 @@ Page({
       if (!fmtLines) return;
       let freq = fmtLines.length ? 60000 : 600000;
       fmtLines.forEach(item => item.runBusInfo !== null && (freq = 10000));
-      if (freq !== this.data.queryFrequency) this.setData({ queryFrequency: freq });
+      if (freq !== this.data.queryFrequency) this.setData({
+        queryFrequency: freq
+      });
     },
     'queryFrequency': function () {
       setTimer(this);
@@ -114,9 +121,9 @@ Page({
         });
       }
     }
-    this.data.activeIndex === 0 ? 
-    getFormatedBusLines(this, newBusLines).then(fmtLines => setting(fmtLines)) : 
-    getFormatedShuttleLines(this, newBusLines).then(fmtLines => setting(fmtLines));
+    this.data.activeIndex === 0 ?
+      getFormatedBusLines(this, newBusLines).then(fmtLines => setting(fmtLines)) :
+      getFormatedShuttleLines(this, newBusLines).then(fmtLines => setting(fmtLines));
   },
   onSetStopsByBusLines(formatBusLines) {
     const newStops = distinctStops(formatBusLines);
@@ -129,6 +136,11 @@ Page({
       selectedBusLine: bid,
     });
   },
+  onSetShowPath() {
+    this.setData({
+      showPath: !this.data.showPath,
+    });
+  },
   onRollback() {
     this.setData({
       stops: this.data.allstops,
@@ -138,6 +150,14 @@ Page({
   onLoad(query) {
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
+    let res = my.getStorageSync({
+      key: 'activeIndex'
+    });
+    if (res.success) {
+      this.setData({
+        activeIndex: res.data,
+      });
+    }
   },
   onShareAppMessage() {
     // 返回自定义分享信息
