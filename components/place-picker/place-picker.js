@@ -1,18 +1,22 @@
-import { endAddresses } from "/util/data";
+import { busEndAddresses } from "/util/data";
 import { timeFormat } from "/util/fmtUnit";
 
 Component({
   data: {
     // 地点
     stationOptions: [],
-    startIndex: null,
-    endIndex: null,
+    startOptions: [],
+    endOptions: [],
+    startName: "",
+    endName: "",
     startTime: '00:00',
     isWeekend: false
   },
   didMount() {
     this.setData({
-      stationOptions: endAddresses
+      stationOptions: busEndAddresses,
+      startOptions: busEndAddresses,
+      endOptions: busEndAddresses,
     });
     my.getServerTime({
       success: (res) => {
@@ -29,29 +33,30 @@ Component({
   },
   methods: {
     bindPickerChange(e) {
+      const start = this.data.startOptions[e.detail.value];
       this.setData({
-        startIndex: e.detail.value,
+        startName: start,
+        endOptions: this.data.stationOptions.filter(item => item !== start),
       });
     },
     bindObjPickerChange(e) {
+      const end = this.data.endOptions[e.detail.value];
       this.setData({
-        endIndex: e.detail.value,
+        endName: end,
+        startOptions: this.data.stationOptions.filter(item => item !== end),
       });
     },
     onSwitchAddress() {
       this.setData({
-        startIndex: this.data.endIndex,
-        endIndex: this.data.startIndex
+        startName: this.data.endName,
+        endName: this.data.startName,
+        startOptions: this.data.endOptions,
+        endOptions: this.data.startOptions,
       });
     },
     onTimePick() {
-      // let currentTime;
-      // AlipayJSBridge.call('getServerTime', function(data) {
-      //   currentTime = data.time;
-      // });
       my.datePicker({
         format: 'HH:mm',
-        // currentDate: '11:11',
         startDate: '00:00',
         endDate: '23:59',
         success: (res) => {
@@ -67,7 +72,7 @@ Component({
       });
     },
     onSubmit() {
-      if (this.data.startIndex === null || this.data.endIndex === null) {
+      if (this.data.startName === "" || this.data.endName === "") {
         my.showToast({
           content: '请填写地点信息',
           duration: 1000,
@@ -75,8 +80,8 @@ Component({
         return;
       }
       this.props.onSubmitQuery({
-        startAddress: this.data.stationOptions[this.data.startIndex],
-        endAddress: this.data.stationOptions[this.data.endIndex],
+        startAddress: this.data.startName,
+        endAddress: this.data.endName,
         "startTime": Number(this.data.startTime.replace(':', '')),
         "startDay": this.data.isWeekend ? "6,7" : "1,2,3,4,5"
       });

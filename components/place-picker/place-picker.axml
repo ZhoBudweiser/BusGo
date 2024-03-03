@@ -1,25 +1,19 @@
 <view class="picker-container">
-  <!--<notice
-    show="{{closeShow}}"
-    type="error"
-    mode="closable"
-    onClickLeft="linkActionClick">
-    请输入地点信息</notice> -->
   <view class="picker-destinations">
     <view class="picker-address">
-      <picker onChange="bindPickerChange" value="{{startIndex}}" range="{{stationOptions}}">
+      <picker onChange="bindPickerChange" range="{{startOptions}}">
         <view class="row row-start">
           <view class="row-title">起点</view>
           <view class="row-extra">
-            {{startIndex!==null ? stationOptions[startIndex] : "请选择起点"}}
+            {{startName!=="" ? startName : "请选择起点"}}
           </view>
         </view>
       </picker>
-      <picker onChange="bindObjPickerChange" value="{{endIndex}}" range="{{stationOptions}}">
+      <picker onChange="bindObjPickerChange" range="{{endOptions}}">
         <view class="row row-end">
           <view class="row-title">终点</view>
           <view class="row-extra">
-            {{endIndex!==null ? stationOptions[endIndex] : "请选择终点"}}
+            {{endName!=="" ? endName : "请选择终点"}}
           </view>
         </view>
       </picker>

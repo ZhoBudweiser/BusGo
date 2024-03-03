@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "place-picker": "/components/picker/picker",
+    "place-picker": "/components/place-picker/place-picker",
       "steps": "/components/steps/steps",
       "footer": "/components/footer/index"
   },
