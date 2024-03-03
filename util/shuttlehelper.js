@@ -9,7 +9,7 @@ const fmtLines = (lines) => {
       "runBusInfo": null,
       "line_alias": item.line_alias,
       "station_map": station_map,
-      "duration": "",
+      "duration": item.line_alias,
       "remark": "",
       "stations": item.station_list
     }

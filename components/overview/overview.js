@@ -5,7 +5,6 @@ import { findShttleLines } from "/util/shuttlehelper";
 
 const calTimeToPercentage = (t) => {
   const tt = Number(t);
-  console.log(tt);
   if (tt > 15) {
     return '5%';
   } else {
@@ -27,6 +26,7 @@ Component({
     coming_lines: [],
     activeTimeIndex: 0,
     showTime: true,
+    showRoute: false,
     selectedEnd: '',
     preSelectedCampus: '',
     activeCards: [],
@@ -96,7 +96,12 @@ Component({
       const i = e.currentTarget.dataset.i;
       if (this.data.activeTimeIndex === i) {
         if (this.data.showTime) {
-          this.props.onSetSelectedBusLine(this.props.busLines[i].bid);
+          if (this.data.showRoute) {
+            this.props.onSetSelectedBusLine("");
+          } else {
+            this.props.onSetSelectedBusLine(this.props.busLines[i].bid);
+          }
+          this.setData({ showRoute: !this.data.showRoute });
         }
         this.setData({
           showTime: !this.data.showTime

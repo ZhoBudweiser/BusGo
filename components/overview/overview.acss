@@ -154,11 +154,26 @@
   background-size: contain;
 }
 
-.item-bus-icon-car {
-  background-image: url('/images/shuttle.svg');
+.item-bus-icon.bus {
+  background-image: url('/images/bus.svg');
   width: 120rpx;
   height: 120rpx;
   translate: 0 40rpx;
+}
+
+.item-bus-icon.babybus {
+  background-image: url('/images/babybus.svg');
+  width: 100rpx;
+  height: 100rpx;
+  translate: 0 25rpx;
+}
+
+.item-bus-icon.shuttle {
+  background-image: url('/images/shuttle.svg');
+  width: 90rpx;
+  height: 90rpx;
+  translate: 0 20rpx;
+  scale: -1 1;
 }
 
 .item-bus-icon-flag {

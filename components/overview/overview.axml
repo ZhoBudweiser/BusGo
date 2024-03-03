@@ -11,6 +11,7 @@
       vertical="{{false}}"
       circular="{{true}}"
       onChange="onChange"
+      disable-touch
     >
       <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
@@ -53,7 +54,9 @@
                   onTap="onActiveTime"
                   data-i="{{jndex}}"
                 >
-                  <view class="item-bus-icon item-bus-icon-car">
+                  <view
+                  class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}"
+                  >
                   </view>
                   <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
                     {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' : item.runBusInfo[0].vehi_num}`}}
@@ -81,15 +84,7 @@
           <!-- 班车路线 -->
           <view class="scroll-container">
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-              <view class="swiper-item" style="{{`
-                border-color: ${
-                item.runBusInfo === null ?
-                'gray': 
-                item.runBusInfo[0].near_distance > 0 ? 
-                'orange' : 'red'
-              }; 
-                height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}
-              `}}">
+              <view class="swiper-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
                 <!-- 班车基本信息 -->
                 <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
                   <!-- 班车名称 -->
