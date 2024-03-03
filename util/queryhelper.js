@@ -2,11 +2,15 @@ import {
   replaceKeys,
   toCampus,
   getFormatedBusLines,
+  getFormatedShuttleLines,
   distinctStops,
 } from "/util/fmtUnit";
 import {
   endAddresses
 } from "/util/data";
+import {
+  findShttleLinesByStartOnly
+} from "./shuttlehelper";
 
 export const getNearestStop = (poses, lat, lon) => {
   let min_dist = 9999,
@@ -140,7 +144,7 @@ export const queryBusLinesByStop = (parm) => {
     url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + parm.bid + '&stationName=' + parm.stopId,
     method: 'POST',
     headers: {
-      'content-type': 'application/json', //默认值
+      'content-type': 'application/json',
     },
     dataType: 'json',
     success: async (res) => getFormatedBusLines(client, res.data.data),
@@ -153,17 +157,73 @@ export const queryBusLinesByStop = (parm) => {
   });
 }
 
+export const queryShttleLinesByStop = (parm) => {
+  const client = parm.obj;
+  getFormatedShuttleLines(client, findShttleLinesByStartOnly(client));
+}
+
+export const queryRunInfo = async (client, item) => {
+  return await my.request({
+    url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcVehicleRun',
+    method: 'POST',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    dataType: 'json',
+    data: {
+      lid: item.bid,
+      stationAliasNo: client.data.selectedStop,
+    },
+    success: (res) => res,
+    fail: function (error) {
+      console.error('fail: ', error);
+    },
+    complete: function (res) {},
+  });
+}
+
+export const queryRunPos = async (lid) => {
+  return await my.request({
+    url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcVehicleByLine',
+    method: 'POST',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+    dataType: 'json',
+    data: {
+      lid: lid,
+    },
+    success: (res) => res,
+    fail: function (error) {
+      console.error('fail: ', error);
+    },
+    complete: function (res) {
+      my.hideLoading();
+    },
+  });
+}
+
+
 export const setTimer = (client) => {
   if (client.timer)
     clearInterval(client.timer);
-  queryBusLinesByStop({
-    bid: '',
-    stopId: client.data.selectedStop,
-    obj: client
-  });
-  client.timer = setInterval(queryBusLinesByStop, client.data.queryFrequency, {
-    bid: '',
-    stopId: client.data.selectedStop,
-    obj: client
-  });
+  if (client.data.activeIndex === 0) {
+    queryBusLinesByStop({
+      bid: '',
+      stopId: client.data.selectedStop,
+      obj: client
+    });
+    client.timer = setInterval(queryBusLinesByStop, client.data.queryFrequency, {
+      bid: '',
+      stopId: client.data.selectedStop,
+      obj: client
+    });
+  } else if (client.data.activeIndex === 1) {
+    queryShttleLinesByStop({
+      obj: client
+    });
+    client.timer = setInterval(queryShttleLinesByStop, client.data.queryFrequency, {
+      obj: client
+    });
+  }
 }

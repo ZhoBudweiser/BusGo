@@ -1,5 +1,7 @@
 import {
-  queryBusStopsByBid
+  queryBusStopsByBid,
+  queryRunInfo,
+  queryRunPos,
 } from "/util/queryhelper"
 
 var jsUnitRpx = 'false';
@@ -162,10 +164,36 @@ export function distinctStops(lines) {
   }, []);
 }
 
-export function getFormatedShuttleLines(client, res) {
+export const combinRunInfo = (res, poses, infos) => {
+  return res.map((lineInfo, i) => {
+    const runInfos = infos[i].map(info => {
+      const pos = poses[i].filter(p => p.vehiNum === info.vehiNum)[0];
+      return {
+        ...lineInfo,
+        runBusInfo: [{
+          "vehi_num": info.vehiNum,
+          "near_distance": info.costStationCount,
+          "about_minute": info.costMinute,
+          "next_station": info.nextStation,
+          "px": pos.px,
+          "py": pos.py,
+          "vehicleType": pos.vehicleType,
+        }],
+      };      
+    });
+    return runInfos;
+  }).flat(1);
+}
+
+export async function getFormatedShuttleLines(client, res) {
+  const poses = await Promise.all(await res.map(async item => queryRunPos(item.bid)
+    .then(res => res.data.data)));
+  const infos = await Promise.all(await res.map(async item => queryRunInfo(client, item)
+    .then(res => res.data.data)));
+  const lines = combinRunInfo(res, poses, infos);
   client.setData({
-    busLines: res.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
+    busLines: lines.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
   });
   my.hideLoading();
-  return res;
+  return lines;
 }

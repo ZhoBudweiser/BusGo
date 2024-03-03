@@ -83,12 +83,12 @@
             <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
               <view class="swiper-item" style="{{`
                 border-color: ${
-                item.runBusInfo === null?
+                item.runBusInfo === null ?
                 'gray': 
                 item.runBusInfo[0].near_distance > 0 ? 
                 'orange' : 'red'
               }; 
-                height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : '50rpx'}
+                height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}
               `}}">
                 <!-- 班车基本信息 -->
                 <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
@@ -122,7 +122,7 @@
                   </steps>
                 </view>
                 <!-- 班车备注 -->
-                <view class="item-bus-remark">
+                <view class="{{item.remark ? 'item-bus-remark' : ''}}">
                   {{item.remark}}
                 </view>
               </view>

@@ -33,6 +33,7 @@
 
 .swiper-item.first {
   margin-bottom: 30rpx;
+  position: relative;
 }
 
 .item-header {
@@ -200,11 +201,14 @@
 
 .item-bus-remark {
   display: block;
+  position: absolute;
+  background-color: #fff;
+  z-index: 20;
+  bottom: 5rpx;
   width: 100%;
   height: 30rpx;
   font-size: 24rpx;
   margin: 0 5rpx;
-  margin-top: -60rpx;
   white-space: nowrap;
   overflow: auto;
 }

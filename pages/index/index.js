@@ -101,6 +101,7 @@ Page({
   },
   onSetBusLines(newBusLines) {
     const setting = (fmtLines) => {
+      console.log(fmtLines);
       this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
       this.setData({
         queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
@@ -115,7 +116,7 @@ Page({
     }
     this.data.activeIndex === 0 ? 
     getFormatedBusLines(this, newBusLines).then(fmtLines => setting(fmtLines)) : 
-    setting(getFormatedShuttleLines(newBusLines));
+    getFormatedShuttleLines(this, newBusLines).then(fmtLines => setting(fmtLines));
   },
   onSetStopsByBusLines(formatBusLines) {
     const newStops = distinctStops(formatBusLines);

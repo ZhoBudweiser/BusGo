@@ -20,21 +20,21 @@ export function findShttleLines(client) {
   const startName = client.props.nearest_stop_name;
   const endName = client.data.selectedEnd;
   const lines = client.props.shuttleLines.filter(
-    item =>
-    item.station_list.findIndex(stop => stop.station_alias === startName) <
-    item.station_list.findIndex(stop => stop.station_alias === endName)
+    item => {
+      const startIndex = item.station_list.findIndex(stop => stop.station_alias === startName);
+      const endIndex = item.station_list.findIndex(stop => stop.station_alias === endName);
+      return startIndex !== -1 && endIndex !== -1 && startIndex < endIndex;
+    }
   );
+  console.log(lines);
   client.props.onSetBusLines(fmtLines(lines));
-  // const newStops = distinctStops(lines.map(item => item.station_list));
-  // client.setData({
-  //   queriedLines: lines.length ? lines.map(item => item.lid) : ["0"],
-  //   stops: newStops,
-  // });
-  // my.hideLoading();
-  // if (!lines.length) {
-  //   my.showToast({
-  //     content: '暂无班车信息',
-  //     duration: 2000,
-  //   });
-  // }
+}
+
+export function findShttleLinesByStartOnly(client) {
+  const startId = client.data.selectedStop;
+  const lines = client.data.shuttleLines.filter(
+    item =>
+    item.station_list.findIndex(stop => stop.station_alias_no === startId) !== -1
+  );
+  return fmtLines(lines);
 }

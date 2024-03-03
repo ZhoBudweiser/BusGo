@@ -102,7 +102,7 @@ Component({
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
           buses.push({
-            iconPath: '/images/map_bus.png',
+            iconPath: item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === "2" ? '/images/map_shuttle.png':'/images/map_babybus.png') : '/images/map_bus.png',
             id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')),
             // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
             latitude: Number(item.runBusInfo[0].py),
@@ -146,7 +146,7 @@ Component({
   },
   methods: {
     markertap(e) {
-      if (/[\u4E00-\u9FFF]/.test(e.markerId)) return;
+      if (/[\u4E00-\u9FFF]/.test(e.markerId) || (""+e.markerId).length < 4) return;
       if (e.markerId === this.props.selectedStop) {
         const stops = this.props.stops.filter(item => item.station_alias_no === e.markerId);
         this.mapCtx.showRoute({
@@ -195,7 +195,6 @@ Component({
           lat: item.station_lat
         };
       });
-      console.log("Route");
       this.mapCtx.showRoute({
         startLat: stops[0].station_lat,
         startLng: stops[0].station_long,
@@ -220,7 +219,7 @@ Component({
         });
       }
       buses.forEach(item => {
-        // console.log(item.id);
+        // console.log(item);
         this.mapCtx.translateMarker({
           markerId: item.id,
           destination: {
@@ -239,7 +238,7 @@ Component({
             console.log(error);
           },
           complete: () => {
-
+            // console.log('complete end');
           }
         });
       });
