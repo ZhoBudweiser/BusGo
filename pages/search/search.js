@@ -2,6 +2,7 @@ Page({
   data: {
     query_info: null,
     lines: [],
+    initStart: "",
   },
   async onSubmitQueryCloud(info) {
     var self = this;
@@ -56,7 +57,9 @@ Page({
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
     if (query.start) {
-      
+      this.setData({
+        initStart: query.start,
+      });
     }
   },
 });

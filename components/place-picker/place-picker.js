@@ -13,7 +13,10 @@ Component({
     isWeekend: false
   },
   didMount() {
+    const options = busEndAddresses.filter(address => this.props.initStart.indexOf(address) !== -1);
+    const name = options.length ? options[0] : "";
     this.setData({
+      startName: name,
       stationOptions: busEndAddresses,
       startOptions: busEndAddresses,
       endOptions: busEndAddresses,
@@ -27,6 +30,7 @@ Component({
     });
   },
   props: {
+    initStart: "",
     onSubmitQuery: () => {
       console.log('defalut')
     }

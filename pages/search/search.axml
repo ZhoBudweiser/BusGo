@@ -1,5 +1,5 @@
 <view class="search-container">
-  <place-picker class="picker" onSubmitQuery="onSubmitQuery">
+  <place-picker class="picker" initStart="{{initStart}}" onSubmitQuery="onSubmitQuery">
   </place-picker>
   <block a:for="{{ lines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
     <view class="swiper-item swiper-item-line">
