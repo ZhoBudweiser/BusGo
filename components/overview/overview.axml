@@ -107,7 +107,7 @@
                   </view>
                 </view>
                 <!-- 详细站点 -->
-                <view class="item-bus-line-detail">
+                <view class="item-bus-line-detail" a:if="{{ activeCards[jndex] }}">
                   <steps
                     items="{{item.stations}}"
                     close="{{true}}"

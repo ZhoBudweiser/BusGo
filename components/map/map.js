@@ -17,6 +17,7 @@ Component({
     longitude: data_longitude,
     latitude: data_latitude,
     stops: [],
+    selectedStopName: "",
     selectedStop: "0",
     selectedBusLine: "-1",
     showPath: false,
@@ -26,6 +27,10 @@ Component({
   },
   observers: {
     'stops': function () {
+      this.mapCtx.clearRoute();
+      this.data.buses && this.mapCtx.changeMarkers({
+        remove: this.data.buses,
+      });
       this.mapCtx.showsCompass({
         isShowsCompass: true
       });
@@ -187,7 +192,7 @@ Component({
     },
     onJumpSearch() {
       my.navigateTo({
-        url: '/pages/search/search',
+        url: '/pages/search/search?start=' + this.props.selectedStopName,
       });
     },
     drawRoute(stops) {

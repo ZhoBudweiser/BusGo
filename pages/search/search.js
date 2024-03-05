@@ -3,7 +3,6 @@ Page({
     query_info: null,
     lines: [],
   },
-  onLoad() {},
   async onSubmitQueryCloud(info) {
     var self = this;
     var context = await my.getCloudContext();
@@ -52,5 +51,12 @@ Page({
     });
     this.onSubmitQueryCloud(info);
     console.log("receive: ", info);
-  }
+  },
+  onLoad(query) {
+    // 页面加载
+    console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
+    if (query.start) {
+      
+    }
+  },
 });
