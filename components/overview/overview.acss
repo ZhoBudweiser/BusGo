@@ -212,6 +212,7 @@
   /* TODO: adapt to size */
   height: 920rpx;
   overflow: auto;
+  
 }
 
 .item-bus-remark {
