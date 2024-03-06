@@ -37,11 +37,29 @@ Page({
     observers: true,
   },
   observers: {
-    'activeIndex': function () {
-      locate(this, this.data.activeIndex);
+    'activeIndex': function (index) {
+      my.showLoading({
+        content: '加载中...'
+      });
+      if (this.timer)
+        clearInterval(this.timer);
+      this.setData({
+        busLines: [],
+        queriedLines: [],
+        queryFrequency: 20000,
+        selectedStop: "0",
+        selectedStopName: "",
+        selectedBusLine: "-1",
+        showPath: false,
+        stops: [],
+        allstops: [],
+        destinations: [],
+        timeCost: -1,
+      });
+      locate(this, index);
       my.setStorageSync({
         key: 'activeIndex',
-        data: this.data.activeIndex,
+        data: index,
       });
     },
     'stops': function (curval) {
@@ -52,6 +70,7 @@ Page({
       });
     },
     'selectedStop': function () {
+      if (!this.data.allstops.length) return;
       const newStopName = this.data.allstops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias;
       this.setData({
         selectedStopName: newStopName
@@ -113,7 +132,6 @@ Page({
       this.setData({
         queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
       });
-      my.hideLoading();
       if (!newBusLines.length) {
         my.showToast({
           content: '暂无班车信息',
@@ -150,12 +168,20 @@ Page({
   onLoad(query) {
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
-    let res = my.getStorageSync({
+    const index_res = my.getStorageSync({
       key: 'activeIndex'
     });
-    if (res.success) {
+    if (index_res.success) {
       this.setData({
-        activeIndex: res.data,
+        activeIndex: index_res.data,
+      });
+    }
+    const stations_res = my.getStorageSync({
+      key: 'stationsBuffers'
+    });
+    if (stations_res.success) {
+      this.setData({
+        stationsBuffers: stations_res.data,
       });
     }
   },
@@ -166,5 +192,11 @@ Page({
       desc: '智慧校园出行助手',
       path: 'pages/index/index',
     };
+  },
+  onUnload() {
+    my.setStorageSync({
+      key: 'stationsBuffers',
+      data: this.data.stationsBuffers,
+    });
   },
 });

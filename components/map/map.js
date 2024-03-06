@@ -64,7 +64,8 @@ Component({
         add: stops,
       });
       this.setData({
-        stops_labels: stops
+        stops_labels: stops,
+        display_mode: true,
       });
     },
     'selectedStop': function () {
@@ -135,14 +136,14 @@ Component({
         },
       });
     },
-    'display_mode': function () {
-      if (this.data.display_mode) {
+    'display_mode': function (mode) {
+      if (mode) {
         this.mapCtx.changeMarkers({
-          add: this.data.stops_labels,
+          add: this.data.stops_labels.filter(item => item.station_alias_no != this.props.selectedStop),
         });
       } else {
         this.mapCtx.changeMarkers({
-          remove: this.data.stops_labels,
+          remove: this.data.stops_labels.filter(item => item.station_alias_no != this.props.selectedStop),
         });
       }
     },

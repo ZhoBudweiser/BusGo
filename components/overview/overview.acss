@@ -232,5 +232,6 @@
 .item-bus-name {
   max-width: 200rpx;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
