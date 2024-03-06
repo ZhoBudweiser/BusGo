@@ -13,10 +13,10 @@
   <view class="float-icon see-mode" onTap="onSwitchMode" style="{{ `background-image: url(${display_mode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}">
 
   </view>
-  <view class="float-icon news-notice" onTap="onJumpNotice">
+  <!-- <view class="float-icon news-notice" onTap="onJumpNotice">
 
   </view>
   <view class="float-icon loc-search" onTap="onJumpSearch">
 
-  </view>
+  </view> -->
 </view>

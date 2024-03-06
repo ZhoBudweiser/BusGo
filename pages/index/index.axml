@@ -1,5 +1,5 @@
 <view class="container">
-  <notice
+  <!-- <notice
     class="notice"
     show="{{noticeShow}}"
     type="active"
@@ -7,7 +7,7 @@
     onClick="noticeClick"
   >
     班车调整|关于调整元旦期间班车运行的通知
-  </notice>
+  </notice> -->
   <schoolmap
     class="schoolmap"
     longitude="{{longitude}}"
