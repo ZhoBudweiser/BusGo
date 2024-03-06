@@ -19,7 +19,7 @@ Component({
       startName: name,
       stationOptions: busEndAddresses,
       startOptions: busEndAddresses,
-      endOptions: busEndAddresses,
+      endOptions: busEndAddresses.filter(item => item !== name),
     });
     my.getServerTime({
       success: (res) => {
