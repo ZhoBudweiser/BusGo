@@ -44,7 +44,7 @@ export const getBusStops = (client, lat, lon) => {
       console.error('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
-      my.hideLoading();
+      // my.hideLoading();
     },
   });
 };
@@ -67,7 +67,7 @@ export const getShuttleStops = (client, lat, lon) => {
       console.error('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
-      my.hideLoading();
+      // my.hideLoading();
     },
   });
 };
@@ -139,6 +139,7 @@ export const queryBusStopsByBid = async (bid) => {
 
 export const queryBusLinesByStop = (parm) => {
   const client = parm.obj;
+  if (parm.stopId == 0) return;
   my.request({
     url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + parm.bid + '&stationName=' + parm.stopId,
     method: 'POST',
@@ -151,7 +152,7 @@ export const queryBusLinesByStop = (parm) => {
       console.error('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
-      my.hideLoading();
+      // my.hideLoading();
     },
   });
 }
@@ -197,7 +198,7 @@ export const queryRunPos = async (lid) => {
       console.error('fail: ', error);
     },
     complete: function (res) {
-      my.hideLoading();
+      // my.hideLoading();
     },
   });
 }

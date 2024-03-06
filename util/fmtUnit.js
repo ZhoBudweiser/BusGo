@@ -165,19 +165,36 @@ export function distinctStops(lines) {
 }
 
 export const combinRunInfo = (res, poses, infos) => {
+  let label = 88;
   return res.map((lineInfo, i) => {
-    const runInfos = infos[i].map(info => {
-      const pos = poses[i].filter(p => p.vehiNum === info.vehiNum)[0];
+    // const runInfos = infos[i].map(info => {
+    //   const pos = poses[i].filter(p => p.vehiNum === info.vehiNum)[0];
+    //   return {
+    //     ...lineInfo,
+    //     runBusInfo: [{
+    //       "vehi_num": info.vehiNum,
+    //       "near_distance": info.costStationCount,
+    //       "about_minute": info.costMinute,
+    //       "next_station": info.nextStation,
+    //       "px": pos.px,
+    //       "py": pos.py,
+    //       "vehicleType": pos.vehicleType,
+    //     }],
+    //   };      
+    // });
+    const runInfos = poses[i].map(pos => {
+      const run = infos[i].filter(i => pos.vehiNum === i.vehiNum);
+      const info = run.length ? run[0] : null;
       return {
         ...lineInfo,
         runBusInfo: [{
-          "vehi_num": info.vehiNum,
-          "near_distance": info.costStationCount,
-          "about_minute": info.costMinute,
-          "next_station": info.nextStation,
+          "vehi_num": info ? info.vehiNum : "未识别班车" + label++,
+          "near_distance": info ? info.costStationCount : 1,
+          "about_minute": info ? info.costMinute : 0,
+          "next_station": info ? info.nextStation : 0,
           "px": pos.px,
           "py": pos.py,
-          "vehicleType": pos.vehicleType,
+          "vehicleType": pos.vehicleType + (info ? "" : "1"),
         }],
       };      
     });

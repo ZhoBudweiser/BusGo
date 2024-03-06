@@ -23,7 +23,6 @@ Component({
     vehicles: [0, 0],
     dist_car: '10%',
     dist_human: '5%',
-    coming_lines: [],
     activeTimeIndex: 0,
     showTime: true,
     showRoute: false,
@@ -50,7 +49,7 @@ Component({
       console.log(lines);
       if (lines.length !== this.data.activeCards.length) {
         this.setData({
-          activeCards: lines.map((item, i) => i === 0 || item.runBusInfo !== null),
+          activeCards: lines.map((item, i) => i === 0 || (item.runBusInfo !== null && item.runBusInfo[0].vehi_num.indexOf("未识别") === -1)),
         });
       }
     },

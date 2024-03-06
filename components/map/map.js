@@ -28,9 +28,6 @@ Component({
   observers: {
     'stops': function () {
       this.mapCtx.clearRoute();
-      this.data.buses && this.mapCtx.changeMarkers({
-        remove: this.data.buses,
-      });
       this.mapCtx.showsCompass({
         isShowsCompass: true
       });
@@ -69,6 +66,7 @@ Component({
       });
     },
     'selectedStop': function () {
+      this.mapCtx.clearRoute();
       let lat, lon;
       const stops_labels = this.data.stops_labels.map(item => {
         if (item.id === this.props.selectedStop) {
@@ -105,11 +103,25 @@ Component({
         this.drawRoute(line[0].stations)
     },
     'lines': function () {
+      const iconPathSelection = (type) => {
+        switch(type) {
+          case "2":
+            return "/images/map_shuttle.png";
+          case "3":
+            return "/images/map_babybus.png";
+          case "21":
+            return "/images/map_shuttle_no.png";
+          case "31":
+            return "/images/map_babybus_no.png";
+          default:
+            return "/images/map_bus.png";
+        }
+      }
       const buses = [];
       this.props.lines.forEach(item => {
         if (item.runBusInfo) {
           buses.push({
-            iconPath: item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === "2" ? '/images/map_shuttle.png' : '/images/map_babybus.png') : '/images/map_bus.png',
+            iconPath: item.runBusInfo[0].vehicleType ? iconPathSelection(item.runBusInfo[0].vehicleType) : '/images/map_bus.png',
             id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')),
             // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
             latitude: Number(item.runBusInfo[0].py),
@@ -225,9 +237,8 @@ Component({
       });
     },
     drawBusPos(buses) {
-      if (this.data.buses &&
-        (this.data.buses.length !== buses.length ||
-          (buses.length && this.data.buses[0].id !== buses[0].id))) {
+      if ((this.data.buses.length !== buses.length) ||
+        (buses.length && this.data.buses.length && this.data.buses[0].id !== buses[0].id)) {
         this.mapCtx.changeMarkers({
           remove: this.data.buses,
         });
