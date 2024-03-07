@@ -15,8 +15,8 @@
   </view>
   <!-- <view class="float-icon news-notice" onTap="onJumpNotice">
 
-  </view>
+  </view> -->
   <view class="float-icon loc-search" onTap="onJumpSearch">
 
-  </view> -->
+  </view>
 </view>

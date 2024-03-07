@@ -1,8 +1,12 @@
+import {
+  fmtQueryResult
+} from "/util/fmtUnit";
+
 Page({
   data: {
-    query_info: null,
     lines: [],
     initStart: "",
+    activeCards: [],
   },
   async onSubmitQueryCloud(info) {
     var self = this;
@@ -11,47 +15,37 @@ Page({
       name: "queryBusLinesByAddresses",
       data: info,
       success: function (res) {
-        console.log(res);
+        const queryResult = res.result.data;
         self.setData({
-          lines: res.result.data.map(item => {
-            const stations = item["stations"];
-            const startTime = "" + item.startTime,
-              endTime = "" + item.endTime;
-            return {
-              ...item,
-              startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
-              endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
-              startStationName: item.startStation.replace(/校区(.*)/g, ''),
-              endStationName: item.endStation.replace(/校区(.*)/g, ''),
-              isWeekend: item.cycle.indexOf('7') === -1,
-              stations: stations.map(jtem => {
-                const res = jtem.name.match(/校区(.+)/);
-                const str = String(jtem.time);
-                const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
-                return {
-                  ...jtem,
-                  "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
-                  "time": t,
-                  "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
-                }
-              })
-            };
+          lines: queryResult
+            .map(item => fmtQueryResult(info, item))
+            .sort((l1, l2) => l1.sortNum < l2.sortNum ?
+              -1 : (l1.sortNum == l2.sortNum ? 0 : 1)),
+          activeCards: Array.from({
+            length: queryResult.length
           }),
         });
-        my.hideLoading();
       },
-      fail: function (err) {}
+      fail: function (err) {},
+      complete: function () {
+        my.hideLoading();
+      }
     });
   },
   onSubmitQuery(info) {
-    this.setData({
-      query_info: info,
-    });
     my.showLoading({
       content: '查询中...'
     });
     this.onSubmitQueryCloud(info);
     console.log("receive: ", info);
+  },
+  onToggleCard(e) {
+    const i = e.currentTarget.dataset.i;
+    const cards = this.data.activeCards.concat();
+    cards[i] = !cards[i];
+    this.setData({
+      activeCards: cards,
+    });
   },
   onLoad(query) {
     // 页面加载

@@ -214,3 +214,29 @@ export async function getFormatedShuttleLines(client, res) {
   // my.hideLoading();
   return lines;
 }
+
+export function fmtQueryResult(info, item) {
+  const stations = item["stations"];
+  const startTime = "" + item.startTime,
+    endTime = "" + item.endTime;
+  return {
+    ...item,
+    sortNum: Number(item.startTime),
+    startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
+    endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
+    startStationName: item.startStation.replace(/校区(.*)/g, ''),
+    endStationName: item.endStation.replace(/校区(.*)/g, ''),
+    isWeekend: item.cycle.indexOf('7') === -1,
+    stations: stations.map(jtem => {
+      const res = jtem.name.match(/校区(.+)/);
+      const str = String(jtem.time);
+      const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
+      return {
+        ...jtem,
+        "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
+        "time": t,
+        "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
+      }
+    })
+  };
+}

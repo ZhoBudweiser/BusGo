@@ -32,12 +32,15 @@
 
 .swiper-item {
   display: flex;
+  position: relative;
   flex-direction: column;
   margin: 5rpx 20rpx;
   padding: 5rpx;
   border: gray solid 5rpx;
   border-radius: 15rpx;
-  height: 230rpx;
+  height: 240rpx;
+  overflow: hidden;
+  transition: all 0.5s;
 }
 
 .item-header {
@@ -111,11 +114,14 @@
 
 .item-bus-remark {
   display: block;
+  position: absolute;
+  background-color: #fff;
+  z-index: 20;
+  bottom: 5rpx;
   width: 100%;
   height: 30rpx;
   font-size: 24rpx;
   margin: 0 5rpx;
-  margin-top: -40rpx;
   white-space: nowrap;
   overflow: auto;
 }
@@ -123,5 +129,6 @@
 .item-bus-name {
   max-width: 200rpx;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
