@@ -41,8 +41,7 @@ Page({
       my.showLoading({
         content: '加载中...'
       });
-      if (this.timer)
-        clearInterval(this.timer);
+      this.onClearTimer();
       this.setData({
         busLines: [],
         queriedLines: [],
@@ -106,11 +105,6 @@ Page({
     this.setData({
       selectedStop: id
     });
-    queryBusLinesByStop({
-      bid: '',
-      stopId: id,
-      obj: this
-    });
   },
   onStateChange(s) {
     this.setData({
@@ -126,6 +120,7 @@ Page({
     locate(this, this.data.activeIndex);
   },
   onSetBusLines(newBusLines) {
+    this.onClearTimer();
     const setting = (fmtLines) => {
       console.log(fmtLines);
       this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
@@ -148,6 +143,10 @@ Page({
     this.setData({
       stops: newStops,
     });
+  },
+  onClearTimer() {
+    if (this.timer)
+      clearInterval(this.timer);
   },
   onSetSelectedBusLine(bid) {
     this.setData({

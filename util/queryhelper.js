@@ -95,9 +95,6 @@ const getAllAvailableDestinationsByStart = (client) => {
 }
 
 export const getAvailableBusLineByStart = (client) => {
-  my.showLoading({
-    content: '查询中...'
-  });
   const currentLocation = toCampus(client.props.nearest_stop_name);
   const endLocation = toCampus(client.data.selectedEnd);
   my.request({

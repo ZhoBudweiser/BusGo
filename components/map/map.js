@@ -245,6 +245,10 @@ Component({
         this.mapCtx.changeMarkers({
           add: buses,
         });
+        this.setData({
+          buses: buses
+        });
+        return;
       }
       buses.forEach(item => {
         this.mapCtx.translateMarker({

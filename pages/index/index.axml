@@ -28,7 +28,6 @@
       <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
       <overview
         activeTab={{activeIndex}}
-        onActive="onActive"
         state={{currentState}}
         busLines={{busLines}}
         shuttleLines={{shuttleLines}}
@@ -36,6 +35,8 @@
         nearest_stop_id={{selectedStop}}
         nearest_stop_name={{selectedStopName}}
         time_left_human_walk={{timeCost}}
+        onClearTimer="onClearTimer"
+        onActive="onActive"
         onSetBusLines="onSetBusLines"
         onSetSelectedBusLine="onSetSelectedBusLine"
         onSetShowPath="onSetShowPath"

@@ -146,7 +146,7 @@ export async function getFormatedBusLines(client, res) {
   client.setData({
     busLines: results.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
   });
-  my.hideLoading();
+  // my.hideLoading();
   return results;
 }
 
@@ -211,6 +211,6 @@ export async function getFormatedShuttleLines(client, res) {
   client.setData({
     busLines: lines.filter(res => client.data.queriedLines.length === 0 || client.data.queriedLines.indexOf(res.bid) !== -1)
   });
-  my.hideLoading();
+  // my.hideLoading();
   return lines;
 }

@@ -28,7 +28,7 @@ Component({
     showRoute: false,
     selectedEnd: '',
     preSelectedCampus: '',
-    activeCards: [],
+    activeCards: Array.from({ length: 100 }),
     destinations: [],
   },
   props: {
@@ -38,6 +38,7 @@ Component({
     time_left_human_walk: -1,
     busLines: [],
     shuttleLines: [],
+    onClearTimer: () => {},
     onActive: () => {},
     onSetBusLines: () => {},
     onSetSelectedBusLine: () => {},
@@ -52,6 +53,7 @@ Component({
           activeCards: lines.map((item, i) => i === 0 || (item.runBusInfo !== null && item.runBusInfo[0].vehi_num.indexOf("未识别") === -1)),
         });
       }
+      my.hideLoading();
     },
     'time_left_human_walk': function () {
       if (this.props.time_left_human_walk < 0) return;
@@ -72,6 +74,10 @@ Component({
     },
     'selectedEnd': function (end) {
       if (!end) return;
+      this.props.onClearTimer();
+      my.showLoading({
+        content: '查询中...'
+      });
       this.props.activeTab === 0 ? getAvailableBusLineByStart(this) : findShttleLines(this);
       this.props.onSetSelectedBusLine("");
     }
@@ -118,6 +124,9 @@ Component({
       });
     },
     onRollback() {
+      my.showLoading({
+        content: '查询中...'
+      });
       this.props.onRollback();
       this.setData({
         selectedEnd: ""
