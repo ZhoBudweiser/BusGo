@@ -7,6 +7,7 @@ Page({
     lines: [],
     initStart: "",
     activeCards: [],
+    queried: false,
   },
   async onSubmitQueryCloud(info) {
     var self = this;
@@ -33,6 +34,9 @@ Page({
     });
   },
   onSubmitQuery(info) {
+    this.setData({
+      queried: true,
+    });
     my.showLoading({
       content: '查询中...'
     });

@@ -32,5 +32,8 @@
       </view>
     </view>
   </block>
-  <footer content="{{query_info === null ? '--- 请输入查询信息 ---' : '--- 已经到底了 ---'}}"></footer>
+  <view a:if="{{ !queried }}" class="bg-logo">
+    <!-- <image mode="scaleToFill" src="/images/logo.png" class="bg-logo" /> -->
+  </view>
+  <footer a:if="{{ queried }}"></footer>
 </view>

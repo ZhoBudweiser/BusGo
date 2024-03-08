@@ -27,14 +27,18 @@
     </view>
   </view>
   <view class="picker-filter">
-    <view class="picker-filter-title">
-      出发时间
-    </view>
-    <view class="picker-time" onTap="onTimePick">
+    <view class="picker-option time" onTap="onTimePick">
       {{startTime}}
     </view>
-    <view class="picker-day" onTap="onDayPick">
+    <view class="picker-option day" onTap="onDayPick">
       {{isWeekend ? "周末" : "工作日"}}
+    </view>
+    <view class="picker-filter-title">
+      出发
+    </view>
+    <view class="picker-option div"></view>
+    <view class="picker-option trans" onTap="onTransPick">
+      {{canTrans ? "允许转乘" : "不允许转乘"}}
     </view>
   </view>
 </view>

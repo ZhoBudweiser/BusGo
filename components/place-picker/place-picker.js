@@ -10,7 +10,8 @@ Component({
     startName: "",
     endName: "",
     startTime: '00:00',
-    isWeekend: false
+    isWeekend: false,
+    canTrans: true,
   },
   didMount() {
     const options = busEndAddresses.filter(address => this.props.initStart.indexOf(address) !== -1);
@@ -73,6 +74,11 @@ Component({
     onDayPick() {
       this.setData({
         isWeekend: !this.data.isWeekend
+      });
+    },
+    onTransPick() {
+      this.setData({
+        canTrans: !this.data.canTrans
       });
     },
     onSubmit() {

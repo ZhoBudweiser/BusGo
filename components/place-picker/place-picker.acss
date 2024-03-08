@@ -107,20 +107,46 @@
 
 .picker-filter {
   display: flex;
-  height: 50rpx;
+  height: 60rpx;
   margin: 0 30rpx;
   border-top: rgb(202, 199, 199) 5rpx solid;
   align-items: center;
   justify-content: center;
-  line-height: 50rpx;
-  font-size: 32rpx;
+  line-height: 60rpx;
   color: #888;
 }
 
-.picker-time {
-  margin-left: 80rpx;
+.picker-filter-title {
+  height: 28rpx;
+  font-size: 26rpx;
+  line-height: 28rpx;
+  margin: 0 20rpx;
 }
 
-.picker-day {
-  margin-left: 50rpx;
+.picker-option {
+  padding: 2rpx;
+  border: gray solid 3rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  height: 28rpx;
+  font-size: 26rpx;
+  line-height: 28rpx;
+}
+
+.picker-option.time {
+  margin-left: 40rpx;
+}
+
+.picker-option.day {
+  margin-left: 30rpx;
+}
+
+.picker-option.trans {
+  margin-left: 30rpx;
+}
+
+.picker-option.div {
+  height: 80%;
+  border: 0;
+  border-left: gray solid 3rpx;
 }

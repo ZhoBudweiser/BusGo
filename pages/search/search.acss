@@ -48,6 +48,14 @@
   justify-content: space-around;
 }
 
+.bg-logo {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
 /* -----overview-------- */
 
 .item-destinations {
