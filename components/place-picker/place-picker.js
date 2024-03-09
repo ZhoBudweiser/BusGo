@@ -40,13 +40,13 @@ Component({
       startOptions: busEndAddresses,
       endOptions: busEndAddresses.filter(item => item !== name),
     });
-    // my.getServerTime({
-    //   success: (res) => {
-    //     this.setData({
-    //       startTime: timeFormat(res.time, 'hh:mm')
-    //     });
-    //   },
-    // });
+    my.getServerTime({
+      success: (res) => {
+        this.setData({
+          startTime: timeFormat(res.time, 'hh:mm')
+        });
+      },
+    });
   },
   props: {
     initStart: "",

@@ -226,7 +226,7 @@ export function fmtQueryResult(info, item) {
     endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
     startStationName: item.startStation.replace(/校区(.*)/g, ''),
     endStationName: item.endStation.replace(/校区(.*)/g, ''),
-    isWeekend: item.cycle.indexOf('7') === -1,
+    isWeekend:  item.cycle === 7 || item.cycle.indexOf('6') !== -1,
     stations: stations.map(jtem => {
       const res = jtem.name.match(/校区(.+)/);
       const str = String(jtem.time);

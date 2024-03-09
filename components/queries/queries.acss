@@ -120,7 +120,8 @@
 }
 
 .item-bus-name {
-  width: 200rpx;
+  width: 180rpx;
+  margin: 0 20rpx;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;

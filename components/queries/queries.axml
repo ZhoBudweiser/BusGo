@@ -1,6 +1,7 @@
 <block a:for="{{ lines }}" a:for-index="index" key="bus-line-{{index}}">
   <view a:if="{{ !item.length }}" class="swiper-item" style="{{`height: ${cardHeights[index][activeCards[index]]}`}}">
     <view class="item-header item-header-remark" data-i="{{index}}" onTap="onToggleCard">
+      <view class="item-bus-label" style="visibility: hidden"> </view>
       <view class="item-bus-name">
         {{item.busName}}
       </view>

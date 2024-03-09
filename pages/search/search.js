@@ -2,12 +2,13 @@ import {
   fmtQueryResult,
   fmtQueryArrayResult
 } from "/util/fmtUnit";
+import { isObjectValueEqual } from "/util/queryhelper";
 
 Page({
   data: {
     lines: [],
     initStart: "",
-    queried: false,
+    queried: null,
     throttle: false,
     throttleTimer: null,
     historyAddress: {},
@@ -29,14 +30,21 @@ Page({
         duration: 2000,
       });
       this.setData({
-        throttleTimer: setTimeout(clearTimer, 10000)
+        throttleTimer: setTimeout(clearTimer, 6000)
       });
       return;
     } else {
       this.setData({
         throttle: true,
-        throttleTimer: setTimeout(clearTimer, 10000)
+        throttleTimer: setTimeout(clearTimer, 6000)
       });
+    }
+    if (isObjectValueEqual(info, this.data.queried)) {
+      my.showToast({
+        content: '结果已给出，\n请更新查询',
+        duration: 2000,
+      });
+      return;
     }
     const self = this;
     const context = await my.getCloudContext();
@@ -55,6 +63,9 @@ Page({
             }),
         });
         my.hideLoading();
+        self.setData({
+          queried: info,
+        });
         if (queryResult.length === 0) {
           my.showToast({
             content: '未查询到班车信息',
@@ -69,9 +80,6 @@ Page({
     });
   },
   onSubmitQuery(info) {
-    this.setData({
-      queried: true,
-    });
     my.showLoading({
       content: '查询中...'
     });

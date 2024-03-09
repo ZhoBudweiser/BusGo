@@ -19,9 +19,10 @@ exports.main = async (event, context) => {
   // 查询 collection 中的 doc 列表，默认返回 100 条
   const docList = await db.collection(collectionName).where({
     cycle: startDay === "1,2,3,4,5" ?
-      db.command.or(db.command.eq("1,2,3,4,5"), db.command.eq("1,2,3,4,5,6,7")) : db.command.or(db.command.or(db.command.eq("6,7"), db.command.eq("1,2,3,4,5,6,7")), db.command.eq("7")),
+      db.command.or(db.command.eq("1,2,3,4,5"), db.command.eq("1,2,3,4,5,6,7")) : 
+      db.command.or(db.command.eq("6,7"),db.command.eq("1,2,3,4,5,6,7"), db.command.eq(7)),
     endTime: db.command.gt(startTime)
-  }).get();
+  }).limit(200).get();
   // console.log('当前 collection 中的 候选列表:', docList);
 
   const startList = [],
@@ -66,8 +67,15 @@ exports.main = async (event, context) => {
           sn = endList[j].stations.length;
         let match = false;
         let lastStartStationTime = startList[i].startTime;
+        let find = false;
         for (let x = 0; x < sm && !match; ++x) {
           const startStation = startList[i].stations[x];
+          if (startStation.name.indexOf(startAddress) !== -1) {
+            find = true;
+          }
+          if (!find) {
+            continue;
+          }
           let lastEndStationTime = endList[j].startTime;
           lastStartStationTime = startStation.time ? startStation.time : lastStartStationTime;
           for (let y = 0; y < sn && !match; ++y) {
