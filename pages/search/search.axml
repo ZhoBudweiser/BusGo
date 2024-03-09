@@ -1,39 +1,11 @@
 <view class="search-container">
-  <place-picker class="picker" initStart="{{initStart}}" onSubmitQuery="onSubmitQuery">
-  </place-picker>
-  <block a:for="{{ lines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-    <view class="swiper-item" style="{{`height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
-      <view class="item-header"  data-i="{{jndex}}" onTap="onToggleCard">
-        <view class="item-bus-name">
-          {{item.busName}}
-        </view>
-        <view class="item-bus-line">
-          <view class="item-destination-name">
-            {{item.startStationName}}
-          </view>
-          <view class="item-destination-arrow"></view>
-          <view class="item-destination-name">
-            {{item.endStationName}}
-          </view>
-        </view>
-        <view class="item-bus-time">
-          {{item.startTime+'-'+item.endTime}}
-        </view>
-      </view>
-      <view class="item-body-child">
-        <view class="item-bus-line-detail" a:if="{{ activeCards[jndex] }}">
-          <steps items="{{item.stations}}" activeIndex="{{item.stations.length}}" flagIndex="{{}}">
-
-          </steps>
-        </view>
-        <view  class="{{item.remark ? 'item-bus-remark' : ''}}">
-          {{item.remark}}
-        </view>
-      </view>
-    </view>
-  </block>
-  <view a:if="{{ !queried }}" class="bg-logo">
-    <!-- <image mode="scaleToFill" src="/images/logo.png" class="bg-logo" /> -->
+  <view class="picker">
+    <place-picker initStart="{{initStart}}" historyAddress={{historyAddress}} onSubmitQuery="onSubmitQuery" />
   </view>
-  <footer a:if="{{ queried }}"></footer>
+  <view class="queries">
+    <queries lines="{{lines}}" />
+    <query-history style="{{`display: ${ queried ? 'none': '' }`}}" appendedItem="{{appendedItem}}" onSetHistoryAddress="onSetHistoryAddress"/>
+    <footer a:if="{{ queried }}" type="end" />
+    <view style="height: 20rpx"></view>
+  </view>
 </view>

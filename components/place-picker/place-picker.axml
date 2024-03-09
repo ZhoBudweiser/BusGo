@@ -38,7 +38,7 @@
     </view>
     <view class="picker-option div"></view>
     <view class="picker-option trans" onTap="onTransPick">
-      {{canTrans ? "允许转乘" : "不允许转乘"}}
+      {{canTrans ? "允许换乘" : "不允许换乘"}}
     </view>
   </view>
 </view>

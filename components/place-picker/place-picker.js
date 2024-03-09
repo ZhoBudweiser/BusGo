@@ -2,6 +2,9 @@ import { busEndAddresses } from "/util/data";
 import { timeFormat } from "/util/fmtUnit";
 
 Component({
+  options: {
+    observers: true,
+  },
   data: {
     // 地点
     stationOptions: [],
@@ -12,6 +15,21 @@ Component({
     startTime: '00:00',
     isWeekend: false,
     canTrans: true,
+  },
+  observers: {
+    'historyAddress': function(history) {
+      if (!history.startAddress || !history.endAddress) return;
+      let options = busEndAddresses.filter(address => history.startAddress.indexOf(address) !== -1);
+      const startName = options.length ? options[0] : "";
+      options = busEndAddresses.filter(address => history.endAddress.indexOf(address) !== -1);
+      const endName = options.length ? options[0] : "";
+      this.setData({
+        startName: startName,
+        endName: endName,
+        startOptions: busEndAddresses.filter(item => item !== endName),
+        endOptions: busEndAddresses.filter(item => item !== startName),
+      });
+    }
   },
   didMount() {
     const options = busEndAddresses.filter(address => this.props.initStart.indexOf(address) !== -1);
@@ -32,6 +50,7 @@ Component({
   },
   props: {
     initStart: "",
+    historyAddress: {},
     onSubmitQuery: () => {
       console.log('defalut')
     }

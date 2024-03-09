@@ -28,7 +28,6 @@
                   </view>
                 </picker>
                 <view class="item-destination-cancel" onTap="onRollback">
-                  x
                 </view>
               </view>
               <view a:else class="item-destinations">

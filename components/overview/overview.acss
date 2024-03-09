@@ -85,6 +85,11 @@
   text-align: center;
 }
 
+.item-destination-cancel:before {
+  content: '\2716';
+  color: gray;
+}
+
 .item-destination-name.end-active {
   background-color: #e5e5e5;
 }

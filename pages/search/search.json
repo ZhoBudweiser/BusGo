@@ -1,8 +1,9 @@
 {
   "usingComponents": {
     "place-picker": "/components/place-picker/place-picker",
-      "steps": "/components/steps/steps",
-      "footer": "/components/footer/index"
+      "queries": "/components/queries/queries",
+      "footer": "/components/footer/index",
+      "query-history": "/components/query-history/query-history"
   },
   "styleIsolation": "apply-shared"
 }
