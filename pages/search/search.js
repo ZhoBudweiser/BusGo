@@ -1,5 +1,6 @@
 import {
-  fmtQueryResult
+  fmtQueryResult,
+  fmtQueryArrayResult
 } from "/util/fmtUnit";
 
 Page({
@@ -11,22 +12,32 @@ Page({
     appendedItem: {},
   },
   async onSubmitQueryCloud(info) {
-    var self = this;
-    var context = await my.getCloudContext();
+    const self = this;
+    const context = await my.getCloudContext();
     context.callFunction({
-      name: "queryBusLinesByAddresses",
+      name: "queryBusLines",
       data: info,
       success: function (res) {
         const queryResult = res.result.data;
         self.setData({
           lines: queryResult
-            .map(item => fmtQueryResult(info, item))
-            .sort((l1, l2) => l1.sortNum < l2.sortNum ?
-              -1 : (l1.sortNum == l2.sortNum ? 0 : 1)),
+            .map(item => item.length ? fmtQueryArrayResult(info, item) : fmtQueryResult(info, item))
+            .sort((l1, l2) => {
+              const n1 = l1.sortNum ? l1.sortNum : l1[0].sortNum;
+              const n2 = l2.sortNum ? l2.sortNum : l2[0].sortNum;
+              return n1 < n2 ? -1 : (n1 == n2 ? 0 : 1);
+            }),
         });
+        my.hideLoading();
+        if (queryResult.length === 0) {
+          my.showToast({
+            content: '未查询到班车信息',
+            duration: 2000,
+          });
+        }
       },
-      fail: function (err) {},
-      complete: function () {
+      fail: function (err) {
+        console.log(err);
         my.hideLoading();
       }
     });

@@ -40,13 +40,13 @@ Component({
       startOptions: busEndAddresses,
       endOptions: busEndAddresses.filter(item => item !== name),
     });
-    my.getServerTime({
-      success: (res) => {
-        this.setData({
-          startTime: timeFormat(res.time, 'hh:mm')
-        });
-      },
-    });
+    // my.getServerTime({
+    //   success: (res) => {
+    //     this.setData({
+    //       startTime: timeFormat(res.time, 'hh:mm')
+    //     });
+    //   },
+    // });
   },
   props: {
     initStart: "",
@@ -112,7 +112,8 @@ Component({
         startAddress: this.data.startName,
         endAddress: this.data.endName,
         "startTime": Number(this.data.startTime.replace(':', '')),
-        "startDay": this.data.isWeekend ? "6,7" : "1,2,3,4,5"
+        "startDay": this.data.isWeekend ? "6,7" : "1,2,3,4,5",
+        "canTrans": this.data.canTrans,
       });
     },
   }

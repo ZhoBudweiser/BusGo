@@ -1,7 +1,10 @@
+import { getCardHeights } from "/util/fmtUnit";
+
 Component({
   mixins: [],
   data: {
     activeCards: [],
+    cardHeights: [],
   },
   props: {
     lines: [],
@@ -11,10 +14,10 @@ Component({
   },
   observers: {
     'lines': function (lines) {
+      console.log(lines);
       this.setData({
-        activeCards: Array.from({
-          length: lines.length
-        }),
+        activeCards: lines.map(_ => 0),
+        cardHeights: getCardHeights(lines),
       });
     },
   },
@@ -25,7 +28,7 @@ Component({
     onToggleCard(e) {
       const i = e.currentTarget.dataset.i;
       const cards = this.data.activeCards.concat();
-      cards[i] = !cards[i];
+      cards[i] = cards[i] == 0 ? 1 : 0;
       this.setData({
         activeCards: cards,
       });

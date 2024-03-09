@@ -134,7 +134,7 @@
 }
 
 .picker-option.time {
-  margin-left: 40rpx;
+  margin-left: 5rpx;
 }
 
 .picker-option.day {

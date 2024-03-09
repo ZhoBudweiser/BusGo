@@ -15,14 +15,12 @@
 .item-header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10rpx;
 }
 
-.bg-logo {
-  margin: 0 auto;
-  width: 90%;
-  display: flex;
-  justify-items: center;
-  align-items: center;
+.item-header-remark:first-child {
+  background-color: #eee;
 }
 
 /* -----overview-------- */
@@ -66,6 +64,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 245rpx;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .item-body-child {
@@ -78,9 +79,14 @@
 }
 
 .item-bus-line-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 90%;
   overflow-y: auto;
+  margin: 0 auto;
   margin-top: 10rpx;
+  flex-wrap: nowrap;
 }
 
 .scroll-container {
@@ -92,20 +98,46 @@
 .item-bus-remark {
   display: block;
   position: absolute;
-  background-color: #fff;
   z-index: 20;
   bottom: 5rpx;
-  width: 100%;
+  width: 95%;
   height: 30rpx;
   font-size: 24rpx;
-  margin: 0 5rpx;
+  margin: 0 15rpx;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+
+.item-bus-remarks {
+  display: block;
+  width: 95%;
+  height: 30rpx;
+  font-size: 24rpx;
+  margin: 10rpx 15rpx;
   white-space: nowrap;
   overflow: auto;
 }
 
 .item-bus-name {
-  max-width: 200rpx;
+  width: 200rpx;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;
+}
+
+.item-bus-time {
+  width: 180rpx;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.item-bus-label {
+  display: inline-block;
+  width: 15rpx;
+  height: 15rpx;
+  line-height: 15rpx;
+  font-size: medium;
+  color: gray;
 }

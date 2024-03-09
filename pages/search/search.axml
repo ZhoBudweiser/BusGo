@@ -6,6 +6,5 @@
     <queries lines="{{lines}}" />
     <query-history style="{{`display: ${ queried ? 'none': '' }`}}" appendedItem="{{appendedItem}}" onSetHistoryAddress="onSetHistoryAddress"/>
     <footer a:if="{{ queried }}" type="end" />
-    <view style="height: 20rpx"></view>
   </view>
 </view>

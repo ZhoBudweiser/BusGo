@@ -240,3 +240,56 @@ export function fmtQueryResult(info, item) {
     })
   };
 }
+
+export function fmtQueryArrayResult(info, items) {
+  return items.map(item => {
+    const stations = item["stations"];
+    const startTime = "" + item.startTime,
+      endTime = "" + item.endTime;
+    return {
+      ...item,
+      sortNum: Number(item.startTime),
+      startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
+      endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
+      startStationName: item.startStation.replace(/校区(.*)/g, ''),
+      endStationName: item.endStation.replace(/校区(.*)/g, ''),
+      isWeekend: item.cycle.indexOf('7') === -1,
+      stations: stations.map(jtem => {
+        const res = jtem.name.match(/校区(.+)/);
+        const str = String(jtem.time);
+        const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
+        return {
+          ...jtem,
+          "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
+          "time": t,
+          "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
+        }
+      })
+    };    
+  });
+}
+
+export function getCardHeights(lines) {
+  return lines.map(item => {
+    if (!item.length) {
+      if (item.remark) {
+        return ['85rpx', '240rpx'];
+      } else {
+        return ['50rpx', '200rpx'];
+      }
+    } else {
+      let minH = 0,
+        maxH = 0;
+      item.forEach(l => {
+        if (l.remark) {
+          minH += 95;
+          maxH += 240;
+        } else {
+          minH += 57;
+          maxH += 200;
+        }
+      });
+      return [minH+'rpx', maxH+'rpx'];
+    }
+  });
+}
