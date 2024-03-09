@@ -8,10 +8,36 @@ Page({
     lines: [],
     initStart: "",
     queried: false,
+    throttle: false,
+    throttleTimer: null,
     historyAddress: {},
     appendedItem: {},
   },
   async onSubmitQueryCloud(info) {
+    const clearTimer = () => {
+      this.setData({
+        throttle: false,
+        throttleTimer: null,
+      });
+    }
+    if (this.data.throttleTimer) {
+      clearTimeout(this.data.throttleTimer);
+    }
+    if (this.data.throttle) {
+      my.showToast({
+        content: '查询过于频繁，\n请稍后再试',
+        duration: 2000,
+      });
+      this.setData({
+        throttleTimer: setTimeout(clearTimer, 10000)
+      });
+      return;
+    } else {
+      this.setData({
+        throttle: true,
+        throttleTimer: setTimeout(clearTimer, 10000)
+      });
+    }
     const self = this;
     const context = await my.getCloudContext();
     context.callFunction({
