@@ -23,11 +23,11 @@
 .loc-search{
   bottom: 40%;
   right: 10rpx;
-  background-image: url('/images/search.png');
+  background-image: url('/images/search.svg');
 }
 
 .news-notice {
   bottom: 50%;
   right: 10rpx;
-  background-image: url('/images/notice.png');
+  background-image: url('/images/notice.svg');
 }

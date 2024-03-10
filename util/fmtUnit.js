@@ -215,58 +215,51 @@ export async function getFormatedShuttleLines(client, res) {
   return lines;
 }
 
+function fmtStations(info, stations) {
+  return stations.map(jtem => {
+    const res = jtem.name.match(/校区(.+)/);
+    const str = String(jtem.time);
+    const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
+    return {
+      ...jtem,
+      "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
+      "time": t,
+      "start": jtem.name.indexOf(info.startAddress) !== -1,
+      "end": jtem.name.indexOf(info.endAddress) !== -1,
+    }
+  })
+}
+
+function passByYuquan(stations) {
+  const station = stations.filter(item => item.name.indexOf("玉泉校区") !== -1);
+  if (!station.length) return "";
+  else return station[0].name;
+}
+
+function fmtYuquan(item, yuquan) {
+  return (yuquan ? ("班车途经" + yuquan + (item.remark ? "； " : "")) : "") + item.remark;
+}
+
 export function fmtQueryResult(info, item) {
   const stations = item["stations"];
   const startTime = "" + item.startTime,
     endTime = "" + item.endTime;
+  const yuquan = passByYuquan(stations);
   return {
     ...item,
+    remark: fmtYuquan(item, yuquan),
     sortNum: Number(item.startTime),
     startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
     endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
     startStationName: item.startStation.replace(/校区(.*)/g, ''),
     endStationName: item.endStation.replace(/校区(.*)/g, ''),
     isWeekend:  item.cycle === 7 || item.cycle.indexOf('6') !== -1,
-    stations: stations.map(jtem => {
-      const res = jtem.name.match(/校区(.+)/);
-      const str = String(jtem.time);
-      const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
-      return {
-        ...jtem,
-        "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
-        "time": t,
-        "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
-      }
-    })
+    stations: fmtStations(info, stations),
   };
 }
 
 export function fmtQueryArrayResult(info, items) {
-  return items.map(item => {
-    const stations = item["stations"];
-    const startTime = "" + item.startTime,
-      endTime = "" + item.endTime;
-    return {
-      ...item,
-      sortNum: Number(item.startTime),
-      startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
-      endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
-      startStationName: item.startStation.replace(/校区(.*)/g, ''),
-      endStationName: item.endStation.replace(/校区(.*)/g, ''),
-      isWeekend: item.cycle.indexOf('7') === -1,
-      stations: stations.map(jtem => {
-        const res = jtem.name.match(/校区(.+)/);
-        const str = String(jtem.time);
-        const t = str ? str.slice(0, -2) + ":" + str.slice(-2) : "";
-        return {
-          ...jtem,
-          "station_alias": res ? (jtem.name.indexOf("玉泉校区") === -1 ? res[1] : "玉泉校区") : jtem.name,
-          "time": t,
-          "active": jtem.name.indexOf(info.startAddress) !== -1 || jtem.name.indexOf(info.endAddress) !== -1
-        }
-      })
-    };    
-  });
+  return items.map(item => fmtQueryResult(info, item));
 }
 
 export function getCardHeights(lines) {
@@ -282,7 +275,7 @@ export function getCardHeights(lines) {
         maxH = 0;
       item.forEach(l => {
         if (l.remark) {
-          minH += 95;
+          minH += 97;
           maxH += 240;
         } else {
           minH += 57;

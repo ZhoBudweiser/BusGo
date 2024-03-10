@@ -149,4 +149,5 @@
   height: 50%;
   border: 0;
   border-left: gray solid 3rpx;
+  border-radius: 0;
 }

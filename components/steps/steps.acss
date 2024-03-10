@@ -65,6 +65,16 @@
   background-color: var(--am-steps-color, #f7ac16)
 }
 
+.am-hor-step-icon.is-start {
+  background-color: green;
+  background-color: var(--am-steps-color, green)
+}
+
+.am-hor-step-icon.is-end {
+  background-color: red;
+  background-color: var(--am-steps-color, red)
+}
+
 .am-hor-step-text {
   display: flex;
   flex-direction: column;
