@@ -71,6 +71,13 @@ Component({
       });
     },
     onSwitchAddress() {
+      if (this.data.startName === "" || this.data.endName === "") {
+        my.showToast({
+          content: '请填写地点信息',
+          duration: 1000,
+        });
+        return;
+      }
       this.setData({
         startName: this.data.endName,
         endName: this.data.startName,

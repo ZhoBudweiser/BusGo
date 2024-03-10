@@ -26,6 +26,7 @@ Page({
     selectedStopName: "",
     selectedBusLine: "-1",
     showPath: false,
+    showPosition: false,
     stops: [],
     allstops: [],
     destinations: [],
@@ -50,6 +51,7 @@ Page({
         selectedStopName: "",
         selectedBusLine: "-1",
         showPath: false,
+        showPosition: false,
         stops: [],
         allstops: [],
         destinations: [],
@@ -156,6 +158,11 @@ Page({
   onSetShowPath() {
     this.setData({
       showPath: !this.data.showPath,
+    });
+  },
+  onSetShowPosition() {
+    this.setData({
+      showPosition: !this.data.showPosition,
     });
   },
   onRollback() {

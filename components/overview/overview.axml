@@ -74,7 +74,7 @@
               </view>
               <!-- 用户 -->
               <view class="item-bus-object" style="right: {{dist_human}}">
-                <view class="item-bus-icon item-bus-icon-human-walk">
+                <view class="item-bus-icon item-bus-icon-human-walk" onTap="onTapHuman">
                 </view>
                 <view a:if="{{ time_left_human_walk >= 0 }}" class="item-bus-caption">
                   {{time_left_human_walk}} 分钟

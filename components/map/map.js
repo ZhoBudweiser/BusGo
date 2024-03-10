@@ -21,6 +21,7 @@ Component({
     selectedStop: "0",
     selectedBusLine: "-1",
     showPath: false,
+    showPosition: false,
     lines: [],
     onSelectedStop: () => {},
     onSetTimeCost: () => {}
@@ -179,6 +180,12 @@ Component({
       } else {
         this.mapCtx.clearRoute();
       }
+    },
+    'showPosition': function() {
+      this.mapCtx.moveToLocation({
+        longitude: this.props.longitude,
+        latitude: this.props.latitude,
+      });
     }
   },
   onInit() {

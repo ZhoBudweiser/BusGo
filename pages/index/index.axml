@@ -18,6 +18,7 @@
     selectedStop="{{selectedStop}}"
     selectedBusLine="{{selectedBusLine}}"
     showPath={{showPath}}
+    showPosition={{showPosition}}
     onSelectedStop="onSelectedStop"
     onSetTimeCost="onSetTimeCost"
   >
@@ -39,6 +40,7 @@
         onActive="onActive"
         onSetBusLines="onSetBusLines"
         onSetSelectedBusLine="onSetSelectedBusLine"
+        onSetShowPosition="onSetShowPosition"
         onSetShowPath="onSetShowPath"
         onRollback="onRollback"
       >
