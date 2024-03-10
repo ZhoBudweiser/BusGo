@@ -2,7 +2,10 @@ import {
   fmtQueryResult,
   fmtQueryArrayResult
 } from "/util/fmtUnit";
-import { isObjectValueEqual } from "/util/queryhelper";
+import {
+  isObjectValueEqual
+} from "/util/queryhelper";
+import { dataAlert } from "/util/data"; 
 
 Page({
   data: {
@@ -32,6 +35,7 @@ Page({
       this.setData({
         throttleTimer: setTimeout(clearTimer, 6000)
       });
+      my.hideLoading();
       return;
     } else {
       this.setData({
@@ -44,6 +48,7 @@ Page({
         content: '结果已给出，\n请更新查询',
         duration: 2000,
       });
+      my.hideLoading();
       return;
     }
     const self = this;
@@ -101,6 +106,12 @@ Page({
       this.setData({
         initStart: query.start,
       });
+    }
+    const data_res = my.getStorageSync({
+      key: 'dataAlert'
+    });
+    if (!data_res.data) {
+      dataAlert();
     }
   },
 });

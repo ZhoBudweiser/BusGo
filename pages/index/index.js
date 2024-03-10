@@ -2,7 +2,6 @@ import {
   locate,
 } from "/util/maphelper";
 import {
-  queryBusLinesByStop,
   getNearestStop,
   setTimer,
 } from "/util/queryhelper";
@@ -11,6 +10,7 @@ import {
   getFormatedBusLines,
   getFormatedShuttleLines,
 } from "/util/fmtUnit";
+import { getStart } from "/util/data";
 
 Page({
   data: {
@@ -31,8 +31,7 @@ Page({
     allstops: [],
     destinations: [],
     timeCost: -1,
-    stationsBuffers: {},
-    noticeShow: true
+    stationsBuffers: {}
   },
   options: {
     observers: true,
@@ -113,11 +112,6 @@ Page({
       currentState: s
     });
   },
-  noticeClick() {
-    this.setData({
-      noticeShow: false
-    });
-  },
   onShow() {
     locate(this, this.data.activeIndex);
   },
@@ -189,6 +183,12 @@ Page({
       this.setData({
         stationsBuffers: stations_res.data,
       });
+    }
+    const news_res = my.getStorageSync({
+      key: 'noticeShow'
+    });
+    if (!news_res.data) {
+      getStart();
     }
   },
   onShareAppMessage() {
