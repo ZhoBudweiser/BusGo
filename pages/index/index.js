@@ -46,7 +46,7 @@ Page({
         busLines: [],
         queriedLines: [],
         queryFrequency: 20000,
-        selectedStop: "0",
+        selectedStop: "",
         selectedStopName: "",
         selectedBusLine: "-1",
         showPath: false,

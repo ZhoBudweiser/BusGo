@@ -51,7 +51,7 @@ Component({
       console.log(lines);
       if (lines.length !== this.data.activeCards.length) {
         this.setData({
-          activeCards: lines.map((item, i) => i === 0 || (item.runBusInfo !== null && item.runBusInfo[0].vehi_num.indexOf("未识别") === -1)),
+          activeCards: lines.map((item, i) => i === 0 || (item.runBusInfo !== null && item.runBusInfo[0].vehi_num.indexOf("无信号") === -1)),
         });
       }
       my.hideLoading();
@@ -63,13 +63,26 @@ Component({
       });
     },
     'nearest_stop_name': function (curval){
-      if (!curval || this.data.preSelectedCampus === toCampus(curval)) return;
       const curSelectedCampus = toCampus(curval);
+      if (this.data.preSelectedCampus === curSelectedCampus) return;
+      if (curval === "") {
+        this.setData({
+          selectedEnd: "",
+        });
+        return;
+      }
+      const end = this.data.selectedEnd;
+      if (curSelectedCampus == toCampus(end)) {
+        my.showToast({
+          content: '目的地在站点附近',
+          duration: 2000,
+        });
+      }
       this.setData({
         destinations: this.props.activeTab == 0 ? 
             busEndAddresses.filter(item => toCampus(item) !== curSelectedCampus) : shuttleEndAddresses.filter(item => item !== curval),
-        preSelectedCampus: curSelectedCampus,
-        selectedEnd: '',
+        preSelectedCampus: curSelectedCampus == toCampus(end) ? this.data.preSelectedCampus : curSelectedCampus,
+        // selectedEnd: curSelectedCampus == toCampus(end) ? end + '(附近)' : end,
       });
       this.props.onSetSelectedBusLine("");
     },

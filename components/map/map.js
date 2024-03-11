@@ -1,3 +1,4 @@
+import { shttleChange } from "/util/shuttlehelper";
 const data_longitude = 120.090178;
 const data_latitude = 30.303975;
 
@@ -123,7 +124,7 @@ Component({
         if (item.runBusInfo) {
           buses.push({
             iconPath: item.runBusInfo[0].vehicleType ? iconPathSelection(item.runBusInfo[0].vehicleType) : '/images/map_bus.png',
-            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')),
+            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')*11),
             // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
             latitude: Number(item.runBusInfo[0].py),
             longitude: Number(item.runBusInfo[0].px),
@@ -244,8 +245,7 @@ Component({
       });
     },
     drawBusPos(buses) {
-      if ((this.data.buses.length !== buses.length) ||
-        (buses.length && this.data.buses.length && this.data.buses[0].id !== buses[0].id)) {
+      if (shttleChange(this.data.buses, buses)) {
         this.mapCtx.changeMarkers({
           remove: this.data.buses,
         });
@@ -273,7 +273,7 @@ Component({
             // console.log(res);
           },
           fail: (error) => {
-            console.log(error);
+            console.log(item, error);
           },
           complete: () => {
             // console.log('complete end');

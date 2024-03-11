@@ -21,9 +21,20 @@ export function findShttleLines(client) {
   const endName = client.data.selectedEnd;
   const lines = client.props.shuttleLines.filter(
     item => {
-      const startIndex = item.station_list.findIndex(stop => stop.station_alias === startName);
-      const endIndex = item.station_list.findIndex(stop => stop.station_alias === endName);
-      return startIndex !== -1 && endIndex !== -1 && startIndex < endIndex;
+      let startIndex = -1;
+      let endIndex = -1;
+      let match = false;
+       item.station_list.forEach((stop, i) => {
+        if (stop.station_alias === startName) {
+          startIndex = i;
+        } else if (stop.station_alias === endName) {
+          endIndex = i;
+          if (startIndex !== -1 && startIndex < endIndex) {
+            match = true;
+          }
+        }
+      });
+      return match;
     }
   );
   console.log(lines);
@@ -37,4 +48,16 @@ export function findShttleLinesByStartOnly(client) {
     item.station_list.findIndex(stop => stop.station_alias_no === startId) !== -1
   );
   return fmtLines(lines);
+}
+
+export function shttleChange(oldbuses, newBuses) {
+  if (oldbuses.length !== newBuses.length) return true;
+  if (!newBuses.length || !oldbuses.length) return false;
+  const n = oldbuses.length;
+  for (let i = 0; i < n; ++i) {
+    if (oldbuses[i].id !== newBuses[i].id) {
+      return true;
+    }
+  }
+  return false;
 }

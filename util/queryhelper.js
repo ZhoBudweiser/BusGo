@@ -50,6 +50,17 @@ export const getBusStops = (client, lat, lon) => {
 };
 
 export const getShuttleStops = (client, lat, lon) => {
+  const shuttleStops_res = my.getStorageSync({
+    key: 'shuttleStops'
+  });
+  if (shuttleStops_res.success) {
+    client.setData({
+      shuttleLines: shuttleStops_res.data.lines,
+      stops: shuttleStops_res.data.stations,
+      allstops: shuttleStops_res.data.stations,
+    });
+    return;
+  }
   my.request({
     url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcLine',
     method: 'POST',
@@ -61,6 +72,10 @@ export const getShuttleStops = (client, lat, lon) => {
         shuttleLines: lines,
         stops: stations,
         allstops: stations,
+      });
+      my.setStorageSync({
+        key: 'shuttleStops',
+        data: {lines, stations},
       });
     },
     fail: function (error) {

@@ -188,7 +188,7 @@ export const combinRunInfo = (res, poses, infos) => {
       return {
         ...lineInfo,
         runBusInfo: [{
-          "vehi_num": info ? info.vehiNum : "未识别班车" + label++,
+          "vehi_num": info ? info.vehiNum : "无信号班车" + label++,
           "near_distance": info ? info.costStationCount : 1,
           "about_minute": info ? info.costMinute : 0,
           "next_station": info ? info.nextStation : 0,
