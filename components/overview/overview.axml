@@ -124,8 +124,8 @@
               </view>
             </block>
             <footer type="end"></footer>
+            <view style="height:580rpx"></view>
           </view>
-          <view style="height:10rpx"></view>
         </view>
       </swiper-item>
     </swiper>

@@ -37,7 +37,7 @@
   border: gray solid 3rpx;
   border-radius: 10rpx;
   text-align: center;
-  font-size: small;
+  font-size: 26rpx;
 }
 
 .item-destination-arrow::before {
@@ -122,6 +122,7 @@
 .item-bus-name {
   width: 180rpx;
   margin: 0 20rpx;
+  font-size: 28rpx;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;
@@ -132,6 +133,8 @@
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;
+  margin-left: 15rpx;
+  font-size: 28rpx;
 }
 
 .item-bus-label {
@@ -139,6 +142,6 @@
   width: 15rpx;
   height: 15rpx;
   line-height: 15rpx;
-  font-size: medium;
+  font-size: 24rpx;
   color: gray;
 }

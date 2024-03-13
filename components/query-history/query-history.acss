@@ -12,7 +12,7 @@
 .history-title {
   margin: 5rpx;
   padding: 10rpx;
-  font-size: large;
+  font-size: 32rpx;
   height: 30rpx;
   line-height: 30rpx;
 }
@@ -54,7 +54,7 @@
   padding: 5rpx;
   color: gray;
   text-align: center;
-  font-size: medium;
+  font-size: 28rpx;
 }
 
 .history-destination-arrow::before {
@@ -89,7 +89,7 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  font-size: medium;
+  font-size: 28rpx;
   padding: 10rpx;
   height: 50rpx;
   line-height: 50rpx;

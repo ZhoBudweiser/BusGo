@@ -37,6 +37,8 @@
 }
 
 .item-header {
+  height: 32rpx;
+  padding: 8rpx;
   display: flex;
   justify-content: space-around;
 }
@@ -44,6 +46,7 @@
 /* -----overview-------- */
 
 .item-destinations {
+  font-size: 28rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +59,7 @@
   border: gray solid 3rpx;
   border-radius: 10rpx;
   text-align: center;
-  font-size: small;
+  font-size: 26rpx;
 }
 
 
@@ -92,6 +95,12 @@
 
 .item-destination-name.end-active {
   background-color: #e5e5e5;
+}
+
+.item-bus-time {
+  font-size: 28rpx;
+  line-height: 28rpx;
+  vertical-align: middle;
 }
 
 .item-destination-arrow::before {
@@ -199,6 +208,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  vertical-align: middle;
 }
 
 .item-bus-left {
@@ -236,7 +246,10 @@
 
 .item-bus-name {
   max-width: 200rpx;
+  font-size: 28rpx;
+  line-height: 28rpx;
   white-space: nowrap;
   overflow-y: hidden;
   overflow-x: auto;
+  vertical-align: middle;
 }

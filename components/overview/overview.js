@@ -90,7 +90,7 @@ Component({
       if (!end) return;
       this.props.onClearTimer();
       my.showLoading({
-        content: '查询中...'
+        content: this.props.activeTab === 0 ? '此次查询预计需要 10 秒左右' : '查询中...',
       });
       this.props.activeTab === 0 ? getAvailableBusLineByStart(this) : findShttleLines(this);
       this.props.onSetSelectedBusLine("");

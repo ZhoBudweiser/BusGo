@@ -2,10 +2,12 @@ const fmtLines = (lines) => {
   return lines.map(item => {
     const station_map = {};
     item.station_list.forEach((station, i) => (station_map[station.station_alias_no] = i));
+    const n = item.station_list.length;
+    const endIndex = n - 3 >= 0 ? n - 3 : 0;
     return {
       "bid": item.lid,
       "start_address": item.station_list[0].station_alias,
-      "end_address": item.station_list.at(-3).station_alias,
+      "end_address": item.station_list[endIndex].station_alias,
       "runBusInfo": null,
       "line_alias": item.line_alias,
       "station_map": station_map,

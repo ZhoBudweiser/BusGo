@@ -124,8 +124,7 @@ Component({
         if (item.runBusInfo) {
           buses.push({
             iconPath: item.runBusInfo[0].vehicleType ? iconPathSelection(item.runBusInfo[0].vehicleType) : '/images/map_bus.png',
-            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')*11),
-            // id: item.runBusInfo[0].vehi_num.replace('浙', 'BUS'),
+            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')*1767),
             latitude: Number(item.runBusInfo[0].py),
             longitude: Number(item.runBusInfo[0].px),
             width: 30,
@@ -194,6 +193,7 @@ Component({
   },
   methods: {
     markertap(e) {
+      // 手动消除点击班车触发的事件
       if (/[\u4E00-\u9FFF]/.test(e.markerId) || (("" + e.markerId).length < 4 &&
           e.markerId !== "233" && e.markerId !== "32")) return;
       if (e.markerId !== this.props.selectedStop) {
