@@ -9,13 +9,6 @@ changelog:
     - title: 🚨 Removed
       labels:
         - removed
-    - title: 🎉 Major features and improvements
-      labels:
-        - major-enhancement
-        - major-rfe
-    - title: 🐛 Major bug fixes
-      labels:
-        - major-bug
     - title: ⚠️ Deprecated
       labels:
         - deprecated
@@ -23,6 +16,7 @@ changelog:
       labels:
         - enhancement
         - feature
+        - feat
         - rfe
     - title: 🐛 Bug fixes
       labels:
@@ -31,12 +25,6 @@ changelog:
         - bugfix
         - regression
         - regression-fix
-    - title: 🌐 Localization and translation
-      labels:
-        - localization
-    - title: 👷 Changes for plugin developers
-      labels:
-        - developer
     - title: 📝 Documentation updates
       labels:
         - documentation
@@ -51,16 +39,3 @@ changelog:
       labels:
         - test
         - tests
-    - title: ✍ Other changes
-      labels:
-        - "*"
-    # Default label used by Dependabot
-    - title: 📦 Dependency updates
-      labels:
-        - dependencies
-      collapse-after: 15
-exclude-labels:
-  - reverted
-  - no-changelog
-  - skip-changelog
-  - invalid
