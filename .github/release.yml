@@ -2,61 +2,63 @@ changelog:
   exclude:
     labels:
       - ignore-for-release
-categories:
-  - title: 💥 Breaking changes
-    labels:
-      - breaking
-  - title: 🚨 Removed
-    labels:
-      - removed
-  - title: 🎉 Major features and improvements
-    labels:
-      - major-enhancement
-      - major-rfe
-  - title: 🐛 Major bug fixes
-    labels:
-      - major-bug
-  - title: ⚠️ Deprecated
-    labels:
-      - deprecated
-  - title: 🚀 New features and improvements
-    labels:
-      - enhancement
-      - feature
-      - rfe
-  - title: 🐛 Bug fixes
-    labels:
-      - bug
-      - fix
-      - bugfix
-      - regression
-      - regression-fix
-  - title: 🌐 Localization and translation
-    labels:
-      - localization
-  - title: 👷 Changes for plugin developers
-    labels:
-      - developer
-  - title: 📝 Documentation updates
-    labels:
-      - documentation
-      - doc
-      - docs
-  - title: 👻 Maintenance
-    labels:
-      - chore
-      - internal
-      - maintenance
-  - title: 🚦 Tests
-    labels:
-      - test
-      - tests
-  - title: ✍ Other changes
-  # Default label used by Dependabot
-  - title: 📦 Dependency updates
-    labels:
-      - dependencies
-    collapse-after: 15
+  categories:
+    - title: 💥 Breaking changes
+      labels:
+        - breaking
+    - title: 🚨 Removed
+      labels:
+        - removed
+    - title: 🎉 Major features and improvements
+      labels:
+        - major-enhancement
+        - major-rfe
+    - title: 🐛 Major bug fixes
+      labels:
+        - major-bug
+    - title: ⚠️ Deprecated
+      labels:
+        - deprecated
+    - title: 🚀 New features and improvements
+      labels:
+        - enhancement
+        - feature
+        - rfe
+    - title: 🐛 Bug fixes
+      labels:
+        - bug
+        - fix
+        - bugfix
+        - regression
+        - regression-fix
+    - title: 🌐 Localization and translation
+      labels:
+        - localization
+    - title: 👷 Changes for plugin developers
+      labels:
+        - developer
+    - title: 📝 Documentation updates
+      labels:
+        - documentation
+        - doc
+        - docs
+    - title: 👻 Maintenance
+      labels:
+        - chore
+        - internal
+        - maintenance
+    - title: 🚦 Tests
+      labels:
+        - test
+        - tests
+    - title: ✍ Other changes
+      labels:
+        - "*"
+    # Default label used by Dependabot
+    - title: 📦 Dependency updates
+      labels:
+        - dependencies
+      collapse-after: 15
 exclude-labels:
   - reverted
   - no-changelog
