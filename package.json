@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^8.0.1",
+    "release-it": "^17.1.1"
+  },
+  "version": "1.0.0"
+}
