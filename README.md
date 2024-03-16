@@ -22,7 +22,7 @@
 
 ![IDE](./doc-images/ide.png)
 
-## 关于 Issue 和 Contribution
+## 关于 Issue 和 Contributing
 
 如果发现小程序中的问题，可以依据模板填写Issue，注意写明现象和复现步骤。Issue将会很快得到回复。
 
