@@ -41,7 +41,7 @@ export const getBusStops = (client, lat, lon) => {
       });
     },
     fail: function (error) {
-      console.error('fail: ', JSON.stringify(error));
+      console.log('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
       // my.hideLoading();
@@ -79,7 +79,7 @@ export const getShuttleStops = (client, lat, lon) => {
       });
     },
     fail: function (error) {
-      console.error('fail: ', JSON.stringify(error));
+      console.log('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
       // my.hideLoading();
@@ -103,7 +103,7 @@ const getAllAvailableDestinationsByStart = (client) => {
     },
     dataType: 'json',
     success: (res) => res,
-    fail: (error) => console.error('fail: ', JSON.stringify(error)),
+    fail: (error) => console.log('fail: ', JSON.stringify(error)),
   }).then(res => res.data.data));
   Promise.all(availableDestinations).then(res => console.log(res));
   // console.log(Promise.all(availableDestinations));
@@ -126,7 +126,7 @@ export const getAvailableBusLineByStart = (client) => {
     },
     dataType: 'json',
     success: (res) => res,
-    fail: (error) => console.error('fail: ', JSON.stringify(error)),
+    fail: (error) => console.log('fail: ', JSON.stringify(error)),
   }).then(res => client.props.onSetBusLines(res.data.data));
 }
 
@@ -161,7 +161,7 @@ export const queryBusLinesByStop = (parm) => {
     dataType: 'json',
     success: async (res) => getFormatedBusLines(client, res.data.data),
     fail: function (error) {
-      console.error('fail: ', JSON.stringify(error));
+      console.log('fail: ', JSON.stringify(error));
     },
     complete: function (res) {
       // my.hideLoading();
@@ -188,7 +188,7 @@ export const queryRunInfo = async (client, item) => {
     },
     success: (res) => res,
     fail: function (error) {
-      console.error('fail: ', error);
+      console.log('fail: ', error);
     },
     complete: function (res) {},
   });
@@ -207,7 +207,7 @@ export const queryRunPos = async (lid) => {
     },
     success: (res) => res,
     fail: function (error) {
-      console.error('fail: ', error);
+      console.log('fail: ', error);
     },
     complete: function (res) {
       // my.hideLoading();

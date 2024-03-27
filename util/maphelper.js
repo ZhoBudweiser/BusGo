@@ -82,7 +82,7 @@ const authGuideLocation = async () => {
     }
     return false;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return false;
   }
 };
