@@ -27,10 +27,11 @@ export const getNearestStop = (poses, lat, lon) => {
   return target_id;
 }
 
+const baseURL = "https://bccx.zju.edu.cn";
 
 export const getBusStops = (client, lat, lon) => {
   my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getNearStation?lat=' + lat + '&lon=' + lon,
+    url: baseURL + '/schoolbus_wx/manage/getNearStation?lat=' + lat + '&lon=' + lon,
     method: 'POST',
     dataType: 'json',
     success: function (res) {
@@ -42,6 +43,11 @@ export const getBusStops = (client, lat, lon) => {
     },
     fail: function (error) {
       console.log('fail: ', JSON.stringify(error));
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
     },
     complete: function (res) {
       // my.hideLoading();
@@ -62,7 +68,7 @@ export const getShuttleStops = (client, lat, lon) => {
     return;
   }
   my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcLine',
+    url: baseURL + '/schoolbus_wx/xbc/getXbcLine',
     method: 'POST',
     dataType: 'json',
     success: function (res) {
@@ -80,6 +86,11 @@ export const getShuttleStops = (client, lat, lon) => {
     },
     fail: function (error) {
       console.log('fail: ', JSON.stringify(error));
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
     },
     complete: function (res) {
       // my.hideLoading();
@@ -90,7 +101,7 @@ export const getShuttleStops = (client, lat, lon) => {
 const getAllAvailableDestinationsByStart = (client) => {
   const currentLocation = toCampus(client.data.selectedStopName);
   const availableDestinations = endAddresses.map(end => my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/searchLine',
+    url: baseURL + '/schoolbus_wx/manage/searchLine',
     method: 'POST',
     data: {
       begin_station: currentLocation,
@@ -113,7 +124,7 @@ export const getAvailableBusLineByStart = (client) => {
   const currentLocation = toCampus(client.props.nearest_stop_name);
   const endLocation = toCampus(client.data.selectedEnd);
   my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/searchLine',
+    url: baseURL + '/schoolbus_wx/manage/searchLine',
     method: 'POST',
     data: {
       begin_station: currentLocation,
@@ -126,7 +137,14 @@ export const getAvailableBusLineByStart = (client) => {
     },
     dataType: 'json',
     success: (res) => res,
-    fail: (error) => console.log('fail: ', JSON.stringify(error)),
+    fail: (error) => {
+      console.log('fail: ', JSON.stringify(error));
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
+    },
   }).then(res => client.props.onSetBusLines(res.data.data));
 }
 
@@ -136,7 +154,7 @@ export const getAvailableBusLineByStart = (client) => {
 export const queryBusStopsByBid = async (bid) => {
   try {
     let result = await my.request({
-      url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcStationList?bid=' + bid,
+      url: baseURL + '/schoolbus_wx/manage/getBcStationList?bid=' + bid,
       method: 'POST',
       headers: {
         'content-type': 'application/json', //默认值  
@@ -146,6 +164,11 @@ export const queryBusStopsByBid = async (bid) => {
     return result;
   } catch (error) {
     console.log(error);
+    my.alert({
+      title: '查询服务',
+      content: '当前实时定位异常，先试试静态查询吧',
+      buttonText: '确定',
+    });
   }
 }
 
@@ -153,7 +176,7 @@ export const queryBusLinesByStop = (parm) => {
   const client = parm.obj;
   if (parm.stopId == 0) return;
   my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/manage/getBcByStationName?bid=' + parm.bid + '&stationName=' + parm.stopId,
+    url: baseURL + '/schoolbus_wx/manage/getBcByStationName?bid=' + parm.bid + '&stationName=' + parm.stopId,
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -162,6 +185,11 @@ export const queryBusLinesByStop = (parm) => {
     success: async (res) => getFormatedBusLines(client, res.data.data),
     fail: function (error) {
       console.log('fail: ', JSON.stringify(error));
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
     },
     complete: function (res) {
       // my.hideLoading();
@@ -176,7 +204,7 @@ export const queryShttleLinesByStop = (parm) => {
 
 export const queryRunInfo = async (client, item) => {
   return await my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcVehicleRun',
+    url: baseURL + '/schoolbus_wx/xbc/getXbcVehicleRun',
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -189,6 +217,11 @@ export const queryRunInfo = async (client, item) => {
     success: (res) => res,
     fail: function (error) {
       console.log('fail: ', error);
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
     },
     complete: function (res) {},
   });
@@ -196,7 +229,7 @@ export const queryRunInfo = async (client, item) => {
 
 export const queryRunPos = async (lid) => {
   return await my.request({
-    url: 'https://bccx.zju.edu.cn/schoolbus_wx/xbc/getXbcVehicleByLine',
+    url: baseURL + '/schoolbus_wx/xbc/getXbcVehicleByLine',
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -208,6 +241,11 @@ export const queryRunPos = async (lid) => {
     success: (res) => res,
     fail: function (error) {
       console.log('fail: ', error);
+      my.alert({
+        title: '查询服务',
+        content: '当前实时定位异常，先试试静态查询吧',
+        buttonText: '确定',
+      });
     },
     complete: function (res) {
       // my.hideLoading();
