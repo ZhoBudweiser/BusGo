@@ -16,6 +16,27 @@ export const busEndAddresses = [
   "丰谭中学"
 ];
 
+export const busStaticEndAddresses = [
+  "紫金港校区",
+  "玉泉校区",
+  "西溪校区",
+  "华家池校区",
+  "之江校区",
+  "工程师学院",
+  "信息港园区",
+  "水博园区",
+  "湖滨",
+  "紫金文苑",
+  "雅仕苑",
+  "丰谭路高教二期",
+  "南都德加东",
+  "城市心境",
+  "高教一期",
+  "恩济花园",
+  "高教二期",
+  "丰谭中学"
+];
+
 export const shuttleEndAddresses = [
   "青溪东侧",
   "东区生活区",

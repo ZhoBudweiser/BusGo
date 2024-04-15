@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   const collectionName = 'bus-time-line-time';
   // console.log('查询 collection:', collectionName);
   // 查询 collection
-  const collection = await db.getCollection(collectionName);
+  // const collection = await db.getCollection(collectionName);
   // console.log('查询 collection id:', collection.coll_id);
 
   // 查询 collection 中的 doc 列表，默认返回 100 条
@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
       db.command.or(db.command.eq("6,7"),db.command.eq("1,2,3,4,5,6,7"), db.command.eq(7)),
     endTime: db.command.gt(startTime)
   }).limit(200).get();
-  // console.log('当前 collection 中的 候选列表:', docList);
+  // console.log('当前 collection 中的 候选列表:', docList.filter(item => item.id > 200));
 
   const startList = [],
     endList = [];
@@ -84,7 +84,7 @@ exports.main = async (event, context) => {
               break;
             }
             lastEndStationTime = endStation.time ? endStation.time : lastEndStationTime;
-            if ((lastStartStationTime < lastEndStationTime) && (lastEndStationTime - lastStartStationTime < 200) &&
+            if ((lastStartStationTime <= lastEndStationTime) && (lastEndStationTime - lastStartStationTime < 200) &&
               startStation.name.slice(0, 3) == endStation.name.slice(0, 3)) {
                 match = true;
             }
