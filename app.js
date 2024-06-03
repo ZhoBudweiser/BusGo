@@ -7,7 +7,7 @@ App({
         return  my.fncontext;
       }else{
         const context = await my.cloud.createCloudContext({
-          env: 'env-00jx4wwu6o82'
+          env: 'env-00jxgs8oaofe'
         });
         await context.init();
         my.fncontext = context;
@@ -18,5 +18,3 @@ App({
   onShow(options) {
   },
 });
-
-// TODO: 路线表初始为当前位置、智能请求（按照时间请求）、收藏、通知栏、转车、班车路径显示、区分到站和中途
