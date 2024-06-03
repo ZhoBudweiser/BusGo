@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.1.0](https://github.com/ZhoBudweiser/BusGo/compare/v1.0.0...v1.1.0) (2024-06-03)
+
+
+### ✨新功能
+
+* new bus line ([cacc790](https://github.com/ZhoBudweiser/BusGo/commit/cacc7903e1327d8a3fab530579f04c1e3c15e695))
+
+
+### ✅变动
+
+* **deps:** bump undici in /cloud/functions/queryBusLines ([6786c80](https://github.com/ZhoBudweiser/BusGo/commit/6786c80ba25eee52cb6e0306b532a8509d93816f))
+* update cloud env ([08c2155](https://github.com/ZhoBudweiser/BusGo/commit/08c2155bdd5dc00059c6c8a2d3f3b97a31ceebe9))
+
+
+### 🐛问题修复
+
+* backend missing ([fa78634](https://github.com/ZhoBudweiser/BusGo/commit/fa78634682a8909f9791f3cc63c5f2cc4d055de7))
+
+
+### 📚文档
+
+* delete outdated info ([eb13bab](https://github.com/ZhoBudweiser/BusGo/commit/eb13bab0112b77adb6e638bfabe2049410bf5a44))
+
 ## 1.0.0 (2024-03-16)
 
 
