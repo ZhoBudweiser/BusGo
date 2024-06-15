@@ -1,10 +1,5 @@
-import {
-  locate,
-} from "/util/maphelper";
-import {
-  getNearestStop,
-  setTimer,
-} from "/util/queryhelper";
+import { locate } from "/util/maphelper";
+import { getNearestStop, setTimer } from "/util/queryhelper";
 import {
   distinctStops,
   getFormatedBusLines,
@@ -31,15 +26,15 @@ Page({
     allstops: [],
     destinations: [],
     timeCost: -1,
-    stationsBuffers: {}
+    stationsBuffers: {},
   },
   options: {
     observers: true,
   },
   observers: {
-    'activeIndex': function (index) {
+    activeIndex: function (index) {
       my.showLoading({
-        content: '加载中...'
+        content: "加载中...",
       });
       this.onClearTimer();
       this.setData({
@@ -58,58 +53,65 @@ Page({
       });
       locate(this, index);
       my.setStorageSync({
-        key: 'activeIndex',
+        key: "activeIndex",
         data: index,
       });
     },
-    'stops': function (curval) {
+    stops: function (curval) {
       if (!curval || !curval.length) return;
-      const stopid = getNearestStop(curval, this.data.latitude, this.data.longitude);
+      const stopid = getNearestStop(
+        curval,
+        this.data.latitude,
+        this.data.longitude,
+      );
       this.setData({
-        selectedStop: stopid
+        selectedStop: stopid,
       });
     },
-    'selectedStop': function () {
+    selectedStop: function () {
       if (!this.data.allstops.length) return;
-      const newStopName = this.data.allstops.filter(item => item.station_alias_no === this.data.selectedStop)[0].station_alias;
+      const newStopName = this.data.allstops.filter(
+        (item) => item.station_alias_no === this.data.selectedStop,
+      )[0].station_alias;
       this.setData({
-        selectedStopName: newStopName
+        selectedStopName: newStopName,
       });
       my.showLoading({
-        content: '查询中...'
+        content: "查询中...",
       });
       setTimer(this);
     },
-    'busLines': function (fmtLines) {
+    busLines: function (fmtLines) {
       if (!fmtLines) return;
       let freq = fmtLines.length ? 60000 : 600000;
-      fmtLines.forEach(item => item.runBusInfo !== null && (freq = 10000));
-      if (freq !== this.data.queryFrequency) this.setData({
-        queryFrequency: freq
-      });
+      fmtLines.forEach((item) => item.runBusInfo !== null && (freq = 10000));
+      if (freq !== this.data.queryFrequency)
+        this.setData({
+          queryFrequency: freq,
+        });
     },
-    'queryFrequency': function () {
+    queryFrequency: function () {
       setTimer(this);
     },
   },
   onActive(id) {
     this.setData({
-      activeIndex: id
+      activeIndex: id,
     });
   },
   onSetTimeCost(time) {
     this.setData({
-      timeCost: (time / 60).toFixed(1)
+      timeCost: (time / 60).toFixed(1),
     });
   },
   onSelectedStop(id) {
     this.setData({
-      selectedStop: id
+      selectedStop: id,
     });
   },
   onStateChange(s) {
     this.setData({
-      currentState: s
+      currentState: s,
     });
   },
   onShow() {
@@ -119,20 +121,24 @@ Page({
     this.onClearTimer();
     const setting = (fmtLines) => {
       console.log(fmtLines);
-      this.onSetStopsByBusLines(fmtLines.map(item => item.stations));
+      this.onSetStopsByBusLines(fmtLines.map((item) => item.stations));
       this.setData({
-        queriedLines: fmtLines.length ? fmtLines.map(item => item.bid) : [""],
+        queriedLines: fmtLines.length ? fmtLines.map((item) => item.bid) : [""],
       });
       if (!newBusLines.length) {
         my.showToast({
-          content: '暂无班车信息',
+          content: "暂无班车信息",
           duration: 2000,
         });
       }
-    }
-    this.data.activeIndex === 0 ?
-      getFormatedBusLines(this, newBusLines).then(fmtLines => setting(fmtLines)) :
-      getFormatedShuttleLines(this, newBusLines).then(fmtLines => setting(fmtLines));
+    };
+    this.data.activeIndex === 0
+      ? getFormatedBusLines(this, newBusLines).then((fmtLines) =>
+          setting(fmtLines),
+        )
+      : getFormatedShuttleLines(this, newBusLines).then((fmtLines) =>
+          setting(fmtLines),
+        );
   },
   onSetStopsByBusLines(formatBusLines) {
     const newStops = distinctStops(formatBusLines);
@@ -141,8 +147,7 @@ Page({
     });
   },
   onClearTimer() {
-    if (this.timer)
-      clearInterval(this.timer);
+    if (this.timer) clearInterval(this.timer);
   },
   onSetSelectedBusLine(bid) {
     this.setData({
@@ -169,7 +174,7 @@ Page({
     // 页面加载
     console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
     const index_res = my.getStorageSync({
-      key: 'activeIndex'
+      key: "activeIndex",
     });
     if (index_res.success) {
       this.setData({
@@ -177,7 +182,7 @@ Page({
       });
     }
     const stations_res = my.getStorageSync({
-      key: 'stationsBuffers'
+      key: "stationsBuffers",
     });
     if (stations_res.success) {
       this.setData({
@@ -185,7 +190,7 @@ Page({
       });
     }
     const news_res = my.getStorageSync({
-      key: 'noticeShow'
+      key: "noticeShow",
     });
     if (!news_res.data) {
       getStart();
@@ -194,14 +199,14 @@ Page({
   onShareAppMessage() {
     // 返回自定义分享信息
     return {
-      title: 'ZJU-BusGo',
-      desc: '智慧校园出行助手',
-      path: 'pages/index/index',
+      title: "ZJU-BusGo",
+      desc: "智慧校园出行助手",
+      path: "pages/index/index",
     };
   },
   onUnload() {
     my.setStorageSync({
-      key: 'stationsBuffers',
+      key: "stationsBuffers",
       data: this.data.stationsBuffers,
     });
   },

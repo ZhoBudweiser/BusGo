@@ -1,14 +1,14 @@
-var jsUnitRpx = 'false';
+var jsUnitRpx = "false";
 function fmtUnit(oldUnit) {
   var getUnit = oldUnit;
 
-  if (jsUnitRpx === 'true') {
-    if (typeof getUnit === 'string' && getUnit === 'px') {
-      getUnit = 'rpx';
-    } else if (typeof getUnit === 'number') {
+  if (jsUnitRpx === "true") {
+    if (typeof getUnit === "string" && getUnit === "px") {
+      getUnit = "rpx";
+    } else if (typeof getUnit === "number") {
       getUnit *= 2;
-    } else if (typeof getUnit === 'string') {
-      getUnit = oldUnit.match(/(\d+|\d+\.\d+)(px)/)[1] * 2 + 'rpx';
+    } else if (typeof getUnit === "string") {
+      getUnit = oldUnit.match(/(\d+|\d+\.\d+)(px)/)[1] * 2 + "rpx";
     }
   }
 
@@ -16,24 +16,24 @@ function fmtUnit(oldUnit) {
 }
 Component({
   props: {
-    className: '',
+    className: "",
     // normal: 基础样式；
     // guide：文案加引导；
     // copyright：声明；
     // brand：带品牌；
     // link：带链接
     // end: 没有更多
-    type: 'normal',
-    content: '',
+    type: "normal",
+    content: "",
     extend: [],
     onBrandTap: function onBrandTap() {},
     showEndIcon: false,
-    iconName: 'selected'
+    iconName: "selected",
   },
   data: {
     defaultSize: fmtUnit(18),
     maxSize: fmtUnit(22),
-    valueUnit: fmtUnit('px')
+    valueUnit: fmtUnit("px"),
   },
   methods: {
     onBrandClick: function onBrandClick(e) {
@@ -42,15 +42,15 @@ Component({
         onBrandTap = _this$props.onBrandTap,
         extend = _this$props.extend;
 
-      if (onBrandTap !== '' && brandLink) {
+      if (onBrandTap !== "" && brandLink) {
         my.navigateTo({
-          url: brandLink
+          url: brandLink,
         });
       }
 
-      if (onBrandTap !== '' && !brandLink && typeof onBrandTap === 'function') {
+      if (onBrandTap !== "" && !brandLink && typeof onBrandTap === "function") {
         onBrandTap(extend[e.currentTarget.dataset.index]);
       }
-    }
-  }
+    },
+  },
 });

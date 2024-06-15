@@ -6,7 +6,7 @@ const authGuideLocation = async () => {
     return new Promise((resolve, reject) => {
       my.getSystemInfo({
         success: resolve,
-        fail: reject
+        fail: reject,
       });
     });
   };
@@ -15,7 +15,7 @@ const authGuideLocation = async () => {
     return new Promise((resolve, reject) => {
       my.getSetting({
         success: resolve,
-        fail: reject
+        fail: reject,
       });
     });
   };
@@ -24,7 +24,7 @@ const authGuideLocation = async () => {
     return new Promise((resolve, reject) => {
       my.openSetting({
         success: resolve,
-        fail: reject
+        fail: reject,
       });
     });
   };
@@ -34,7 +34,7 @@ const authGuideLocation = async () => {
       my.alert({
         content,
         success: resolve,
-        fail: reject
+        fail: reject,
       });
     });
   };
@@ -59,7 +59,10 @@ const authGuideLocation = async () => {
   // 获取用户是否授权过当前小程序使用定位
   const isLocationMPAuthorized = async () => {
     const settingInfo = await myGetSetting();
-    return settingInfo.authSetting.location === undefined || settingInfo.authSetting.location;
+    return (
+      settingInfo.authSetting.location === undefined ||
+      settingInfo.authSetting.location
+    );
   };
 
   // 若用户未授权当前小程序使用定位，则引导用户跳转至小程序设置页开启定位权限
@@ -89,23 +92,23 @@ const authGuideLocation = async () => {
 
 const locationService = (func) => {
   my.getLocation({
-    type: 1, 
+    type: 1,
     success: (res) => {
       func(res.longitude, res.latitude);
     },
     fail: (res) => {
       my.alert({
-        title: '定位失败',
-        content: JSON.stringify(res)
+        title: "定位失败",
+        content: JSON.stringify(res),
       });
-    }
+    },
   });
-}
+};
 
 const autoLocate = (parm) => {
   const { client } = parm;
   my.getLocation({
-    type: 0, 
+    type: 0,
     success: (res) => {
       client.setData({
         longitude: res.longitude,
@@ -114,34 +117,34 @@ const autoLocate = (parm) => {
     },
     fail: (res) => {
       console.log({
-        title: '定位失败',
-        content: JSON.stringify(res)
+        title: "定位失败",
+        content: JSON.stringify(res),
       });
       if (posTimer) {
         clearInterval(posTimer);
         posTimer = null;
       }
-    }
+    },
   });
-}
+};
 
 const longitude = 120.090178;
 const latitude = 30.303975;
 let posTimer = null;
 
 export const locate = (client, activeIndex) => {
-  authGuideLocation().then(res => {
+  authGuideLocation().then((res) => {
     const setting = (lon, lat) => {
       client.setData({
         longitude: lon,
-        latitude: lat
+        latitude: lat,
       });
       if (activeIndex === 0) {
         getBusStops(client, lat, lon);
       } else if (activeIndex === 1) {
         getShuttleStops(client, lat, lon);
       }
-    }
+    };
     if (res === true) {
       locationService((lon, lat) => setting(lon, lat));
       posTimer = setInterval(autoLocate, 5000, { client });
@@ -149,4 +152,4 @@ export const locate = (client, activeIndex) => {
       setting(longitude, latitude);
     }
   });
-}
+};

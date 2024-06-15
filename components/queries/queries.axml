@@ -1,22 +1,22 @@
 <block a:for="{{ lines }}" a:for-index="index" key="bus-line-{{index}}">
-  <view a:if="{{ !item.length }}" class="swiper-item" style="{{`height: ${cardHeights[index][activeCards[index]]}`}}">
-    <view class="item-header item-header-remark" data-i="{{index}}" onTap="onToggleCard">
+  <view
+    a:if="{{ !item.length }}"
+    class="swiper-item"
+    style="{{`height: ${cardHeights[index][activeCards[index]]}`}}"
+  >
+    <view
+      class="item-header item-header-remark"
+      data-i="{{index}}"
+      onTap="onToggleCard"
+    >
       <view class="item-bus-label" style="visibility: hidden"> </view>
-      <view class="item-bus-name">
-        {{item.busName}}
-      </view>
+      <view class="item-bus-name"> {{item.busName}} </view>
       <view class="item-bus-line">
-        <view class="item-destination-name">
-          {{item.startStationName}}
-        </view>
+        <view class="item-destination-name"> {{item.startStationName}} </view>
         <view class="item-destination-arrow"></view>
-        <view class="item-destination-name">
-          {{item.endStationName}}
-        </view>
+        <view class="item-destination-name"> {{item.endStationName}} </view>
       </view>
-      <view class="item-bus-time">
-        {{item.startTime+'-'+item.endTime}}
-      </view>
+      <view class="item-bus-time"> {{item.startTime+'-'+item.endTime}} </view>
     </view>
     <view class="item-body-child">
       <view a:if="{{ activeCards[index] }}" class="item-bus-line-detail">
@@ -31,37 +31,53 @@
       </view>
     </view>
   </view>
-  <view a:else class="swiper-item" style="{{`height: ${cardHeights[index][activeCards[index]]}`}}">
+  <view
+    a:else
+    class="swiper-item"
+    style="{{`height: ${cardHeights[index][activeCards[index]]}`}}"
+  >
     <view class="item-headers" data-i="{{index}}" onTap="onToggleCard">
-      <view a:for="{{ item }}" a:for-index="jndex" a:for-item="jtem" class="item-header-remark">
+      <view
+        a:for="{{ item }}"
+        a:for-index="jndex"
+        a:for-item="jtem"
+        class="item-header-remark"
+      >
         <view class="item-header">
-          <view class="item-bus-label" style="{{`${jndex ? '' : 'visibility: hidden'}`}}">
+          <view
+            class="item-bus-label"
+            style="{{`${jndex ? '' : 'visibility: hidden'}`}}"
+          >
             {{jndex}}
           </view>
-          <view class="item-bus-name">
-            {{jtem.busName}}
-          </view>
+          <view class="item-bus-name"> {{jtem.busName}} </view>
           <view class="item-bus-line">
             <view class="item-destination-name">
               {{jtem.startStationName}}
             </view>
             <view class="item-destination-arrow"></view>
-            <view class="item-destination-name">
-              {{jtem.endStationName}}
-            </view>
+            <view class="item-destination-name"> {{jtem.endStationName}} </view>
           </view>
           <view class="item-bus-time">
             {{jtem.startTime+'-'+jtem.endTime}}
-          </view>          
+          </view>
         </view>
         <view a:if="{{ jtem.remark }}" class="item-bus-remarks">
           {{jtem.remark}}
         </view>
       </view>
     </view>
-    <view a:for="{{ item }}" a:for-index="jndex" a:for-item="jtem" class="item-body-child">
+    <view
+      a:for="{{ item }}"
+      a:for-index="jndex"
+      a:for-item="jtem"
+      class="item-body-child"
+    >
       <view a:if="{{ activeCards[index] }}" class="item-bus-line-detail">
-        <view class="item-bus-label" style="{{`${jndex ? '' : 'visibility: hidden'}`}}">
+        <view
+          class="item-bus-label"
+          style="{{`${jndex ? '' : 'visibility: hidden'}`}}"
+        >
           {{jndex}}
         </view>
         <steps

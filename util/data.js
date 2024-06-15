@@ -13,7 +13,7 @@ export const busEndAddresses = [
   "高教一期",
   "恩济花园",
   "高教二期",
-  "丰谭中学"
+  "丰谭中学",
 ];
 
 export const busStaticEndAddresses = [
@@ -34,7 +34,7 @@ export const busStaticEndAddresses = [
   "高教一期",
   "恩济花园",
   "高教二期",
-  "丰谭中学"
+  "丰谭中学",
 ];
 
 export const shuttleEndAddresses = [
@@ -56,28 +56,29 @@ export const shuttleEndAddresses = [
 
 export function getStart() {
   my.alert({
-    title: '欢迎使用「校车行」',
-    content: '本产品旨在为浙大师生提供便捷、智能的校车出行服务，使用过程中不会存储用户敏感信息。',
-    buttonText: '启动',
+    title: "欢迎使用「校车行」",
+    content:
+      "本产品旨在为浙大师生提供便捷、智能的校车出行服务，使用过程中不会存储用户敏感信息。",
+    buttonText: "启动",
     success: () => {
       my.setStorageSync({
-        key: 'noticeShow',
+        key: "noticeShow",
         data: true,
       });
-    }
+    },
   });
 }
 
 export function dataAlert() {
   my.alert({
-    title: '温馨提示',
-    content: '班次运行时偶尔会出现变化，请以实际运行和学校通知为准。',
-    buttonText: '我已知晓',
+    title: "温馨提示",
+    content: "班次运行时偶尔会出现变化，请以实际运行和学校通知为准。",
+    buttonText: "我已知晓",
     success: () => {
       my.setStorageSync({
-        key: 'dataAlert',
+        key: "dataAlert",
         data: true,
       });
-    }
+    },
   });
 }

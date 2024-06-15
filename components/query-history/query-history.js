@@ -7,18 +7,18 @@ Component({
     queryHistory: [],
   },
   observers: {
-    'appendedItem': function(history) {
+    appendedItem: function (history) {
       if (!history.startAddress || !history.endAddress) return;
       this.onAppendHistoryItem(history);
-    }
+    },
   },
   props: {
     appendedItem: {},
-    onSetHistoryAddress: () => {}
+    onSetHistoryAddress: () => {},
   },
   didMount() {
     const res = my.getStorageSync({
-      key: 'queryHistory'
+      key: "queryHistory",
     });
     if (res.success) {
       this.setData({
@@ -29,7 +29,7 @@ Component({
   didUpdate() {},
   didUnmount() {
     my.setStorageSync({
-      key: 'queryHistory',
+      key: "queryHistory",
       data: this.data.queryHistory,
     });
   },
@@ -47,15 +47,21 @@ Component({
     },
     onClear() {
       this.setData({
-        queryHistory: []
+        queryHistory: [],
       });
     },
     onAppendHistoryItem(item) {
-      const history = this.data.queryHistory.filter(line => !(line.startAddress === item.startAddress && line.endAddress === item.endAddress));
+      const history = this.data.queryHistory.filter(
+        (line) =>
+          !(
+            line.startAddress === item.startAddress &&
+            line.endAddress === item.endAddress
+          ),
+      );
       history.unshift(item);
       this.setData({
         queryHistory: history,
       });
-    }
+    },
   },
 });

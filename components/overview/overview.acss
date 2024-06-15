@@ -62,7 +62,6 @@
   font-size: 26rpx;
 }
 
-
 .item-destination-title-name {
   height: 32rpx;
   font-size: 30rpx;
@@ -89,7 +88,7 @@
 }
 
 .item-destination-cancel:before {
-  content: '\2716';
+  content: "\2716";
   color: gray;
 }
 
@@ -109,7 +108,7 @@
   width: 40rpx;
   height: 40rpx;
   margin-left: 5rpx;
-  background-image: url('/images/arrow.svg');
+  background-image: url("/images/arrow.svg");
   background-size: contain;
 }
 
@@ -124,7 +123,7 @@
   width: 40rpx;
   height: 40rpx;
   margin-right: 10rpx;
-  background-image: url('/images/switch.svg');
+  background-image: url("/images/switch.svg");
   background-size: contain;
 }
 
@@ -150,16 +149,13 @@
   bottom: 80rpx;
   font-size: 26rpx;
   white-space: nowrap;
-  
 }
-
 
 .item-stop-caption {
   position: absolute;
   bottom: 110rpx;
   font-size: 26rpx;
   white-space: nowrap;
-  
 }
 
 .item-bus-icon {
@@ -169,21 +165,21 @@
 }
 
 .item-bus-icon.bus {
-  background-image: url('/images/bus.svg');
+  background-image: url("/images/bus.svg");
   width: 120rpx;
   height: 120rpx;
   translate: 0 40rpx;
 }
 
 .item-bus-icon.babybus {
-  background-image: url('/images/babybus.svg');
+  background-image: url("/images/babybus.svg");
   width: 100rpx;
   height: 100rpx;
   translate: 0 25rpx;
 }
 
 .item-bus-icon.shuttle {
-  background-image: url('/images/shuttle.svg');
+  background-image: url("/images/shuttle.svg");
   width: 90rpx;
   height: 90rpx;
   translate: 0 20rpx;
@@ -191,13 +187,13 @@
 }
 
 .item-bus-icon-flag {
-  background-image: url('/images/flag.svg');
+  background-image: url("/images/flag.svg");
   width: 60rpx;
   height: 60rpx;
 }
 
 .item-bus-icon-human-walk {
-  background-image: url('/images/walk.svg');
+  background-image: url("/images/walk.svg");
   width: 60rpx;
   height: 60rpx;
 }
@@ -227,7 +223,6 @@
   /* TODO: adapt to size */
   height: 920rpx;
   overflow: auto;
-  
 }
 
 .item-bus-remark {

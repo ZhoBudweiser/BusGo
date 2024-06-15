@@ -6,7 +6,6 @@
   margin-left: 20rpx;
 }
 
-
 .row {
   display: flex;
   align-items: center;
@@ -47,37 +46,37 @@
   flex: 5;
 }
 
-/* 创建起点和终点的圆形 */  
-.row::before {  
-  content: '';  
-  position: absolute; 
-  display: block; 
-  width: 20rpx;  
-  height: 20rpx;  
+/* 创建起点和终点的圆形 */
+.row::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 20rpx;
+  height: 20rpx;
   border-radius: 50%;
-}  
-  
-/* 起点圆形 */  
+}
+
+/* 起点圆形 */
 .row-start::before {
-  background-color: green;  
-}  
-  
-/* 终点圆形 */  
+  background-color: green;
+}
+
+/* 终点圆形 */
 .row-end::before {
-  background-color: red;  
-}  
-  
-/* 创建连接线 */  
-.picker-address::before {  
-  content: '';  
-  position: absolute;  
-  width: 4rpx;  
-  height: 40rpx;  
-  background-color: gray;  
-  top: 50%;  
-  left: 35rpx;  
-  transform: translateY(-20rpx);  
-}  
+  background-color: red;
+}
+
+/* 创建连接线 */
+.picker-address::before {
+  content: "";
+  position: absolute;
+  width: 4rpx;
+  height: 40rpx;
+  background-color: gray;
+  top: 50%;
+  left: 35rpx;
+  transform: translateY(-20rpx);
+}
 
 .picker-operation {
   display: flex;
@@ -91,7 +90,7 @@
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
-  background-image: url('/images/switch.svg');
+  background-image: url("/images/switch.svg");
   background-size: contain;
   transform: rotateZ(90deg);
 }
@@ -101,7 +100,7 @@
   margin-top: 40rpx;
   width: 40rpx;
   height: 40rpx;
-  background-image: url('/images/done.svg');
+  background-image: url("/images/done.svg");
   background-size: contain;
 }
 

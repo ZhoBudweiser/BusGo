@@ -6,7 +6,7 @@
   "window": {
     "defaultTitle": "校车行",
     "v8WorkerPlugins": "gcanvas_runtime",
-    "allowsBounceVertical":"NO"
+    "allowsBounceVertical": "NO"
   },
   "behavior": {
     "requestReferrerStrategy": "page",

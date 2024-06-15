@@ -1,21 +1,23 @@
-import debounce from '/util/debounce';
+import debounce from "/util/debounce";
 
-const order = ['blue', 'red', 'green', 'yellow'];
+const order = ["blue", "red", "green", "yellow"];
 
 Component({
   data: {
-    toView: 'red',
+    toView: "red",
     scrollTop: 100,
     containerHeight: 300,
   },
   didMount() {
     this.scroll = debounce(this.scroll.bind(this), 100);
     my.createSelectorQuery()
-      .selectViewport().boundingClientRect().exec((ret) => {
+      .selectViewport()
+      .boundingClientRect()
+      .exec((ret) => {
         const height = ret[0].height;
-        console.log(height)
+        console.log(height);
         this.setData({
-          containerHeight: height // TODO: adapt to above height
+          containerHeight: height, // TODO: adapt to above height
         });
       });
   },
@@ -30,9 +32,7 @@ Component({
       scrollTop: e.detail.scrollTop,
     });
   },
-  scrollEnd() {
-
-  },
+  scrollEnd() {},
   scrollToTop(e) {
     console.log(e);
     this.setData({

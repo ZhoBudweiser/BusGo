@@ -5,11 +5,11 @@
     latitude="{{latitude}}"
     stops="{{stops}}"
     lines="{{busLines}}"
-    selectedStopName={{selectedStopName}}
+    selectedStopName="{{selectedStopName}}"
     selectedStop="{{selectedStop}}"
     selectedBusLine="{{selectedBusLine}}"
-    showPath={{showPath}}
-    showPosition={{showPosition}}
+    showPath="{{showPath}}"
+    showPosition="{{showPosition}}"
     onSelectedStop="onSelectedStop"
     onSetTimeCost="onSetTimeCost"
   >
@@ -20,16 +20,16 @@
         <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
         <text class="placeholder">搜索你想了解的地方</text>
       </view>
-      <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
+      <tabs activeTab="{{activeIndex}}" onActive="onActive"></tabs>
       <overview
-        activeTab={{activeIndex}}
-        state={{currentState}}
-        busLines={{busLines}}
-        shuttleLines={{shuttleLines}}
-        destinations={{stops}}
-        nearest_stop_id={{selectedStop}}
-        nearest_stop_name={{selectedStopName}}
-        time_left_human_walk={{timeCost}}
+        activeTab="{{activeIndex}}"
+        state="{{currentState}}"
+        busLines="{{busLines}}"
+        shuttleLines="{{shuttleLines}}"
+        destinations="{{stops}}"
+        nearest_stop_id="{{selectedStop}}"
+        nearest_stop_name="{{selectedStopName}}"
+        time_left_human_walk="{{timeCost}}"
         onClearTimer="onClearTimer"
         onActive="onActive"
         onSetBusLines="onSetBusLines"

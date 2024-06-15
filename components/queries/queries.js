@@ -13,10 +13,10 @@ Component({
     observers: true,
   },
   observers: {
-    'lines': function (lines) {
+    lines: function (lines) {
       console.log(lines);
       this.setData({
-        activeCards: lines.map(_ => 0),
+        activeCards: lines.map((_) => 0),
         cardHeights: getCardHeights(lines),
       });
     },

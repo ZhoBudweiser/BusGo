@@ -37,6 +37,6 @@
 
 .tabs-bar-tab-title.active {
   font-weight: bold;
-  color: #1371F7;
-  border-bottom: 3px solid #1371F7;
+  color: #1371f7;
+  border-bottom: 3px solid #1371f7;
 }

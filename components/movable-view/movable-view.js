@@ -3,38 +3,43 @@ Component({
     currentState: 0,
     currentY: 0,
     stateHeights: [],
-    stateBoders: []
+    stateBoders: [],
   },
   props: {
-    onStateChange: () => {}
+    onStateChange: () => {},
   },
   didMount() {
     let contentHeight;
     my.createSelectorQuery()
-      .select('#content').boundingClientRect().exec((ret) => {
+      .select("#content")
+      .boundingClientRect()
+      .exec((ret) => {
         contentHeight = ret[0].height;
         // console.log(contentHeight);
         this.setData({
-          contentHeight
+          contentHeight,
         });
-      })
+      });
     my.createSelectorQuery()
-      .selectViewport().boundingClientRect().exec((ret) => {
+      .selectViewport()
+      .boundingClientRect()
+      .exec((ret) => {
         const height = ret[0].height;
         this.setData({
           height,
           currentY: height - contentHeight,
           // currentY: 0,
           stateHeights: [0, height - contentHeight, height],
-          stateBoders: [(height - contentHeight) / 2, (height + (height - contentHeight) / 2) / 2],
+          stateBoders: [
+            (height - contentHeight) / 2,
+            (height + (height - contentHeight) / 2) / 2,
+          ],
         });
       });
   },
   methods: {
     onMove(e) {
-      const {
-        y
-      } = e.detail;
+      const { y } = e.detail;
       const newState = this.changeState(y);
       // console.log(this.data.currentY);
       this.props.onStateChange(newState);
@@ -51,6 +56,6 @@ Component({
         }
       }
       return 0;
-    }
-  }
+    },
+  },
 });

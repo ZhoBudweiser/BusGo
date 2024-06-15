@@ -25,18 +25,18 @@ Component({
     showPosition: false,
     lines: [],
     onSelectedStop: () => {},
-    onSetTimeCost: () => {}
+    onSetTimeCost: () => {},
   },
   observers: {
-    'stops': function () {
+    stops: function () {
       this.mapCtx.clearRoute();
       this.mapCtx.showsCompass({
-        isShowsCompass: true
+        isShowsCompass: true,
       });
       this.mapCtx.updateComponents({
         scale: 16,
       });
-      const stops = this.props.stops.map(item => {
+      const stops = this.props.stops.map((item) => {
         return {
           ...item,
           id: item.station_alias_no,
@@ -44,21 +44,25 @@ Component({
           longitude: item.station_long,
           width: 19,
           height: 31,
-          iconPath: this.props.selectedStop === item.station_alias_no ? '/images/mark_stop.png' : '/images/mark_bs.png',
+          iconPath:
+            this.props.selectedStop === item.station_alias_no
+              ? "/images/mark_stop.png"
+              : "/images/mark_bs.png",
           label: {
-            content: item.station_alias.replace(/.*校区(?=\S)/g, ''),
+            content: item.station_alias.replace(/.*校区(?=\S)/g, ""),
             color: "#a2a2a2",
             fontSize: 14,
             borderRadius: 3,
             bgColor: "#ffffff",
             padding: 5,
           },
-          markerLevel: 2
-        }
+          markerLevel: 2,
+        };
       });
-      this.data.stops_labels && this.mapCtx.changeMarkers({
-        remove: this.data.stops_labels,
-      });
+      this.data.stops_labels &&
+        this.mapCtx.changeMarkers({
+          remove: this.data.stops_labels,
+        });
       this.mapCtx.changeMarkers({
         add: stops,
       });
@@ -67,21 +71,21 @@ Component({
         display_mode: true,
       });
     },
-    'selectedStop': function () {
+    selectedStop: function () {
       this.mapCtx.clearRoute();
       let lat, lon;
-      const stops_labels = this.data.stops_labels.map(item => {
+      const stops_labels = this.data.stops_labels.map((item) => {
         if (item.id === this.props.selectedStop) {
           lat = item.latitude;
           lon = item.longitude;
           return {
             ...item,
-            iconPath: '/images/mark_stop.png'
-          }
+            iconPath: "/images/mark_stop.png",
+          };
         } else {
           return {
             ...item,
-            iconPath: '/images/mark_bs.png'
+            iconPath: "/images/mark_bs.png",
           };
         }
       });
@@ -91,22 +95,21 @@ Component({
         stop_lon: lon,
       });
       this.mapCtx.changeMarkers({
-        update: stops_labels
+        update: stops_labels,
       });
       this.mapCtx.updateComponents({
         longitude: lon,
         latitude: lat,
       });
     },
-    'selectedBusLine': function (bid) {
+    selectedBusLine: function (bid) {
       this.mapCtx.clearRoute();
-      const line = this.props.lines.filter(item => item.bid === bid);
-      if (line.length)
-        this.drawRoute(line[0].stations)
+      const line = this.props.lines.filter((item) => item.bid === bid);
+      if (line.length) this.drawRoute(line[0].stations);
     },
-    'lines': function () {
+    lines: function () {
       const iconPathSelection = (type) => {
-        switch(type) {
+        switch (type) {
           case "2":
             return "/images/map_shuttle.png";
           case "3":
@@ -118,24 +121,26 @@ Component({
           default:
             return "/images/map_bus.png";
         }
-      }
+      };
       const buses = [];
-      this.props.lines.forEach(item => {
+      this.props.lines.forEach((item) => {
         if (item.runBusInfo) {
           buses.push({
-            iconPath: item.runBusInfo[0].vehicleType ? iconPathSelection(item.runBusInfo[0].vehicleType) : '/images/map_bus.png',
-            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, '')*1767),
+            iconPath: item.runBusInfo[0].vehicleType
+              ? iconPathSelection(item.runBusInfo[0].vehicleType)
+              : "/images/map_bus.png",
+            id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, "") * 1767),
             latitude: Number(item.runBusInfo[0].py),
             longitude: Number(item.runBusInfo[0].px),
             width: 30,
             height: 40,
-            markerLevel: 3
+            markerLevel: 3,
           });
         }
       });
       this.drawBusPos(buses);
     },
-    'stop_lat, stop_lon, longitude, latitude': function () {
+    "stop_lat, stop_lon, longitude, latitude": function () {
       my.calculateRoute({
         startLat: this.props.latitude,
         startLng: this.props.longitude,
@@ -149,18 +154,22 @@ Component({
         },
       });
     },
-    'display_mode': function (mode) {
+    display_mode: function (mode) {
       if (mode) {
         this.mapCtx.changeMarkers({
-          add: this.data.stops_labels.filter(item => item.station_alias_no != this.props.selectedStop),
+          add: this.data.stops_labels.filter(
+            (item) => item.station_alias_no != this.props.selectedStop,
+          ),
         });
       } else {
         this.mapCtx.changeMarkers({
-          remove: this.data.stops_labels.filter(item => item.station_alias_no != this.props.selectedStop),
+          remove: this.data.stops_labels.filter(
+            (item) => item.station_alias_no != this.props.selectedStop,
+          ),
         });
       }
     },
-    'showPath': function (val) {
+    showPath: function (val) {
       if (val) {
         this.mapCtx.showRoute({
           startLat: this.props.latitude,
@@ -168,8 +177,9 @@ Component({
           endLat: this.data.stop_lat,
           endLng: this.data.stop_lon,
           zIndex: 4,
-          routeColor: '#FFB90F',
-          iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+          routeColor: "#FFB90F",
+          iconPath:
+            "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
           iconWidth: 10,
           routeWidth: 10,
           success: (res) => {},
@@ -181,21 +191,26 @@ Component({
         this.mapCtx.clearRoute();
       }
     },
-    'showPosition': function() {
+    showPosition: function () {
       this.mapCtx.moveToLocation({
         longitude: this.props.longitude,
         latitude: this.props.latitude,
       });
-    }
+    },
   },
   onInit() {
-    this.mapCtx = my.createMapContext('map');
+    this.mapCtx = my.createMapContext("map");
   },
   methods: {
     markertap(e) {
       // 手动消除点击班车触发的事件
-      if (/[\u4E00-\u9FFF]/.test(e.markerId) || (("" + e.markerId).length < 4 &&
-          e.markerId !== "233" && e.markerId !== "32")) return;
+      if (
+        /[\u4E00-\u9FFF]/.test(e.markerId) ||
+        (("" + e.markerId).length < 4 &&
+          e.markerId !== "233" &&
+          e.markerId !== "32")
+      )
+        return;
       if (e.markerId !== this.props.selectedStop) {
         this.mapCtx.clearRoute();
         this.props.onSelectedStop(e.markerId);
@@ -203,24 +218,24 @@ Component({
     },
     onSwitchMode() {
       this.setData({
-        display_mode: !this.data.display_mode
+        display_mode: !this.data.display_mode,
       });
     },
     onJumpNotice() {
       my.navigateTo({
-        url: '/pages/news/news',
+        url: "/pages/news/news",
       });
     },
     onJumpSearch() {
       my.navigateTo({
-        url: '/pages/search/search?start=' + this.props.selectedStopName,
+        url: "/pages/search/search?start=" + this.props.selectedStopName,
       });
     },
     drawRoute(stops) {
-      const points = stops.map(item => {
+      const points = stops.map((item) => {
         return {
           lng: item.station_long,
-          lat: item.station_lat
+          lat: item.station_lat,
         };
       });
       this.mapCtx.showRoute({
@@ -229,10 +244,11 @@ Component({
         endLat: stops[stops.length - 1].station_lat,
         endLng: stops[stops.length - 1].station_long,
         zIndex: 4,
-        searchType: 'drive',
+        searchType: "drive",
         throughPoints: points,
-        routeColor: '#FFB90F',
-        iconPath: "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+        routeColor: "#FFB90F",
+        iconPath:
+          "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
         iconWidth: 5,
         routeWidth: 5,
         success: (res) => {
@@ -253,11 +269,11 @@ Component({
           add: buses,
         });
         this.setData({
-          buses: buses
+          buses: buses,
         });
         return;
       }
-      buses.forEach(item => {
+      buses.forEach((item) => {
         this.mapCtx.translateMarker({
           markerId: item.id,
           destination: {
@@ -277,11 +293,11 @@ Component({
           },
           complete: () => {
             // console.log('complete end');
-          }
+          },
         });
       });
       this.setData({
-        buses: buses
+        buses: buses,
       });
     },
   },

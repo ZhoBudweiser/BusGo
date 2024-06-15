@@ -7,16 +7,17 @@
     markers="{{markers}}"
     onMarkerTap="markertap"
     show-location
-    style="width: 100%; height: 100%;"
+    style="width: 100%; height: 100%"
   >
   </map>
-  <view class="float-icon see-mode" onTap="onSwitchMode" style="{{ `background-image: url(${display_mode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}">
-
+  <view
+    class="float-icon see-mode"
+    onTap="onSwitchMode"
+    style="{{ `background-image: url(${display_mode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}"
+  >
   </view>
   <!-- <view class="float-icon news-notice" onTap="onJumpNotice">
 
   </view> -->
-  <view class="float-icon loc-search" onTap="onJumpSearch">
-
-  </view>
+  <view class="float-icon loc-search" onTap="onJumpSearch"> </view>
 </view>

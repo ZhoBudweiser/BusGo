@@ -1,11 +1,6 @@
-import {
-  fmtQueryResult,
-  fmtQueryArrayResult
-} from "/util/fmtUnit";
-import {
-  isObjectValueEqual
-} from "/util/queryhelper";
-import { dataAlert } from "/util/data"; 
+import { fmtQueryResult, fmtQueryArrayResult } from "/util/fmtUnit";
+import { isObjectValueEqual } from "/util/queryhelper";
+import { dataAlert } from "/util/data";
 
 Page({
   data: {
@@ -23,29 +18,29 @@ Page({
         throttle: false,
         throttleTimer: null,
       });
-    }
+    };
     if (this.data.throttleTimer) {
       clearTimeout(this.data.throttleTimer);
     }
     if (this.data.throttle) {
       my.showToast({
-        content: '查询过于频繁，\n请稍后再试',
+        content: "查询过于频繁，\n请稍后再试",
         duration: 2000,
       });
       this.setData({
-        throttleTimer: setTimeout(clearTimer, 6000)
+        throttleTimer: setTimeout(clearTimer, 6000),
       });
       my.hideLoading();
       return;
     } else {
       this.setData({
         throttle: true,
-        throttleTimer: setTimeout(clearTimer, 6000)
+        throttleTimer: setTimeout(clearTimer, 6000),
       });
     }
     if (isObjectValueEqual(info, this.data.queried)) {
       my.showToast({
-        content: '结果已给出，\n请更新查询',
+        content: "结果已给出，\n请更新查询",
         duration: 2000,
       });
       my.hideLoading();
@@ -60,11 +55,15 @@ Page({
         const queryResult = res.result.data;
         self.setData({
           lines: queryResult
-            .map(item => item.length ? fmtQueryArrayResult(info, item) : fmtQueryResult(info, item))
+            .map((item) =>
+              item.length
+                ? fmtQueryArrayResult(info, item)
+                : fmtQueryResult(info, item),
+            )
             .sort((l1, l2) => {
               const n1 = l1.sortNum ? l1.sortNum : l1[0].sortNum;
               const n2 = l2.sortNum ? l2.sortNum : l2[0].sortNum;
-              return n1 < n2 ? -1 : (n1 == n2 ? 0 : 1);
+              return n1 < n2 ? -1 : n1 == n2 ? 0 : 1;
             }),
         });
         my.hideLoading();
@@ -73,7 +72,7 @@ Page({
         });
         if (queryResult.length === 0) {
           my.showToast({
-            content: '未查询到班车信息',
+            content: "未查询到班车信息",
             duration: 2000,
           });
         }
@@ -81,12 +80,12 @@ Page({
       fail: function (err) {
         console.log(err);
         my.hideLoading();
-      }
+      },
     });
   },
   onSubmitQuery(info) {
     my.showLoading({
-      content: '查询中...'
+      content: "查询中...",
     });
     this.onSubmitQueryCloud(info);
     this.setData({
@@ -96,7 +95,7 @@ Page({
   },
   onSetHistoryAddress(history) {
     this.setData({
-      historyAddress: history
+      historyAddress: history,
     });
   },
   onLoad(query) {
@@ -108,7 +107,7 @@ Page({
       });
     }
     const data_res = my.getStorageSync({
-      key: 'dataAlert'
+      key: "dataAlert",
     });
     if (!data_res.data) {
       dataAlert();

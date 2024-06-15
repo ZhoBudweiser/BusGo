@@ -9,5 +9,5 @@ movable-area {
 movable-view {
   height: 220rpx;
   width: 100%;
-  pointer-events: auto; 
+  pointer-events: auto;
 }

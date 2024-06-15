@@ -19,23 +19,16 @@
       </picker>
     </view>
     <view class="picker-operation">
-      <view class="picker-switch" onTap="onSwitchAddress">
-
-      </view>
-      <view class="picker-submit" onTap="onSubmit">
-      </view>
+      <view class="picker-switch" onTap="onSwitchAddress"> </view>
+      <view class="picker-submit" onTap="onSubmit"> </view>
     </view>
   </view>
   <view class="picker-filter">
-    <view class="picker-option time" onTap="onTimePick">
-      {{startTime}}
-    </view>
+    <view class="picker-option time" onTap="onTimePick"> {{startTime}} </view>
     <view class="picker-option day" onTap="onDayPick">
       {{isWeekend ? "周末" : "工作日"}}
     </view>
-    <view class="picker-filter-title">
-      出发
-    </view>
+    <view class="picker-filter-title"> 出发 </view>
     <view class="picker-option div"></view>
     <view class="picker-option trans" onTap="onTransPick">
       {{canTrans ? "允许换乘" : "不允许换乘"}}

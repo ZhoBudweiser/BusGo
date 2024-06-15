@@ -63,7 +63,7 @@
   width: 30rpx;
   height: 30rpx;
   margin-left: 5rpx;
-  background-image: url('/images/arrow.svg');
+  background-image: url("/images/arrow.svg");
   background-size: contain;
   color: gray;
 }
@@ -80,7 +80,7 @@
 }
 
 .history-delete:before {
-  content: '\2716';
+  content: "\2716";
   color: gray;
 }
 
@@ -102,7 +102,7 @@
   margin: 10rpx;
   width: 40rpx;
   height: 40rpx;
-  background-image: url('/images/trash.svg');
+  background-image: url("/images/trash.svg");
   background-size: contain;
   color: gray;
 }

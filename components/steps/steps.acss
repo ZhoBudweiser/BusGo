@@ -22,23 +22,23 @@
   margin: 6px 0;
   height: 1px;
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
 
 .am-hor-step-line.is-active {
   background-color: #1677ff;
-  background-color: var(--am-steps-color, #1677ff)
+  background-color: var(--am-steps-color, #1677ff);
 }
 
 .am-hor-step-line.is-active-last {
   width: 150%;
   z-index: 9;
   background-color: #1677ff;
-  background-color: var(--am-steps-color, #1677ff)
+  background-color: var(--am-steps-color, #1677ff);
 }
 
 .am-hor-step-line.is-last {
-  background-color: transparent
+  background-color: transparent;
 }
 
 .am-hor-step-icon {
@@ -52,27 +52,27 @@
   border-radius: 50vh;
   border-radius: var(--am-steps-icon-border-radius, 50vh);
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
 
 .am-hor-step-icon.is-active {
   background-color: #1677ff;
-  background-color: var(--am-steps-color, #1677ff)
+  background-color: var(--am-steps-color, #1677ff);
 }
 
 .am-hor-step-icon.is-flag {
   background-color: #f7ac16;
-  background-color: var(--am-steps-color, #f7ac16)
+  background-color: var(--am-steps-color, #f7ac16);
 }
 
 .am-hor-step-icon.is-start {
   background-color: green;
-  background-color: var(--am-steps-color, green)
+  background-color: var(--am-steps-color, green);
 }
 
 .am-hor-step-icon.is-end {
   background-color: red;
-  background-color: var(--am-steps-color, red)
+  background-color: var(--am-steps-color, red);
 }
 
 .am-hor-step-text {
@@ -97,7 +97,6 @@
   transform-origin: left top;
   transform: rotate(-45deg);
   white-space: nowrap;
-
 }
 
 .am-hor-step-description {
@@ -105,17 +104,17 @@
   font-size: 24rpx;
   font-size: var(--am-steps-horizontal-description-size, 24rpx);
   color: #999;
-  color: var(--am-steps-description-color, #999)
+  color: var(--am-steps-description-color, #999);
 }
 
 .am-vertical-steps {
   padding: 20px 30px 20px 30px;
   background-color: #fff;
-  background-color: var(--am-steps-bg-color, #fff)
+  background-color: var(--am-steps-bg-color, #fff);
 }
 
 .am-vertical-step {
-  display: flex
+  display: flex;
 }
 
 .am-vertical-step-left {
@@ -125,7 +124,7 @@
   justify-content: center;
   align-items: center;
   width: 24px;
-  margin-right: 20px
+  margin-right: 20px;
 }
 
 .am-vertical-step-line {
@@ -133,23 +132,23 @@
   top: 10px;
   width: 1px;
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
 
 .am-vertical-step-line-top {
-  flex: 1
+  flex: 1;
 }
 
 .am-vertical-step-line-bottom {
   height: 30px;
   width: 1px;
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
 
 .am-vertical-step-line.is-active {
   background-color: #1677ff;
-  background-color: var(--am-steps-color, #1677ff)
+  background-color: var(--am-steps-color, #1677ff);
 }
 
 .am-vertical-step-icon {
@@ -158,24 +157,24 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50vh;
-  border-radius: var(--am-steps-icon-border-radius, 50vh)
+  border-radius: var(--am-steps-icon-border-radius, 50vh);
 }
 
 .am-vertical-step-active-image,
 .am-vertical-step-image {
   width: 24px;
   border-radius: 50vh;
-  border-radius: var(--am-steps-icon-border-radius, 50vh)
+  border-radius: var(--am-steps-icon-border-radius, 50vh);
 }
 
 .am-vertical-step-active-image {
   background-color: #1677ff;
-  background-color: var(--am-steps-color, #1677ff)
+  background-color: var(--am-steps-color, #1677ff);
 }
 
 .am-vertical-step-image {
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
 
 .am-vertical-step-icon.is-normal {
@@ -183,23 +182,23 @@
   background-color: #e5e5e5;
   background-color: var(--am-steps-bg-color, #e5e5e5);
   width: 8px;
-  height: 8px
+  height: 8px;
 }
 
 .am-vertical-step-icon.is-active,
 .am-vertical-step-icon.is-fail {
   display: flex;
   background-color: #fff;
-  background-color: var(--am-steps-bg-color, #fff)
+  background-color: var(--am-steps-bg-color, #fff);
 }
 
 .am-vertical-step-right {
   flex: 1;
-  margin-bottom: 12px
+  margin-bottom: 12px;
 }
 
 .am-vertical-step-right-last {
-  margin-bottom: 0
+  margin-bottom: 0;
 }
 
 .am-vertical-step-title {
@@ -207,28 +206,28 @@
   font-size: 17px;
   font-size: var(--am-steps-vertical-title-size, 17px);
   color: #333;
-  color: var(--am-steps-title-color, #333)
+  color: var(--am-steps-title-color, #333);
 }
 
 .am-vertical-step-title.is-active {
   color: #1677ff;
-  color: var(--am-steps-vertical-title-active-color, #1677ff)
+  color: var(--am-steps-vertical-title-active-color, #1677ff);
 }
 
 .am-vertical-step-title.is-fail {
   color: #ff3b30;
-  color: var(--am-steps-vertical-warning-color, #ff3b30)
+  color: var(--am-steps-vertical-warning-color, #ff3b30);
 }
 
 .am-vertical-step-description {
   font-size: 15px;
   font-size: var(--am-steps-vertical-description-size, 15px);
   color: #999;
-  color: var(--am-steps-description-color, #999)
+  color: var(--am-steps-description-color, #999);
 }
 
 .am-vertical-placeholder {
-  height: 20px
+  height: 20px;
 }
 
 .am-vertical-placeholder-line {
@@ -238,5 +237,5 @@
   height: 100%;
   width: 1px;
   background-color: #e5e5e5;
-  background-color: var(--am-steps-bg-color, #e5e5e5)
+  background-color: var(--am-steps-bg-color, #e5e5e5);
 }
