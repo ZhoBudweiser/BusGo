@@ -10,7 +10,6 @@ import { getStart } from "/util/data";
 Page({
   data: {
     activeIndex: 0,
-    currentState: 1,
     busLines: [],
     shuttleLines: [],
     queriedLines: [],
@@ -107,11 +106,6 @@ Page({
   onSelectedStop(id) {
     this.setData({
       selectedStop: id,
-    });
-  },
-  onStateChange(s) {
-    this.setData({
-      currentState: s,
     });
   },
   onShow() {

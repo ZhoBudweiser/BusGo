@@ -5,7 +5,7 @@ Component({
     shadow: false,
   },
   props: {
-    tabs: ["校区间", "校内"],
+    tabs: ["校区间", "校区内"],
     activeTab: 1,
     onActive: () => {
       console.log("dd");

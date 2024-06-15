@@ -21,7 +21,7 @@
   flex-direction: column;
 }
 
-.searchbar {
+.touchbar {
   margin: 10rpx auto;
   height: 92rpx;
   width: 50%;

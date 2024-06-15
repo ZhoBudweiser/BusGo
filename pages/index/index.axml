@@ -14,16 +14,15 @@
     onSetTimeCost="onSetTimeCost"
   >
   </schoolmap>
-  <movable class="previa" onStateChange="onStateChange">
+  <movable class="previa">
     <view id="content">
-      <view class="searchbar">
+      <view class="touchbar">
         <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
         <text class="placeholder">搜索你想了解的地方</text>
       </view>
       <tabs activeTab="{{activeIndex}}" onActive="onActive"></tabs>
       <overview
         activeTab="{{activeIndex}}"
-        state="{{currentState}}"
         busLines="{{busLines}}"
         shuttleLines="{{shuttleLines}}"
         destinations="{{stops}}"
