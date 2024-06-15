@@ -1,13 +1,4 @@
 <view class="container">
-  <!-- <notice
-    class="notice"
-    show="{{noticeShow}}"
-    type="active"
-    mode="closable"
-    onClick="noticeClick"
-  >
-    班车调整|关于调整元旦期间班车运行的通知
-  </notice> -->
   <schoolmap
     class="schoolmap"
     longitude="{{longitude}}"
@@ -25,7 +16,10 @@
   </schoolmap>
   <movable class="previa" onStateChange="onStateChange">
     <view id="content">
-      <searchbar></searchbar>
+      <view class="searchbar">
+        <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
+        <text class="placeholder">搜索你想了解的地方</text>
+      </view>
       <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
       <overview
         activeTab={{activeIndex}}

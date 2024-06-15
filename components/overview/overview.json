@@ -3,7 +3,6 @@
   "styleIsolation": "apply-shared",
   "usingComponents": {
     "steps": "/components/steps/steps",
-    "progress-ring": "/components/progress/progress",
     "scroll": "/components/scroll-view/scroll-view",
     "footer": "/components/footer/index"
   }

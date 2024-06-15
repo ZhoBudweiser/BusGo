@@ -15,6 +15,4 @@ App({
       return my.fncontext;
     }
   },
-  onShow(options) {
-  },
 });
