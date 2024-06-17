@@ -148,14 +148,9 @@ Page({
       selectedBusLine: bid,
     });
   },
-  onSetShowPath() {
+  onFlip(field) {
     this.setData({
-      showPath: !this.data.showPath,
-    });
-  },
-  onSetShowPosition() {
-    this.setData({
-      showPosition: !this.data.showPosition,
+      [field]: !this.data[field],
     });
   },
   onRollback() {
@@ -190,6 +185,12 @@ Page({
       getStart();
     }
   },
+  onUnload() {
+    my.setStorageSync({
+      key: "stationsBuffers",
+      data: this.data.stationsBuffers,
+    });
+  },
   onShareAppMessage() {
     // 返回自定义分享信息
     return {
@@ -197,11 +198,5 @@ Page({
       desc: "智慧校园出行助手",
       path: "pages/index/index",
     };
-  },
-  onUnload() {
-    my.setStorageSync({
-      key: "stationsBuffers",
-      data: this.data.stationsBuffers,
-    });
   },
 });

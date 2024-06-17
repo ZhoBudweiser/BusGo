@@ -41,8 +41,7 @@ Component({
     onActive: () => {},
     onSetBusLines: () => {},
     onSetSelectedBusLine: () => {},
-    onSetShowPosition: () => {},
-    onSetShowPath: () => {},
+    onFlip: () => {},
     onRollback: () => {},
   },
   observers: {
@@ -163,10 +162,10 @@ Component({
       });
     },
     onTapFlag() {
-      this.props.onSetShowPath();
+      this.props.onFlip("showPath");
     },
     onTapHuman() {
-      this.props.onSetShowPosition();
+      this.props.onFlip("showPosition");
     },
     onToggleCard(e) {
       const i = e.currentTarget.dataset.i;

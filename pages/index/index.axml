@@ -33,8 +33,7 @@
         onActive="onActive"
         onSetBusLines="onSetBusLines"
         onSetSelectedBusLine="onSetSelectedBusLine"
-        onSetShowPosition="onSetShowPosition"
-        onSetShowPath="onSetShowPath"
+        onFlip="onFlip"
         onRollback="onRollback"
       >
       </overview>
