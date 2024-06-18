@@ -1,4 +1,4 @@
-export default function debounce(fn, wait) {
+export function debounce(fn, wait) {
   var timeout;
   return function () {
     var ctx = this,
@@ -8,4 +8,10 @@ export default function debounce(fn, wait) {
       fn.apply(ctx, args);
     }, wait);
   };
+}
+
+export function flip(client, field) {
+  client.setData({
+    [field]: !client.data[field],
+  });
 }

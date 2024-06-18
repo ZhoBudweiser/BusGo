@@ -1,5 +1,6 @@
 import { busStaticEndAddresses } from "/util/data";
 import { timeFormat } from "/util/fmtUnit";
+import { flip } from "/util/setters";
 
 Component({
   options: {
@@ -104,14 +105,10 @@ Component({
       });
     },
     onDayPick() {
-      this.setData({
-        isWeekend: !this.data.isWeekend,
-      });
+      flip(this, "isWeekend");
     },
     onTransPick() {
-      this.setData({
-        canTrans: !this.data.canTrans,
-      });
+      flip(this, "canTrans");
     },
     onSubmit() {
       if (this.data.startName === "" || this.data.endName === "") {

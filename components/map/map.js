@@ -1,3 +1,4 @@
+import { flip } from "/util/setters";
 import { shttleChange } from "/util/shuttlehelper";
 const data_longitude = 120.090178;
 const data_latitude = 30.303975;
@@ -217,9 +218,7 @@ Component({
       }
     },
     onSwitchMode() {
-      this.setData({
-        display_mode: !this.data.display_mode,
-      });
+      flip(this, "display_mode");
     },
     onJumpNotice() {
       my.navigateTo({

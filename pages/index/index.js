@@ -6,6 +6,7 @@ import {
   getFormatedShuttleLines,
 } from "/util/fmtUnit";
 import { getStart } from "/util/data";
+import { flip } from "/util/setters";
 
 Page({
   data: {
@@ -149,9 +150,7 @@ Page({
     });
   },
   onFlip(field) {
-    this.setData({
-      [field]: !this.data[field],
-    });
+    flip(this, field);
   },
   onRollback() {
     this.setData({

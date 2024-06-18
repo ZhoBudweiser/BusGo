@@ -1,6 +1,7 @@
 import { busEndAddresses, shuttleEndAddresses } from "/util/data";
 import { toCampus } from "/util/fmtUnit";
 import { getAvailableBusLineByStart } from "/util/queryhelper";
+import { flip } from "/util/setters";
 import { findShttleLines } from "/util/shuttlehelper";
 
 const calTimeToPercentage = (t) => {
@@ -136,11 +137,9 @@ Component({
           } else {
             this.props.onSetSelectedBusLine(this.props.busLines[i].bid);
           }
-          this.setData({ showRoute: !this.data.showRoute });
+          flip(this, "showRoute");
         }
-        this.setData({
-          showTime: !this.data.showTime,
-        });
+        flip(this, "showTime");
       } else {
         this.setData({
           activeTimeIndex: i,

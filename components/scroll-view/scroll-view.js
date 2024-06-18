@@ -1,4 +1,4 @@
-import debounce from "/util/debounce";
+import { debounce } from "/util/setters.js";
 
 const order = ["blue", "red", "green", "yellow"];
 
@@ -32,7 +32,7 @@ Component({
       scrollTop: e.detail.scrollTop,
     });
   },
-  scrollEnd() {},
+  scrollEnd() { },
   scrollToTop(e) {
     console.log(e);
     this.setData({
