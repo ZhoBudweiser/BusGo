@@ -16,8 +16,10 @@ Component({
     observers: true,
   },
   props: {
-    longitude: data_longitude,
-    latitude: data_latitude,
+    position: {
+      longitude: data_longitude,
+      latitude: data_latitude,
+    },
     stops: [],
     selectedStopName: "",
     selectedStop: "0",
@@ -143,8 +145,8 @@ Component({
     },
     "stop_lat, stop_lon, longitude, latitude": function () {
       my.calculateRoute({
-        startLat: this.props.latitude,
-        startLng: this.props.longitude,
+        startLat: this.props.position.latitude,
+        startLng: this.props.position.longitude,
         endLat: this.data.stop_lat,
         endLng: this.data.stop_lon,
         success: (res) => {
@@ -173,8 +175,8 @@ Component({
     showPath: function (val) {
       if (val) {
         this.mapCtx.showRoute({
-          startLat: this.props.latitude,
-          startLng: this.props.longitude,
+          startLat: this.props.position.latitude,
+          startLng: this.props.position.longitude,
           endLat: this.data.stop_lat,
           endLng: this.data.stop_lon,
           zIndex: 4,
@@ -194,8 +196,8 @@ Component({
     },
     showPosition: function () {
       this.mapCtx.moveToLocation({
-        longitude: this.props.longitude,
-        latitude: this.props.latitude,
+        longitude: this.props.position.longitude,
+        latitude: this.props.position.latitude,
       });
     },
   },

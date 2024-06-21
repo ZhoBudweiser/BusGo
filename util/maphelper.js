@@ -111,8 +111,10 @@ const autoLocate = (parm) => {
     type: 0,
     success: (res) => {
       client.setData({
-        longitude: res.longitude,
-        latitude: res.latitude,
+        position: {
+          longitude: res.longitude,
+          latitude: res.latitude,
+        }
       });
     },
     fail: (res) => {
@@ -136,8 +138,10 @@ export const locate = (client, activeIndex) => {
   authGuideLocation().then((res) => {
     const setting = (lon, lat) => {
       client.setData({
-        longitude: lon,
-        latitude: lat,
+        position: {
+          longitude: lon,
+          latitude: lat,
+        }
       });
       if (activeIndex === 0) {
         getBusStops(client, lat, lon);

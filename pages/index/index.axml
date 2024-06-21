@@ -1,8 +1,7 @@
 <view class="container">
   <schoolmap
     class="schoolmap"
-    longitude="{{longitude}}"
-    latitude="{{latitude}}"
+    position="{{position}}"
     stops="{{stops}}"
     lines="{{busLines}}"
     selectedStopName="{{selectedStopName}}"

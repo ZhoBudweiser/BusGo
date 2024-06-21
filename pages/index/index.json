@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "scroll":"/components/scroll-view/scroll-view",
     "schoolmap":"/components/map/map",
     "tabs": "/components/tabs/tabs",
     "overview": "/components/overview/overview",

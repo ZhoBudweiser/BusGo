@@ -15,8 +15,10 @@ Page({
     shuttleLines: [],
     queriedLines: [],
     queryFrequency: 20000,
-    longitude: 120.090178,
-    latitude: 30.303975,
+    position: {
+      longitude: 120.090178,
+      latitude: 30.303975,
+    },
     selectedStop: "0",
     selectedStopName: "",
     selectedBusLine: "-1",
@@ -61,8 +63,8 @@ Page({
       if (!curval || !curval.length) return;
       const stopid = getNearestStop(
         curval,
-        this.data.latitude,
-        this.data.longitude,
+        this.data.position.latitude,
+        this.data.position.longitude,
       );
       this.setData({
         selectedStop: stopid,
