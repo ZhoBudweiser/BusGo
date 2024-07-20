@@ -44,7 +44,7 @@ export function findShttleLines(client) {
 }
 
 export function findShttleLinesByStartOnly(client) {
-  const startId = client.data.selectedStop;
+  const startId = client.data.selectedStopId;
   const lines = client.data.shuttleLines.filter(
     (item) =>
       item.station_list.findIndex(

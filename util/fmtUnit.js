@@ -111,12 +111,12 @@ export const toCampus = (name) => {
 const fmtBusLine = async function (client, item) {
   try {
     let stations;
-    if (client.data.stationsBuffers.hasOwnProperty(item.bid)) {
-      stations = client.data.stationsBuffers[item.bid];
+    if (client.data.stationsBuffer.hasOwnProperty(item.bid)) {
+      stations = client.data.stationsBuffer[item.bid];
     } else {
       stations = await queryBusStopsByBid(item.bid);
       stations = stations.data.data;
-      client.data.stationsBuffers[item.bid] = stations;
+      client.data.stationsBuffer[item.bid] = stations;
     }
     return {
       ...item,

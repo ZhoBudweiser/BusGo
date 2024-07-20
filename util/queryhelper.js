@@ -222,7 +222,7 @@ export const queryRunInfo = async (client, item) => {
     dataType: "json",
     data: {
       lid: item.bid,
-      stationAliasNo: client.data.selectedStop,
+      stationAliasNo: client.data.selectedStopId,
     },
     success: (res) => res,
     fail: function (error) {
@@ -268,15 +268,15 @@ export const setTimer = (client) => {
   if (client.data.activeIndex === 0) {
     queryBusLinesByStop({
       bid: "",
-      stopId: client.data.selectedStop,
+      stopId: client.data.selectedStopId,
       obj: client,
     });
     client.timer = setInterval(
       queryBusLinesByStop,
-      client.data.queryFrequency,
+      client.data.sysQueryFrequency,
       {
         bid: "",
-        stopId: client.data.selectedStop,
+        stopId: client.data.selectedStopId,
         obj: client,
       },
     );
@@ -286,7 +286,7 @@ export const setTimer = (client) => {
     });
     client.timer = setInterval(
       queryShttleLinesByStop,
-      client.data.queryFrequency,
+      client.data.sysQueryFrequency,
       {
         obj: client,
       },

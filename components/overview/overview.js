@@ -161,10 +161,10 @@ Component({
       });
     },
     onTapFlag() {
-      this.props.onFlip("showPath");
+      this.props.onFlip("showNavigationPath");
     },
     onTapHuman() {
-      this.props.onFlip("showPosition");
+      this.props.onFlip("moveToUserPosition");
     },
     onToggleCard(e) {
       const i = e.currentTarget.dataset.i;

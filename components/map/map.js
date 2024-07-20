@@ -22,10 +22,10 @@ Component({
     },
     stops: [],
     selectedStopName: "",
-    selectedStop: "0",
-    selectedBusLine: "-1",
-    showPath: false,
-    showPosition: false,
+    selectedStopId: "0",
+    selectedBusLineId: "-1",
+    showNavigationPath: false,
+    moveToUserPosition: false,
     lines: [],
     onSelectedStop: () => {},
     onSetTimeCost: () => {},
@@ -48,7 +48,7 @@ Component({
           width: 19,
           height: 31,
           iconPath:
-            this.props.selectedStop === item.station_alias_no
+            this.props.selectedStopId === item.station_alias_no
               ? "/images/mark_stop.png"
               : "/images/mark_bs.png",
           label: {
@@ -74,11 +74,11 @@ Component({
         display_mode: true,
       });
     },
-    selectedStop: function () {
+    selectedStopId: function () {
       this.mapCtx.clearRoute();
       let lat, lon;
       const stops_labels = this.data.stops_labels.map((item) => {
-        if (item.id === this.props.selectedStop) {
+        if (item.id === this.props.selectedStopId) {
           lat = item.latitude;
           lon = item.longitude;
           return {
@@ -105,7 +105,7 @@ Component({
         latitude: lat,
       });
     },
-    selectedBusLine: function (bid) {
+    selectedBusLineId: function (bid) {
       this.mapCtx.clearRoute();
       const line = this.props.lines.filter((item) => item.bid === bid);
       if (line.length) this.drawRoute(line[0].stations);
@@ -161,18 +161,18 @@ Component({
       if (mode) {
         this.mapCtx.changeMarkers({
           add: this.data.stops_labels.filter(
-            (item) => item.station_alias_no != this.props.selectedStop,
+            (item) => item.station_alias_no != this.props.selectedStopId,
           ),
         });
       } else {
         this.mapCtx.changeMarkers({
           remove: this.data.stops_labels.filter(
-            (item) => item.station_alias_no != this.props.selectedStop,
+            (item) => item.station_alias_no != this.props.selectedStopId,
           ),
         });
       }
     },
-    showPath: function (val) {
+    showNavigationPath: function (val) {
       if (val) {
         this.mapCtx.showRoute({
           startLat: this.props.position.latitude,
@@ -194,7 +194,7 @@ Component({
         this.mapCtx.clearRoute();
       }
     },
-    showPosition: function () {
+    moveToUserPosition: function () {
       this.mapCtx.moveToLocation({
         longitude: this.props.position.longitude,
         latitude: this.props.position.latitude,
@@ -214,7 +214,7 @@ Component({
           e.markerId !== "32")
       )
         return;
-      if (e.markerId !== this.props.selectedStop) {
+      if (e.markerId !== this.props.selectedStopId) {
         this.mapCtx.clearRoute();
         this.props.onSelectedStop(e.markerId);
       }

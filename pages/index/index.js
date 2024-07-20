@@ -14,21 +14,20 @@ Page({
     busLines: [],
     shuttleLines: [],
     queriedLines: [],
-    queryFrequency: 20000,
+    sysQueryFrequency: 20000,
     position: {
       longitude: 120.090178,
       latitude: 30.303975,
     },
-    selectedStop: "0",
+    selectedStopId: "0",
     selectedStopName: "",
-    selectedBusLine: "-1",
-    showPath: false,
-    showPosition: false,
+    selectedBusLineId: "-1",
+    showNavigationPath: false,
+    moveToUserPosition: false,
     stops: [],
     allstops: [],
-    destinations: [],
-    timeCost: -1,
-    stationsBuffers: {},
+    userTimeCost: -1,
+    stationsBuffer: {},
   },
   options: {
     observers: true,
@@ -42,16 +41,15 @@ Page({
       this.setData({
         busLines: [],
         queriedLines: [],
-        queryFrequency: 20000,
-        selectedStop: "",
+        sysQueryFrequency: 20000,
+        selectedStopId: "",
         selectedStopName: "",
-        selectedBusLine: "-1",
-        showPath: false,
-        showPosition: false,
+        selectedBusLineId: "-1",
+        showNavigationPath: false,
+        moveToUserPosition: false,
         stops: [],
         allstops: [],
-        destinations: [],
-        timeCost: -1,
+        userTimeCost: -1,
       });
       locate(this, index);
       my.setStorageSync({
@@ -67,13 +65,13 @@ Page({
         this.data.position.longitude,
       );
       this.setData({
-        selectedStop: stopid,
+        selectedStopId: stopid,
       });
     },
-    selectedStop: function () {
+    selectedStopId: function () {
       if (!this.data.allstops.length) return;
       const newStopName = this.data.allstops.filter(
-        (item) => item.station_alias_no === this.data.selectedStop,
+        (item) => item.station_alias_no === this.data.selectedStopId,
       )[0].station_alias;
       this.setData({
         selectedStopName: newStopName,
@@ -87,12 +85,12 @@ Page({
       if (!fmtLines) return;
       let freq = fmtLines.length ? 60000 : 600000;
       fmtLines.forEach((item) => item.runBusInfo !== null && (freq = 10000));
-      if (freq !== this.data.queryFrequency)
+      if (freq !== this.data.sysQueryFrequency)
         this.setData({
-          queryFrequency: freq,
+          sysQueryFrequency: freq,
         });
     },
-    queryFrequency: function () {
+    sysQueryFrequency: function () {
       setTimer(this);
     },
   },
@@ -103,12 +101,12 @@ Page({
   },
   onSetTimeCost(time) {
     this.setData({
-      timeCost: (time / 60).toFixed(1),
+      userTimeCost: (time / 60).toFixed(1),
     });
   },
   onSelectedStop(id) {
     this.setData({
-      selectedStop: id,
+      selectedStopId: id,
     });
   },
   onShow() {
@@ -148,7 +146,7 @@ Page({
   },
   onSetSelectedBusLine(bid) {
     this.setData({
-      selectedBusLine: bid,
+      selectedBusLineId: bid,
     });
   },
   onFlip(field) {
@@ -172,11 +170,11 @@ Page({
       });
     }
     const stations_res = my.getStorageSync({
-      key: "stationsBuffers",
+      key: "stationsBuffer",
     });
     if (stations_res.success) {
       this.setData({
-        stationsBuffers: stations_res.data,
+        stationsBuffer: stations_res.data,
       });
     }
     const news_res = my.getStorageSync({
@@ -188,8 +186,8 @@ Page({
   },
   onUnload() {
     my.setStorageSync({
-      key: "stationsBuffers",
-      data: this.data.stationsBuffers,
+      key: "stationsBuffer",
+      data: this.data.stationsBuffer,
     });
   },
   onShareAppMessage() {
