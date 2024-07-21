@@ -3,7 +3,7 @@ import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/xbc/";
 
-export async function getShuttleStations() {
+export async function getShuttleAllStations() {
   return await my.request({
     url: derivedURL + "getXbcLine",
     method: "POST",

@@ -3,9 +3,9 @@ import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
 
-export async function getBusStationsByPosition(lat, lon) {
+export async function getBusAllStations() {
   return await my.request({
-    url: derivedURL + "getNearStation?lat=" + lat + "&lon=" + lon,
+    url: derivedURL + "getNearStation?lat=30.30&lon=120.09",
     method: "POST",
     success: stripData,
     fail: (err) => popQueryError(err, "站点获取"),
@@ -13,7 +13,7 @@ export async function getBusStationsByPosition(lat, lon) {
   });
 }
 
-export async function getBusLinesByStart(startStation, endStation) {
+export async function getBusLinesByEnds(startStation, endStation) {
   return await my.request({
     url: derivedURL + "searchLine",
     method: "POST",
@@ -42,9 +42,9 @@ export async function getBusStationsByBusId(bid) {
   });
 }
 
-export async function getBusLinesByBusIdAndStationId(bid, sid) {
+export async function getBusLinesByStationId(sid) {
   return my.request({
-    url: derivedURL + "getBcByStationName?bid=" + bid + "&stationName=" + sid,
+    url: derivedURL + "getBcByStationName?bid=&stationName=" + sid,
     method: "POST",
     success: stripData,
     fail: (err) => popQueryError(err, "班车路线"),
