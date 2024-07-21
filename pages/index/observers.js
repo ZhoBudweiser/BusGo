@@ -1,6 +1,7 @@
 import { locate } from "/util/maphelper";
 import { getNearestStop, setTimer } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
+import { showQuerying } from "/util/notification";
 
 const observers = {
   activeIndex,
@@ -13,9 +14,7 @@ const observers = {
 export default observers;
 
 function activeIndex(index) {
-  my.showLoading({
-    content: "加载中...",
-  });
+  showQuerying();
   this.onClearTimer();
   this.setData(dynamicData);
   locate(this, index);
@@ -37,9 +36,7 @@ function selectedStopId(val) {
   this.setData({
     selectedStopName: newStopName,
   });
-  my.showLoading({
-    content: "查询中...",
-  });
+  showQuerying();
   setTimer(this);
 }
 

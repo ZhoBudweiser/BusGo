@@ -50,10 +50,6 @@ function onSelectedStop(id) {
   });
 }
 
-function onShow() {
-  locate(this, this.data.activeIndex);
-}
-
 function onSetBusLines(newBusLines) {
   this.onClearTimer();
   const setting = (fmtLines) => {
@@ -107,6 +103,10 @@ function onRollback() {
         : this.data.shuttleStations,
     queriedLines: [],
   });
+}
+
+function onShow() {
+  locate(this, this.data.activeIndex);
 }
 
 function onLoad(query) {
