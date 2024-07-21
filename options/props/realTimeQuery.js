@@ -1,9 +1,10 @@
 const staticData = {
   busLines: [],
-  allBusStations: [],
+  busStations: [],
   shuttleLines: [],
-  allShuttleStations: [],
+  shuttleStations: [],
   stationsBuffer: {},
+  activeIndex: 0,
 };
 
 const runtimeData = {
@@ -18,7 +19,6 @@ const runtimeData = {
 };
 
 const selections = {
-  activeIndex: 0,
   showNavigationPath: false,
   moveToUserPosition: false,
   selectedStopId: "",
@@ -30,4 +30,9 @@ export const realTimeQueryProps = {
   ...staticData,
   ...runtimeData,
   ...selections,
-}
+};
+
+export const dynamicData = {
+  ...runtimeData,
+  ...selections,
+};

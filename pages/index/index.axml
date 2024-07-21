@@ -2,7 +2,7 @@
   <schoolmap
     class="schoolmap"
     position="{{position}}"
-    stops="{{stops}}"
+    stops="{{queriedStations}}"
     lines="{{busLines}}"
     selectedStopName="{{selectedStopName}}"
     selectedStopId="{{selectedStopId}}"
@@ -24,7 +24,7 @@
         activeTab="{{activeIndex}}"
         busLines="{{busLines}}"
         shuttleLines="{{shuttleLines}}"
-        destinations="{{stops}}"
+        destinations="{{queriedStations}}"
         nearest_stop_id="{{selectedStopId}}"
         nearest_stop_name="{{selectedStopName}}"
         time_left_human_walk="{{userTimeCost}}"

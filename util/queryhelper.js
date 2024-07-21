@@ -39,8 +39,8 @@ export const getBusStops = (client, lat, lon) => {
     success: function (res) {
       const poses = res.data.data;
       client.setData({
-        stops: poses,
-        allstops: poses,
+        queriedStations: poses,
+        busStations: poses,
       });
     },
     fail: function (error) {
@@ -64,8 +64,8 @@ export const getShuttleStops = (client, lat, lon) => {
   if (shuttleStops_res.success) {
     client.setData({
       shuttleLines: shuttleStops_res.data.lines,
-      stops: shuttleStops_res.data.stations,
-      allstops: shuttleStops_res.data.stations,
+      queriedStations: shuttleStops_res.data.stations,
+      shuttleStations: shuttleStops_res.data.stations,
     });
     return;
   }
@@ -78,8 +78,8 @@ export const getShuttleStops = (client, lat, lon) => {
       const stations = distinctStops(lines.map((item) => item.station_list));
       client.setData({
         shuttleLines: lines,
-        stops: stations,
-        allstops: stations,
+        queriedStations: stations,
+        shuttleStations: stations,
       });
       my.setStorageSync({
         key: "shuttleStops",
