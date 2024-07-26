@@ -124,8 +124,8 @@ const fmtBusLine = async function (client, item) {
         return acc;
       }, {}) : null,
       duration: item.start_time.replace(/:\d{2}$/, '') + '-' + (item.arrive_time ? item.arrive_time.replace(/:\d{2}$/, '') : "22:40"),
-      start_address: item.start_address.replace(/校区(.*)/g, ''),
-      end_address: item.end_address.replace(/校区(.*)/g, ''),
+      start_address: item.start_address ? item.start_address.replace(/校区(.*)/g, '') : "",
+      end_address: item.end_address ? item.end_address.replace(/校区(.*)/g, '') : "",
       remark: item.memo,
       stations: stations ? stations.map(item => {
         const res = item.station_alias.match(/校区(.+)/);
