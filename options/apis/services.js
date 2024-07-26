@@ -1,5 +1,5 @@
 import { getBusAllStations, getBusLinesByEnds, getBusLinesByStationId, getBusStationsByBusId } from "./busApis";
-import { getShuttleAllStations } from "./shuttleApis";
+import { getShuttleAllStations, getShuttleLinesByEnds, getShuttleLinesByStationId, getShuttleStationsByShuttleId } from "./shuttleApis";
 
 const funcMap = {
     allStations: [
@@ -8,12 +8,15 @@ const funcMap = {
     ],
     linesByEnds: [
         getBusLinesByEnds,
+        getShuttleLinesByEnds
     ],
     stationsById: [
         getBusStationsByBusId,
+        getShuttleStationsByShuttleId
     ],
     linesByStationId: [
         getBusLinesByStationId,
+        getShuttleLinesByStationId
     ],
 };
 
