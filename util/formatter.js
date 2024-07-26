@@ -1,7 +1,23 @@
-const DEFAULT_ARRIVE_TIME = "22:40";
+const DEFAULT_TIME = "22:40";
 
 export function stripData(res) {
   return res.data.data;
+}
+
+export function distinctStations(lines) {
+  const visits = new Set();
+  return lines.reduce((pre_stations, cur_list) => {
+    return pre_stations.concat(
+      cur_list.reduce((pres, station) => {
+        if (visits.has(station.station_alias_no)) {
+          return pres;
+        } else {
+          visits.add(station.station_alias_no);
+          return pres.concat([station]);
+        }
+      }, []),
+    );
+  }, []);
 }
 
 export function fmtBusLines(busLines) {
@@ -9,8 +25,9 @@ export function fmtBusLines(busLines) {
 }
 
 export function fmtShuttleLines(shuttleLines) {
-    return shuttleLines.map((shuttleLine) => fmtShuttleLine(shuttleLine));
-  }
+  const lines = shuttleLines.map((shuttleLine) => fmtShuttleLine(shuttleLine));
+  return lines.reduce((pre_lines, line) => (pre_lines[line.lid] = line.station_list), {});
+}
 
 function fmtBusLine(busLine) {
   return {
@@ -23,17 +40,15 @@ function fmtBusLine(busLine) {
 }
 
 function makeDuration(startTime, arriveTime) {
-  return removeSeconds(startTime) + "-" + arriveTime
-    ? removeSeconds(arriveTime)
-    : DEFAULT_ARRIVE_TIME;
+  return removeSeconds(startTime) + "-" + removeSeconds(arriveTime);
 }
 
 function removeSeconds(time) {
-  return time.replace(/:\d{2}$/, "");
+  return time ? time.replace(/:\d{2}$/, "") : DEFAULT_TIME;
 }
 
 function removeCampusPrefix(address) {
-  return address.replace(/校区(.*)/g, "");
+  return address ? address.replace(/校区(.*)/g, "") : "";
 }
 
 function fmtShuttleLine(shuttleLine) {
@@ -61,20 +76,4 @@ function convertNameStyle(str) {
     temp = temp.slice(1);
   }
   return temp;
-}
-
-function distinctStops(lines) {
-  const visits = new Set();
-  return lines.reduce((pre_stations, cur_list) => {
-    return pre_stations.concat(
-      cur_list.reduce((pres, station) => {
-        if (visits.has(station.station_alias_no)) {
-          return pres;
-        } else {
-          visits.add(station.station_alias_no);
-          return pres.concat([station]);
-        }
-      }, []),
-    );
-  }, []);
 }

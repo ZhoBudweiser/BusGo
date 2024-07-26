@@ -1,29 +1,37 @@
 import { baseURL, nop } from "./apis";
-import { fmtShuttleLines, stripData } from "/util/formatter";
+import { shuttleAllStations, shuttleLineStations } from "/util/cache";
+import { distinctStations, fmtShuttleLines, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/xbc/";
 
 export async function getShuttleAllStations() {
+  if (shuttleAllStations != null) return shuttleAllStations;
+  const lineStations = await getShuttleALLLineStations();
+  shuttleAllStations = distinctStations(Object.values(lineStations));
+  return shuttleAllStations;
 }
 
-export async function getShuttleLinesByEnds(startStation, endStation) {
+export async function getShuttleLinesByEnds(startStation, endStation) {}
+
+export async function getShuttleStationsByShuttleId(sid) {
+  if (shuttleLineStations.hasOwnProperty(sid)) return shuttleLineStations[sid];
+  getShuttleALLLineStations();
+  return shuttleLineStations[sid];
 }
 
-export async function getShuttleStationsByShuttleId(bid) {
-}
+export async function getShuttleLinesByStationId(sid) {}
 
-export async function getShuttleLinesByStationId(sid) {
-}
-
-async function getShuttleALLLines() {
-  return await my.request({
+async function getShuttleALLLineStations() {
+  if (Object.keys(shuttleLineStations).length !== 0) return shuttleLineStations;
+  shuttleLineStations = await my.request({
     url: derivedURL + "getXbcLine",
     method: "POST",
     success: (res) => fmtShuttleLines(stripData(res)),
     fail: (err) => popQueryError(err, "校车站点"),
     complete: nop,
   });
+  return shuttleLineStations;
 }
 
 async function getShuttleInfoByLineIdAndStationId(lid, sid) {

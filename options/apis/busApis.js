@@ -1,17 +1,20 @@
 import { baseURL, nop } from "./apis";
+import { busAllStations, busLineStations } from "/util/cache";
 import { fmtBusLines, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
 
 export async function getBusAllStations() {
-  return await my.request({
+  if (busAllStations != null) return busAllStations;
+  busAllStations = await my.request({
     url: derivedURL + "getNearStation?lat=30.30&lon=120.09",
     method: "POST",
     success: stripData,
     fail: (err) => popQueryError(err, "站点获取"),
     complete: nop,
   });
+  return busAllStations;
 }
 
 export async function getBusLinesByEnds(startStation, endStation) {
@@ -34,13 +37,15 @@ export async function getBusLinesByEnds(startStation, endStation) {
 }
 
 export async function getBusStationsByBusId(bid) {
-  return await my.request({
+  if (busLineStations.hasOwnProperty(bid)) return busLineStations[bid];
+  busLineStations[bid] = await my.request({
     url: derivedURL + "getBcStationList?bid=" + bid,
     method: "POST",
     success: stripData,
     fail: (err) => popQueryError(err, "班车站点"),
     complete: nop,
   });
+  return busLineStations[bid];
 }
 
 export async function getBusLinesByStationId(sid) {
