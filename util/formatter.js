@@ -1,4 +1,4 @@
-const DEFAULT_TIME = "22:40";
+import { DEFAULT_TIME } from "/options/props/defaults";
 
 export function stripData(res) {
   return res.data.data;

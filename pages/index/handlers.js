@@ -6,6 +6,8 @@ import {
 } from "/util/fmtUnit";
 import { getStart } from "/util/data";
 import { flip } from "/util/setters";
+import { setInitLocation, setLocationTimer } from "/util/location";
+// import { queryBackend } from "/options/apis/services";
 
 const eventHandlers = {
   onActive,
@@ -22,6 +24,7 @@ const eventHandlers = {
 const lifeHandlers = {
   onShow,
   onLoad,
+  onReady,
   onUnload,
 };
 
@@ -105,10 +108,6 @@ function onRollback() {
   });
 }
 
-function onShow() {
-  locate(this, this.data.activeIndex);
-}
-
 function onLoad(query) {
   // 页面加载
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
@@ -136,7 +135,21 @@ function onLoad(query) {
   }
 }
 
+async function onShow() {
+  const config = await setInitLocation();
+  const locationTimer = config.locationAuthed ? setLocationTimer(this): null;
+  this.setData({...config, locationTimer});
+}
+
+function onReady() {
+  // this.setData({
+  //   queriedStations: queryBackend("allStations", this.data.activeIndex, [])
+  // });
+}
+
 function onUnload() {
+  console.log("已清除定时器");
+  clearInterval(this.data.locationTimer);
   my.setStorageSync({
     key: "stationsBuffer",
     data: this.data.stationsBuffer,

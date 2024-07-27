@@ -4,6 +4,8 @@ const staticData = {
   shuttleLines: [],
   shuttleStations: [],
   stationsBuffer: {},
+  locationAuthed: false,
+  locationTimer: null,
   activeIndex: 0,
 };
 
