@@ -20,12 +20,19 @@ export function distinctStations(lines) {
   }, []);
 }
 
+export function extractLineIds(busLines) {
+  return busLines.map((busLine) => busLine.bid);
+}
+
 export function fmtBusLines(busLines) {
   return busLines.map((busLine) => fmtBusLine(busLine));
 }
 
 export function fmtShuttleLines(shuttleLines) {
-  const lines = shuttleLines.map((shuttleLine) => fmtShuttleLine(shuttleLine));
+  return shuttleLines.map((shuttleLine) => fmtShuttleLine(shuttleLine));
+}
+
+export function fmtShuttleLineStations(lines) {
   return lines.reduce((pre_lines, line) => (pre_lines[line.lid] = line.station_list), {});
 }
 
@@ -52,7 +59,23 @@ function removeCampusPrefix(address) {
 }
 
 function fmtShuttleLine(shuttleLine) {
-  return replaceKeys(shuttleLine);
+  const item = replaceKeys(shuttleLine);
+  const station_list = item.station_list;
+  const n = station_list.length;
+  const endIndex = n - 3 > 0 ? n - 3 : 0;
+  return {
+    bid: item.lid,
+    start_address: extractAlias(station_list[0]),
+    end_address: extractAlias(station_list[endIndex]),
+    runBusInfo: null,
+    line_alias: item.line_alias,
+    duration: item.line_alias,
+    remark: "",
+  };
+}
+
+function extractAlias(station) {
+  return station ? station.station_alias : "";
 }
 
 function replaceKeys(obj) {

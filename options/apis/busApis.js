@@ -1,6 +1,6 @@
 import { baseURL, nop } from "./apis";
 import { busAllStations, busLineStations } from "/util/cache";
-import { fmtBusLines, stripData } from "/util/formatter";
+import { extractLineIds, fmtBusLines, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
@@ -17,7 +17,17 @@ export async function getBusAllStations() {
   return busAllStations;
 }
 
-export async function getBusLinesByEnds(startStation, endStation) {
+export async function getBusLinesByStationId(sid) {
+  return my.request({
+    url: derivedURL + "getBcByStationName?bid=&stationName=" + sid,
+    method: "POST",
+    success: (res) => fmtBusLines(stripData(res)),
+    fail: (err) => popQueryError(err, "班车路线"),
+    complete: nop,
+  });
+}
+
+export async function getBusLineIdsByEnds(startStation, endStation) {
   return await my.request({
     url: derivedURL + "searchLine",
     method: "POST",
@@ -30,7 +40,7 @@ export async function getBusLinesByEnds(startStation, endStation) {
     headers: {
       "content-type": "application/x-www-form-urlencoded",
     },
-    success: (res) => fmtBusLines(stripData(res)),
+    success: (res) => extractLineIds(stripData(res)),
     fail: (err) => popQueryError(err, "路线搜索"),
     complete: nop,
   });
@@ -46,14 +56,4 @@ export async function getBusStationsByBusId(bid) {
     complete: nop,
   });
   return busLineStations[bid];
-}
-
-export async function getBusLinesByStationId(sid) {
-  return my.request({
-    url: derivedURL + "getBcByStationName?bid=&stationName=" + sid,
-    method: "POST",
-    success: (res) => fmtBusLines(stripData(res)),
-    fail: (err) => popQueryError(err, "班车路线"),
-    complete: nop,
-  });
 }
