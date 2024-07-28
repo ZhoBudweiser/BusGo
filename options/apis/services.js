@@ -21,5 +21,5 @@ const funcMap = {
 };
 
 export async function queryBackend(dataName, dataType, parm) {
-    return funcMap[dataName][dataType](...parm);
+    return await funcMap[dataName][dataType](...parm);
 }

@@ -33,7 +33,10 @@ export function fmtShuttleLines(shuttleLines) {
 }
 
 export function fmtShuttleLineStations(lines) {
-  return lines.reduce((pre_lines, line) => (pre_lines[line.lid] = line.station_list), {});
+  return lines.reduce((pre_lines, line) => {
+    pre_lines[line.bid] = line.station_list;
+    return pre_lines;
+  }, {});
 }
 
 function fmtBusLine(busLine) {
@@ -64,6 +67,7 @@ function fmtShuttleLine(shuttleLine) {
   const n = station_list.length;
   const endIndex = n - 3 > 0 ? n - 3 : 0;
   return {
+    station_list,
     bid: item.lid,
     start_address: extractAlias(station_list[0]),
     end_address: extractAlias(station_list[endIndex]),

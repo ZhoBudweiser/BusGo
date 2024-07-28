@@ -1,3 +1,5 @@
+import { DEFAULT_POSITION } from "./defaults";
+
 const staticData = {
   busLines: [],
   busStations: [],
@@ -12,10 +14,7 @@ const staticData = {
 const runtimeData = {
   queriedLines: [],
   queriedStations: [],
-  userPosition: {
-    longitude: 120.090178,
-    latitude: 30.303975,
-  },
+  userPosition: DEFAULT_POSITION,
   userTimeCost: -1,
   sysQueryFrequency: 20000,
 };

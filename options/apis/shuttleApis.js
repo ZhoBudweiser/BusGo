@@ -1,9 +1,5 @@
 import { baseURL, nop } from "./apis";
-import {
-  shuttleAllLines,
-  shuttleAllStations,
-  shuttleLineStations,
-} from "/util/cache";
+import cache from "/util/cache";
 import {
   distinctStations,
   extractLineIds,
@@ -16,21 +12,25 @@ import { popQueryError } from "/util/notification";
 const derivedURL = baseURL + "/xbc/";
 
 export async function getShuttleAllStations() {
-  if (shuttleAllStations != null) return shuttleAllStations;
+  if (cache.shuttleAllStations != null) return cache.shuttleAllStations;
   const lineStations = await getShuttleALLLineStations();
-  shuttleAllStations = distinctStations(Object.values(lineStations));
-  return shuttleAllStations;
+  cache.shuttleAllStations = distinctStations(Object.values(lineStations));
+  return cache.shuttleAllStations;
 }
 
 export async function getShuttleLinesByStationId(sid) {
   const lines = await getShuttleALLLines();
   const filteredLines = findShttleLinesByStationId(lines, sid);
-  const filteredPoses = await Promise.all(await filteredLines.map(async (flines) =>
-    getShuttlePositionByLineId(flines.bid),
-  ));
-  const filteredInfos = await Promise.all(await filteredLines.map(async (flines) =>
-    getShuttleInfoByLineIdAndStationId(flines.bid, sid),
-  ));
+  const filteredPoses = await Promise.all(
+    await filteredLines.map(async (flines) =>
+      getShuttlePositionByLineId(flines.bid),
+    ),
+  );
+  const filteredInfos = await Promise.all(
+    await filteredLines.map(async (flines) =>
+      getShuttleInfoByLineIdAndStationId(flines.bid, sid),
+    ),
+  );
   return matchShuttleRunInfo(lines, filteredPoses, filteredInfos);
 }
 
@@ -53,22 +53,23 @@ export async function getShuttleStationsByShuttleId(lid) {
 }
 
 async function getShuttleALLLineStations() {
-  if (Object.keys(shuttleLineStations).length !== 0) return shuttleLineStations;
+  if (Object.keys(cache.shuttleLineStations).length !== 0)
+    return cache.shuttleLineStations;
   const lines = await getShuttleALLLines();
-  shuttleLineStations = fmtShuttleLineStations(lines);
-  return shuttleLineStations;
+  cache.shuttleLineStations = fmtShuttleLineStations(lines);
+  return cache.shuttleLineStations;
 }
 
 async function getShuttleALLLines() {
-  if (shuttleAllLines != null) return shuttleAllLines;
-  shuttleAllLines = await my.request({
+  if (cache.shuttleAllLines != null) return cache.shuttleAllLines;
+  cache.shuttleAllLines = await my.request({
     url: derivedURL + "getXbcLine",
     method: "POST",
-    success: (res) => fmtShuttleLines(stripData(res)),
+    success: nop,
     fail: (err) => popQueryError(err, "校车站点"),
     complete: nop,
-  });
-  return shuttleAllLines;
+  }).then((res) => fmtShuttleLines(stripData(res)));
+  return cache.shuttleAllLines;
 }
 
 async function getShuttleInfoByLineIdAndStationId(lid, sid) {
@@ -82,10 +83,10 @@ async function getShuttleInfoByLineIdAndStationId(lid, sid) {
       lid: lid,
       stationAliasNo: sid,
     },
-    success: stripData,
+    success: nop,
     fail: (err) => popQueryError(err, "班车信息"),
     complete: nop,
-  });
+  }).then(stripData);
 }
 
 async function getShuttlePositionByLineId(lid) {
@@ -98,10 +99,10 @@ async function getShuttlePositionByLineId(lid) {
     data: {
       lid: lid,
     },
-    success: stripData,
+    success: nop,
     fail: (err) => popQueryError(err, "班车位置"),
     complete: nop,
-  });
+  }).then(stripData);
 }
 
 function findShttleLinesByEnds(lines, startStationName, endStationName) {

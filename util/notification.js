@@ -7,9 +7,8 @@ export function showQuerying() {
 
 export function popQueryError (error, name) {
   console.log("fail: ", error);
-  my.alert({
-    title: name,
-    content: "当前实时定位异常，先试试其他功能吧",
-    buttonText: "确定",
+  my.showToast({
+    content: `当前${name}异常，先试试其他功能吧`,
+    duration: 2000,
   });
 }

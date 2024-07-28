@@ -44,8 +44,8 @@ function queriedStations(curval) {
   if (!curval || !curval.length) return;
   const stopid = getNearestStop(
     curval,
-    this.data.position.latitude,
-    this.data.position.longitude,
+    this.data.userPosition.latitude,
+    this.data.userPosition.longitude,
   );
   this.setData({
     selectedStopId: stopid,

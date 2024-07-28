@@ -1,7 +1,7 @@
 <view class="container">
   <schoolmap
     class="schoolmap"
-    position="{{position}}"
+    position="{{userPosition}}"
     stops="{{queriedStations}}"
     lines="{{busLines}}"
     selectedStopName="{{selectedStopName}}"

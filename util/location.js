@@ -1,23 +1,24 @@
+import { nop } from "/options/apis/apis";
 import { DEFAULT_POSITION } from "/options/props/defaults";
 
-export async function setInitLocation() {
-  const locationAuthed = await authGuideLocation();
-  let position = DEFAULT_POSITION;
-  if (locationAuthed) {
-    position = await getUserLocation();
-  }
-  return {
-    position,
-    locationAuthed,
-  };
-}
+// export async function setInitLocation() {
+//   const locationAuthed = await authGuideLocation();
+//   let userPosition = DEFAULT_POSITION;
+//   if (locationAuthed) {
+//     userPosition = await getUserLocation();
+//   }
+//   return {
+//     userPosition,
+//     locationAuthed,
+//   };
+// }
 
 export function setLocationTimer(client) {
   return setInterval(autoLocate, 5000, client);
 }
 
 // 由于跳转到系统设置页无法监听用户最终是否打开系统定位及对支付宝授权位置信息，因此请在生命周期 onShow 中调用定位授权准备方法。
-async function authGuideLocation() {
+export async function authGuideLocation() {
   const myGetSystemInfo = () => {
     return new Promise((resolve, reject) => {
       my.getSystemInfo({
@@ -65,7 +66,6 @@ async function authGuideLocation() {
   const isLocationMPAuthorized = async () => {
     const settingInfo = await myGetSetting();
     return (
-      settingInfo.authSetting.location === undefined ||
       settingInfo.authSetting.location
     );
   };
@@ -94,22 +94,21 @@ async function authGuideLocation() {
   }
 }
 
-async function getUserLocation() {
-  return await my.getLocation({
-    type: 1,
-    success: (res) => res,
-    fail: (err) => {
-      console.log("定位获取异常", err);
-      return DEFAULT_POSITION;
-    },
-  });
-}
+// async function getUserLocation() {
+//   const location = await my.getLocation({
+//     type: 1,
+//     success: (res) => console.log(res),
+//     fail: (err) => console.log("定位获取异常", err),
+//   });
+//   console.log(location);
+//   return location;
+// }
 
 function autoLocate(client) {
   console.log("已获取定位");
   my.getLocation({
     type: 0,
-    success: (position) => client.setData({ position }),
+    success: (userPosition) => client.setData({ userPosition }),
     fail: () => clearInterval(client.data.locationTimer),
   });
 }

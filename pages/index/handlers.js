@@ -1,4 +1,3 @@
-import { locate } from "/util/maphelper";
 import {
   distinctStops,
   getFormatedBusLines,
@@ -6,8 +5,12 @@ import {
 } from "/util/fmtUnit";
 import { getStart } from "/util/data";
 import { flip } from "/util/setters";
-import { setInitLocation, setLocationTimer } from "/util/location";
-// import { queryBackend } from "/options/apis/services";
+import {
+  authGuideLocation,
+  setInitLocation,
+  setLocationTimer,
+} from "/util/location";
+import { queryBackend } from "/options/apis/services";
 
 const eventHandlers = {
   onActive,
@@ -136,15 +139,19 @@ function onLoad(query) {
 }
 
 async function onShow() {
-  const config = await setInitLocation();
-  const locationTimer = config.locationAuthed ? setLocationTimer(this): null;
-  this.setData({...config, locationTimer});
+  const locationAuthed = await authGuideLocation();
+  const locationTimer = locationAuthed ? setLocationTimer(this) : null;
+  this.setData({
+    locationTimer,
+    queriedStations: await queryBackend(
+      "allStations",
+      this.data.activeIndex,
+      [],
+    ),
+  });
 }
 
-function onReady() {
-  // this.setData({
-  //   queriedStations: queryBackend("allStations", this.data.activeIndex, [])
-  // });
+async function onReady() {
 }
 
 function onUnload() {

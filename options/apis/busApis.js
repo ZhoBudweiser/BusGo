@@ -1,30 +1,30 @@
 import { baseURL, nop } from "./apis";
-import { busAllStations, busLineStations } from "/util/cache";
+import cache from "/util/cache";
 import { extractLineIds, fmtBusLines, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
 
 export async function getBusAllStations() {
-  if (busAllStations != null) return busAllStations;
-  busAllStations = await my.request({
+  if (cache.busAllStations != null) return cache.busAllStations;
+  cache.busAllStations = await my.request({
     url: derivedURL + "getNearStation?lat=30.30&lon=120.09",
     method: "POST",
-    success: stripData,
+    success: nop,
     fail: (err) => popQueryError(err, "站点获取"),
     complete: nop,
-  });
-  return busAllStations;
+  }).then(stripData);
+  return cache.busAllStations;
 }
 
 export async function getBusLinesByStationId(sid) {
-  return my.request({
+  return await my.request({
     url: derivedURL + "getBcByStationName?bid=&stationName=" + sid,
     method: "POST",
-    success: (res) => fmtBusLines(stripData(res)),
+    success: nop,
     fail: (err) => popQueryError(err, "班车路线"),
     complete: nop,
-  });
+  }).then((res) => fmtBusLines(stripData(res)));
 }
 
 export async function getBusLineIdsByEnds(startStation, endStation) {
@@ -40,20 +40,21 @@ export async function getBusLineIdsByEnds(startStation, endStation) {
     headers: {
       "content-type": "application/x-www-form-urlencoded",
     },
-    success: (res) => extractLineIds(stripData(res)),
+    success: nop,
     fail: (err) => popQueryError(err, "路线搜索"),
     complete: nop,
-  });
+  }).then((res) => extractLineIds(stripData(res)));
 }
 
 export async function getBusStationsByBusId(bid) {
-  if (busLineStations.hasOwnProperty(bid)) return busLineStations[bid];
-  busLineStations[bid] = await my.request({
+  if (cache.busLineStations.hasOwnProperty(bid))
+    return cache.busLineStations[bid];
+  cache.busLineStations[bid] = await my.request({
     url: derivedURL + "getBcStationList?bid=" + bid,
     method: "POST",
-    success: stripData,
+    success: nop,
     fail: (err) => popQueryError(err, "班车站点"),
     complete: nop,
-  });
-  return busLineStations[bid];
+  }).then(stripData);
+  return cache.busLineStations[bid];
 }

@@ -1,5 +1,9 @@
-export let busAllStations = null;
-export let shuttleAllStations = null;
-export let shuttleAllLines = null;
-export let busLineStations = {};
-export let shuttleLineStations = {};
+const cache = {
+    busAllStations: null,
+    shuttleAllStations: null,
+    shuttleAllLines: null,
+    busLineStations: {},
+    shuttleLineStations: {},
+};
+
+export default cache;
