@@ -138,8 +138,8 @@ export async function getFormatedBusLines(client, res) {
   client.setData({
     busLines: results.filter(
       (res) =>
-        client.data.queriedLines.length === 0 ||
-        client.data.queriedLines.indexOf(res.bid) !== -1,
+        client.data.queriedLineIds.length === 0 ||
+        client.data.queriedLineIds.indexOf(res.bid) !== -1,
     ),
   });
   // my.hideLoading();
@@ -219,8 +219,8 @@ export async function getFormatedShuttleLines(client, res) {
   client.setData({
     busLines: lines.filter(
       (res) =>
-        client.data.queriedLines.length === 0 ||
-        client.data.queriedLines.indexOf(res.bid) !== -1,
+        client.data.queriedLineIds.length === 0 ||
+        client.data.queriedLineIds.indexOf(res.bid) !== -1,
     ),
   });
   // my.hideLoading();

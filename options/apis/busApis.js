@@ -27,13 +27,13 @@ export async function getBusLinesByStationId(sid) {
   }).then((res) => fmtBusLines(stripData(res)));
 }
 
-export async function getBusLineIdsByEnds(startStation, endStation) {
+export async function getBusLineIdsByEnds(startStationName, endStationName) {
   return await my.request({
     url: derivedURL + "searchLine",
     method: "POST",
     data: {
-      begin_station: startStation,
-      end_station: endStation,
+      begin_station: startStationName,
+      end_station: endStationName,
       date: "00",
       time: "00",
     },

@@ -9,7 +9,9 @@ import {
   authGuideLocation,
   setLocationTimer,
 } from "/options/apis/locationApis";
-import { queryBackend } from "/options/apis/carApis";
+import { queryBackend, resetCarTimer } from "/options/apis/carApis";
+import { popNoCar } from "/util/notification";
+import { extractAddressName } from "/util/formatter";
 
 const eventHandlers = {
   onActive,
@@ -55,28 +57,19 @@ function onSelectedStop(id) {
   });
 }
 
-function onSetBusLines(newBusLines) {
-  this.onClearTimer();
-  const setting = (fmtLines) => {
-    console.log(fmtLines);
-    this.onSetStopsByBusLines(fmtLines.map((item) => item.stations));
-    this.setData({
-      queriedLines: fmtLines.length ? fmtLines.map((item) => item.bid) : [""],
-    });
-    if (!newBusLines.length) {
-      my.showToast({
-        content: "暂无班车信息",
-        duration: 2000,
-      });
-    }
-  };
-  this.data.activeIndex === 0
-    ? getFormatedBusLines(this, newBusLines).then((fmtLines) =>
-        setting(fmtLines),
-      )
-    : getFormatedShuttleLines(this, newBusLines).then((fmtLines) =>
-        setting(fmtLines),
-      );
+async function onSetBusLines(startStationName, endStationName) {
+  const { activeIndex, selectedStationId, sysQueryFrequency } = this.data;
+  const sname = extractAddressName(startStationName);
+  const ename = extractAddressName(endStationName);
+  const newBusLineIds = await queryBackend("linesByEnds", activeIndex, [sname, ename]);
+  if (newBusLineIds.length === 0) popNoCar();
+  this.setData({
+    queriedLineIds: newBusLineIds,
+  });
+  // 请求实时数据
+  resetCarTimer(this, activeIndex, selectedStationId, sysQueryFrequency);
+  // 过滤其他站点
+  // ...
 }
 
 function onSetStopsByBusLines(formatBusLines) {
@@ -106,7 +99,7 @@ function onRollback() {
       this.data.activeIndex == 0
         ? this.data.busStations
         : this.data.shuttleStations,
-    queriedLines: [],
+    queriedLineIds: null,
   });
 }
 

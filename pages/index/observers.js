@@ -2,6 +2,7 @@ import { locate } from "/util/maphelper";
 import { getNearestStop, setTimer } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";
+import { resetCarTimer } from "/options/apis/carApis";
 
 const observers = {
   activeIndex,
@@ -24,8 +25,8 @@ function activeIndex(index) {
   });
 }
 
-function selectedStationId(val) {
-  if (val == "") return;
+function selectedStationId(sid) {
+  if (sid == "") return;
   const stations =
     this.data.activeIndex == 0
       ? this.data.busStations
@@ -37,7 +38,8 @@ function selectedStationId(val) {
     selectedStationName: newStopName,
   });
   showQuerying();
-  setTimer(this);
+  const { activeIndex, sysQueryFrequency } = this.data;
+  resetCarTimer(this, activeIndex, sid, sysQueryFrequency);
 }
 
 function queriedStations(curval) {
@@ -62,6 +64,7 @@ function busLines(fmtLines) {
     });
 }
 
-function sysQueryFrequency() {
-  setTimer(this);
+function sysQueryFrequency(frequency) {
+  const { activeIndex, selectedStationId } = this.data;
+  resetCarTimer(this, activeIndex, selectedStationId, frequency);
 }

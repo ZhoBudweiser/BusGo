@@ -1,18 +1,19 @@
-import { DEFAULT_POSITION } from "./defaults";
+import { DEFAULT_POSITION, DEFAULT_STATION_ID } from "./defaults";
 
 const staticData = {
-  busLines: [],
   busStations: [],
   shuttleLines: [],
   shuttleStations: [],
   stationsBuffer: {},
   locationAuthed: false,
   locationTimer: null,
+  carTimer: null,
   activeIndex: 0,
 };
 
 const runtimeData = {
-  queriedLines: [],
+  busLines: [],
+  queriedLineIds: null,
   queriedStations: [],
   userPosition: DEFAULT_POSITION,
   userTimeCost: -1,
@@ -22,7 +23,7 @@ const runtimeData = {
 const selections = {
   showNavigationPath: false,
   moveToUserPosition: false,
-  selectedStationId: "",
+  selectedStationId: DEFAULT_STATION_ID,
   selectedStationName: "",
   selectedLineId: "",
 };

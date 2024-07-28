@@ -24,6 +24,13 @@ export function extractLineIds(busLines) {
   return busLines.map((busLine) => busLine.bid);
 }
 
+export function extractAddressName(name, dataType) {
+  if (dataType == 1) return name;
+  return name.indexOf("华家池") === -1
+    ? name.replace(/校区(.*)/g, "")
+    : "华家池";
+}
+
 export function fmtBusLines(busLines) {
   return busLines.map((busLine) => fmtBusLine(busLine));
 }

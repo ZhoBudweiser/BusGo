@@ -31,7 +31,7 @@ export async function getShuttleLinesByStationId(sid) {
       getShuttleInfoByLineIdAndStationId(flines.bid, sid),
     ),
   );
-  return matchShuttleRunInfo(lines, filteredPoses, filteredInfos);
+  return matchShuttleRunInfo(filteredLines, filteredPoses, filteredInfos);
 }
 
 export async function getShuttleLineIdsByEnds(
@@ -110,7 +110,7 @@ function findShttleLinesByEnds(lines, startStationName, endStationName) {
     let startStationIndex = -1;
     let endStationIndex = -1;
     let match = false;
-    stationLine.station_list.forEach((station) => {
+    stationLine.station_list.forEach((station, i) => {
       if (station.station_alias == startStationName) {
         startStationIndex = i;
       } else if (station.station_alias == endStationName) {

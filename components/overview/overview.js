@@ -106,9 +106,12 @@ Component({
             ? "此次查询预计需要 10 秒左右"
             : "查询中...",
       });
-      this.props.activeTab === 0
-        ? getAvailableBusLineByStart(this)
-        : findShttleLines(this);
+      const startName = this.props.nearest_stop_name;
+      const endName = this.data.selectedEnd;
+      this.props.onSetBusLines(startName, endName);
+      // this.props.activeTab === 0
+      //   ? getAvailableBusLineByStart(this)
+      //   : findShttleLines(this);
       this.props.onSetSelectedBusLine("");
     },
   },
