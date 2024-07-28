@@ -2,20 +2,20 @@ import {
   getBusAllStations,
   getBusLineIdsByEnds,
   getBusLinesByStationId,
-  getBusStationsByBusId,
+  getBusStationsByBusId
 } from "./busApis";
 import {
   getShuttleAllStations,
   getShuttleLineIdsByEnds,
   getShuttleLinesByStationId,
-  getShuttleStationsByShuttleId,
+  getShuttleStationsByShuttleId
 } from "./shuttleApis";
 
 const funcMap = {
   allStations: [getBusAllStations, getShuttleAllStations],
   linesByStationId: [getBusLinesByStationId, getShuttleLinesByStationId],
   linesByEnds: [getBusLineIdsByEnds, getShuttleLineIdsByEnds],
-  stationsById: [getBusStationsByBusId, getShuttleStationsByShuttleId],
+  stationsByLineId: [getBusStationsByBusId, getShuttleStationsByShuttleId]
 };
 
 export async function queryBackend(dataName, dataType, parm) {

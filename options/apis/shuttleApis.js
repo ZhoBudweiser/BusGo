@@ -52,6 +52,16 @@ export async function getShuttleStationsByShuttleId(lid) {
   return lineStations[lid];
 }
 
+export function getShuttleStationMapByShuttleId(lid, stations) {
+  if (cache.shuttleStationMap.hasOwnProperty(lid))
+    return cache.shuttleStationMap[lid];
+  cache.shuttleStationMap[lid] = {};
+  stations.forEach(
+    (station, i) => (cache.shuttleStationMap[lid][station.station_alias_no] = i),
+  );
+  return cache.shuttleStationMap[lid];
+}
+
 async function getShuttleALLLineStations() {
   if (Object.keys(cache.shuttleLineStations).length !== 0)
     return cache.shuttleLineStations;
@@ -110,7 +120,7 @@ function findShttleLinesByEnds(lines, startStationName, endStationName) {
     let startStationIndex = -1;
     let endStationIndex = -1;
     let match = false;
-    stationLine.station_list.forEach((station, i) => {
+    stationLine.stations.forEach((station, i) => {
       if (station.station_alias == startStationName) {
         startStationIndex = i;
       } else if (station.station_alias == endStationName) {
@@ -127,7 +137,7 @@ function findShttleLinesByEnds(lines, startStationName, endStationName) {
 
 function findShttleLinesByStationId(lines, sid) {
   const filteredLines = lines.filter((stationLine) =>
-    stationLine.station_list.some((station) => sid == station.station_alias_no),
+    stationLine.stations.some((station) => sid == station.station_alias_no),
   );
   return filteredLines;
 }

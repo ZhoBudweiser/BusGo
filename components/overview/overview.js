@@ -1,9 +1,7 @@
+import { queryBackend } from "/options/apis/carApis";
 import { busEndAddresses, shuttleEndAddresses } from "/util/data";
 import { toCampus } from "/util/fmtUnit";
-import { getAvailableBusLineByStart } from "/util/queryhelper";
 import { flip } from "/util/setters";
-import { findShttleLines } from "/util/shuttlehelper";
-
 const calTimeToPercentage = (t) => {
   const tt = Number(t);
   if (tt > 15) {
@@ -109,9 +107,6 @@ Component({
       const startName = this.props.nearest_stop_name;
       const endName = this.data.selectedEnd;
       this.props.onSetBusLines(startName, endName);
-      // this.props.activeTab === 0
-      //   ? getAvailableBusLineByStart(this)
-      //   : findShttleLines(this);
       this.props.onSetSelectedBusLine("");
     },
   },
@@ -176,6 +171,6 @@ Component({
       this.setData({
         activeCards: cards,
       });
-    },
+    }
   },
 });

@@ -24,7 +24,7 @@ export async function getBusLinesByStationId(sid) {
     success: nop,
     fail: (err) => popQueryError(err, "班车路线"),
     complete: nop,
-  }).then((res) => fmtBusLines(stripData(res)));
+  }).then(async (res) => await fmtBusLines(stripData(res)));
 }
 
 export async function getBusLineIdsByEnds(startStationName, endStationName) {
@@ -57,4 +57,15 @@ export async function getBusStationsByBusId(bid) {
     complete: nop,
   }).then(stripData);
   return cache.busLineStations[bid];
+}
+
+export async function getBusStationMapByBusId(bid) {
+  if (cache.busStationMap.hasOwnProperty(bid))
+    return cache.busStationMap[bid];
+  cache.busStationMap[bid] = {};
+  const stations = await getBusStationsByBusId(bid);
+  stations.forEach(
+    (station, i) => (cache.busStationMap[bid][station.station_alias_no] = i),
+  );
+  return cache.busStationMap[bid];
 }

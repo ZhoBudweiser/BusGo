@@ -1,3 +1,5 @@
+import { getBusStationMapByBusId, getBusStationsByBusId } from "/options/apis/busApis";
+import { getShuttleStationMapByShuttleId } from "/options/apis/shuttleApis";
 import { DEFAULT_TIME } from "/options/props/defaults";
 
 export function stripData(res) {
@@ -31,8 +33,8 @@ export function extractAddressName(name, dataType) {
     : "华家池";
 }
 
-export function fmtBusLines(busLines) {
-  return busLines.map((busLine) => fmtBusLine(busLine));
+export async function fmtBusLines(busLines) {
+  return await Promise.all(busLines.map(async (busLine) => await fmtBusLine(busLine)));
 }
 
 export function fmtShuttleLines(shuttleLines) {
@@ -41,14 +43,16 @@ export function fmtShuttleLines(shuttleLines) {
 
 export function fmtShuttleLineStations(lines) {
   return lines.reduce((pre_lines, line) => {
-    pre_lines[line.bid] = line.station_list;
+    pre_lines[line.bid] = line.stations;
     return pre_lines;
   }, {});
 }
 
-function fmtBusLine(busLine) {
+async function fmtBusLine(busLine) {
   return {
     ...busLine,
+    stations: await getBusStationsByBusId(busLine.bid),
+    station_map: await getBusStationMapByBusId(busLine.bid),
     duration: makeDuration(busLine.start_time, busLine.arrive_time),
     start_address: removeCampusPrefix(busLine.start_address),
     end_address: removeCampusPrefix(busLine.end_address),
@@ -70,14 +74,15 @@ function removeCampusPrefix(address) {
 
 function fmtShuttleLine(shuttleLine) {
   const item = replaceKeys(shuttleLine);
-  const station_list = item.station_list;
-  const n = station_list.length;
+  const stations = item.station_list;
+  const n = stations.length;
   const endIndex = n - 3 > 0 ? n - 3 : 0;
   return {
-    station_list,
+    stations,
+    stationMap: getShuttleStationMapByShuttleId(item.lid, stations),
     bid: item.lid,
-    start_address: extractAlias(station_list[0]),
-    end_address: extractAlias(station_list[endIndex]),
+    start_address: extractAlias(stations[0]),
+    end_address: extractAlias(stations[endIndex]),
     runBusInfo: null,
     line_alias: item.line_alias,
     duration: item.line_alias,

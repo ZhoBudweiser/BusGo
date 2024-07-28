@@ -4,6 +4,8 @@ const cache = {
     shuttleAllLines: null,
     busLineStations: {},
     shuttleLineStations: {},
+    busStationMap: {},
+    shuttleStationMap: {},
 };
 
 export default cache;
