@@ -7,10 +7,9 @@ import { getStart } from "/util/data";
 import { flip } from "/util/setters";
 import {
   authGuideLocation,
-  setInitLocation,
   setLocationTimer,
-} from "/util/location";
-import { queryBackend } from "/options/apis/services";
+} from "/options/apis/locationApis";
+import { queryBackend } from "/options/apis/carApis";
 
 const eventHandlers = {
   onActive,
