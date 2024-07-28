@@ -6,6 +6,10 @@ const funcMap = {
         getBusAllStations,
         getShuttleAllStations
     ],
+    linesByStationId: [
+        getBusLinesByStationId,
+        getShuttleLinesByStationId
+    ],
     linesByEnds: [
         getBusLinesByEnds,
         getShuttleLinesByEnds
@@ -13,10 +17,6 @@ const funcMap = {
     stationsById: [
         getBusStationsByBusId,
         getShuttleStationsByShuttleId
-    ],
-    linesByStationId: [
-        getBusLinesByStationId,
-        getShuttleLinesByStationId
     ],
 };
 

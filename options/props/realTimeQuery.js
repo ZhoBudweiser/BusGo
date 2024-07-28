@@ -22,9 +22,9 @@ const runtimeData = {
 const selections = {
   showNavigationPath: false,
   moveToUserPosition: false,
-  selectedStopId: "",
-  selectedStopName: "",
-  selectedBusLineId: "",
+  selectedStationId: "",
+  selectedStationName: "",
+  selectedLineId: "",
 };
 
 export const realTimeQueryProps = {

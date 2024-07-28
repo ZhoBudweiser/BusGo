@@ -52,7 +52,7 @@ function onSetTimeCost(time) {
 
 function onSelectedStop(id) {
   this.setData({
-    selectedStopId: id,
+    selectedStationId: id,
   });
 }
 
@@ -93,7 +93,7 @@ function onClearTimer() {
 
 function onSetSelectedBusLine(bid) {
   this.setData({
-    selectedBusLineId: bid,
+    selectedLineId: bid,
   });
 }
 

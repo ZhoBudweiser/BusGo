@@ -1,17 +1,3 @@
-import { nop } from "/options/apis/apis";
-import { DEFAULT_POSITION } from "/options/props/defaults";
-
-// export async function setInitLocation() {
-//   const locationAuthed = await authGuideLocation();
-//   let userPosition = DEFAULT_POSITION;
-//   if (locationAuthed) {
-//     userPosition = await getUserLocation();
-//   }
-//   return {
-//     userPosition,
-//     locationAuthed,
-//   };
-// }
 
 export function setLocationTimer(client) {
   return setInterval(autoLocate, 5000, client);
@@ -93,16 +79,6 @@ export async function authGuideLocation() {
     return false;
   }
 }
-
-// async function getUserLocation() {
-//   const location = await my.getLocation({
-//     type: 1,
-//     success: (res) => console.log(res),
-//     fail: (err) => console.log("定位获取异常", err),
-//   });
-//   console.log(location);
-//   return location;
-// }
 
 function autoLocate(client) {
   console.log("已获取定位");

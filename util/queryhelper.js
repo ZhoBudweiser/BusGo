@@ -101,7 +101,7 @@ export const getShuttleStops = (client, lat, lon) => {
 };
 
 const getAllAvailableDestinationsByStart = (client) => {
-  const currentLocation = toCampus(client.data.selectedStopName);
+  const currentLocation = toCampus(client.data.selectedStationName);
   const availableDestinations = endAddresses.map((end) =>
     my
       .request({
@@ -222,7 +222,7 @@ export const queryRunInfo = async (client, item) => {
     dataType: "json",
     data: {
       lid: item.bid,
-      stationAliasNo: client.data.selectedStopId,
+      stationAliasNo: client.data.selectedStationId,
     },
     success: (res) => res,
     fail: function (error) {
@@ -268,7 +268,7 @@ export const setTimer = (client) => {
   if (client.data.activeIndex === 0) {
     queryBusLinesByStop({
       bid: "",
-      stopId: client.data.selectedStopId,
+      stopId: client.data.selectedStationId,
       obj: client,
     });
     client.timer = setInterval(
@@ -276,7 +276,7 @@ export const setTimer = (client) => {
       client.data.sysQueryFrequency,
       {
         bid: "",
-        stopId: client.data.selectedStopId,
+        stopId: client.data.selectedStationId,
         obj: client,
       },
     );

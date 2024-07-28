@@ -5,7 +5,7 @@ import { showQuerying } from "/util/notification";
 
 const observers = {
   activeIndex,
-  selectedStopId,
+  selectedStationId,
   queriedStations,
   busLines,
   sysQueryFrequency,
@@ -24,17 +24,17 @@ function activeIndex(index) {
   });
 }
 
-function selectedStopId(val) {
+function selectedStationId(val) {
   if (val == "") return;
   const stations =
     this.data.activeIndex == 0
       ? this.data.busStations
       : this.data.shuttleStations;
   const newStopName = stations.filter(
-    (item) => item.station_alias_no === this.data.selectedStopId,
+    (item) => item.station_alias_no === this.data.selectedStationId,
   )[0].station_alias;
   this.setData({
-    selectedStopName: newStopName,
+    selectedStationName: newStopName,
   });
   showQuerying();
   setTimer(this);
@@ -48,7 +48,7 @@ function queriedStations(curval) {
     this.data.userPosition.longitude,
   );
   this.setData({
-    selectedStopId: stopid,
+    selectedStationId: stopid,
   });
 }
 
