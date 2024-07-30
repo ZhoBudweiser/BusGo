@@ -33,7 +33,7 @@
               <view a:else class="item-destinations">
                 请点击
                 <picker onChange="onSelectEnd" range="{{destinations}}">
-                  <view class="item-destination-title-name"> 此处 </view>
+                  <view class="item-destination-title-name"> 此处</view>
                 </picker>
                 选择目的地
               </view>
@@ -41,11 +41,7 @@
             <!-- 校车进展 -->
             <view class="item-body-main">
               <!-- 校车 -->
-              <block
-                a:for="{{ busLines }}"
-                a:for-index="jndex"
-                key="bus-coming-line-{{jndex}}"
-              >
+              <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
                 <view
                   a:if="{{item.runBusInfo[0].about_minute}}"
                   class="item-bus-object"
@@ -53,14 +49,9 @@
                   onTap="onActiveTime"
                   data-i="{{jndex}}"
                 >
-                  <view
-                    class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}"
-                  >
+                  <view class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}">
                   </view>
-                  <view
-                    class="item-bus-caption"
-                    style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}"
-                  >
+                  <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
                     {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' :
                     item.runBusInfo[0].vehi_num}`}}
                   </view>
@@ -68,12 +59,9 @@
               </block>
               <!-- 站点 -->
               <view class="item-bus-object" style="left: 50%">
-                <view
-                  class="item-bus-icon item-bus-icon-flag"
-                  onTap="onTapFlag"
-                >
+                <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
                 </view>
-                <view class="item-stop-caption"> {{nearest_stop_name}} </view>
+                <view class="item-stop-caption"> {{nearest_stop_name}}</view>
               </view>
               <!-- 用户 -->
               <view class="item-bus-object" style="right: {{dist_human}}">
@@ -82,10 +70,7 @@
                   onTap="onTapHuman"
                 >
                 </view>
-                <view
-                  a:if="{{ time_left_human_walk >= 0 }}"
-                  class="item-bus-caption"
-                >
+                <view a:if="{{ time_left_human_walk >= 0 }}" class="item-bus-caption">
                   {{time_left_human_walk}} 分钟
                 </view>
               </view>
@@ -93,21 +78,10 @@
           </view>
           <!-- 班车路线 -->
           <view class="scroll-container" capture-catchTouchMove="onMove">
-            <block
-              a:for="{{ busLines }}"
-              a:for-index="jndex"
-              key="bus-line-{{jndex}}"
-            >
-              <view
-                class="swiper-item"
-                style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}"
-              >
+            <block a:for="{{ busLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
+              <view class="swiper-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
                 <!-- 班车基本信息 -->
-                <view
-                  class="item-header"
-                  data-i="{{jndex}}"
-                  onTap="onToggleCard"
-                >
+                <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
                   <!-- 班车名称 -->
                   <view class="item-bus-name">
                     {{item.runBusInfo !== null ? item.runBusInfo[0].vehi_num :
@@ -124,17 +98,14 @@
                     </view>
                   </view>
                   <!-- 班车时间 -->
-                  <view class="item-bus-time"> {{item.duration}} </view>
+                  <view class="item-bus-time"> {{item.duration}}</view>
                 </view>
                 <!-- 详细站点 -->
-                <view
-                  class="item-bus-line-detail"
-                  a:if="{{ activeCards[jndex] }}"
-                >
+                <view a:if="{{ activeCards[jndex] }}" class="item-bus-line-detail">
                   <steps
                     items="{{item.stations}}"
                     close="{{true}}"
-                    activeIndex="{{[item.station_map[item.runBusInfo[0].next_station]]}}"
+                    activeIndex="{{item.runBusInfo ? item.station_map[item.runBusInfo[0].next_station] : 0}}"
                     flagIndex="{{1+item.station_map[nearest_stop_id]}}"
                   >
                   </steps>

@@ -1,6 +1,6 @@
 import { baseURL, nop } from "./apiConfig";
 import cache from "/util/cache";
-import { extractLineIds, fmtBusLines, stripData } from "/util/formatter";
+import { extractLineIds, fmtBusLines, fmtBusStations, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
@@ -55,7 +55,7 @@ export async function getBusStationsByBusId(bid) {
     success: nop,
     fail: (err) => popQueryError(err, "班车站点"),
     complete: nop,
-  }).then(stripData);
+  }).then((res) => fmtBusStations(stripData(res)));
   return cache.busLineStations[bid];
 }
 
