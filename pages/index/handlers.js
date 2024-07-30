@@ -51,23 +51,38 @@ function onSetTimeCost(time) {
   });
 }
 
-function onSelectedStop(id) {
+export async function onSelectedStop(sid) {
+  if (sid == "") return;
+  const stations = await queryBackend("allStations", this.data.activeIndex, []);
+  const stationName = stations.find(
+    (item) => item.station_alias_no === sid,
+  ).station_alias;
+  console.log(stationName);
   this.setData({
-    selectedStationId: id,
+    selectedStation: {
+      id: sid,
+      name: stationName,
+    },
   });
+  showQuerying();
+  const { activeIndex, sysQueryFrequency } = this.data;
+  resetCarTimer(this, activeIndex, sid, sysQueryFrequency);
 }
 
 async function onSetBusLines(startStationName, endStationName) {
-  const { activeIndex, selectedStationId, sysQueryFrequency } = this.data;
+  const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   const sname = extractAddressName(startStationName);
   const ename = extractAddressName(endStationName);
-  const newBusLineIds = await queryBackend("linesByEnds", activeIndex, [sname, ename]);
+  const newBusLineIds = await queryBackend("linesByEnds", activeIndex, [
+    sname,
+    ename,
+  ]);
   if (newBusLineIds.length === 0) popNoCar();
   this.setData({
     queriedLineIds: newBusLineIds,
   });
   // 请求实时数据
-  resetCarTimer(this, activeIndex, selectedStationId, sysQueryFrequency);
+  resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
   // 过滤其他站点
   // ...
 }
@@ -143,8 +158,7 @@ async function onShow() {
   });
 }
 
-async function onReady() {
-}
+async function onReady() {}
 
 function onUnload() {
   console.log("已清除定时器");

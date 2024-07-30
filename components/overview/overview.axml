@@ -61,7 +61,7 @@
               <view class="item-bus-object" style="left: 50%">
                 <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
                 </view>
-                <view class="item-stop-caption"> {{nearest_stop_name}}</view>
+                <view class="item-stop-caption"> {{selectedStation.name}}</view>
               </view>
               <!-- 用户 -->
               <view class="item-bus-object" style="right: {{dist_human}}">
@@ -106,7 +106,7 @@
                     items="{{item.stations}}"
                     close="{{true}}"
                     activeIndex="{{item.runBusInfo ? item.station_map[item.runBusInfo[0].next_station] : 0}}"
-                    flagIndex="{{1+item.station_map[nearest_stop_id]}}"
+                    flagIndex="{{1+item.station_map[selectedStation.id]}}"
                   >
                   </steps>
                 </view>

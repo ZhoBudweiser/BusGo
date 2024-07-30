@@ -1,3 +1,4 @@
+import { DEFAULT_STATION } from "/options/props/defaults";
 import { flip } from "/util/setters";
 import { shttleChange } from "/util/shuttlehelper";
 const data_longitude = 120.090178;
@@ -21,8 +22,7 @@ Component({
       latitude: data_latitude,
     },
     stops: [],
-    selectedStopName: "",
-    selectedStopId: "0",
+    selectedStation: DEFAULT_STATION,
     selectedBusLineId: "-1",
     showNavigationPath: false,
     moveToUserPosition: false,
@@ -48,7 +48,7 @@ Component({
           width: 19,
           height: 31,
           iconPath:
-            this.props.selectedStopId === item.station_alias_no
+            this.props.selectedStation.id === item.station_alias_no
               ? "/images/mark_stop.png"
               : "/images/mark_bs.png",
           label: {
@@ -74,11 +74,11 @@ Component({
         display_mode: true,
       });
     },
-    selectedStopId: function () {
+    "selectedStation.id": function () {
       this.mapCtx.clearRoute();
       let lat, lon;
       const stops_labels = this.data.stops_labels.map((item) => {
-        if (item.id === this.props.selectedStopId) {
+        if (item.id === this.props.selectedStation.id) {
           lat = item.latitude;
           lon = item.longitude;
           return {
@@ -161,13 +161,13 @@ Component({
       if (mode) {
         this.mapCtx.changeMarkers({
           add: this.data.stops_labels.filter(
-            (item) => item.station_alias_no != this.props.selectedStopId,
+            (item) => item.station_alias_no != this.props.selectedStation.id,
           ),
         });
       } else {
         this.mapCtx.changeMarkers({
           remove: this.data.stops_labels.filter(
-            (item) => item.station_alias_no != this.props.selectedStopId,
+            (item) => item.station_alias_no != this.props.selectedStation.id,
           ),
         });
       }
@@ -214,7 +214,7 @@ Component({
           e.markerId !== "32")
       )
         return;
-      if (e.markerId !== this.props.selectedStopId) {
+      if (e.markerId !== this.props.selectedStation.id) {
         this.mapCtx.clearRoute();
         this.props.onSelectedStop(e.markerId);
       }
@@ -229,7 +229,7 @@ Component({
     },
     onJumpSearch() {
       my.navigateTo({
-        url: "/pages/search/search?start=" + this.props.selectedStopName,
+        url: "/pages/search/search?start=" + this.props.selectedStation.name,
       });
     },
     drawRoute(stops) {

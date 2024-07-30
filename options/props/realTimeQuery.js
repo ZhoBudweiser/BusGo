@@ -1,4 +1,4 @@
-import { DEFAULT_POSITION, DEFAULT_STATION_ID } from "./defaults";
+import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID } from "./defaults";
 
 const staticData = {
   busStations: [],
@@ -23,8 +23,7 @@ const runtimeData = {
 const selections = {
   showNavigationPath: false,
   moveToUserPosition: false,
-  selectedStationId: DEFAULT_STATION_ID,
-  selectedStationName: "",
+  selectedStation: DEFAULT_STATION,
   selectedLineId: "",
 };
 

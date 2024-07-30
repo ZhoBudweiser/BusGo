@@ -2,11 +2,11 @@ import { locate } from "/util/maphelper";
 import { getNearestStop, setTimer } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";
-import { resetCarTimer } from "/options/apis/carApis";
+import { queryBackend, resetCarTimer } from "/options/apis/carApis";
+import { onSelectedStop } from "./handlers";
 
 const observers = {
   activeIndex,
-  selectedStationId,
   queriedStations,
   busLines,
   sysQueryFrequency,
@@ -25,23 +25,6 @@ function activeIndex(index) {
   });
 }
 
-function selectedStationId(sid) {
-  if (sid == "") return;
-  const stations =
-    this.data.activeIndex == 0
-      ? this.data.busStations
-      : this.data.shuttleStations;
-  const newStopName = stations.filter(
-    (item) => item.station_alias_no === this.data.selectedStationId,
-  )[0].station_alias;
-  this.setData({
-    selectedStationName: newStopName,
-  });
-  showQuerying();
-  const { activeIndex, sysQueryFrequency } = this.data;
-  resetCarTimer(this, activeIndex, sid, sysQueryFrequency);
-}
-
 function queriedStations(curval) {
   if (!curval || !curval.length) return;
   const stopid = getNearestStop(
@@ -49,9 +32,7 @@ function queriedStations(curval) {
     this.data.userPosition.latitude,
     this.data.userPosition.longitude,
   );
-  this.setData({
-    selectedStationId: stopid,
-  });
+  onSelectedStop(stopid);
 }
 
 function busLines(fmtLines) {
@@ -65,6 +46,7 @@ function busLines(fmtLines) {
 }
 
 function sysQueryFrequency(frequency) {
-  const { activeIndex, selectedStationId } = this.data;
-  resetCarTimer(this, activeIndex, selectedStationId, frequency);
+  const { activeIndex, selectedStation } = this.data;
+  if (selectedStation.id == "") return;
+  resetCarTimer(this, activeIndex, selectedStation.id, frequency);
 }

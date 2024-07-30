@@ -1,4 +1,5 @@
 import { queryBackend } from "/options/apis/carApis";
+import { DEFAULT_STATION } from "/options/props/defaults";
 import { busEndAddresses, shuttleEndAddresses } from "/util/data";
 import { toCampus } from "/util/fmtUnit";
 import { flip } from "/util/setters";
@@ -31,8 +32,7 @@ Component({
   },
   props: {
     activeTab: 1,
-    nearest_stop_id: "1007",
-    nearest_stop_name: "风雨操场",
+    selectedStation: DEFAULT_STATION,
     time_left_human_walk: -1,
     busLines: [],
     shuttleLines: [],
@@ -64,7 +64,7 @@ Component({
         dist_human: calTimeToPercentage(this.props.time_left_human_walk),
       });
     },
-    nearest_stop_name: function (curval) {
+    "selectedStation.name": function (curval) {
       const curSelectedCampus = toCampus(curval);
       if (this.data.preSelectedCampus === curSelectedCampus) return;
       if (curval === "") {
@@ -104,7 +104,7 @@ Component({
             ? "此次查询预计需要 10 秒左右"
             : "查询中...",
       });
-      const startName = this.props.nearest_stop_name;
+      const startName = this.props.selectedStation.name;
       const endName = this.data.selectedEnd;
       this.props.onSetBusLines(startName, endName);
       this.props.onSetSelectedBusLine("");
