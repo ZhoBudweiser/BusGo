@@ -26,7 +26,6 @@
         destinations="{{queriedStations}}"
         selectedStation="{{selectedStation}}"
         time_left_human_walk="{{userTimeCost}}"
-        onClearTimer="onClearTimer"
         onActive="onActive"
         onSetBusLines="onSetBusLines"
         onSetSelectedBusLine="onSetSelectedBusLine"

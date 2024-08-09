@@ -1,5 +1,5 @@
 import { locate } from "/util/maphelper";
-import { getNearestStop, setTimer } from "/util/queryhelper";
+import { getNearestStop } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";
 import { queryBackend, resetCarTimer } from "/options/apis/carApis";
@@ -14,11 +14,16 @@ const observers = {
 
 export default observers;
 
-function activeIndex(index) {
+async function activeIndex(index) {
   showQuerying();
-  this.onClearTimer();
-  this.setData(dynamicData);
-  locate(this, index);
+  this.setData({
+    ...dynamicData,
+    queriedStations: await queryBackend(
+      "allStations",
+      this.data.activeIndex,
+      [],
+    ),
+  });
   my.setStorageSync({
     key: "activeIndex",
     data: index,

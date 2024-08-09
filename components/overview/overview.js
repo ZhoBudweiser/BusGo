@@ -36,7 +36,6 @@ Component({
     time_left_human_walk: -1,
     busLines: [],
     shuttleLines: [],
-    onClearTimer: () => {},
     onActive: () => {},
     onSetBusLines: () => {},
     onSetSelectedBusLine: () => {},
@@ -97,7 +96,6 @@ Component({
     },
     selectedEnd: function (end) {
       if (!end) return;
-      this.props.onClearTimer();
       my.showLoading({
         content:
           this.props.activeTab === 0

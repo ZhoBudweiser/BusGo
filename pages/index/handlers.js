@@ -20,7 +20,6 @@ const eventHandlers = {
   onSelectedStop,
   onSetBusLines,
   onSetStopsByBusLines,
-  onClearTimer,
   onSetSelectedBusLine,
   onFlip,
   onRollback,
@@ -79,10 +78,6 @@ function onSetStopsByBusLines(formatBusLines) {
   this.setData({
     queriedStations: newStops,
   });
-}
-
-function onClearTimer() {
-  if (this.timer) clearInterval(this.timer);
 }
 
 function onSetSelectedBusLine(bid) {
