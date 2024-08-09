@@ -3,6 +3,7 @@ import {
   getFormatedBusLines,
   getFormatedShuttleLines,
 } from "/util/fmtUnit";
+import { showQuerying } from "/util/notification";
 import { getStart } from "/util/data";
 import { flip } from "/util/setters";
 import {
@@ -51,22 +52,8 @@ function onSetTimeCost(time) {
   });
 }
 
-export async function onSelectedStop(sid) {
-  if (sid == "") return;
-  const stations = await queryBackend("allStations", this.data.activeIndex, []);
-  const stationName = stations.find(
-    (item) => item.station_alias_no === sid,
-  ).station_alias;
-  console.log(stationName);
-  this.setData({
-    selectedStation: {
-      id: sid,
-      name: stationName,
-    },
-  });
-  showQuerying();
-  const { activeIndex, sysQueryFrequency } = this.data;
-  resetCarTimer(this, activeIndex, sid, sysQueryFrequency);
+async function onSelectedStop(sid) {
+  selectedStop(this, sid);
 }
 
 async function onSetBusLines(startStationName, endStationName) {
@@ -167,4 +154,22 @@ function onUnload() {
     key: "stationsBuffer",
     data: this.data.stationsBuffer,
   });
+}
+
+export async function selectedStop(client, sid) {
+  if (sid == "") return;
+  const stations = await queryBackend("allStations", client.data.activeIndex, []);
+  const stationName = stations.find(
+    (item) => item.station_alias_no === sid,
+  ).station_alias;
+  console.log(stationName);
+  client.setData({
+    selectedStation: {
+      id: sid,
+      name: stationName,
+    },
+  });
+  showQuerying();
+  const { activeIndex, sysQueryFrequency } = client.data;
+  resetCarTimer(client, activeIndex, sid, sysQueryFrequency);
 }

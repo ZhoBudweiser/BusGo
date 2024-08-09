@@ -3,7 +3,7 @@ import { getNearestStop, setTimer } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";
 import { queryBackend, resetCarTimer } from "/options/apis/carApis";
-import { onSelectedStop } from "./handlers";
+import { selectedStop } from "./handlers";
 
 const observers = {
   activeIndex,
@@ -32,7 +32,7 @@ function queriedStations(curval) {
     this.data.userPosition.latitude,
     this.data.userPosition.longitude,
   );
-  onSelectedStop(stopid);
+  selectedStop(this, stopid);
 }
 
 function busLines(fmtLines) {
