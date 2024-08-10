@@ -62,6 +62,11 @@ export function getShuttleStationMapByShuttleId(lid, stations) {
   return cache.shuttleStationMap[lid];
 }
 
+export async function getShuttleAllEnds() {
+  if (cache.shuttleAllEnds != null) return cache.shuttleAllEnds;
+  return cache.shuttleAllEnds;
+}
+
 async function getShuttleALLLineStations() {
   if (Object.keys(cache.shuttleLineStations).length !== 0)
     return cache.shuttleLineStations;

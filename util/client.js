@@ -1,5 +1,4 @@
 import { load } from "./cache";
-import { showQuerying } from "./notification";
 import { queryBackend } from "/options/apis/carApis";
 import { DEFAULT_LOCATION_QUERY_FREQUENCY } from "/options/props/defaults";
 
@@ -35,9 +34,6 @@ export async function selectStation(client, sid) {
       name: stationName,
     },
   });
-  showQuerying();
-  const { activeIndex, sysQueryFrequency } = client.data;
-  resetCarTimer(client, activeIndex, sid, sysQueryFrequency);
 }
 
 export function setData(client, key, data) {
@@ -69,7 +65,7 @@ function queryLinesByStationId(client, dataType, sid) {
     const notfiltered = (bid) =>
       queriedLineIds == null || queriedLineIds.indexOf(bid) !== -1;
     const carLines = (
-      await queryBackend("linesByStationId", dataType, [sid])
+      await queryBackend("linesByStationId", dataType, [sid], false)
     ).filter((line) => notfiltered(line.bid));
     client.setData({ carLines });
     console.log("查询到班次：", carLines);

@@ -6,6 +6,6 @@ export const data = {
 
 export const props = {
   tabs: ["校区间", "校区内"],
-  activeTab: 1,
+  activeIndex: 1,
   onMainData: nop,
 };

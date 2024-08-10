@@ -18,16 +18,15 @@
         <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
         <text class="placeholder">搜索你想了解的地方</text>
       </view>
-      <tabs activeTab="{{activeIndex}}" onMainData="onMainData"></tabs>
+      <tabs activeIndex="{{activeIndex}}" onMainData="onMainData"></tabs>
       <overview
-        activeTab="{{activeIndex}}"
-        busLines="{{carLines}}"
+        activeIndex="{{activeIndex}}"
+        carLines="{{carLines}}"
         shuttleLines="{{shuttleLines}}"
         destinations="{{queriedStations}}"
         selectedStation="{{selectedStation}}"
-        time_left_human_walk="{{userTimeCost}}"
+        userTimeCost="{{userTimeCost}}"
         onMainData="onMainData"
-        onSetCarLines="onSetCarLines"
         onFlip="onFlip"
         onRollback="onRollback"
       >

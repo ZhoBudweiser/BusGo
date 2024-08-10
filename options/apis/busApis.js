@@ -69,3 +69,8 @@ export async function getBusStationMapByBusId(bid) {
   );
   return cache.busStationMap[bid];
 }
+
+export async function getBusAllEnds() {
+  if (cache.busAllEnds != null) return cache.busAllEnds;
+  return cache.busAllEnds;
+}

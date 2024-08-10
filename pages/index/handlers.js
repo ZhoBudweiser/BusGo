@@ -1,12 +1,13 @@
 import { getStart } from "/util/data";
-import { flip } from "/util/setters";
-import {
-  authGuideLocation,
-} from "/options/apis/locationApis";
+import { flip, setStation } from "/util/setters";
+import { authGuideLocation } from "/options/apis/locationApis";
 import { queryBackend } from "/options/apis/carApis";
-import { popNoCar } from "/util/notification";
-import { extractAddressName } from "/util/formatter";
-import { loadAndSet, resetCarTimer, selectStation, setData, setLocationTimer } from "/util/client";
+import {
+  loadAndSet,
+  selectStation,
+  setData,
+  setLocationTimer,
+} from "/util/client";
 import { load, store } from "/util/cache";
 
 const eventHandlers = {
@@ -14,7 +15,6 @@ const eventHandlers = {
   onFlip,
   onRollback,
   onSelectStation,
-  onSetCarLines,
 };
 
 const lifeHandlers = {
@@ -39,34 +39,20 @@ function onFlip(field) {
 }
 
 async function onRollback() {
+  const { activeIndex } = this.data;
   this.setData({
-    queriedStations: await queryBackend("allStations", i, []),
+    queriedStations: await queryBackend("allStations", activeIndex, []),
     queriedLineIds: null,
   });
 }
 
 async function onSelectStation(sid) {
-  selectStation(this, sid);
-}
-
-async function onSetCarLines(startStationName, endStationName) {
-  const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
-  const sname = extractAddressName(startStationName);
-  const ename = extractAddressName(endStationName);
-  const newBusLineIds = await queryBackend("linesByEnds", activeIndex, [
-    sname,
-    ename,
-  ]);
-  if (newBusLineIds.length === 0) popNoCar();
-  this.setData({
-    queriedLineIds: newBusLineIds,
-  });
-  // 定时请求数据
-  resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
+  const { activeIndex } = this.data;
+  const selectedStation = await setStation(activeIndex, sid);
+  this.setData({ selectedStation });
 }
 
 function onLoad(query) {
-  // 页面加载
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   loadAndSet(this, "activeIndex");
   loadAndSet(this, "stationsBuffer");
@@ -92,4 +78,3 @@ function onUnload() {
   console.log("已清除定时器");
   store("stationsBuffer", this.data.stationsBuffer);
 }
-

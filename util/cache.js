@@ -1,6 +1,10 @@
+import { DEFAULT_BUS_ALL_ENDS, DEFAULT_SHUTTLE_ALL_ENDS } from "/options/props/defaults";
+
 const cache = {
   busAllStations: null,
   shuttleAllStations: null,
+  busAllEnds: DEFAULT_BUS_ALL_ENDS,
+  shuttleAllEnds: DEFAULT_SHUTTLE_ALL_ENDS,
   shuttleAllLines: null,
   busLineStations: {},
   shuttleLineStations: {},

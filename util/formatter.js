@@ -36,7 +36,7 @@ export function extractLineIds(carLines) {
 export function extractAddressName(name, dataType) {
   if (dataType == 1) return name;
   return name.indexOf("华家池") === -1
-    ? name.replace(/校区(.*)/g, "")
+    ? removeCampusSuffix(name)
     : "华家池";
 }
 
