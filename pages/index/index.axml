@@ -18,12 +18,11 @@
         <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
         <text class="placeholder">搜索你想了解的地方</text>
       </view>
-      <tabs activeIndex="{{activeIndex}}" onMainData="onMainData"></tabs>
+      <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData"></tabs>
       <overview
+        tabs="{{tabs}}"
         activeIndex="{{activeIndex}}"
         carLines="{{carLines}}"
-        shuttleLines="{{shuttleLines}}"
-        destinations="{{queriedStations}}"
         selectedStation="{{selectedStation}}"
         userTimeCost="{{userTimeCost}}"
         onMainData="onMainData"

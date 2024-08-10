@@ -8,6 +8,7 @@ export const DEFAULT_STATION = {
   id: "",
   name: "",
 };
+export const DEFAULT_TABS = ["校区间", "校区内"];
 export const DEFAULT_BUS_ALL_ENDS = [
   "紫金港校区",
   "玉泉校区",

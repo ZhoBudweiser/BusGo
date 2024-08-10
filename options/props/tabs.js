@@ -1,3 +1,4 @@
+import { DEFAULT_TABS } from "./defaults";
 import { nop } from "/options/apis/apiConfig";
 
 export const data = {
@@ -5,7 +6,7 @@ export const data = {
 };
 
 export const props = {
-  tabs: ["校区间", "校区内"],
+  tabs: DEFAULT_TABS,
   activeIndex: 1,
   onMainData: nop,
 };

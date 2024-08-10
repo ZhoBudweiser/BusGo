@@ -1,4 +1,4 @@
-import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID } from "./defaults";
+import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID, DEFAULT_TABS } from "./defaults";
 
 const staticData = {
   busStations: [],
@@ -9,6 +9,7 @@ const staticData = {
   locationTimer: null,
   carTimer: null,
   activeIndex: 0,
+  tabs: DEFAULT_TABS,
 };
 
 const runtimeData = {

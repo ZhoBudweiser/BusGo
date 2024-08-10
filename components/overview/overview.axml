@@ -2,7 +2,6 @@
   <view class="list-container" style="height: {{containerHeight}}">
     <swiper
       style="height: 100%"
-      class="demo-swiper"
       previousMargin="10px"
       nextMargin="10px"
       current="{{activeIndex}}"
@@ -15,71 +14,15 @@
       touch-angle="{{-90}}"
       onChange="onChange"
     >
-      <swiper-item a:for="{{vehicles}}" key="swiper-item-{{index}}">
+      <swiper-item a:for="{{tabs}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
-          <view class="swiper-item first">
-            <!-- 目的地选择 -->
-            <view class="item-header">
-              <view a:if="{{selectedEnd}}" class="item-destinations">
-                去往
-                <picker onChange="onSelectEnd" range="{{destinations}}">
-                  <view class="item-destination-title-name">
-                    {{selectedEnd}}
-                  </view>
-                </picker>
-                <view class="item-destination-cancel" onTap="onRollback">
-                </view>
-              </view>
-              <view a:else class="item-destinations">
-                请点击
-                <picker onChange="onSelectEnd" range="{{destinations}}">
-                  <view class="item-destination-title-name"> 此处</view>
-                </picker>
-                选择目的地
-              </view>
-            </view>
-            <!-- 校车进展 -->
-            <view class="item-body-main">
-              <!-- 校车 -->
-              <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
-                <view
-                  a:if="{{item.runBusInfo[0].about_minute}}"
-                  class="item-bus-object"
-                  style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (35 - item.runBusInfo[0].about_minute/35 * 100) + '%'}}"
-                  onTap="onActiveTime"
-                  data-i="{{jndex}}"
-                >
-                  <view class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}">
-                  </view>
-                  <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
-                    {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' :
-                    item.runBusInfo[0].vehi_num}`}}
-                  </view>
-                </view>
-              </block>
-              <!-- 站点 -->
-              <view class="item-bus-object" style="left: 50%">
-                <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
-                </view>
-                <view class="item-stop-caption"> {{selectedStation.name}}</view>
-              </view>
-              <!-- 用户 -->
-              <view class="item-bus-object" style="right: {{humanDistance}}">
-                <view
-                  class="item-bus-icon item-bus-icon-human-walk"
-                  onTap="onTapHuman"
-                >
-                </view>
-                <view a:if="{{ userTimeCost >= 0 }}" class="item-bus-caption">
-                  {{userTimeCost}} 分钟
-                </view>
-              </view>
-            </view>
+          <view class="swiper-container-item first">
+            <header carLines="{{carLines}}" selectedStation="{{selectedStation}}" userTimeCost="{{userTimeCost}}" onFlip="{{onFlip}}"></header>
           </view>
           <!-- 班车路线 -->
           <view class="scroll-container" capture-catchTouchMove="onMove">
             <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
-              <view class="swiper-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
+              <view class="swiper-container-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.runBusInfo[0].near_distance > 0 ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
                 <!-- 班车基本信息 -->
                 <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
                   <!-- 班车名称 -->
