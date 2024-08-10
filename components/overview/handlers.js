@@ -5,7 +5,7 @@ export const methods = {
   onRollback,
   onTapFlag,
   onTapHuman,
-  onToggleCard
+  onToggleCard,
 };
 
 export const lifeHanders = {
@@ -37,16 +37,14 @@ function onActiveTime(e) {
 }
 
 function onSelectEnd(e) {
-  this.setData({
-    selectedEnd: this.data.destinations[e.detail.value],
-  });
+  const selectedEnd = this.data.destinations[e.detail.value];
+  this.setData({ selectedEnd });
 }
 
 function onRollback() {
   this.props.onRollback();
-  this.setData({
-    selectedEnd: "",
-  });
+  const selectedEnd = "";
+  this.setData({ selectedEnd });
 }
 
 function onTapFlag() {
@@ -59,11 +57,9 @@ function onTapHuman() {
 
 function onToggleCard(e) {
   const i = e.currentTarget.dataset.i;
-  const cards = this.data.activeCards.concat();
-  cards[i] = !cards[i];
-  this.setData({
-    activeCards: cards,
-  });
+  const activeCards = this.data.activeCards.concat();
+  activeCards[i] = !activeCards[i];
+  this.setData({ activeCards });
 }
 
 function didMount() {
