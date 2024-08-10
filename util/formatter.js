@@ -25,8 +25,8 @@ export function distinctStations(lines) {
   }, []);
 }
 
-export function extractLineIds(busLines) {
-  return busLines.map((busLine) => busLine.bid);
+export function extractLineIds(carLines) {
+  return carLines.map((carLine) => carLine.bid);
 }
 
 export function extractAddressName(name, dataType) {

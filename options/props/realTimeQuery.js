@@ -12,7 +12,7 @@ const staticData = {
 };
 
 const runtimeData = {
-  busLines: [],
+  carLines: [],
   queriedLineIds: null,
   queriedStations: [],
   userPosition: DEFAULT_POSITION,

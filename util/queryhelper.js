@@ -8,7 +8,7 @@ import {
 import { endAddresses } from "/util/data";
 import { findShttleLinesByStartOnly } from "./shuttlehelper";
 
-export const getNearestStop = (poses, lat, lon) => {
+export const getNearestStationId = (poses, lat, lon) => {
   let min_dist = 9999,
     target_id = "1007";
   poses.forEach((item) => {

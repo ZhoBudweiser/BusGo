@@ -136,7 +136,7 @@ export async function getFormatedBusLines(client, res) {
   const queryRes = await res.map(async (item) => fmtBusLine(client, item));
   const results = await Promise.all(queryRes);
   client.setData({
-    busLines: results.filter(
+    carLines: results.filter(
       (res) =>
         client.data.queriedLineIds.length === 0 ||
         client.data.queriedLineIds.indexOf(res.bid) !== -1,
@@ -217,7 +217,7 @@ export async function getFormatedShuttleLines(client, res) {
   );
   const lines = combinRunInfo(res, poses, infos);
   client.setData({
-    busLines: lines.filter(
+    carLines: lines.filter(
       (res) =>
         client.data.queriedLineIds.length === 0 ||
         client.data.queriedLineIds.indexOf(res.bid) !== -1,

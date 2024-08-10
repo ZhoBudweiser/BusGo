@@ -64,10 +64,10 @@ function queryLinesByStationId(client, dataType, sid) {
     const { queriedLineIds } = client.data;
     const notfiltered = (bid) =>
       queriedLineIds == null || queriedLineIds.indexOf(bid) !== -1;
-    const busLines = (
+    const carLines = (
       await queryBackend("linesByStationId", dataType, [sid])
     ).filter((line) => notfiltered(line.bid));
-    client.setData({ busLines });
-    console.log("查询到班次：", busLines);
+    client.setData({ carLines });
+    console.log("查询到班次：", carLines);
   };
 }

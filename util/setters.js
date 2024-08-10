@@ -15,3 +15,15 @@ export function flip(client, field) {
     [field]: !client.data[field],
   });
 }
+
+export function setSysQueryFrequency(lines) {
+  if (lines.length == 0) {
+    return 600000;
+  } else {
+    if (lines.find((line) => line.runBusInfo !== null)) {
+      return 10000;
+    } else {
+      return 60000;
+    }
+  }
+}

@@ -3,7 +3,7 @@
     class="schoolmap"
     position="{{userPosition}}"
     stops="{{queriedStations}}"
-    lines="{{busLines}}"
+    lines="{{carLines}}"
     selectedStation="{{selectedStation}}"
     selectedBusLineId="{{selectedLineId}}"
     showNavigationPath="{{showNavigationPath}}"
@@ -21,7 +21,7 @@
       <tabs activeTab="{{activeIndex}}" onActive="onActive"></tabs>
       <overview
         activeTab="{{activeIndex}}"
-        busLines="{{busLines}}"
+        busLines="{{carLines}}"
         shuttleLines="{{shuttleLines}}"
         destinations="{{queriedStations}}"
         selectedStation="{{selectedStation}}"
