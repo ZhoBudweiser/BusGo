@@ -1,3 +1,6 @@
+import { load, store } from "/util/cache";
+import { loadAndSet } from "/util/client";
+
 Component({
   options: {
     observers: true,
@@ -17,21 +20,11 @@ Component({
     onSetHistoryAddress: () => {},
   },
   didMount() {
-    const res = my.getStorageSync({
-      key: "queryHistory",
-    });
-    if (res.success) {
-      this.setData({
-        queryHistory: res.data,
-      });
-    }
+    loadAndSet(this, "queryHistory");
   },
   didUpdate() {},
   didUnmount() {
-    my.setStorageSync({
-      key: "queryHistory",
-      data: this.data.queryHistory,
-    });
+    store("queryHistory", this.data.queryHistory);
   },
   methods: {
     onChoose(e) {

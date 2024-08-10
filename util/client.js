@@ -1,3 +1,4 @@
+import { load } from "./cache";
 import { showQuerying } from "./notification";
 import { queryBackend } from "/options/apis/carApis";
 import { DEFAULT_LOCATION_QUERY_FREQUENCY } from "/options/props/defaults";
@@ -37,6 +38,16 @@ export async function selectStation(client, sid) {
   showQuerying();
   const { activeIndex, sysQueryFrequency } = client.data;
   resetCarTimer(client, activeIndex, sid, sysQueryFrequency);
+}
+
+export function loadAndSet(client, key) {
+  const res = load(key);
+  if (res.success) {
+    client.setData({
+      [key]: res.data,
+    });
+    console.log("已读取缓存：", key);
+  }
 }
 
 function autoLocate(client) {

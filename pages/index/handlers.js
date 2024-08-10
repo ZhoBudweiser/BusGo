@@ -12,7 +12,8 @@ import {
 import { queryBackend } from "/options/apis/carApis";
 import { popNoCar } from "/util/notification";
 import { extractAddressName } from "/util/formatter";
-import { resetCarTimer, selectStation, setLocationTimer } from "/util/client";
+import { loadAndSet, resetCarTimer, selectStation, setLocationTimer } from "/util/client";
+import { load, store } from "/util/cache";
 
 const eventHandlers = {
   onActive,
@@ -103,28 +104,10 @@ function onRollback() {
 function onLoad(query) {
   // 页面加载
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
-  const index_res = my.getStorageSync({
-    key: "activeIndex",
-  });
-  if (index_res.success) {
-    this.setData({
-      activeIndex: index_res.data,
-    });
-  }
-  const stations_res = my.getStorageSync({
-    key: "stationsBuffer",
-  });
-  if (stations_res.success) {
-    this.setData({
-      stationsBuffer: stations_res.data,
-    });
-  }
-  const news_res = my.getStorageSync({
-    key: "noticeShow",
-  });
-  if (!news_res.data) {
-    getStart();
-  }
+  loadAndSet(this, "activeIndex");
+  loadAndSet(this, "stationsBuffer");
+  loadAndSet(this, "stationsBuffer");
+  !load("noticeShow").data && getStart();
 }
 
 async function onShow() {
@@ -145,9 +128,6 @@ async function onReady() {}
 function onUnload() {
   console.log("已清除定时器");
   clearInterval(this.data.locationTimer);
-  my.setStorageSync({
-    key: "stationsBuffer",
-    data: this.data.stationsBuffer,
-  });
+  store("stationsBuffer", this.data.stationsBuffer);
 }
 

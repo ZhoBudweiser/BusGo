@@ -1,6 +1,7 @@
 import { fmtQueryResult, fmtQueryArrayResult } from "/util/fmtUnit";
 import { isObjectValueEqual } from "/util/queryhelper";
 import { dataAlert } from "/util/data";
+import { load } from "/util/cache";
 
 Page({
   data: {
@@ -106,11 +107,6 @@ Page({
         initStart: query.start,
       });
     }
-    const data_res = my.getStorageSync({
-      key: "dataAlert",
-    });
-    if (!data_res.data) {
-      dataAlert();
-    }
+    !load("dataAlert").data && dataAlert();
   },
 });

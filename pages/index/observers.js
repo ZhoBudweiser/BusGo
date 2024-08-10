@@ -4,6 +4,7 @@ import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";
 import { queryBackend } from "/options/apis/carApis";
 import { resetCarTimer, selectStation } from "/util/client";
+import { store } from "/util/cache";
 
 const observers = {
   activeIndex,
@@ -14,20 +15,13 @@ const observers = {
 
 export default observers;
 
-async function activeIndex(index) {
+async function activeIndex(i) {
   showQuerying();
   this.setData({
     ...dynamicData,
-    queriedStations: await queryBackend(
-      "allStations",
-      this.data.activeIndex,
-      [],
-    ),
+    queriedStations: await queryBackend("allStations", i, []),
   });
-  my.setStorageSync({
-    key: "activeIndex",
-    data: index,
-  });
+  store("activeIndex", i);
 }
 
 function queriedStations(curval) {
