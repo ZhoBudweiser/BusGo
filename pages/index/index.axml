@@ -8,8 +8,8 @@
     selectedBusLineId="{{selectedLineId}}"
     showNavigationPath="{{showNavigationPath}}"
     moveToUserPosition="{{moveToUserPosition}}"
-    onSelectedStop="onSelectedStop"
-    onSetTimeCost="onSetTimeCost"
+    onSelectStation="onSelectStation"
+    onMainData="onMainData"
   >
   </schoolmap>
   <movable class="previa">
@@ -18,7 +18,7 @@
         <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
         <text class="placeholder">搜索你想了解的地方</text>
       </view>
-      <tabs activeTab="{{activeIndex}}" onActive="onActive"></tabs>
+      <tabs activeTab="{{activeIndex}}" onMainData="onMainData"></tabs>
       <overview
         activeTab="{{activeIndex}}"
         busLines="{{carLines}}"
@@ -26,9 +26,8 @@
         destinations="{{queriedStations}}"
         selectedStation="{{selectedStation}}"
         time_left_human_walk="{{userTimeCost}}"
-        onActive="onActive"
-        onSetBusLines="onSetBusLines"
-        onSetSelectedBusLine="onSetSelectedBusLine"
+        onMainData="onMainData"
+        onSetCarLines="onSetCarLines"
         onFlip="onFlip"
         onRollback="onRollback"
       >

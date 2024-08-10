@@ -40,6 +40,10 @@ export async function selectStation(client, sid) {
   resetCarTimer(client, activeIndex, sid, sysQueryFrequency);
 }
 
+export function setData(client, key, data) {
+  client.setData({ [key]: data });
+}
+
 export function loadAndSet(client, key) {
   const res = load(key);
   if (res.success) {

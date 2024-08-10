@@ -1,3 +1,4 @@
+import { nop } from "/options/apis/apiConfig";
 import { queryBackend } from "/options/apis/carApis";
 import { DEFAULT_STATION } from "/options/props/defaults";
 import { busEndAddresses, shuttleEndAddresses } from "/util/data";
@@ -36,9 +37,8 @@ Component({
     time_left_human_walk: -1,
     busLines: [],
     shuttleLines: [],
-    onActive: () => {},
-    onSetBusLines: () => {},
-    onSetSelectedBusLine: () => {},
+    onMainData: nop,
+    onSetCarLines: () => {},
     onFlip: () => {},
     onRollback: () => {},
   },
@@ -92,7 +92,7 @@ Component({
             : curSelectedCampus,
         // selectedEnd: curSelectedCampus == toCampus(end) ? end + '(附近)' : end,
       });
-      this.props.onSetSelectedBusLine("");
+      this.props.onMainData("selectedLineId", "");
     },
     selectedEnd: function (end) {
       if (!end) return;
@@ -104,8 +104,8 @@ Component({
       });
       const startName = this.props.selectedStation.name;
       const endName = this.data.selectedEnd;
-      this.props.onSetBusLines(startName, endName);
-      this.props.onSetSelectedBusLine("");
+      this.props.onSetCarLines(startName, endName);
+      this.props.onMainData("selectedLineId", "");
     },
   },
   didMount() {
@@ -122,16 +122,16 @@ Component({
   methods: {
     onChange(e) {
       const { current } = e.detail;
-      this.props.onActive(current);
+      this.props.onMainData("activeIndex", current);
     },
     onActiveTime(e) {
       const i = e.currentTarget.dataset.i;
       if (this.data.activeTimeIndex === i) {
         if (this.data.showTime) {
           if (this.data.showRoute) {
-            this.props.onSetSelectedBusLine("");
+            this.props.onMainData("selectedLineId", "");
           } else {
-            this.props.onSetSelectedBusLine(this.props.busLines[i].bid);
+            this.props.onMainData("selectedLineId", this.props.busLines[i].bid);
           }
           flip(this, "showRoute");
         }

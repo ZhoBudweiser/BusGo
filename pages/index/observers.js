@@ -1,4 +1,3 @@
-import { locate } from "/util/maphelper";
 import { getNearestStationId } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { showQuerying } from "/util/notification";

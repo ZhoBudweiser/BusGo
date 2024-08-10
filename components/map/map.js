@@ -1,4 +1,6 @@
+import { nop } from "/options/apis/apiConfig";
 import { DEFAULT_STATION } from "/options/props/defaults";
+import { second2minute } from "/util/formatter";
 import { flip } from "/util/setters";
 import { shttleChange } from "/util/shuttlehelper";
 const data_longitude = 120.090178;
@@ -27,8 +29,8 @@ Component({
     showNavigationPath: false,
     moveToUserPosition: false,
     lines: [],
-    onSelectedStop: () => {},
-    onSetTimeCost: () => {},
+    onSelectStation: () => {},
+    onMainData: nop,
   },
   observers: {
     stops: function () {
@@ -150,7 +152,7 @@ Component({
         endLat: this.data.stop_lat,
         endLng: this.data.stop_lon,
         success: (res) => {
-          this.props.onSetTimeCost(res.duration);
+          this.props.onMainData("userTimeCost", second2minute(res.duration));
         },
         fail: (error) => {
           console.log(error);
@@ -216,7 +218,7 @@ Component({
         return;
       if (e.markerId !== this.props.selectedStation.id) {
         this.mapCtx.clearRoute();
-        this.props.onSelectedStop(e.markerId);
+        this.props.onSelectStation(e.markerId);
       }
     },
     onSwitchMode() {

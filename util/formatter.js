@@ -9,6 +9,10 @@ export function stripData(res) {
   return res.data.data;
 }
 
+export function second2minute(second) {
+  return (second / 60).toFixed(1);
+}
+
 export function distinctStations(lines) {
   const visits = new Set();
   return lines.reduce((pre_stations, cur_list) => {
@@ -129,7 +133,7 @@ function convertNameStyle(str) {
 function fmtBusStation(busStation) {
   return {
     ...busStation,
-    station_alias: removeCampusPrefix(busStation.station_alias)
+    station_alias: removeCampusPrefix(busStation.station_alias),
   };
 }
 

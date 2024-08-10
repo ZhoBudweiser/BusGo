@@ -1,9 +1,3 @@
-import {
-  distinctStops,
-  getFormatedBusLines,
-  getFormatedShuttleLines,
-} from "/util/fmtUnit";
-import { showQuerying } from "/util/notification";
 import { getStart } from "/util/data";
 import { flip } from "/util/setters";
 import {
@@ -12,24 +6,20 @@ import {
 import { queryBackend } from "/options/apis/carApis";
 import { popNoCar } from "/util/notification";
 import { extractAddressName } from "/util/formatter";
-import { loadAndSet, resetCarTimer, selectStation, setLocationTimer } from "/util/client";
+import { loadAndSet, resetCarTimer, selectStation, setData, setLocationTimer } from "/util/client";
 import { load, store } from "/util/cache";
 
 const eventHandlers = {
-  onActive,
-  onSetTimeCost,
-  onSelectedStop,
-  onSetBusLines,
-  onSetStopsByBusLines,
-  onSetSelectedBusLine,
+  onMainData,
   onFlip,
   onRollback,
+  onSelectStation,
+  onSetCarLines,
 };
 
 const lifeHandlers = {
-  onShow,
   onLoad,
-  onReady,
+  onShow,
   onUnload,
 };
 
@@ -40,23 +30,26 @@ const handlers = {
 
 export default handlers;
 
-function onActive(id) {
+function onMainData(key, data) {
+  setData(this, key, data);
+}
+
+function onFlip(field) {
+  flip(this, field);
+}
+
+async function onRollback() {
   this.setData({
-    activeIndex: id,
+    queriedStations: await queryBackend("allStations", i, []),
+    queriedLineIds: null,
   });
 }
 
-function onSetTimeCost(time) {
-  this.setData({
-    userTimeCost: (time / 60).toFixed(1),
-  });
-}
-
-async function onSelectedStop(sid) {
+async function onSelectStation(sid) {
   selectStation(this, sid);
 }
 
-async function onSetBusLines(startStationName, endStationName) {
+async function onSetCarLines(startStationName, endStationName) {
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   const sname = extractAddressName(startStationName);
   const ename = extractAddressName(endStationName);
@@ -68,37 +61,8 @@ async function onSetBusLines(startStationName, endStationName) {
   this.setData({
     queriedLineIds: newBusLineIds,
   });
-  // 请求实时数据
+  // 定时请求数据
   resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
-  // 过滤其他站点
-  // ...
-}
-
-function onSetStopsByBusLines(formatBusLines) {
-  const newStops = distinctStops(formatBusLines);
-  this.setData({
-    queriedStations: newStops,
-  });
-}
-
-function onSetSelectedBusLine(bid) {
-  this.setData({
-    selectedLineId: bid,
-  });
-}
-
-function onFlip(field) {
-  flip(this, field);
-}
-
-function onRollback() {
-  this.setData({
-    queriedStations:
-      this.data.activeIndex == 0
-        ? this.data.busStations
-        : this.data.shuttleStations,
-    queriedLineIds: null,
-  });
 }
 
 function onLoad(query) {
@@ -123,11 +87,9 @@ async function onShow() {
   });
 }
 
-async function onReady() {}
-
 function onUnload() {
-  console.log("已清除定时器");
   clearInterval(this.data.locationTimer);
+  console.log("已清除定时器");
   store("stationsBuffer", this.data.stationsBuffer);
 }
 

@@ -151,7 +151,7 @@ export const getAvailableBusLineByStart = (client) => {
         buttonText: "确定",
       });
     },
-  }).then((res) => client.props.onSetBusLines(res.data.data));
+  }).then((res) => client.props.onSetCarLines(res.data.data));
 };
 
 // ------------------------------

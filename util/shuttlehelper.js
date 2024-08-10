@@ -40,7 +40,7 @@ export function findShttleLines(client) {
     return match;
   });
   console.log(lines);
-  client.props.onSetBusLines(fmtLines(lines));
+  client.props.onSetCarLines(fmtLines(lines));
 }
 
 export function findShttleLinesByStartOnly(client) {
