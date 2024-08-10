@@ -8,11 +8,11 @@ import { getStart } from "/util/data";
 import { flip } from "/util/setters";
 import {
   authGuideLocation,
-  setLocationTimer,
 } from "/options/apis/locationApis";
-import { queryBackend, resetCarTimer } from "/options/apis/carApis";
+import { queryBackend } from "/options/apis/carApis";
 import { popNoCar } from "/util/notification";
 import { extractAddressName } from "/util/formatter";
+import { resetCarTimer, selectStation, setLocationTimer } from "/util/client";
 
 const eventHandlers = {
   onActive,
@@ -52,7 +52,7 @@ function onSetTimeCost(time) {
 }
 
 async function onSelectedStop(sid) {
-  selectedStop(this, sid);
+  selectStation(this, sid);
 }
 
 async function onSetBusLines(startStationName, endStationName) {
@@ -151,20 +151,3 @@ function onUnload() {
   });
 }
 
-export async function selectedStop(client, sid) {
-  if (sid == "") return;
-  const stations = await queryBackend("allStations", client.data.activeIndex, []);
-  const stationName = stations.find(
-    (item) => item.station_alias_no === sid,
-  ).station_alias;
-  console.log(stationName);
-  client.setData({
-    selectedStation: {
-      id: sid,
-      name: stationName,
-    },
-  });
-  showQuerying();
-  const { activeIndex, sysQueryFrequency } = client.data;
-  resetCarTimer(client, activeIndex, sid, sysQueryFrequency);
-}

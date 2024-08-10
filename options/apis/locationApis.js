@@ -1,8 +1,4 @@
-import { DEFAULT_LOCATION_QUERY_FREQUENCY } from "/options/props/defaults";
 
-export function setLocationTimer(client) {
-  return setInterval(autoLocate, DEFAULT_LOCATION_QUERY_FREQUENCY, client);
-}
 
 // 由于跳转到系统设置页无法监听用户最终是否打开系统定位及对支付宝授权位置信息，因此请在生命周期 onShow 中调用定位授权准备方法。
 export async function authGuideLocation() {
@@ -79,13 +75,4 @@ export async function authGuideLocation() {
     console.log(error);
     return false;
   }
-}
-
-function autoLocate(client) {
-  console.log("已获取定位");
-  my.getLocation({
-    type: 0,
-    success: (userPosition) => client.setData({ userPosition }),
-    fail: () => clearInterval(client.data.locationTimer),
-  });
 }
