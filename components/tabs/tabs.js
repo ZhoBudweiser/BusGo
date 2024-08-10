@@ -1,23 +1,8 @@
-import { nop } from "/options/apis/apiConfig";
+import methods from "./handlers";
+import { data, props } from "/options/props/tabs";
 
 Component({
-  mixins: [],
-  data: {
-    top: 0,
-    shadow: false,
-  },
-  props: {
-    tabs: ["校区间", "校区内"],
-    activeTab: 1,
-    onMainData: nop,
-  },
-  didMount() {},
-  didUpdate() {},
-  didUnmount() {},
-  methods: {
-    onTabBarTap(e) {
-      const { index } = e.target.dataset;
-      this.props.onMainData("activeIndex", index);
-    },
-  },
+  data,
+  props,
+  methods,
 });
