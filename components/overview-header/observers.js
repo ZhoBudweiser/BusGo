@@ -1,10 +1,9 @@
 import { queryBackend } from "/options/apis/carApis";
 import { extractAddressName } from "/util/formatter";
 import { popStationNearBy } from "/util/notification";
-import { setActiveCards, setCarLines, setHumanDistance } from "/util/setters";
+import { setCarLines, setHumanDistance } from "/util/setters";
 
 const observers = {
-  carLines,
   activeIndex,
   userTimeCost,
   "selectedStation.name": selectedStationName,
@@ -16,12 +15,6 @@ export default observers;
 function activeIndex() {
   const selectedEnd = "";
   this.setData({ selectedEnd });
-}
-
-function carLines(lines) {
-  if (lines.length === this.data.activeCards.length) return;
-  const activeCards = setActiveCards(lines);
-  this.setData({ activeCards });
 }
 
 function userTimeCost(cost) {

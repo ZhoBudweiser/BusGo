@@ -32,61 +32,8 @@
   position: relative;
 }
 
-.item-header {
-  height: 32rpx;
-  padding: 8rpx;
-  display: flex;
-  justify-content: space-around;
-}
-
-
-/* -------line------- */
-
-.item-bus-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-}
-
-.item-bus-left {
-  margin-right: -100rpx;
-}
-
-.item-bus-line-detail {
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
-  margin-top: 20rpx;
-  padding: 0 20rpx;
-}
-
 .scroll-container {
   /* TODO: adapt to size */
   height: 920rpx;
   overflow: auto;
-}
-
-.item-bus-remark {
-  display: block;
-  position: absolute;
-  background-color: #fff;
-  z-index: 20;
-  bottom: 5rpx;
-  width: 100%;
-  height: 30rpx;
-  font-size: 24rpx;
-  margin: 0 5rpx;
-  white-space: nowrap;
-  overflow: auto;
-}
-
-.item-bus-name {
-  max-width: 200rpx;
-  font-size: 28rpx;
-  line-height: 28rpx;
-  white-space: nowrap;
-  overflow-y: hidden;
-  overflow-x: auto;
-  vertical-align: middle;
 }

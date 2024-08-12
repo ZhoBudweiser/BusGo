@@ -35,6 +35,7 @@ function onMainData(key, data) {
 }
 
 function onFlip(field) {
+  console.log(field);
   flip(this, field);
 }
 

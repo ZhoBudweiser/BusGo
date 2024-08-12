@@ -29,26 +29,26 @@
       onTap="onActiveTime"
       data-i="{{jndex}}"
     >
-      <view class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}">
-      </view>
       <view class="item-bus-caption" style="visibility: {{activeTimeIndex === jndex ? '' : 'hidden'}}">
         {{`${showTime ? item.runBusInfo[0].about_minute + ' 分钟' :
           item.runBusInfo[0].vehi_num}`}}
+      </view>
+      <view class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}">
       </view>
     </view>
   </block>
   <!-- 站点 -->
   <view class="item-bus-object" style="left: 50%">
+    <view class="item-stop-caption"> {{selectedStation.name}}</view>
     <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
     </view>
-    <view class="item-stop-caption"> {{selectedStation.name}}</view>
   </view>
   <!-- 用户 -->
   <view class="item-bus-object" style="right: {{humanDistance}}">
-    <view class="item-bus-icon item-bus-icon-human-walk" onTap="onTapHuman">
-    </view>
     <view a:if="{{ userTimeCost >= 0 }}" class="item-bus-caption">
       {{userTimeCost}} 分钟
+    </view>
+    <view class="item-bus-icon item-bus-icon-human-walk" onTap="onTapHuman">
     </view>
   </view>
 </view>

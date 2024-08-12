@@ -1,10 +1,13 @@
 import { DEFAULT_STATION, DEFAULT_TABS, NOP } from "./defaults";
 
 export const headerProps = {
+  activeIndex: 1,
   carLines: [],
   selectedStation: DEFAULT_STATION,
   userTimeCost: -1,
+  onMainData: NOP,
   onFlip: NOP,
+  onRollback: NOP,
 };
 
 export const headerData = {
@@ -17,10 +20,16 @@ export const headerData = {
   selectedEnd: "",
 };
 
-export const data = {
-  ...headerData,
-  containerHeight: 300,
+export const bodyProps = {
+  carLines: [],
+};
+
+export const bodyData = {
   activeCards: Array.from({ length: 100 }),
+};
+
+export const data = {
+  containerHeight: 300,
 };
 
 export const props = {

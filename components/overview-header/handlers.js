@@ -1,17 +1,12 @@
+import { flip } from "/util/setters";
+
 export const methods = {
-  onChange,
   onActiveTime,
   onSelectEnd,
   onRollback,
   onTapFlag,
   onTapHuman,
-  onToggleCard,
 };
-
-function onChange(e) {
-  const { current } = e.detail;
-  this.props.onMainData("activeIndex", current);
-}
 
 function onActiveTime(e) {
   const i = e.currentTarget.dataset.i;
@@ -49,11 +44,4 @@ function onTapFlag() {
 
 function onTapHuman() {
   this.props.onFlip("moveToUserPosition");
-}
-
-function onToggleCard(e) {
-  const i = e.currentTarget.dataset.i;
-  const activeCards = this.data.activeCards.concat();
-  activeCards[i] = !activeCards[i];
-  this.setData({ activeCards });
 }
