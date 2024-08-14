@@ -24,7 +24,6 @@ const funcMap = {
 
 export async function queryBackend(dataName, dataType, parm, show=true) {
   if (show) showQuerying(dataType);
-  console.log(dataName, dataType, parm);
   const ret = await funcMap[dataName][dataType](...parm);
   if (show) hideLoading();
   return ret;

@@ -16,7 +16,6 @@
     >
       <swiper-item a:for="{{tabs}}" key="swiper-item-{{index}}">
         <view class="swiper-container">
-          <view class="swiper-container-item first">
             <header
               activeIndex="{{activeIndex}}"
               carLines="{{carLines}}"
@@ -26,7 +25,6 @@
               onFlip="onFlip"
               onRollback="onRollback"
             />
-          </view>
           <!-- 班车路线 -->
           <view class="scroll-container" capture-catchTouchMove="onMove">
             <body carLines="{{carLines}}" />
