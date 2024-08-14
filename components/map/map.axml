@@ -3,7 +3,7 @@
     id="map"
     longitude="{{120.090178}}"
     latitude="{{30.303975}}"
-    scale="{{scale}}"
+    scale="{{14}}"
     markers="{{markers}}"
     onMarkerTap="markertap"
     show-location
@@ -13,11 +13,8 @@
   <view
     class="float-icon see-mode"
     onTap="onSwitchMode"
-    style="{{ `background-image: url(${display_mode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}"
+    style="{{ `background-image: url(${displayMode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}"
   >
   </view>
-  <!-- <view class="float-icon news-notice" onTap="onJumpNotice">
-
-  </view> -->
   <view class="float-icon loc-search" onTap="onJumpSearch"> </view>
 </view>
