@@ -1,4 +1,4 @@
-import { extractAddressName } from "./formatter";
+import { extractAddressName, removeCampusPrefix } from "./formatter";
 import { queryBackend } from "/options/apis/carApis";
 
 export function debounce(fn, wait) {
@@ -71,4 +71,49 @@ export async function setStation(activeIndex, sid) {
     name: stationName,
   };
   return selectedStation;
+}
+
+export function setStationMarkers(stations, selectedStationId) {
+  const markers = stations.map((item) => {
+    return {
+      ...item,
+      id: item.station_alias_no,
+      latitude: item.station_lat,
+      longitude: item.station_long,
+      width: 19,
+      height: 31,
+      iconPath:
+        selectedStationId === item.station_alias_no
+          ? "/images/mark_stop.png"
+          : "/images/mark_bs.png",
+      label: {
+        content: removeCampusPrefix(item.station_alias),
+        color: "#a2a2a2",
+        fontSize: 14,
+        borderRadius: 3,
+        bgColor: "#ffffff",
+        padding: 5,
+      },
+      markerLevel: 2,
+    };
+  });
+  return markers;
+}
+
+export function updateStationMarkers(oldStationMarkers, selectedStationId) {
+  let selectedStationPosition;
+  const stationMarkers = oldStationMarkers.map((item) => {
+    const match = item.id === selectedStationId;
+    if (match) {
+      selectedStationPosition = {
+        latitude: item.latitude,
+        longitude: item.longitude,
+      };
+    }
+    return {
+      ...item,
+      iconPath: match ? "/images/mark_stop.png" : "/images/mark_bs.png",
+    };
+  });
+  return { selectedStationPosition, stationMarkers };
 }

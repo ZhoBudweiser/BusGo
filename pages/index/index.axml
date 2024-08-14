@@ -2,7 +2,7 @@
   <schoolmap
     class="schoolmap"
     position="{{userPosition}}"
-    stops="{{queriedStations}}"
+    stations="{{queriedStations}}"
     lines="{{carLines}}"
     selectedStation="{{selectedStation}}"
     selectedBusLineId="{{selectedLineId}}"

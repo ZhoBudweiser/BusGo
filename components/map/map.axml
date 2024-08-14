@@ -4,7 +4,6 @@
     longitude="{{120.090178}}"
     latitude="{{30.303975}}"
     scale="{{14}}"
-    markers="{{markers}}"
     onMarkerTap="markertap"
     show-location
     style="width: 100%; height: 100%"

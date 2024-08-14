@@ -61,6 +61,10 @@ export function fmtShuttleLineStations(lines) {
   }, {});
 }
 
+export function removeCampusPrefix(address) {
+  return address ? address.replace(/(.*?)校区(?=.)/g, "") : "";
+}
+
 async function fmtBusLine(busLine) {
   return {
     ...busLine,
@@ -135,8 +139,4 @@ function fmtBusStation(busStation) {
     ...busStation,
     station_alias: removeCampusPrefix(busStation.station_alias),
   };
-}
-
-function removeCampusPrefix(address) {
-  return address ? address.replace(/(.*?)校区(?=.)/g, "") : "";
 }

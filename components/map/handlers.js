@@ -37,18 +37,18 @@ function onJumpSearch() {
   });
 }
 
-function drawRoute(stops) {
-  const points = stops.map((item) => {
+function drawRoute(stations) {
+  const points = stations.map((item) => {
     return {
       lng: item.station_long,
       lat: item.station_lat,
     };
   });
   this.mapCtx.showRoute({
-    startLat: stops[0].station_lat,
-    startLng: stops[0].station_long,
-    endLat: stops[stops.length - 1].station_lat,
-    endLng: stops[stops.length - 1].station_long,
+    startLat: stations[0].station_lat,
+    startLng: stations[0].station_long,
+    endLat: stations[stations.length - 1].station_lat,
+    endLng: stations[stations.length - 1].station_long,
     zIndex: 4,
     searchType: "drive",
     throughPoints: points,
@@ -110,6 +110,9 @@ function drawBusPos(buses) {
 
 function onInit() {
   this.mapCtx = my.createMapContext("map");
+  this.mapCtx.showsCompass({
+    isShowsCompass: true,
+  });
 }
 
 function shttleChange(oldbuses, newBuses) {

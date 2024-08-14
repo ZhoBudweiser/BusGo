@@ -1,11 +1,12 @@
 import { second2minute } from "/util/formatter";
+import { setStationMarkers, updateStationMarkers } from "/util/setters";
 
 const observers = {
-  stops,
+  stations,
   "selectedStation.id": selectedStationId,
   selectedBusLineId,
   lines,
-  stationPosition,
+  selectedStationPosition,
   displayMode,
   showNavigationPath,
   moveToUserPosition,
@@ -13,88 +14,48 @@ const observers = {
 
 export default observers;
 
-function stops() {
-  this.mapCtx.clearRoute();
-  this.mapCtx.showsCompass({
-    isShowsCompass: true,
-  });
-  this.mapCtx.updateComponents({
+function stations() {
+  const { stations, selectedStation } = this.props;
+  const mapCtx = this.mapCtx;
+  mapCtx.clearRoute();
+  mapCtx.updateComponents({
     scale: 16,
   });
-  const stops = this.props.stops.map((item) => {
-    return {
-      ...item,
-      id: item.station_alias_no,
-      latitude: item.station_lat,
-      longitude: item.station_long,
-      width: 19,
-      height: 31,
-      iconPath:
-        this.props.selectedStation.id === item.station_alias_no
-          ? "/images/mark_stop.png"
-          : "/images/mark_bs.png",
-      label: {
-        content: item.station_alias.replace(/.*校区(?=\S)/g, ""),
-        color: "#a2a2a2",
-        fontSize: 14,
-        borderRadius: 3,
-        bgColor: "#ffffff",
-        padding: 5,
-      },
-      markerLevel: 2,
-    };
-  });
+  const stationMarkers = setStationMarkers(stations, selectedStation.id);
   this.data.stationMarkers &&
-    this.mapCtx.changeMarkers({
+    mapCtx.changeMarkers({
       remove: this.data.stationMarkers,
     });
-  this.mapCtx.changeMarkers({
-    add: stops,
+  mapCtx.changeMarkers({
+    add: stationMarkers,
   });
   this.setData({
-    stationMarkers: stops,
+    stationMarkers,
     displayMode: true,
   });
 }
 
 function selectedStationId() {
-  this.mapCtx.clearRoute();
-  let latitude, longitude;
-  const stationMarkers = this.data.stationMarkers.map((item) => {
-    if (item.id === this.props.selectedStation.id) {
-      latitude = item.latitude;
-      longitude = item.longitude;
-      return {
-        ...item,
-        iconPath: "/images/mark_stop.png",
-      };
-    } else {
-      return {
-        ...item,
-        iconPath: "/images/mark_bs.png",
-      };
-    }
-  });
+  const mapCtx = this.mapCtx;
+  mapCtx.clearRoute();
+  const { selectedStationPosition, stationMarkers } = updateStationMarkers(
+    this.data.stationMarkers,
+    this.props.selectedStation.id,
+  );
   this.setData({
-    stationMarkers: stationMarkers,
-    stationPosition: {
-      latitude,
-      longitude,
-    },
+    stationMarkers,
+    selectedStationPosition,
   });
-  this.mapCtx.changeMarkers({
+  mapCtx.changeMarkers({
     update: stationMarkers,
   });
-  this.mapCtx.updateComponents({
-    longitude,
-    latitude,
-  });
+  mapCtx.updateComponents(selectedStationPosition);
 }
 
 function selectedBusLineId(bid) {
   this.mapCtx.clearRoute();
-  const line = this.props.lines.filter((item) => item.bid === bid);
-  if (line.length) this.drawRoute(line[0].stations);
+  const line = this.props.lines.find((item) => item.bid === bid);
+  if (line !== undefined) this.drawRoute(line.stations);
 }
 
 function lines() {
@@ -131,35 +92,26 @@ function lines() {
   this.drawBusPos(buses);
 }
 
-function stationPosition() {
+function selectedStationPosition(position) {
+  if (!position) return;
   my.calculateRoute({
     startLat: this.props.position.latitude,
     startLng: this.props.position.longitude,
-    endLat: this.data.stationPosition.latitude,
-    endLng: this.data.stationPosition.longitude,
-    success: (res) => {
-      this.props.onMainData("userTimeCost", second2minute(res.duration));
-    },
-    fail: (error) => {
-      console.log(error);
-    },
+    endLat: this.data.selectedStationPosition.latitude,
+    endLng: this.data.selectedStationPosition.longitude,
+    success: (res) => this.props.onMainData("userTimeCost", second2minute(res.duration)),
+    fail: (error) => console.log(error),
   });
 }
 
 function displayMode(mode) {
-  if (mode) {
-    this.mapCtx.changeMarkers({
-      add: this.data.stationMarkers.filter(
-        (item) => item.station_alias_no != this.props.selectedStation.id,
-      ),
-    });
-  } else {
-    this.mapCtx.changeMarkers({
-      remove: this.data.stationMarkers.filter(
-        (item) => item.station_alias_no != this.props.selectedStation.id,
-      ),
-    });
-  }
+  const stationMarkers = this.data.stationMarkers.filter(
+    (item) => item.station_alias_no != this.props.selectedStation.id,
+  );
+  const option = mode ? "add" : "remove";
+  this.mapCtx.changeMarkers({
+    [option]: stationMarkers,
+  });
 }
 
 function showNavigationPath(val) {
@@ -167,8 +119,8 @@ function showNavigationPath(val) {
     this.mapCtx.showRoute({
       startLat: this.props.position.latitude,
       startLng: this.props.position.longitude,
-      endLat: this.data.stationPosition.latitude,
-      endLng: this.data.stationPosition.longitude,
+      endLat: this.data.selectedStationPosition.latitude,
+      endLng: this.data.selectedStationPosition.longitude,
       zIndex: 4,
       routeColor: "#FFB90F",
       iconPath:
@@ -186,8 +138,5 @@ function showNavigationPath(val) {
 }
 
 function moveToUserPosition() {
-  this.mapCtx.moveToLocation({
-    longitude: this.props.position.longitude,
-    latitude: this.props.position.latitude,
-  });
+  this.mapCtx.moveToLocation(this.props.position);
 }

@@ -4,12 +4,12 @@ export const data = {
   stationMarkers: [],
   buses: [],
   displayMode: true,
-  stationPosition: DEFAULT_POSITION,
+  selectedStationPosition: DEFAULT_POSITION,
 };
 
 export const props = {
   position: DEFAULT_POSITION,
-  stops: [],
+  stations: [],
   selectedStation: DEFAULT_STATION,
   selectedBusLineId: "-1",
   showNavigationPath: false,
