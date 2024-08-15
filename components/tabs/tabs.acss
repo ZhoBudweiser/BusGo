@@ -3,6 +3,7 @@
   position: sticky;
   background-color: #fff;
   z-index: 1;
+  padding-bottom: 24rpx;
 }
 
 .tabs-bar {

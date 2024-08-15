@@ -4,14 +4,14 @@ Component({
     stateHeights: [],
     stateBoders: [],
   },
-  props: {},
   didMount() {
     let contentHeight;
     my.createSelectorQuery()
-      .select("#content")
+      .select("#preview")
       .boundingClientRect()
       .exec((ret) => {
         contentHeight = ret[0].height;
+        console.log("预览窗口高度：", contentHeight);
         this.setData({
           contentHeight,
         });
@@ -21,8 +21,8 @@ Component({
       .boundingClientRect()
       .exec((ret) => {
         const height = ret[0].height;
+        console.log("当前手机高度：", height);
         this.setData({
-          // currentY: 0,
           currentY: height - contentHeight,
           stateHeights: [0, height - contentHeight, height],
           stateBoders: [

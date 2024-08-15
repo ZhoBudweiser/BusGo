@@ -11,10 +11,7 @@
       />
     </block>
   </view>
-  <view
-    a:if="{{type === 'link'}}"
-    class="am-footer-extend am-footer-extend__{{type}}"
-  >
+  <view a:if="{{type === 'link'}}" class="am-footer-extend am-footer-extend__{{type}}">
     <block a:for="{{extend}}">
       <navigator
         hover-class="am-footer-link__hover"
@@ -25,34 +22,16 @@
       >
         {{item.text}}
       </navigator>
-      <text a:if="{{index < extend.length -1}}" class="am-footer-link__line"
-        >|</text
+      <text a:if="{{index < extend.length -1}}" class="am-footer-link__line">
+        |
+      </text
       >
     </block>
   </view>
   <block a:if="{{type === 'end'}}">
     <view class="am-footer-end">
       <view class="am-footer-end__divider"></view>
-      <view a:if="{{showEndIcon}}" class="am-footer-end__text">
-        <!--<am-icon
-        a:if="{{!iconURL}}"
-          type="{{iconName?iconName:'selected'}}" 
-          size="{{iconSize?(iconSize > maxSize?maxSize:iconSize):defaultSize}}" 
-          color="#999"
-        /><image
-          a:else
-          src="{{iconURL}}" 
-          style="
-            width: {{iconSize?(iconSize > maxSize?maxSize:iconSize):defaultSize}}{{valueUnit}};
-            height: {{iconSize?(iconSize > maxSize?maxSize:iconSize):defaultSize}}{{valueUnit}};
-          "
-        /> -->
-      </view>
-      <view
-        a:else
-        class="am-footer-end__text"
-        style="{{footerEndColor?'--am-footerEndColor:' + footerEndColor + ';color:' + footerEndColor + ';color: var(--am-footerEndColor);':''}}"
-      >
+      <view class="am-footer-end__text" style="{{footerEndColor?'--am-footerEndColor:' + footerEndColor + ';color:' + footerEndColor + ';color: var(--am-footerEndColor);':''}}">
         {{content?content:'已经到底了'}}
       </view>
       <view class="am-footer-end__divider"></view>
@@ -61,10 +40,7 @@
   <block a:else>
     <view class="am-footer-content">{{content}}</view>
   </block>
-  <view
-    a:if="{{type === 'guide'}}"
-    class="am-footer-extend am-footer-extend__{{type}}"
-  >
+  <view a:if="{{type === 'guide'}}" class="am-footer-extend am-footer-extend__{{type}}">
     <block a:for="{{extend}}">
       <navigator
         hover-class="am-footer-guide__hover"

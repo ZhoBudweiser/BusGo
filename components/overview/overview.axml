@@ -1,36 +1,33 @@
-<view class="list-wrap">
-  <view class="list-container" style="height: {{containerHeight}}">
-    <swiper
-      style="height: 100%"
-      previousMargin="10px"
-      nextMargin="10px"
-      current="{{activeIndex}}"
-      indicator-dots="{{false}}"
-      autoplay="{{false}}"
-      vertical="{{false}}"
-      circular="{{true}}"
-      swipe-ratio="{{1}}"
-      swipe-speed="{{1}}"
-      touch-angle="{{-90}}"
-      onChange="onChange"
-    >
-      <swiper-item a:for="{{tabs}}" key="swiper-item-{{index}}">
-        <view class="swiper-container">
-            <header
-              activeIndex="{{activeIndex}}"
-              carLines="{{carLines}}"
-              selectedStation="{{selectedStation}}"
-              userTimeCost="{{userTimeCost}}"
-              onMainData="onMainData"
-              onFlip="onFlip"
-              onRollback="onRollback"
-            />
-          <!-- 班车路线 -->
-          <view class="scroll-container" capture-catchTouchMove="onMove">
-            <body carLines="{{carLines}}" />
-          </view>
+<view class="list-container">
+  <swiper
+    previousMargin="10px"
+    nextMargin="10px"
+    current="{{activeIndex}}"
+    indicator-dots="{{false}}"
+    autoplay="{{false}}"
+    vertical="{{false}}"
+    circular="{{true}}"
+    swipe-ratio="{{1}}"
+    swipe-speed="{{1}}"
+    touch-angle="{{-90}}"
+    onChange="onChange"
+  >
+    <swiper-item a:for="{{tabs}}" key="swiper-item-{{index}}">
+      <view class="swiper-container">
+        <header
+          activeIndex="{{activeIndex}}"
+          carLines="{{carLines}}"
+          selectedStation="{{selectedStation}}"
+          userTimeCost="{{userTimeCost}}"
+          onMainData="onMainData"
+          onFlip="onFlip"
+          onRollback="onRollback"
+        />
+        <!-- 班车路线 -->
+        <view capture-catchTouchMove="onMove">
+          <body carLines="{{carLines}}" />
         </view>
-      </swiper-item>
-    </swiper>
-  </view>
+      </view>
+    </swiper-item>
+  </swiper>
 </view>

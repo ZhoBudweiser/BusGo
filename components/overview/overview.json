@@ -3,7 +3,6 @@
   "styleIsolation": "apply-shared",
   "usingComponents": {
     "header": "/components/overview-header/overview-header",
-    "body": "/components/overview-body/overview-body",
-    "footer": "/components/footer/index"
+    "body": "/components/overview-body/overview-body"
   }
 }

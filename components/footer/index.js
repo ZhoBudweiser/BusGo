@@ -23,7 +23,7 @@ Component({
     // brand：带品牌；
     // link：带链接
     // end: 没有更多
-    type: "normal",
+    type: "end",
     content: "",
     extend: [],
     onBrandTap: function onBrandTap() {},

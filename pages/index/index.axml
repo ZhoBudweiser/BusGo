@@ -13,12 +13,12 @@
   >
   </schoolmap>
   <movable class="previa">
-    <view id="content">
-      <view class="touchbar">
-        <!--<icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
-        <text class="placeholder">搜索你想了解的地方</text>
+    <view id="preview">
+      <view class="touch-container">
+        <view class="touch-bar" />
       </view>
-      <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData"></tabs>
+      <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData">
+      </tabs>
       <overview
         tabs="{{tabs}}"
         activeIndex="{{activeIndex}}"

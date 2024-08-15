@@ -28,9 +28,7 @@ export const bodyData = {
   activeCards: Array.from({ length: 100 }),
 };
 
-export const data = {
-  containerHeight: 300,
-};
+export const data = {};
 
 export const props = {
   activeIndex: 1,

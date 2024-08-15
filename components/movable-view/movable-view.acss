@@ -1,7 +1,6 @@
 movable-area {
   height: 100%;
   width: 100%;
-  /* background-color: #ccc; */
   overflow: hidden;
   pointer-events: none;
 }
