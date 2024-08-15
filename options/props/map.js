@@ -2,7 +2,7 @@ import { DEFAULT_POSITION, DEFAULT_STATION, NOP } from "./defaults";
 
 export const data = {
   stationMarkers: [],
-  buses: [],
+  carMarkers: [],
   displayMode: true,
   selectedStationPosition: DEFAULT_POSITION,
 };

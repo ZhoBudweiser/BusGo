@@ -53,3 +53,10 @@ export const DEFAULT_ROUTE = {
   success: NOP,
   fail: (err) => console.log("路径输出错误：", err),
 };
+export const CAR_START_LABEL = 1000;
+export const STATION_ID_LABEL = "STATION";
+export const SELECTED_STATION_IMG_PATH = "/images/mark_stop.png";
+export const UNSELECTED_STATION_IMG_PATH = "/images/mark_bs.png";
+export const BUS_IMG_PATH = "/images/map_bus.png";
+export const WHITE_SHUTTLE_IMG_PATH = "/images/map_shuttle.png";
+export const RED_SHUTTLE_IMG_PATH = "/images/map_babybus.png";

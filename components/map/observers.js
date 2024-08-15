@@ -1,7 +1,9 @@
 import { DEFAULT_ROUTE } from "/options/props/defaults";
 import { second2minute } from "/util/formatter";
 import {
-  setCarPositions,
+  drawCarPositions,
+  drawRoute,
+  setCarMarkers,
   setStationMarkers,
   updateStationMarkers,
 } from "/util/setters";
@@ -20,20 +22,21 @@ const observers = {
 export default observers;
 
 function stations() {
-  const { stations, selectedStation } = this.props;
   const mapCtx = this.mapCtx;
+  const { stations, selectedStation } = this.props;
+  const { stationMarkers: oldStationMarkers } = this.data;
   mapCtx.clearRoute();
-  mapCtx.updateComponents({
-    scale: 16,
-  });
-  const stationMarkers = setStationMarkers(stations, selectedStation.id);
-  this.data.stationMarkers &&
+  if (oldStationMarkers.length !== 0) {
     mapCtx.changeMarkers({
-      remove: this.data.stationMarkers,
+      remove: oldStationMarkers,
     });
+    console.log("清空了站点：", oldStationMarkers);
+  }
+  const stationMarkers = setStationMarkers(stations, selectedStation.id);
   mapCtx.changeMarkers({
     add: stationMarkers,
   });
+  console.log("添加了站点：", stationMarkers);
   this.setData({
     stationMarkers,
     displayMode: true,
@@ -42,30 +45,42 @@ function stations() {
 
 function selectedStationId(sid) {
   const mapCtx = this.mapCtx;
+  const { carMarkers: oldCarMarkers } = this.data;
   mapCtx.clearRoute();
+  const carMarkers = [];
   const { selectedStationPosition, stationMarkers } = updateStationMarkers(
     this.data.stationMarkers,
     sid,
   );
+  mapCtx.changeMarkers({
+    remove: oldCarMarkers,
+    update: stationMarkers,
+  });
   this.setData({
+    carMarkers,
     stationMarkers,
     selectedStationPosition,
   });
-  mapCtx.changeMarkers({
-    update: stationMarkers,
-  });
-  mapCtx.updateComponents(selectedStationPosition);
+  console.log("清空了汽车：", oldCarMarkers);
 }
 
 function selectedBusLineId(bid) {
   this.mapCtx.clearRoute();
   const line = this.props.lines.find((item) => item.bid === bid);
-  if (line !== undefined) this.drawRoute(line.stations);
+  if (line !== undefined) drawRoute(line.stations);
 }
 
 function lines(ls) {
-  const carPositions = setCarPositions(ls);
-  this.drawBusPos(carPositions);
+  const carMarkers = setCarMarkers(ls);
+  if (carMarkers.length !== 0)
+    drawCarPositions(
+      this.mapCtx,
+      carMarkers,
+      this.data.carMarkers.length === 0,
+    );
+  this.setData({
+    carMarkers,
+  });
 }
 
 function selectedStationPosition(sp) {

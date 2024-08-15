@@ -1,3 +1,4 @@
+import { CAR_START_LABEL } from "../props/defaults";
 import { baseURL, nop } from "./apiConfig";
 import cache from "/util/cache";
 import {
@@ -148,6 +149,7 @@ function findShttleLinesByStationId(lines, sid) {
 }
 
 function matchShuttleRunInfo(lines, poses, infos) {
+  let label = CAR_START_LABEL;
   return lines
     .map((lineInfo, i) => {
       const runInfos = poses[i].map((pos) => {
@@ -156,7 +158,7 @@ function matchShuttleRunInfo(lines, poses, infos) {
           ...lineInfo,
           runBusInfo: [
             {
-              vehi_num: info ? info.vehiNum : "无信号班车",
+              vehi_num: info ? info.vehiNum : "ZJU" + label++,
               near_distance: info ? info.costStationCount : 1,
               about_minute: info ? info.costMinute : 0,
               next_station: info ? info.nextStation : 0,
