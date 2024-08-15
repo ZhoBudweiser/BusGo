@@ -117,3 +117,35 @@ export function updateStationMarkers(oldStationMarkers, selectedStationId) {
   });
   return { selectedStationPosition, stationMarkers };
 }
+
+export function setCarPositions(lines) {
+  const iconPathSelection = (type) => {
+    switch (type) {
+      case "2":
+        return "/images/map_shuttle.png";
+      case "3":
+        return "/images/map_babybus.png";
+      case "21":
+        return "/images/map_shuttle_no.png";
+      case "31":
+        return "/images/map_babybus_no.png";
+      default:
+        return "/images/map_bus.png";
+    }
+  };
+  const carPositions = [];
+  lines.forEach((item) => {
+    if (item.runBusInfo) {
+      carPositions.push({
+        iconPath: iconPathSelection(item.runBusInfo[0].vehicleType),
+        id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, "") * 1767),
+        latitude: Number(item.runBusInfo[0].py),
+        longitude: Number(item.runBusInfo[0].px),
+        width: 30,
+        height: 40,
+        markerLevel: 3,
+      });
+    }
+  });
+  return carPositions;
+}

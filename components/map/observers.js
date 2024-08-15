@@ -1,5 +1,10 @@
+import { DEFAULT_ROUTE } from "/options/props/defaults";
 import { second2minute } from "/util/formatter";
-import { setStationMarkers, updateStationMarkers } from "/util/setters";
+import {
+  setCarPositions,
+  setStationMarkers,
+  updateStationMarkers,
+} from "/util/setters";
 
 const observers = {
   stations,
@@ -35,12 +40,12 @@ function stations() {
   });
 }
 
-function selectedStationId() {
+function selectedStationId(sid) {
   const mapCtx = this.mapCtx;
   mapCtx.clearRoute();
   const { selectedStationPosition, stationMarkers } = updateStationMarkers(
     this.data.stationMarkers,
-    this.props.selectedStation.id,
+    sid,
   );
   this.setData({
     stationMarkers,
@@ -58,49 +63,21 @@ function selectedBusLineId(bid) {
   if (line !== undefined) this.drawRoute(line.stations);
 }
 
-function lines() {
-  const iconPathSelection = (type) => {
-    switch (type) {
-      case "2":
-        return "/images/map_shuttle.png";
-      case "3":
-        return "/images/map_babybus.png";
-      case "21":
-        return "/images/map_shuttle_no.png";
-      case "31":
-        return "/images/map_babybus_no.png";
-      default:
-        return "/images/map_bus.png";
-    }
-  };
-  const buses = [];
-  this.props.lines.forEach((item) => {
-    if (item.runBusInfo) {
-      buses.push({
-        iconPath: item.runBusInfo[0].vehicleType
-          ? iconPathSelection(item.runBusInfo[0].vehicleType)
-          : "/images/map_bus.png",
-        id: Number(item.runBusInfo[0].vehi_num.replace(/\D/g, "") * 1767),
-        latitude: Number(item.runBusInfo[0].py),
-        longitude: Number(item.runBusInfo[0].px),
-        width: 30,
-        height: 40,
-        markerLevel: 3,
-      });
-    }
-  });
-  this.drawBusPos(buses);
+function lines(ls) {
+  const carPositions = setCarPositions(ls);
+  this.drawBusPos(carPositions);
 }
 
-function selectedStationPosition(position) {
-  if (!position) return;
+function selectedStationPosition(sp) {
+  if (!sp) return;
+  const { position, onMainData } = this.props;
   my.calculateRoute({
-    startLat: this.props.position.latitude,
-    startLng: this.props.position.longitude,
-    endLat: this.data.selectedStationPosition.latitude,
-    endLng: this.data.selectedStationPosition.longitude,
-    success: (res) => this.props.onMainData("userTimeCost", second2minute(res.duration)),
-    fail: (error) => console.log(error),
+    startLat: position.latitude,
+    startLng: position.longitude,
+    endLat: sp.latitude,
+    endLng: sp.longitude,
+    success: (res) => onMainData("userTimeCost", second2minute(res.duration)),
+    fail: (err) => console.log("路程计算错误：", err),
   });
 }
 
@@ -114,23 +91,16 @@ function displayMode(mode) {
   });
 }
 
-function showNavigationPath(val) {
-  if (val) {
+function showNavigationPath(show) {
+  const position = this.props.position;
+  const selectedStationPosition = this.data.selectedStationPosition;
+  if (show) {
     this.mapCtx.showRoute({
-      startLat: this.props.position.latitude,
-      startLng: this.props.position.longitude,
-      endLat: this.data.selectedStationPosition.latitude,
-      endLng: this.data.selectedStationPosition.longitude,
-      zIndex: 4,
-      routeColor: "#FFB90F",
-      iconPath:
-        "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-      iconWidth: 10,
-      routeWidth: 10,
-      success: (res) => {},
-      fail: (error) => {
-        console.log(error);
-      },
+      ...DEFAULT_ROUTE,
+      startLat: position.latitude,
+      startLng: position.longitude,
+      endLat: selectedStationPosition.latitude,
+      endLng: selectedStationPosition.longitude,
     });
   } else {
     this.mapCtx.clearRoute();

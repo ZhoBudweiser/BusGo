@@ -1,3 +1,4 @@
+import { DEFAULT_ROUTE } from "/options/props/defaults";
 import { flip } from "/util/setters";
 
 export const methods = {
@@ -45,25 +46,13 @@ function drawRoute(stations) {
     };
   });
   this.mapCtx.showRoute({
+    ...DEFAULT_ROUTE,
     startLat: stations[0].station_lat,
     startLng: stations[0].station_long,
     endLat: stations[stations.length - 1].station_lat,
     endLng: stations[stations.length - 1].station_long,
-    zIndex: 4,
     searchType: "drive",
     throughPoints: points,
-    routeColor: "#FFB90F",
-    iconPath:
-      "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
-    iconWidth: 5,
-    routeWidth: 5,
-    success: (res) => {
-      // console.log(res, `总路程 ${res.distance} 米, 预计耗时 ${res.duration} 秒`);
-      // this.props.onSetTimeCost(res.duration);
-    },
-    fail: (error) => {
-      console.log(error);
-    },
   });
 }
 

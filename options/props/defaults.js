@@ -42,5 +42,14 @@ export const DEFAULT_SHUTTLE_ALL_ENDS = [
   "化学楼南往北",
   "云峰北侧",
 ];
-
 export const NOP = () => {};
+export const DEFAULT_ROUTE = {
+  zIndex: 4,
+  routeColor: "#FFB90F",
+  iconPath:
+    "https://gw.alipayobjects.com/mdn/rms_dfc0fe/afts/img/A*EGCiTYQhBDkAAAAAAAAAAAAAARQnAQ",
+  iconWidth: 10,
+  routeWidth: 10,
+  success: NOP,
+  fail: (err) => console.log("路径输出错误：", err),
+};
