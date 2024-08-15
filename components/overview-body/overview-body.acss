@@ -31,6 +31,7 @@
 .item-bus-time {
   font-size: 28rpx;
   line-height: 28rpx;
+  text-align: center;
   vertical-align: middle;
 }
 
@@ -75,6 +76,7 @@
 
 .item-bus-name {
   max-width: 200rpx;
+  text-align: center;
   font-size: 28rpx;
   line-height: 28rpx;
   white-space: nowrap;
