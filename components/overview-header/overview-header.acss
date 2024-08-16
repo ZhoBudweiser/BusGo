@@ -8,14 +8,13 @@
 .swiper-container-item {
   display: flex;
   flex-direction: column;
-  margin: 5rpx 20rpx;
-  padding: 5rpx;
   border: gray solid 5rpx;
+  margin: 0rpx 15rpx;
+  padding: 10rpx;
   border-radius: 15rpx;
-  height: 240rpx;
+  height: 20vh;
   overflow: hidden;
-  transition: all 0.5s;
-  margin-bottom: 30rpx;
+  box-sizing: border-box;
 }
 
 .item-destinations {

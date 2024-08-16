@@ -1,3 +1,9 @@
+.overview-body {
+  height: 64vh;
+  overflow-y: auto;
+  margin-top: 1vh;
+}
+
 .item-header {
   height: 32rpx;
   padding: 8rpx;
@@ -13,7 +19,7 @@
   padding: 5rpx;
   border: gray solid 5rpx;
   border-radius: 15rpx;
-  height: 240rpx;
+  height: 20vh;
   overflow: hidden;
   transition: all 0.5s;
 }

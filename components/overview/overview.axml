@@ -24,9 +24,7 @@
           onRollback="onRollback"
         />
         <!-- 班车路线 -->
-        <view capture-catchTouchMove="onMove">
-          <body carLines="{{carLines}}" />
-        </view>
+        <body carLines="{{carLines}}" />
       </view>
     </swiper-item>
   </swiper>

@@ -8,6 +8,13 @@
     damping="{{50}}"
     onChangeEnd="onMove"
   >
+    <view class="touch-container">
+      <view class="touch-bar">
+        <view class="img-container {{state == 0 ? 'rotate' : ''}}">
+          <image class="img" mode="aspectFit" src="/images/up_arrow.svg" />
+        </view>
+      </view>
+    </view>
     <slot>
       <view>default slot & default value</view>
     </slot>

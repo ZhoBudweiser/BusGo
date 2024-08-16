@@ -13,23 +13,18 @@
   >
   </schoolmap>
   <movable class="previa">
-    <view id="preview">
-      <view class="touch-container">
-        <view class="touch-bar" />
-      </view>
-      <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData">
-      </tabs>
-      <overview
-        tabs="{{tabs}}"
-        activeIndex="{{activeIndex}}"
-        carLines="{{carLines}}"
-        selectedStation="{{selectedStation}}"
-        userTimeCost="{{userTimeCost}}"
-        onMainData="onMainData"
-        onFlip="onFlip"
-        onRollback="onRollback"
-      >
-      </overview>
-    </view>
+    <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData">
+    </tabs>
+    <overview
+      tabs="{{tabs}}"
+      activeIndex="{{activeIndex}}"
+      carLines="{{carLines}}"
+      selectedStation="{{selectedStation}}"
+      userTimeCost="{{userTimeCost}}"
+      onMainData="onMainData"
+      onFlip="onFlip"
+      onRollback="onRollback"
+    >
+    </overview>
   </movable>
 </view>

@@ -10,22 +10,19 @@ import {
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
 
-export function debounce(fn, wait) {
-  var timeout;
-  return function () {
-    var ctx = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      fn.apply(ctx, args);
-    }, wait);
-  };
-}
-
 export function flip(client, field) {
   client.setData({
     [field]: !client.data[field],
   });
+}
+
+export function setState(targetY, stateBoders) {
+  for (let i = stateBoders.length - 1; i >= 0; --i) {
+    if (targetY > stateBoders[i]) {
+      return i + 1;
+    }
+  }
+  return 0;
 }
 
 export function setSysQueryFrequency(lines) {

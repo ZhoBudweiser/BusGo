@@ -1,17 +1,20 @@
+import { setState } from "/util/setters";
+
 Component({
   data: {
     currentY: 0,
+    state: 0,
     stateHeights: [],
     stateBoders: [],
   },
   didMount() {
     let contentHeight;
     my.createSelectorQuery()
-      .select("#preview")
+      .select("#body")
       .boundingClientRect()
       .exec((ret) => {
         contentHeight = ret[0].height;
-        console.log("预览窗口高度：", contentHeight);
+        console.log("班车列表高度：", contentHeight);
         this.setData({
           contentHeight,
         });
@@ -23,11 +26,12 @@ Component({
         const height = ret[0].height;
         console.log("当前手机高度：", height);
         this.setData({
-          currentY: height - contentHeight,
-          stateHeights: [0, height - contentHeight, height],
+          state: 1,
+          currentY: contentHeight,
+          stateHeights: [0, contentHeight, height],
           stateBoders: [
-            (height - contentHeight) / 2,
-            (height + (height - contentHeight) / 2) / 2,
+            (contentHeight) / 2,
+            (height + contentHeight / 2) / 2,
           ],
         });
       });
@@ -35,18 +39,12 @@ Component({
   methods: {
     onMove(e) {
       const { y } = e.detail;
-      const newState = this.changeState(y);
+      const { stateBoders, stateHeights } = this.data;
+      const state = setState(y, stateBoders);
       this.setData({
-        currentY: this.data.stateHeights[newState] + Math.random(),
+        state,
+        currentY: stateHeights[state] + Math.random(),
       });
-    },
-    changeState(targetY) {
-      for (let i = this.data.stateBoders.length - 1; i >= 0; --i) {
-        if (targetY > this.data.stateBoders[i]) {
-          return i + 1;
-        }
-      }
-      return 0;
-    },
+    }
   },
 });

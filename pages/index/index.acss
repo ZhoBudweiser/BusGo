@@ -21,20 +21,6 @@
   flex-direction: column;
 }
 
-.touch-container {
-  position: relative;
-  height: 92rpx;
-  background-color: #fff0;
-}
-
-.touch-bar {
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  bottom: -2rpx;
-  background-color: #fff;
-}
-
 .icon {
   float: left;
 }
