@@ -24,7 +24,7 @@
           onRollback="onRollback"
         />
         <!-- 班车路线 -->
-        <body carLines="{{carLines}}" />
+        <body carLines="{{carLines}}" selectedStation="{{selectedStation}}" />
       </view>
     </swiper-item>
   </swiper>

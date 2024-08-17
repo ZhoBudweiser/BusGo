@@ -22,6 +22,7 @@ export const headerData = {
 
 export const bodyProps = {
   carLines: [],
+  selectedStation: DEFAULT_STATION,
 };
 
 export const bodyData = {

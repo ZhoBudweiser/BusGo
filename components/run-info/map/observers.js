@@ -107,7 +107,6 @@ function displayMode(mode) {
 }
 
 function showNavigationPath(show) {
-  console.log("shiw", show);
   const position = this.props.position;
   const selectedStationPosition = this.data.selectedStationPosition;
   if (show) {
