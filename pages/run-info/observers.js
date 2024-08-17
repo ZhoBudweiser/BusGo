@@ -1,4 +1,4 @@
-import { dynamicData } from "/options/props/realTimeQuery";
+import { dynamicData } from "/options/props/run-info/run-info";
 import { queryBackend } from "/options/apis/carApis";
 import { resetCarTimer } from "/util/client";
 import { store } from "/util/cache";

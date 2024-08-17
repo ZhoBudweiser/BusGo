@@ -1,4 +1,4 @@
-import { DEFAULT_STATION, DEFAULT_TABS, NOP } from "./defaults";
+import { DEFAULT_STATION, DEFAULT_TABS, NOP } from "../defaults";
 
 export const headerProps = {
   activeIndex: 1,

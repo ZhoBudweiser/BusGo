@@ -1,4 +1,4 @@
-import { DEFAULT_TABS } from "./defaults";
+import { DEFAULT_TABS } from "../defaults";
 import { nop } from "/options/apis/apiConfig";
 
 export const data = {

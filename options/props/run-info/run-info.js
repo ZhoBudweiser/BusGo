@@ -1,4 +1,4 @@
-import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID, DEFAULT_TABS } from "./defaults";
+import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID, DEFAULT_TABS } from "../defaults";
 
 const staticData = {
   busStations: [],

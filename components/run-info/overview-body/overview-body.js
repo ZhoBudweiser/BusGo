@@ -1,4 +1,4 @@
-import { bodyData, bodyProps } from "/options/props/overview";
+import { bodyData, bodyProps } from "/options/props/run-info/overview";
 import { methods } from "./handlers";
 import observers from "./observers";
 

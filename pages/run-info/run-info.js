@@ -1,4 +1,4 @@
-import { realTimeQueryProps } from "/options/props/realTimeQuery";
+import { realTimeQueryProps } from "/options/props/run-info/run-info";
 import observers from "./observers";
 import handlers from "./handlers";
 

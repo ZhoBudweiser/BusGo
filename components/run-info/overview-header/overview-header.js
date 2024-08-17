@@ -1,4 +1,4 @@
-import { headerData, headerProps } from "/options/props/overview";
+import { headerData, headerProps } from "/options/props/run-info/overview";
 import { methods } from "./handlers";
 import observers from "./observers";
 
