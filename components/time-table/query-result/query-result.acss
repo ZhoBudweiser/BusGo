@@ -23,13 +23,6 @@
 }
 
 /* -----overview-------- */
-
-.item-destinations {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .item-destination-name {
   margin-left: 10rpx;
   padding: 5rpx;
@@ -47,14 +40,6 @@
   margin-left: 10rpx;
   background-image: url("/images/arrow.svg");
   background-size: contain;
-}
-
-.item-body-main {
-  position: relative;
-  height: 85%;
-  margin: 15rpx;
-  border-bottom: solid gray 5rpx;
-  box-sizing: content-box;
 }
 
 /* -------line------- */
@@ -86,12 +71,6 @@
   margin: 0 auto;
   margin-top: 10rpx;
   flex-wrap: nowrap;
-}
-
-.scroll-container {
-  /* TODO: adapt to size */
-  height: 920rpx;
-  overflow: auto;
 }
 
 .item-bus-remark {

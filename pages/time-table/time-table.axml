@@ -7,7 +7,7 @@
     />
   </view>
   <view class="queries">
-    <queries lines="{{lines}}" />
+    <query-result lines="{{lines}}" />
     <query-history
       style="{{`display: ${ queried ? 'none': '' }`}}"
       appendedItem="{{queried}}"
