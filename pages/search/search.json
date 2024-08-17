@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "place-picker": "/components/place-picker/place-picker",
-      "queries": "/components/queries/queries",
-      "footer": "/components/footer/index",
-      "query-history": "/components/query-history/query-history"
-  },
-  "styleIsolation": "apply-shared"
-}

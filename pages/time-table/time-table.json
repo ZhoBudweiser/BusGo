@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "place-picker": "/components/time-table/place-picker/place-picker",
+      "queries": "/components/time-table/queries/queries",
+      "footer": "/components/shared/footer/footer",
+      "query-history": "/components/time-table/query-history/query-history"
+  },
+  "styleIsolation": "apply-shared"
+}

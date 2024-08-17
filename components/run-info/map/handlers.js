@@ -28,7 +28,7 @@ function onSwitchMode() {
 
 function onJumpSearch() {
   my.navigateTo({
-    url: "/pages/search/search?start=" + this.props.selectedStation.name,
+    url: "/pages/time-table/time-table?start=" + this.props.selectedStation.name,
   });
 }
 

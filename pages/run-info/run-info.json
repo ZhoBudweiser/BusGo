@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "schoolmap":"/components/run-info/map/map",
+    "tabs": "/components/run-info/tabs/tabs",
+    "overview": "/components/run-info/overview/overview",
+    "movable": "/components/run-info/movable-view/movable-view"
+  }
+}
