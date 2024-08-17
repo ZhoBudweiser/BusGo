@@ -1,9 +1,8 @@
-import { getNearestStationId } from "/util/queryhelper";
 import { dynamicData } from "/options/props/realTimeQuery";
 import { queryBackend } from "/options/apis/carApis";
-import { resetCarTimer, selectStation } from "/util/client";
+import { resetCarTimer } from "/util/client";
 import { store } from "/util/cache";
-import { setStation, setSysQueryFrequency } from "/util/setters";
+import { setNearestStationId, setStation, setSysQueryFrequency } from "/util/setters";
 import { popNoCar } from "/util/notification";
 
 const observers = {
@@ -27,8 +26,8 @@ async function activeIndex(i) {
 async function queriedStations(stations) {
   if (!stations || !stations.length) return;
   const { activeIndex } = this.data;
-  const { latitude, longitude } = this.data.userPosition;
-  const stationId = getNearestStationId(stations, latitude, longitude);
+  const { userPosition } = this.data;
+  const stationId = setNearestStationId(stations, userPosition);
   const selectedStation = await setStation(activeIndex, stationId);
   this.setData({ selectedStation });
 }

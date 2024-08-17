@@ -37,6 +37,26 @@ export function setSysQueryFrequency(lines) {
   }
 }
 
+export function setNearestStationId(stations, userPosition) {
+  if (stations.length === 0) return "";
+  const { latitude, longitude } = userPosition;
+  const stationDistances = stations.map((item) => {
+    const { station_lat: stationLatitude, station_long: stationLongitude } =
+      item;
+    const dist =
+      (stationLatitude - latitude) * (stationLatitude - latitude) +
+      (stationLongitude - longitude) * (stationLongitude - longitude);
+    return dist;
+  });
+  let minIndex = 0;
+  for (let i = 0; i < stationDistances.length; ++i) {
+    if (stationDistances[minIndex] > stationDistances[i]) {
+      minIndex = i;
+    }
+  }
+  return stations[minIndex].station_alias_no;
+}
+
 export function setActiveCards(lines) {
   return lines.map((item) => item.runBusInfo !== null);
 }
@@ -214,3 +234,29 @@ export function drawCarPositions(mapCtx, carMarkers, add) {
     console.log("汽车发生了移动：", carMarkers);
   }
 }
+
+export function setCardHeights(lines) {
+  return lines.map((item) => {
+    if (!item.length) {
+      if (item.remark) {
+        return ["85rpx", "240rpx"];
+      } else {
+        return ["50rpx", "200rpx"];
+      }
+    } else {
+      let minH = 0,
+        maxH = 0;
+      item.forEach((l) => {
+        if (l.remark) {
+          minH += 97;
+          maxH += 240;
+        } else {
+          minH += 57;
+          maxH += 200;
+        }
+      });
+      return [minH + "rpx", maxH + "rpx"];
+    }
+  });
+}
+

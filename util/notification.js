@@ -1,3 +1,4 @@
+import { store } from "./cache";
 
 export function showQuerying(loonger=1) {
   my.showLoading({
@@ -7,6 +8,25 @@ export function showQuerying(loonger=1) {
 
 export function hideLoading() {
   my.hideLoading();
+}
+
+export function alertStart() {
+  my.alert({
+    title: "欢迎使用「校车行」",
+    content:
+      "本产品旨在为浙大师生提供便捷、智能的校车出行服务，使用过程中不会存储用户敏感信息。",
+    buttonText: "启动",
+    success: () => store("noticeShow", true),
+  });
+}
+
+export function alertData() {
+  my.alert({
+    title: "温馨提示",
+    content: "班次运行时偶尔会出现变化，请以实际运行和学校通知为准。",
+    buttonText: "我已知晓",
+    success: () => store("dataAlert", true),
+  });
 }
 
 export function popQueryError(error, name) {

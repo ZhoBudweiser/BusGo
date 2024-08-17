@@ -1,4 +1,3 @@
-import { getStart } from "/util/data";
 import { flip, setStation } from "/util/setters";
 import { authGuideLocation } from "/options/apis/locationApis";
 import { queryBackend } from "/options/apis/carApis";
@@ -9,6 +8,7 @@ import {
   setLocationTimer,
 } from "/util/client";
 import { load, store } from "/util/cache";
+import { alertStart } from "/util/notification";
 
 const eventHandlers = {
   onMainData,
@@ -58,7 +58,7 @@ function onLoad(query) {
   loadAndSet(this, "activeIndex");
   loadAndSet(this, "stationsBuffer");
   loadAndSet(this, "stationsBuffer");
-  !load("noticeShow").data && getStart();
+  !load("noticeShow").data && alertStart();
 }
 
 async function onShow() {

@@ -1,4 +1,4 @@
-import { getCardHeights } from "/util/fmtUnit";
+import { setCardHeights } from "/util/setters";
 
 Component({
   mixins: [],
@@ -17,7 +17,7 @@ Component({
       console.log(lines);
       this.setData({
         activeCards: lines.map((_) => 0),
-        cardHeights: getCardHeights(lines),
+        cardHeights: setCardHeights(lines),
       });
     },
   },

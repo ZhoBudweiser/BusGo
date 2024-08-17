@@ -1,5 +1,5 @@
-import { busStaticEndAddresses } from "/util/data";
-import { timeFormat } from "/util/fmtUnit";
+import { DEFAULT_QUERY_ALL_ENDS } from "/options/props/defaults";
+import { fmtTime } from "/util/formatter";
 import { flip } from "/util/setters";
 
 Component({
@@ -20,37 +20,37 @@ Component({
   observers: {
     historyAddress: function (history) {
       if (!history.startAddress || !history.endAddress) return;
-      let options = busStaticEndAddresses.filter(
+      let options = DEFAULT_QUERY_ALL_ENDS.filter(
         (address) => history.startAddress.indexOf(address) !== -1,
       );
       const startName = options.length ? options[0] : "";
-      options = busStaticEndAddresses.filter(
+      options = DEFAULT_QUERY_ALL_ENDS.filter(
         (address) => history.endAddress.indexOf(address) !== -1,
       );
       const endName = options.length ? options[0] : "";
       this.setData({
         startName: startName,
         endName: endName,
-        startOptions: busStaticEndAddresses.filter((item) => item !== endName),
-        endOptions: busStaticEndAddresses.filter((item) => item !== startName),
+        startOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== endName),
+        endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
       });
     },
   },
   didMount() {
-    const options = busStaticEndAddresses.filter(
+    const options = DEFAULT_QUERY_ALL_ENDS.filter(
       (address) => this.props.initStart.indexOf(address) !== -1,
     );
     const name = options.length ? options[0] : "";
     this.setData({
       startName: name,
-      stationOptions: busStaticEndAddresses,
-      startOptions: busStaticEndAddresses,
-      endOptions: busStaticEndAddresses.filter((item) => item !== name),
+      stationOptions: DEFAULT_QUERY_ALL_ENDS,
+      startOptions: DEFAULT_QUERY_ALL_ENDS,
+      endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== name),
     });
     my.getServerTime({
       success: (res) => {
         this.setData({
-          startTime: timeFormat(res.time, "hh:mm"),
+          startTime: fmtTime(res.time, "hh:mm"),
         });
       },
     });
