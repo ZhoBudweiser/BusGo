@@ -1,4 +1,5 @@
-import { load, store } from "/util/cache";
+import { NOP } from "/options/props/defaults";
+import { store } from "/util/cache";
 import { loadAndSet } from "/util/client";
 
 Component({
@@ -17,12 +18,11 @@ Component({
   },
   props: {
     appendedItem: {},
-    onSetHistoryAddress: () => {},
+    onSetHistoryAddress: NOP,
   },
   didMount() {
     loadAndSet(this, "queryHistory");
   },
-  didUpdate() {},
   didUnmount() {
     store("queryHistory", this.data.queryHistory);
   },
@@ -33,28 +33,23 @@ Component({
     },
     onDelete(e) {
       const i = e.currentTarget.dataset.i;
-      this.setData({
-        queryHistory: this.data.queryHistory.filter((_, j) => j !== i),
-      });
-      console.log(i);
+      const queryHistory = this.data.queryHistory.filter((_, j) => j !== i);
+      this.setData({ queryHistory });
     },
     onClear() {
-      this.setData({
-        queryHistory: [],
-      });
+      const queryHistory = [];
+      this.setData({ queryHistory });
     },
     onAppendHistoryItem(item) {
-      const history = this.data.queryHistory.filter(
+      const queryHistory = this.data.queryHistory.filter(
         (line) =>
           !(
             line.startAddress === item.startAddress &&
             line.endAddress === item.endAddress
           ),
       );
-      history.unshift(item);
-      this.setData({
-        queryHistory: history,
-      });
+      queryHistory.unshift(item);
+      this.setData({ queryHistory });
     },
   },
 });
