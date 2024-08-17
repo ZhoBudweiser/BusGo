@@ -10,9 +10,9 @@
     <queries lines="{{lines}}" />
     <query-history
       style="{{`display: ${ queried ? 'none': '' }`}}"
-      appendedItem="{{appendedItem}}"
+      appendedItem="{{queried}}"
       onSetHistoryAddress="onSetHistoryAddress"
     />
-    <footer a:if="{{ queried }}" type="end" />
+    <footer a:if="{{ queried }}" />
   </view>
 </view>

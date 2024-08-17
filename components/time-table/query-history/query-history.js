@@ -11,7 +11,7 @@ Component({
   },
   observers: {
     appendedItem: function (history) {
-      if (!history.startAddress || !history.endAddress) return;
+      if (!history || !history.startAddress || !history.endAddress) return;
       this.onAppendHistoryItem(history);
     },
   },

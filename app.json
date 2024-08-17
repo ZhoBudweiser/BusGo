@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/run-info/run-info",
-    "pages/time-table/time-table"
+    "pages/time-table/time-table",
+    "pages/run-info/run-info"
   ],
   "window": {
     "defaultTitle": "校车行",

@@ -1,7 +1,7 @@
 {
   "usingComponents": {
     "place-picker": "/components/time-table/place-picker/place-picker",
-      "queries": "/components/time-table/queries/queries",
+      "queries": "/components/time-table/query-result/query-result",
       "footer": "/components/shared/footer/footer",
       "query-history": "/components/time-table/query-history/query-history"
   },

@@ -4,6 +4,7 @@ export const DEFAULT_POSITION = {
   latitude: 30.303975,
 };
 export const DEFAULT_LOCATION_QUERY_FREQUENCY = 5000;
+export const DEFAULT_THROTTLE_FREQUENCY = 6000;
 export const DEFAULT_STATION = {
   id: "",
   name: "",

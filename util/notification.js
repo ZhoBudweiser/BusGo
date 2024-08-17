@@ -50,3 +50,17 @@ export function popStationNearBy() {
     duration: 2000,
   });
 }
+
+export function popTooFrequent() {
+  my.showToast({
+    content: "查询过于频繁，\n请稍后再试",
+    duration: 2000,
+  });
+}
+
+export function popIsSame() {
+  my.showToast({
+    content: "结果已给出，\n请更新查询",
+    duration: 2000,
+  });
+}

@@ -1,6 +1,10 @@
 import { load } from "./cache";
+import { popTooFrequent } from "./notification";
 import { queryBackend } from "/options/apis/carApis";
-import { DEFAULT_LOCATION_QUERY_FREQUENCY } from "/options/props/defaults";
+import {
+  DEFAULT_LOCATION_QUERY_FREQUENCY,
+  DEFAULT_THROTTLE_FREQUENCY,
+} from "/options/props/defaults";
 
 export function setLocationTimer(client) {
   return setInterval(autoLocate, DEFAULT_LOCATION_QUERY_FREQUENCY, client);
@@ -48,6 +52,28 @@ export function loadAndSet(client, key) {
     });
     console.log("已读取缓存：", key);
   }
+}
+
+export function isThrottle(client) {
+  const { throttleTimer: oldTimer, throttle } = client.data;
+  const clearTimer = () => {
+    client.setData({
+      throttle: false,
+      throttleTimer: null,
+    });
+  };
+  if (oldTimer) {
+    clearTimeout(oldTimer);
+  }
+  if (throttle) {
+    popTooFrequent();
+  }
+  const throttleTimer = setTimeout(clearTimer, DEFAULT_THROTTLE_FREQUENCY);
+  client.setData({
+    throttle: true,
+    throttleTimer,
+  });
+  return throttle;
 }
 
 function autoLocate(client) {

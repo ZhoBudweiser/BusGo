@@ -1,3 +1,4 @@
+import { popIsSame } from "./notification";
 import {
   getBusStationMapByBusId,
   getBusStationsByBusId,
@@ -7,6 +8,10 @@ import { DEFAULT_TIME } from "/options/props/defaults";
 
 export function stripData(res) {
   return res.data.data;
+}
+
+export function stripCloudData(res) {
+  return res.result.data;
 }
 
 export function second2minute(second) {
@@ -57,36 +62,6 @@ export function fmtShuttleLineStations(lines) {
     pre_lines[line.bid] = line.stations;
     return pre_lines;
   }, {});
-}
-
-export function removeCampusPrefix(address) {
-  return address ? address.replace(/(.*?)校区(?=.)/g, "") : "";
-}
-
-export function isObjectValueEqual(a, b) {
-  if (!a || !b) return false;
-  // 判断两个对象是否指向同一内存，指向同一内存返回true
-  if (a === b) return true;
-  // 获取两个对象键值数组
-  let aProps = Object.getOwnPropertyNames(a);
-  let bProps = Object.getOwnPropertyNames(b);
-  // 判断两个对象键值数组长度是否一致，不一致返回false
-  if (aProps.length !== bProps.length) return false;
-  // 遍历对象的键值
-  for (let prop in a) {
-    // 判断a的键值，在b中是否存在，不存在，返回false
-    if (b.hasOwnProperty(prop)) {
-      // 判断a的键值是否为对象，是则递归，不是对象直接判断键值是否相等，不相等返回false
-      if (typeof a[prop] === "object") {
-        if (!isObjectValueEqual(a[prop], b[prop])) return false;
-      } else if (a[prop] !== b[prop]) {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-  return true;
 }
 
 export function fmtTime(time, fmt = "YYYY-MM-DD hh:mm:ss") {
@@ -145,26 +120,27 @@ export function fmtTime(time, fmt = "YYYY-MM-DD hh:mm:ss") {
   return fmt;
 }
 
-export function fmtQueryResult(info, item) {
-  const stations = item["stations"];
-  const startTime = "" + item.startTime,
-    endTime = "" + item.endTime;
-  const yuquan = passByYuquan(stations);
-  return {
-    ...item,
-    remark: fmtYuquan(item, yuquan),
-    sortNum: Number(item.startTime),
-    startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
-    endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
-    startStationName: item.startStation.replace(/校区(.*)/g, ""),
-    endStationName: item.endStation.replace(/校区(.*)/g, ""),
-    isWeekend: item.cycle === 7 || item.cycle.indexOf("6") !== -1,
-    stations: fmtStations(info, stations),
-  };
+export function fmtTimeTableQueryResults(info, queryResult) {
+  return queryResult
+    .map((item) =>
+      item.length
+        ? fmtQueryArrayResult(info, item)
+        : fmtQueryResult(info, item),
+    )
+    .sort((l1, l2) => {
+      const n1 = l1.sortNum ? l1.sortNum : l1[0].sortNum;
+      const n2 = l2.sortNum ? l2.sortNum : l2[0].sortNum;
+      return n1 < n2 ? -1 : n1 == n2 ? 0 : 1;
+    });
 }
 
-export function fmtQueryArrayResult(info, items) {
-  return items.map((item) => fmtQueryResult(info, item));
+export function isSameQuery(a, b) {
+  if (isObjectValueEqual(a, b)) {
+    popIsSame();
+    return true;
+  } else {
+    return false;
+  }
 }
 
 async function fmtBusLine(busLine) {
@@ -236,11 +212,63 @@ function convertNameStyle(str) {
   return temp;
 }
 
+export function removeCampusPrefix(address) {
+  return address ? address.replace(/(.*?)校区(?=.)/g, "") : "";
+}
+
+function isObjectValueEqual(a, b) {
+  if (!a || !b) return false;
+  // 判断两个对象是否指向同一内存，指向同一内存返回true
+  if (a === b) return true;
+  // 获取两个对象键值数组
+  let aProps = Object.getOwnPropertyNames(a);
+  let bProps = Object.getOwnPropertyNames(b);
+  // 判断两个对象键值数组长度是否一致，不一致返回false
+  if (aProps.length !== bProps.length) return false;
+  // 遍历对象的键值
+  for (let prop in a) {
+    // 判断a的键值，在b中是否存在，不存在，返回false
+    if (b.hasOwnProperty(prop)) {
+      // 判断a的键值是否为对象，是则递归，不是对象直接判断键值是否相等，不相等返回false
+      if (typeof a[prop] === "object") {
+        if (!isObjectValueEqual(a[prop], b[prop])) return false;
+      } else if (a[prop] !== b[prop]) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  return true;
+}
+
 function fmtBusStation(busStation) {
   return {
     ...busStation,
     station_alias: removeCampusPrefix(busStation.station_alias),
   };
+}
+
+function fmtQueryResult(info, item) {
+  const stations = item["stations"];
+  const startTime = "" + item.startTime,
+    endTime = "" + item.endTime;
+  const yuquan = passByYuquan(stations);
+  return {
+    ...item,
+    remark: fmtYuquan(item, yuquan),
+    sortNum: Number(item.startTime),
+    startTime: startTime.slice(0, -2) + ":" + startTime.slice(-2),
+    endTime: endTime.slice(0, -2) + ":" + endTime.slice(-2),
+    startStationName: item.startStation.replace(/校区(.*)/g, ""),
+    endStationName: item.endStation.replace(/校区(.*)/g, ""),
+    isWeekend: item.cycle === 7 || item.cycle.indexOf("6") !== -1,
+    stations: fmtStations(info, stations),
+  };
+}
+
+function fmtQueryArrayResult(info, items) {
+  return items.map((item) => fmtQueryResult(info, item));
 }
 
 function fmtStations(info, stations) {
