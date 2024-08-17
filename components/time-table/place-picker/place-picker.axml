@@ -1,34 +1,34 @@
 <view class="picker-container">
   <view class="picker-destinations">
     <view class="picker-address">
-      <picker onChange="bindPickerChange" range="{{startOptions}}">
+      <picker onChange="onPickStart" range="{{startOptions}}">
         <view class="row row-start">
           <view class="row-title">起点</view>
           <view class="row-extra">
-            {{startName!=="" ? startName : "请选择起点"}}
+            {{startName && startName!=="" ? startName : "请选择起点"}}
           </view>
         </view>
       </picker>
-      <picker onChange="bindObjPickerChange" range="{{endOptions}}">
+      <picker onChange="onPickEnd" range="{{endOptions}}">
         <view class="row row-end">
           <view class="row-title">终点</view>
           <view class="row-extra">
-            {{endName!=="" ? endName : "请选择终点"}}
+            {{endName && endName!=="" ? endName : "请选择终点"}}
           </view>
         </view>
       </picker>
     </view>
     <view class="picker-operation">
-      <view class="picker-switch" onTap="onSwitchAddress"> </view>
-      <view class="picker-submit" onTap="onSubmit"> </view>
+      <view class="picker-switch" onTap="onSwitchAddress"></view>
+      <view class="picker-submit" onTap="onSubmit"></view>
     </view>
   </view>
   <view class="picker-filter">
-    <view class="picker-option time" onTap="onTimePick"> {{startTime}} </view>
+    <view class="picker-option time" onTap="onTimePick"> {{startTime}}</view>
     <view class="picker-option day" onTap="onDayPick">
       {{isWeekend ? "周末" : "工作日"}}
     </view>
-    <view class="picker-filter-title"> 出发 </view>
+    <view class="picker-filter-title"> 出发</view>
     <view class="picker-option div"></view>
     <view class="picker-option trans" onTap="onTransPick">
       {{canTrans ? "允许换乘" : "不允许换乘"}}

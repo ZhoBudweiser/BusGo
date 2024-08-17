@@ -5,6 +5,7 @@ export const DEFAULT_POSITION = {
 };
 export const DEFAULT_LOCATION_QUERY_FREQUENCY = 5000;
 export const DEFAULT_THROTTLE_FREQUENCY = 6000;
+export const DEFAULT_SHOW_DURATION = 2000;
 export const DEFAULT_STATION = {
   id: "",
   name: "",

@@ -1,4 +1,5 @@
 import { store } from "./cache";
+import { DEFAULT_SHOW_DURATION } from "/options/props/defaults";
 
 export function showQuerying(loonger=1) {
   my.showLoading({
@@ -33,34 +34,41 @@ export function popQueryError(error, name) {
   console.log("fail: ", error);
   my.showToast({
     content: `当前${name}异常，先试试其他功能吧`,
-    duration: 2000,
+    duration: DEFAULT_SHOW_DURATION,
   });
 }
 
 export function popNoCar() {
   my.showToast({
     content: "暂无班车信息",
-    duration: 2000,
+    duration: DEFAULT_SHOW_DURATION,
   });
 }
 
 export function popStationNearBy() {
   my.showToast({
     content: "目的地在站点附近",
-    duration: 2000,
+    duration: DEFAULT_SHOW_DURATION,
   });
 }
 
 export function popTooFrequent() {
   my.showToast({
     content: "查询过于频繁，\n请稍后再试",
-    duration: 2000,
+    duration: DEFAULT_SHOW_DURATION,
   });
 }
 
 export function popIsSame() {
   my.showToast({
     content: "结果已给出，\n请更新查询",
-    duration: 2000,
+    duration: DEFAULT_SHOW_DURATION,
+  });
+}
+
+export function popNoAddress() {
+  my.showToast({
+    content: "请填写地点信息",
+    duration: DEFAULT_SHOW_DURATION,
   });
 }
