@@ -3,6 +3,7 @@ import { queryBackend } from "/options/apis/carApis";
 import {
   BUS_IMG_PATH,
   DEFAULT_ROUTE,
+  DEFAULT_STATION,
   NOP,
   RED_SHUTTLE_IMG_PATH,
   SELECTED_STATION_IMG_PATH,
@@ -86,13 +87,18 @@ export async function setCarLines(
   return newBusLineIds;
 }
 
-export async function setStation(activeIndex, sid) {
-  if (sid == "") return;
+export async function setStationObj(activeIndex, sid) {
+  if (sid == "") return null;
   const stations = await queryBackend("allStations", activeIndex, []);
-  const stationName = stations.find(
-    (item) => item.station_alias_no === sid,
-  ).station_alias;
-  console.log("已选择的站点：", stationName);
+  return stations.find((item) => item.station_alias_no === sid);
+}
+
+export async function setStation(activeIndex, sid) {
+  if (sid == "") return DEFAULT_STATION;
+  const stationObj = await setStationObj(activeIndex, sid);
+  if (!stationObj) return DEFAULT_STATION;
+  const stationName = stationObj.station_alias;
+  console.log("已选择的站点：", stationObj);
   const selectedStation = {
     id: sid,
     name: stationName,

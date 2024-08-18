@@ -32,7 +32,6 @@ function stations() {
     });
     console.log("清空了站点：", oldStationMarkers);
   }
-  console.log("stations", stations);
   const stationMarkers = setStationMarkers(stations, selectedStation.id);
   mapCtx.changeMarkers({
     add: stationMarkers,

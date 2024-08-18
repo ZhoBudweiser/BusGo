@@ -1,10 +1,6 @@
 import { DEFAULT_POSITION, DEFAULT_STATION, DEFAULT_STATION_ID, DEFAULT_TABS } from "../defaults";
 
 const staticData = {
-  busStations: [],
-  shuttleLines: [],
-  shuttleStations: [],
-  stationsBuffer: {},
   locationAuthed: false,
   locationTimer: null,
   carTimer: null,

@@ -2,7 +2,12 @@ import { dynamicData } from "/options/props/run-info/run-info";
 import { queryBackend } from "/options/apis/carApis";
 import { resetCarTimer } from "/util/client";
 import { store } from "/util/cache";
-import { setNearestStationId, setStation, setSysQueryFrequency } from "/util/setters";
+import {
+  setNearestStationId,
+  setStation,
+  setStationObj,
+  setSysQueryFrequency,
+} from "/util/setters";
 import { popNoCar } from "/util/notification";
 
 const observers = {
@@ -25,10 +30,15 @@ async function activeIndex(i) {
 
 async function queriedStations(stations) {
   if (!stations || !stations.length) return;
-  const { activeIndex } = this.data;
+  const { activeIndex, selectedStation: oldSelectedStation } = this.data;
   const { userPosition } = this.data;
-  const stationId = setNearestStationId(stations, userPosition);
+  const sourcePosition =
+    oldSelectedStation.id === ""
+      ? userPosition
+      : await setStationObj(activeIndex, oldSelectedStation.id);
+  const stationId = setNearestStationId(stations, sourcePosition);
   const selectedStation = await setStation(activeIndex, stationId);
+  console.log("已用", sourcePosition, "匹配最近站点", selectedStation);
   this.setData({ selectedStation });
 }
 
@@ -47,10 +57,16 @@ function thisResetCarTimer() {
   resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
 }
 
-function queriedLineIds(ids) {
+async function queriedLineIds(ids) {
   if (!ids) return;
   if (ids.length === 0) popNoCar();
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   if (selectedStation.id == "") return;
+  const idset = new Set(ids);
+  console.log(idset);
+  const queriedStations = (
+    await queryBackend("allStations", activeIndex, [])
+  ).filter((stations) => idset.has(stations.station_alias_no));
+  this.setData({ queriedStations });
   resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
 }
