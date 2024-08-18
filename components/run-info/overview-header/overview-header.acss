@@ -73,14 +73,14 @@
 
 .item-stop-caption {
   position: absolute;
-  bottom: 110rpx;
+  bottom: 8vh;
   font-size: 26rpx;
   white-space: nowrap;
 }
 
 .item-bus-caption {
   position: absolute;
-  bottom: 80rpx;
+  bottom: 5vh;
   font-size: 26rpx;
   white-space: nowrap;
 }
