@@ -7,7 +7,7 @@ import {
   setData,
   setLocationTimer,
 } from "/util/client";
-import { load, store } from "/util/cache";
+import { load, loadCache, store, storeCache } from "/util/cache";
 import { alertStart } from "/util/notification";
 
 const eventHandlers = {
@@ -55,8 +55,7 @@ async function onSelectStation(sid) {
 function onLoad(query) {
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   loadAndSet(this, "activeIndex");
-  loadAndSet(this, "stationsBuffer");
-  loadAndSet(this, "stationsBuffer");
+  loadCache();
   !load("noticeShow").data && alertStart();
 }
 
@@ -76,5 +75,5 @@ async function onShow() {
 function onUnload() {
   clearInterval(this.data.locationTimer);
   console.log("已清除定时器");
-  store("stationsBuffer", this.data.stationsBuffer);
+  storeCache();
 }

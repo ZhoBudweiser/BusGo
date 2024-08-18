@@ -50,7 +50,7 @@ export function loadAndSet(client, key) {
     client.setData({
       [key]: res.data,
     });
-    console.log("已读取缓存：", key);
+    console.log("已存入缓存：", key);
   }
 }
 
