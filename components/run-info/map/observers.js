@@ -65,9 +65,10 @@ function selectedStationId(sid) {
 }
 
 function selectedBusLineId(bid) {
-  this.mapCtx.clearRoute();
+  const mapCtx = this.mapCtx;
+  mapCtx.clearRoute();
   const line = this.props.lines.find((item) => item.bid === bid);
-  if (line !== undefined) drawRoute(line.stations);
+  if (line !== undefined) drawRoute(mapCtx, line.stations);
 }
 
 function lines(ls) {

@@ -1,5 +1,5 @@
-import { DEFAULT_ROUTE, STATION_ID_LABEL } from "/options/props/defaults";
-import { flip, setRoute } from "/util/setters";
+import { STATION_ID_LABEL } from "/options/props/defaults";
+import { flip } from "/util/setters";
 
 export const methods = {
   onMarkerTap,

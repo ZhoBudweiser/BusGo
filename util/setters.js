@@ -2,6 +2,7 @@ import { extractAddressName, removeCampusPrefix } from "./formatter";
 import { queryBackend } from "/options/apis/carApis";
 import {
   BUS_IMG_PATH,
+  DEFAULT_ROUTE,
   NOP,
   RED_SHUTTLE_IMG_PATH,
   SELECTED_STATION_IMG_PATH,
@@ -177,27 +178,6 @@ export function setCarMarkers(lines) {
   return carPositions;
 }
 
-export function setRoute(stations) {
-  const n = stations.length;
-  const throughPoints = stations
-    .map((item) => {
-      return {
-        lng: item.station_long,
-        lat: item.station_lat,
-      };
-    })
-    .slice(1, n - 1);
-  const startPoint = {
-    startLat: stations[0].station_lat,
-    startLng: stations[0].station_long,
-  };
-  const endPoint = {
-    endLat: stations[n - 1].station_lat,
-    endLng: stations[n - 1].station_long,
-  };
-  return { throughPoints, startPoint, endPoint };
-}
-
 export function drawRoute(mapCtx, stations) {
   const { throughPoints, startPoint, endPoint } = setRoute(stations);
   mapCtx.showRoute({
@@ -260,3 +240,23 @@ export function setCardHeights(lines) {
   });
 }
 
+function setRoute(stations) {
+  const n = stations.length;
+  const throughPoints = stations
+    .map((item) => {
+      return {
+        lng: item.station_long,
+        lat: item.station_lat,
+      };
+    })
+    .slice(1, n - 1);
+  const startPoint = {
+    startLat: stations[0].station_lat,
+    startLng: stations[0].station_long,
+  };
+  const endPoint = {
+    endLat: stations[n - 1].station_lat,
+    endLng: stations[n - 1].station_long,
+  };
+  return { throughPoints, startPoint, endPoint };
+}
