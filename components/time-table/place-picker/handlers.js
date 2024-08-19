@@ -1,5 +1,6 @@
 import { DEFAULT_QUERY_ALL_ENDS } from "/options/props/defaults";
-import { setData } from "/util/client";
+import { store } from "/util/cache";
+import { loadAndSet, setData } from "/util/client";
 import { fmtTime } from "/util/formatter";
 import { popNoAddress } from "/util/notification";
 import { flip } from "/util/setters";
@@ -16,6 +17,7 @@ export const methods = {
 
 export const lifeHanders = {
   didMount,
+  didUnmount,
 };
 
 function onPickStart(e) {
@@ -36,10 +38,6 @@ function onPickEnd(e) {
 
 function onSwitchAddress() {
   const { startName, endName, startOptions, endOptions } = this.data;
-  if (startName === "" || endName === "") {
-    popNoAddress();
-    return;
-  }
   this.setData({
     startName: endName,
     endName: startName,
@@ -93,4 +91,12 @@ function didMount() {
   my.getServerTime({
     success: (res) => setData(this, "startTime", fmtTime(res.time, "hh:mm")),
   });
+  loadAndSet(this, "isWeekend");
+  loadAndSet(this, "canTrans");
+}
+
+function didUnmount() {
+  const { isWeekend, canTrans } = this.data;
+  store("isWeekend", isWeekend);
+  store("canTrans", canTrans);
 }
