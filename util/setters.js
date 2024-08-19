@@ -56,6 +56,7 @@ export function setNearestStationId(stations, userPosition) {
       minIndex = i;
     }
   }
+  console.log(stations, stationDistances, minIndex, userPosition);
   return stations[minIndex].station_alias_no;
 }
 
@@ -90,7 +91,10 @@ export async function setCarLines(
 export async function setStationObj(activeIndex, sid) {
   if (sid == "") return null;
   const stations = await queryBackend("allStations", activeIndex, []);
-  return stations.find((item) => item.station_alias_no === sid);
+  const ret = stations.find((item) => item.station_alias_no === sid);
+  return ret
+    ? { ...ret, longitude: ret.station_long, latitude: ret.station_lat }
+    : ret;
 }
 
 export async function setStation(activeIndex, sid) {
@@ -104,6 +108,25 @@ export async function setStation(activeIndex, sid) {
     name: stationName,
   };
   return selectedStation;
+}
+
+export async function setLineStations(lineIds, activeIndex) {
+  const allStations = await Promise.all(
+    lineIds.map(
+      async (id) => await queryBackend("stationsByLineId", activeIndex, [id]),
+    ),
+  );
+  const queriedStations = [];
+  const visit = new Set();
+  for (let i = 0; i < allStations.length; ++i) {
+    allStations[i].forEach((station) => {
+      if (!visit.has(station.station_alias_no)) {
+        queriedStations.push(station);
+        visit.add(station.station_alias_no);
+      }
+    });
+  }
+  return queriedStations;
 }
 
 export function setStationMarkers(stations, selectedStationId) {

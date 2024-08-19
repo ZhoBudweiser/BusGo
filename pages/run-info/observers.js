@@ -3,6 +3,7 @@ import { queryBackend } from "/options/apis/carApis";
 import { resetCarTimer } from "/util/client";
 import { store } from "/util/cache";
 import {
+  setLineStations,
   setNearestStationId,
   setStation,
   setStationObj,
@@ -62,11 +63,7 @@ async function queriedLineIds(ids) {
   if (ids.length === 0) popNoCar();
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   if (selectedStation.id == "") return;
-  const idset = new Set(ids);
-  console.log(idset);
-  const queriedStations = (
-    await queryBackend("allStations", activeIndex, [])
-  ).filter((stations) => idset.has(stations.station_alias_no));
+  const queriedStations = await setLineStations(ids, activeIndex);
   this.setData({ queriedStations });
   resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
 }
