@@ -4,7 +4,7 @@ import {
   getBusStationsByBusId,
 } from "/options/apis/busApis";
 import { getShuttleStationMapByShuttleId } from "/options/apis/shuttleApis";
-import { DEFAULT_TIME } from "/options/props/defaults";
+import { DEFAULT_TIME, OUTDATE_STATION_IDS } from "/options/props/defaults";
 
 export function stripData(res) {
   return res.data.data;
@@ -41,6 +41,10 @@ export function extractLineIds(carLines) {
 export function extractAddressName(name, dataType) {
   if (dataType == 1) return name;
   return name.indexOf("华家池") === -1 ? removeCampusSuffix(name) : "华家池";
+}
+
+export function removeOutdateStations(stations, activeIndex) {
+  return stations.filter((station) => !OUTDATE_STATION_IDS[activeIndex].has(station.station_alias_no));
 }
 
 export async function fmtBusLines(busLines) {

@@ -7,6 +7,7 @@ import {
   extractLineIds,
   fmtShuttleLines,
   fmtShuttleLineStations,
+  removeOutdateStations,
   stripData,
 } from "/util/formatter";
 import { popQueryError } from "/util/notification";
@@ -16,7 +17,7 @@ const derivedURL = baseURL + "/xbc/";
 export async function getShuttleAllStations() {
   if (cache.shuttleAllStations != null) return cache.shuttleAllStations;
   const lineStations = await getShuttleALLLineStations();
-  cache.shuttleAllStations = distinctStations(Object.values(lineStations));
+  cache.shuttleAllStations = removeOutdateStations(distinctStations(Object.values(lineStations)), 1);
   return cache.shuttleAllStations;
 }
 

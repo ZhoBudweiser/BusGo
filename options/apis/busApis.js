@@ -1,7 +1,7 @@
 import { baseURL, nop } from "./apiConfig";
 import { LRUArray } from "/beans/LRUArray";
 import cache, { lru } from "/util/cache";
-import { extractLineIds, fmtBusLines, fmtBusStations, stripData } from "/util/formatter";
+import { extractLineIds, fmtBusLines, fmtBusStations, removeOutdateStations, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
@@ -14,7 +14,7 @@ export async function getBusAllStations() {
     success: nop,
     fail: (err) => popQueryError(err, "站点获取"),
     complete: nop,
-  }).then(stripData);
+  }).then((res) => removeOutdateStations(stripData(res), 0));
   return cache.busAllStations;
 }
 

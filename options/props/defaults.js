@@ -11,6 +11,8 @@ export const DEFAULT_STATION = {
   name: "",
 };
 export const DEFAULT_TABS = ["校区间", "校区内"];
+
+
 export const DEFAULT_BUS_BUFFER_ENDS = [
   "紫金港校区",
   "玉泉校区",
@@ -79,7 +81,10 @@ export const DEFAULT_QUERY_ALL_ENDS = [
   "高教二期",
   "丰谭中学",
 ];
+
 export const NOP = () => {};
+
+
 export const DEFAULT_ROUTE = {
   zIndex: 4,
   routeColor: "#FFB90F",
@@ -97,3 +102,7 @@ export const UNSELECTED_STATION_IMG_PATH = "/images/mark_bs.png";
 export const BUS_IMG_PATH = "/images/map_bus.png";
 export const WHITE_SHUTTLE_IMG_PATH = "/images/map_shuttle.png";
 export const RED_SHUTTLE_IMG_PATH = "/images/map_babybus.png";
+export const OUTDATE_STATION_IDS = [
+  new Set(["1101", "32", "9219", "4003", "4004", "4005"]),
+  new Set([]),
+]
