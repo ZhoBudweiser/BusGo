@@ -19,8 +19,8 @@
       </picker>
     </view>
     <view class="picker-operation">
-      <view class="picker-switch" onTap="onSwitchAddress"></view>
-      <view class="picker-submit" onTap="onSubmit"></view>
+      <view class="picker-icon picker-switch" onTap="onSwitchAddress"></view>
+      <view class="picker-icon picker-submit {{edited ? 'edited' : ''}}" onTap="onSubmit"></view>
     </view>
   </view>
   <view class="picker-filter">

@@ -14,5 +14,6 @@ function historyAddress(history) {
     endName,
     startOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== endName),
     endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
+    edited: true,
   });
 }

@@ -86,22 +86,29 @@
   margin-right: 40rpx;
 }
 
-.picker-switch {
+.picker-icon {
   display: inline-block;
   width: 40rpx;
   height: 40rpx;
+  border: gray solid 3rpx;
+  border-radius: 10rpx;
+  background-size: 30rpx 30rpx;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.picker-switch {
   background-image: url("/images/switch.svg");
-  background-size: contain;
   transform: rotateZ(90deg);
 }
 
 .picker-submit {
-  display: inline-block;
   margin-top: 40rpx;
-  width: 40rpx;
-  height: 40rpx;
-  background-image: url("/images/done.svg");
-  background-size: contain;
+  background-image: url("/images/search.svg");
+}
+
+.picker-submit.edited {
+  border: dashed;
 }
 
 .picker-filter {

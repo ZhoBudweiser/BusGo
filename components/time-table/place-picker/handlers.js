@@ -25,6 +25,7 @@ function onPickStart(e) {
   this.setData({
     startName,
     endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
+    edited: true,
   });
 }
 
@@ -33,16 +34,22 @@ function onPickEnd(e) {
   this.setData({
     endName,
     startOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== endName),
+    edited: true,
   });
 }
 
 function onSwitchAddress() {
   const { startName, endName, startOptions, endOptions } = this.data;
+  if (startName === "" && endName === "") {
+    popNoAddress();
+    return;
+  }
   this.setData({
     startName: endName,
     endName: startName,
     startOptions: endOptions,
     endOptions: startOptions,
+    edited: true,
   });
 }
 
@@ -54,14 +61,17 @@ function onTimePick() {
     endDate: "23:00",
     success: (res) => setData(this, "startTime", res.date),
   });
+  this.setData({ edited: true });
 }
 
 function onDayPick() {
   flip(this, "isWeekend");
+  this.setData({ edited: true });
 }
 
 function onTransPick() {
   flip(this, "canTrans");
+  this.setData({ edited: true });
 }
 
 function onSubmit() {
@@ -77,6 +87,7 @@ function onSubmit() {
     startDay: isWeekend ? "6,7" : "1,2,3,4,5",
     canTrans: canTrans,
   });
+  this.setData({ edited: false });
 }
 
 function didMount() {
@@ -84,7 +95,7 @@ function didMount() {
     (address) => this.props.initStart.indexOf(address) !== -1,
   );
   this.setData({
-    startName,
+    startName: startName ? startName : "",
     startOptions: DEFAULT_QUERY_ALL_ENDS,
     endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
   });

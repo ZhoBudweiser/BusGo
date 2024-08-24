@@ -2,6 +2,7 @@ import { NOP } from "../defaults";
 
 export const props = {
     initStart: "",
+    edited: false,
     historyAddress: {},
     onSubmitQuery: NOP,
   };
