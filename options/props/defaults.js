@@ -106,3 +106,13 @@ export const OUTDATE_STATION_IDS = [
   new Set(["1101", "32", "9219", "4003", "4004", "4005"]),
   new Set([]),
 ]
+
+export const UNION_LENGTH = (scale) => {
+  let length = 4;
+  if (scale >= 16) {
+    length = 40;
+  } else if (scale >= 14) {
+    length = 10;
+  }
+  return length;
+}

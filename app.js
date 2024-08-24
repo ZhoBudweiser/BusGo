@@ -1,3 +1,5 @@
+console.log = true ? console.log : () => {};
+
 App({
   async onLaunch(options) {
     console.log("小程序启动");

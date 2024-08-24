@@ -8,6 +8,7 @@ import {
   RED_SHUTTLE_IMG_PATH,
   SELECTED_STATION_IMG_PATH,
   STATION_ID_LABEL,
+  UNION_LENGTH,
   UNSELECTED_STATION_IMG_PATH,
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
@@ -128,31 +129,19 @@ export async function setLineStations(lineIds, activeIndex) {
   return queriedStations;
 }
 
-export function setStationMarkers(stations, selectedStationId) {
-  const markers = stations.map((item) => {
-    return {
-      ...item,
-      id: STATION_ID_LABEL + item.station_alias_no,
-      latitude: item.station_lat,
-      longitude: item.station_long,
-      width: 19,
-      height: 31,
-      iconPath:
-        selectedStationId === item.station_alias_no
-          ? SELECTED_STATION_IMG_PATH
-          : UNSELECTED_STATION_IMG_PATH,
-      label: {
-        content: removeCampusPrefix(item.station_alias),
-        color: "#a2a2a2",
-        fontSize: 14,
-        borderRadius: 3,
-        bgColor: "#ffffff",
-        padding: 5,
-      },
-      markerLevel: 2,
-    };
+export function changeStationMarkers(mapCtx, stations, selectedStation, scale, oldStationMarkers) {
+  if (oldStationMarkers.length !== 0) {
+    mapCtx.changeMarkers({
+      remove: oldStationMarkers,
+    });
+    console.log("清空了站点：", oldStationMarkers);
+  }
+  const stationMarkers = setStationMarkers(stations, selectedStation.id, scale);
+  mapCtx.changeMarkers({
+    add: stationMarkers,
   });
-  return markers;
+  console.log("添加了站点：", stationMarkers);
+  return stationMarkers;
 }
 
 export function updateStationMarkers(oldStationMarkers, selectedStationId) {
@@ -287,4 +276,77 @@ function setRoute(stations) {
     endLng: stations[n - 1].station_long,
   };
   return { throughPoints, startPoint, endPoint };
+}
+
+function setStationMarkers(stations, selectedStationId, scale) {
+  const markers = mergeSimilarStations(stations, scale).map((item) => {
+    return {
+      ...item,
+      id: STATION_ID_LABEL + item.station_alias_no,
+      latitude: item.station_lat,
+      longitude: item.station_long,
+      width: 19,
+      height: 31,
+      iconPath:
+        selectedStationId === item.station_alias_no
+          ? SELECTED_STATION_IMG_PATH
+          : UNSELECTED_STATION_IMG_PATH,
+      label: {
+        content: removeCampusPrefix(item.station_alias),
+        color: "#a2a2a2",
+        fontSize: 14,
+        borderRadius: 3,
+        bgColor: "#ffffff",
+        padding: 5,
+      },
+      markerLevel: 2,
+    };
+  });
+  return markers;
+}
+
+function mergeSimilarStations(allStations, minMatchLength) {
+  const mergedStations = [];
+  const stations = allStations.concat();
+  if (minMatchLength > 20) return stations;
+  while (stations.length > 0) {
+      const currentStation = stations.shift();
+      let merged = false;
+      for (let i = 0; i < mergedStations.length; i++) {
+          const mergedStation = mergedStations[i];
+          const commonSubstring = findCommonSubstring(currentStation.station_alias, mergedStation.station_alias);
+          const matchLength = commonSubstring.length;
+          if (matchLength >= minMatchLength || matchLength == currentStation.station_alias.length) {
+              mergedStations[i] = mergeStations(mergedStation, currentStation, commonSubstring);
+              merged = true;
+              break;
+          }
+      }
+      if (!merged) {
+          mergedStations.push(currentStation);
+      }
+  }
+  return mergedStations;
+}
+
+function findCommonSubstring(str1, str2) {
+  let common = '';
+  for (let i = 0; i < str1.length; i++) {
+      for (let j = i; j < str1.length; j++) {
+          const substring = str1.substring(i, j + 1);
+          if (str2.indexOf(substring) !== -1 && substring.length > common.length) {
+              common = substring;
+          }
+      }
+  }
+  return common;
+}
+
+function mergeStations(stationA, stationB, commonSubstring) {
+  return {
+    station_alias: commonSubstring,
+    station_alias_no: stationA.station_alias_no,
+    station_long: (stationA.station_long+stationB.station_long)/2,
+    station_lat: (stationA.station_lat+stationB.station_lat)/2
+  };
 }

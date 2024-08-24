@@ -1,10 +1,11 @@
-import { STATION_ID_LABEL } from "/options/props/defaults";
+import { STATION_ID_LABEL, UNION_LENGTH } from "/options/props/defaults";
 import { flip } from "/util/setters";
 
 export const methods = {
   onMarkerTap,
   onSwitchMode,
-  onJumpSearch
+  onJumpSearch,
+  onRegionChange
 };
 
 export const lifeHanders = {
@@ -30,6 +31,12 @@ function onJumpSearch() {
   my.navigateTo({
     url: "/pages/time-table/time-table?start=" + this.props.selectedStation.name,
   });
+}
+
+function onRegionChange(e) {
+  const scale = UNION_LENGTH(e.scale);
+  if (this.data.scale == scale) return;
+  this.setData({ scale });
 }
 
 function onInit() {

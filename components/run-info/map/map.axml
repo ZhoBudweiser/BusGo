@@ -1,12 +1,13 @@
 <view class="container">
   <map
     id="map"
-    longitude="{{position.longitude}}"
-    latitude="{{position.latitude}}"
+    longitude="{{120.090178}}"
+    latitude="{{30.303975}}"
     show-compass="{{true}}"
     show-scale="{{true}}"
-    scale="{{16}}"
+    scale="{{17}}"
     onMarkerTap="onMarkerTap"
+    onRegionChange="onRegionChange"
     show-location
     style="width: 100%; height: 100%"
   >

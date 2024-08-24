@@ -1,15 +1,16 @@
 import { DEFAULT_ROUTE } from "/options/props/defaults";
 import { second2minute } from "/util/formatter";
 import {
+  changeStationMarkers,
   drawCarPositions,
   drawRoute,
   setCarMarkers,
-  setStationMarkers,
   updateStationMarkers,
 } from "/util/setters";
 
 const observers = {
   stations,
+  scale,
   "selectedStation.id": selectedStationId,
   selectedBusLineId,
   lines,
@@ -21,25 +22,25 @@ const observers = {
 
 export default observers;
 
-function stations() {
+function stations(stas) {
   const mapCtx = this.mapCtx;
-  const { stations, selectedStation } = this.props;
-  const { stationMarkers: oldStationMarkers } = this.data;
+  const { selectedStation } = this.props;
+  const { stationMarkers: oldStationMarkers, scale } = this.data;
   mapCtx.clearRoute();
-  if (oldStationMarkers.length !== 0) {
-    mapCtx.changeMarkers({
-      remove: oldStationMarkers,
-    });
-    console.log("清空了站点：", oldStationMarkers);
-  }
-  const stationMarkers = setStationMarkers(stations, selectedStation.id);
-  mapCtx.changeMarkers({
-    add: stationMarkers,
-  });
-  console.log("添加了站点：", stationMarkers);
+  const stationMarkers = changeStationMarkers(mapCtx, stas, selectedStation, scale, oldStationMarkers);
   this.setData({
     stationMarkers,
     displayMode: true,
+  });
+}
+
+function scale(s) {
+  const mapCtx = this.mapCtx;
+  const { stations, selectedStation } = this.props;
+  const { stationMarkers: oldStationMarkers } = this.data;
+  const stationMarkers = changeStationMarkers(mapCtx, stations, selectedStation, s, oldStationMarkers);
+  this.setData({
+    stationMarkers
   });
 }
 

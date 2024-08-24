@@ -3,6 +3,7 @@ import { DEFAULT_POSITION, DEFAULT_STATION, NOP } from "../defaults";
 export const data = {
   stationMarkers: [],
   carMarkers: [],
+  scale: 40,
   displayMode: true,
   selectedStationPosition: DEFAULT_POSITION,
 };
