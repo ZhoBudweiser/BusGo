@@ -1,9 +1,9 @@
-import { flip, setStation } from "/util/setters";
+import { setStation } from "/util/setters";
+import { flip } from "/util/client";
 import { authGuideLocation } from "/options/apis/locationApis";
 import { queryBackend } from "/options/apis/carApis";
 import {
   loadAndSet,
-  selectStation,
   setData,
   setLocationTimer,
 } from "/util/client";

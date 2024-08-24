@@ -1,4 +1,4 @@
-import { flip } from "/util/setters";
+import { flip } from "/util/client";
 
 export const methods = {
   onActiveTime,

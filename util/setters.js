@@ -13,12 +13,6 @@ import {
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
 
-export function flip(client, field) {
-  client.setData({
-    [field]: !client.data[field],
-  });
-}
-
 export function setState(targetY, stateBoders) {
   for (let i = stateBoders.length - 1; i >= 0; --i) {
     if (targetY > stateBoders[i]) {
@@ -58,6 +52,26 @@ export function setNearestStationId(stations, userPosition) {
     }
   }
   return stations[minIndex].station_alias_no;
+}
+
+export function setNearestCampusIndex(stations, userPosition) {
+  if (stations.length === 0) return "";
+  const { latitude, longitude } = userPosition;
+  const stationDistances = stations.map((item) => {
+    const { latitude: stationLatitude, longitude: stationLongitude } =
+      item;
+    const dist =
+      (stationLatitude - latitude) * (stationLatitude - latitude) +
+      (stationLongitude - longitude) * (stationLongitude - longitude);
+    return dist;
+  });
+  let minIndex = 0;
+  for (let i = 0; i < stationDistances.length; ++i) {
+    if (stationDistances[minIndex] > stationDistances[i]) {
+      minIndex = i;
+    }
+  }
+  return minIndex;
 }
 
 export function setActiveCards(lines) {

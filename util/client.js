@@ -3,10 +3,27 @@ import { popTooFrequent } from "./notification";
 import { queryBackend } from "/options/apis/carApis";
 import {
   DEFAULT_LOCATION_QUERY_FREQUENCY,
+  DEFAULT_STATION,
   DEFAULT_THROTTLE_FREQUENCY,
 } from "/options/props/defaults";
 
+export function flip(client, field) {
+  client.setData({
+    [field]: !client.data[field],
+  });
+}
+
 export function setLocationTimer(client) {
+  my.getLocation({
+    type: 0,
+    success: (userPosition) => {
+      const selectedStation = DEFAULT_STATION;
+      const queriedStations = client.data.queriedStations;
+      client.setData({ userPosition, selectedStation, queriedStations });
+      flip(client, "moveToUserPosition");
+    },
+    fail: () => console.log("自动定位错误"),
+  });
   return setInterval(autoLocate, DEFAULT_LOCATION_QUERY_FREQUENCY, client);
 }
 
@@ -80,7 +97,7 @@ function autoLocate(client) {
   my.getLocation({
     type: 0,
     success: (userPosition) => client.setData({ userPosition }),
-    fail: () => clearInterval(client.data.locationTimer),
+    fail: () => console.log("自动定位错误"),
   });
   console.log("已获取定位");
 }

@@ -10,6 +10,7 @@ import {
   setSysQueryFrequency,
 } from "/util/setters";
 import { popNoCar } from "/util/notification";
+import { DEFAULT_POSITION } from "/options/props/defaults";
 
 const observers = {
   activeIndex,
@@ -25,6 +26,7 @@ async function activeIndex(i) {
   this.setData({
     ...dynamicData,
     queriedStations: await queryBackend("allStations", i, []),
+    userPosition: this.data.userPosition,
   });
   store("activeIndex", i);
 }
@@ -34,7 +36,7 @@ async function queriedStations(stations) {
   const { activeIndex, selectedStation: oldSelectedStation } = this.data;
   const { userPosition } = this.data;
   const sourcePosition =
-    oldSelectedStation.id === ""
+    oldSelectedStation.id == ""
       ? userPosition
       : await setStationObj(activeIndex, oldSelectedStation.id);
   const stationId = setNearestStationId(stations, sourcePosition);

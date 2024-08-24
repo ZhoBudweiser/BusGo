@@ -108,7 +108,7 @@
 }
 
 .picker-submit.edited {
-  border: dashed;
+  border: dotted gray 3rpx;
 }
 
 .picker-filter {

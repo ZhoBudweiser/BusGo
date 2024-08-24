@@ -14,6 +14,7 @@ const observers = {
   "selectedStation.id": selectedStationId,
   selectedBusLineId,
   lines,
+  position,
   selectedStationPosition,
   displayMode,
   showNavigationPath,
@@ -27,7 +28,13 @@ function stations(stas) {
   const { selectedStation } = this.props;
   const { stationMarkers: oldStationMarkers, length } = this.data;
   mapCtx.clearRoute();
-  const stationMarkers = changeStationMarkers(mapCtx, stas, selectedStation, length, oldStationMarkers);
+  const stationMarkers = changeStationMarkers(
+    mapCtx,
+    stas,
+    selectedStation,
+    length,
+    oldStationMarkers,
+  );
   this.setData({
     stationMarkers,
     displayMode: true,
@@ -38,9 +45,15 @@ function length(s) {
   const mapCtx = this.mapCtx;
   const { stations, selectedStation } = this.props;
   const { stationMarkers: oldStationMarkers } = this.data;
-  const stationMarkers = changeStationMarkers(mapCtx, stations, selectedStation, s, oldStationMarkers);
+  const stationMarkers = changeStationMarkers(
+    mapCtx,
+    stations,
+    selectedStation,
+    s,
+    oldStationMarkers,
+  );
   this.setData({
-    stationMarkers
+    stationMarkers,
   });
 }
 
@@ -82,6 +95,21 @@ function lines(ls) {
     );
   this.setData({
     carMarkers,
+  });
+}
+
+function position(pos) {
+  if (!pos) return;
+  const { position, onMainData } = this.props;
+  const { selectedStationPosition } = this.data;
+  if (!selectedStationPosition) return;
+  my.calculateRoute({
+    startLat: position.latitude,
+    startLng: position.longitude,
+    endLat: selectedStationPosition.latitude,
+    endLng: selectedStationPosition.longitude,
+    success: (res) => onMainData("userTimeCost", second2minute(res.duration)),
+    fail: (err) => console.log("路程计算错误：", err),
   });
 }
 

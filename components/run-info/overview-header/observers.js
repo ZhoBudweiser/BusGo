@@ -29,7 +29,7 @@ async function selectedStationName(rawName) {
   const name = extractAddressName(rawName);
   const { selectedEnd } = this.data;
   const { activeIndex } = this.props;
-  if (name == selectedEnd) popStationNearBy();
+  if (selectedEnd.indexOf(name) !== -1) popStationNearBy();
   this.props.onMainData("selectedLineId", "");
   this.setData({
     destinations: (await queryBackend("allEnds", activeIndex, [""])).filter((end) => end.indexOf(name) === -1),

@@ -3,7 +3,7 @@ import { store } from "/util/cache";
 import { loadAndSet, setData } from "/util/client";
 import { fmtTime } from "/util/formatter";
 import { popNoAddress } from "/util/notification";
-import { flip } from "/util/setters";
+import { flip } from "/util/client";
 
 export const methods = {
   onPickStart,

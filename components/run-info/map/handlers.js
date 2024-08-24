@@ -1,5 +1,5 @@
 import { STATION_ID_LABEL, UNION_LENGTH } from "/options/props/defaults";
-import { flip } from "/util/setters";
+import { flip } from "/util/client";
 
 export const methods = {
   onMarkerTap,
