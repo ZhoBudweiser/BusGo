@@ -12,9 +12,10 @@ const observers = {
 
 export default observers;
 
-function activeIndex() {
+async function activeIndex(index) {
   const selectedEnd = "";
-  this.setData({ selectedEnd });
+  const destinations = await queryBackend("allEnds", index, [selectedEnd]);
+  this.setData({ selectedEnd, destinations });
 }
 
 function userTimeCost(cost) {
@@ -29,17 +30,19 @@ async function selectedStationName(rawName) {
   const { selectedEnd } = this.data;
   const { activeIndex } = this.props;
   if (name == selectedEnd) popStationNearBy();
-  this.setData({
-    destinations: (await queryBackend("allEnds", activeIndex, [])).filter((end) => end.indexOf(name) === -1),
-  });
   this.props.onMainData("selectedLineId", "");
+  this.setData({
+    destinations: (await queryBackend("allEnds", activeIndex, [""])).filter((end) => end.indexOf(name) === -1),
+  });
 }
 
-async function selectedEnd(end) {
-  if (!end) return;
+async function selectedEnd(endName) {
+  if (!endName) return;
   const { onMainData, activeIndex } = this.props;
   const startName = this.props.selectedStation.name;
-  const endName = this.data.selectedEnd;
   onMainData("selectedLineId", "");
   onMainData("queriedLineIds", await setCarLines(activeIndex, startName, endName));
+  this.setData({
+    destinations: (await queryBackend("allEnds", activeIndex, [endName])),
+  });
 }

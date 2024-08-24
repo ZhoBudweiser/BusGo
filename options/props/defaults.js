@@ -11,6 +11,13 @@ export const DEFAULT_STATION = {
   name: "",
 };
 export const DEFAULT_TABS = ["校区间", "校区内"];
+export const DEFAULT_BUS_BUFFER_ENDS = [
+  "紫金港校区",
+  "玉泉校区",
+  "西溪校区",
+  "华家池校区",
+  "之江校区"
+];
 export const DEFAULT_BUS_ALL_ENDS = [
   "紫金港校区",
   "玉泉校区",
@@ -28,6 +35,13 @@ export const DEFAULT_BUS_ALL_ENDS = [
   "高教二期",
   "丰谭中学",
 ];
+export const DEFAULT_SHUTTLE_BUFFER_ENDS = [
+  "东教学区",
+  "主图书馆",
+  "段永平教学楼",
+  "西教学区",
+  "云峰东侧",
+];
 export const DEFAULT_SHUTTLE_ALL_ENDS = [
   "青溪东侧",
   "东区生活区",
@@ -36,6 +50,7 @@ export const DEFAULT_SHUTTLE_ALL_ENDS = [
   "医药组团",
   "成均苑",
   "成章楼",
+  "主图书馆",
   "海纳苑",
   "和同苑",
   "段永平教学楼",

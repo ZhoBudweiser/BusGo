@@ -56,7 +56,6 @@ export function setNearestStationId(stations, userPosition) {
       minIndex = i;
     }
   }
-  console.log(stations, stationDistances, minIndex, userPosition);
   return stations[minIndex].station_alias_no;
 }
 

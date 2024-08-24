@@ -1,5 +1,6 @@
 import { baseURL, nop } from "./apiConfig";
-import cache from "/util/cache";
+import { LRUArray } from "/beans/LRUArray";
+import cache, { lru } from "/util/cache";
 import { extractLineIds, fmtBusLines, fmtBusStations, stripData } from "/util/formatter";
 import { popQueryError } from "/util/notification";
 
@@ -70,7 +71,15 @@ export async function getBusStationMapByBusId(bid) {
   return cache.busStationMap[bid];
 }
 
-export async function getBusAllEnds() {
-  if (cache.busAllEnds != null) return cache.busAllEnds;
-  return cache.busAllEnds;
+export async function getBusAllEnds(selectedStation) {
+  if (cache.busEnds.buffer == null) {
+    // TODO: 云端获取
+  }
+  if (cache.busEnds.all == null) {
+    // TODO: 云端获取
+  }
+  if (lru.bus == null) {
+    lru.bus = new LRUArray(cache.busEnds.buffer, cache.busEnds.all);
+  }
+  return lru.bus.update(selectedStation);
 }

@@ -1,13 +1,25 @@
 import {
   DEFAULT_BUS_ALL_ENDS,
+  DEFAULT_BUS_BUFFER_ENDS,
   DEFAULT_SHUTTLE_ALL_ENDS,
+  DEFAULT_SHUTTLE_BUFFER_ENDS,
 } from "/options/props/defaults";
 
+const busEnds = {
+  buffer: DEFAULT_BUS_BUFFER_ENDS,
+  all: DEFAULT_BUS_ALL_ENDS
+};
+
+const shuttleEnds = {
+  buffer: DEFAULT_SHUTTLE_BUFFER_ENDS,
+  all: DEFAULT_SHUTTLE_ALL_ENDS
+};
+
 const cache = {
+  busEnds,
+  shuttleEnds,
   busAllStations: null,
   shuttleAllStations: null,
-  busAllEnds: DEFAULT_BUS_ALL_ENDS,
-  shuttleAllEnds: DEFAULT_SHUTTLE_ALL_ENDS,
   shuttleAllLines: null,
   busLineStations: {},
   shuttleLineStations: {},
@@ -16,6 +28,11 @@ const cache = {
 };
 
 export default cache;
+
+export const lru = {
+  bus: null,
+  shuttle: null,
+};
 
 export function store(key, data) {
   my.setStorageSync({ key, data });
@@ -28,6 +45,8 @@ export function load(key) {
 }
 
 export function storeCache() {
+  if (lru.bus != null) cache.busEnds.buffer = lru.bus.getBuffer();
+  if (lru.shuttle != null) cache.shuttleEnds.buffer = lru.shuttle.getBuffer();
   Object.keys(cache).forEach((key) => store(key, cache[key]));
 }
 

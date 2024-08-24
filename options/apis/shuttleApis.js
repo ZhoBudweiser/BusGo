@@ -1,6 +1,7 @@
 import { CAR_START_LABEL } from "../props/defaults";
 import { baseURL, nop } from "./apiConfig";
-import cache from "/util/cache";
+import { LRUArray } from "/beans/LRUArray";
+import cache, { lru } from "/util/cache";
 import {
   distinctStations,
   extractLineIds,
@@ -63,9 +64,17 @@ export function getShuttleStationMapByShuttleId(lid, stations) {
   return cache.shuttleStationMap[lid];
 }
 
-export async function getShuttleAllEnds() {
-  if (cache.shuttleAllEnds != null) return cache.shuttleAllEnds;
-  return cache.shuttleAllEnds;
+export async function getShuttleAllEnds(selectedStation) {
+  if (cache.shuttleEnds.buffer == null) {
+    // TODO: 云端获取
+  }
+  if (cache.shuttleEnds.all == null) {
+    // TODO: 云端获取
+  }
+  if (lru.shuttle == null) {
+    lru.shuttle = new LRUArray(cache.shuttleEnds.buffer, cache.shuttleEnds.all);
+  }
+  return lru.shuttle.update(selectedStation);
 }
 
 async function getShuttleALLLineStations() {
