@@ -40,7 +40,8 @@
     </block>
     <!-- 站点 -->
     <view class="item-bus-object" style="left: 50%">
-      <view class="item-stop-caption"> {{selectedStation.name}}</view>
+      <view class="item-stop-caption-over"> 所选站点</view>
+      <view class="item-stop-caption"> {{selectedStation.name}} </view>
       <view class="item-bus-icon item-bus-icon-flag" onTap="onTapFlag">
       </view>
     </view>

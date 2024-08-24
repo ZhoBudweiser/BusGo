@@ -11,6 +11,13 @@ export const DEFAULT_STATION = {
   name: "",
 };
 export const DEFAULT_TABS = ["校区间", "校区内"];
+export const DEFAULT_CAMPUS = [
+  { name: "紫金港", longitude: 120.084315, latitude: 30.300897 },
+  { name: "玉泉", longitude: 120.12357, latitude: 30.261126 },
+  { name: "西溪", longitude: 120.140227, latitude: 30.271847 },
+  { name: "之江", longitude: 120.125997, latitude: 30.191475 },
+  { name: "华家池", longitude: 120.192041, latitude: 30.270708 },
+];
 
 
 export const DEFAULT_BUS_BUFFER_ENDS = [

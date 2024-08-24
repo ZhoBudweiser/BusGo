@@ -1,0 +1,16 @@
+<view class="locate-container">
+  <view a:if="{{ locations.length > 1}}" class="btn left" onTap="onTapLeft">
+    <image class="img" mode="aspectFit" src="/images/up_arrow_gray.svg" />
+  </view>
+  <view class="location">
+    <view class="remark">
+      当前校区
+    </view>
+    <view a:if="{{ locations.length !== 0}}" class="address">
+      {{ locations[locationIndex].name }}
+    </view>
+  </view>
+  <view a:if="{{ locations.length > 1}}" class="btn right" onTap="onTapRight">
+    <image class="img" mode="aspectFit" src="/images/up_arrow_gray.svg" />
+  </view>
+</view>

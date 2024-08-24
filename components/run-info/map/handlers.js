@@ -5,7 +5,8 @@ export const methods = {
   onMarkerTap,
   onSwitchMode,
   onJumpSearch,
-  onRegionChange
+  onRegionChange,
+  onSelectLocation
 };
 
 export const lifeHanders = {
@@ -34,9 +35,14 @@ function onJumpSearch() {
 }
 
 function onRegionChange(e) {
-  const scale = UNION_LENGTH(e.scale);
-  if (this.data.scale == scale) return;
-  this.setData({ scale });
+  const { scale } = e;
+  const length = UNION_LENGTH(scale);
+  if (this.data.length == length) return;
+  this.setData({ length });
+}
+
+function onSelectLocation(campusIndex) {
+  this.setData({ campusIndex });
 }
 
 function onInit() {

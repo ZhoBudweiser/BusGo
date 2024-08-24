@@ -129,14 +129,14 @@ export async function setLineStations(lineIds, activeIndex) {
   return queriedStations;
 }
 
-export function changeStationMarkers(mapCtx, stations, selectedStation, scale, oldStationMarkers) {
+export function changeStationMarkers(mapCtx, stations, selectedStation, length, oldStationMarkers) {
   if (oldStationMarkers.length !== 0) {
     mapCtx.changeMarkers({
       remove: oldStationMarkers,
     });
     console.log("清空了站点：", oldStationMarkers);
   }
-  const stationMarkers = setStationMarkers(stations, selectedStation.id, scale);
+  const stationMarkers = setStationMarkers(stations, selectedStation.id, length);
   mapCtx.changeMarkers({
     add: stationMarkers,
   });
@@ -278,8 +278,8 @@ function setRoute(stations) {
   return { throughPoints, startPoint, endPoint };
 }
 
-function setStationMarkers(stations, selectedStationId, scale) {
-  const markers = mergeSimilarStations(stations, scale).map((item) => {
+function setStationMarkers(stations, selectedStationId, length) {
+  const markers = mergeSimilarStations(stations, length).map((item) => {
     return {
       ...item,
       id: STATION_ID_LABEL + item.station_alias_no,

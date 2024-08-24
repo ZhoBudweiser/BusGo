@@ -73,8 +73,16 @@
 
 .item-stop-caption {
   position: absolute;
-  bottom: 8vh;
+  bottom: 7.5vh;
   font-size: 26rpx;
+  white-space: nowrap;
+}
+
+.item-stop-caption-over {
+  position: absolute;
+  bottom: 10vh;
+  font-size: 20rpx;
+  color: gray;
   white-space: nowrap;
 }
 

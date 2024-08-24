@@ -2,6 +2,13 @@
   height: 100%;
 }
 
+.header {
+  width: 100%;
+  height: 3vh;
+  position: fixed;
+  top: 0rpx;
+}
+
 .float-icon {
   width: 60rpx;
   height: 60rpx;

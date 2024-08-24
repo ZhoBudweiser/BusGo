@@ -10,7 +10,7 @@ import {
 
 const observers = {
   stations,
-  scale,
+  length,
   "selectedStation.id": selectedStationId,
   selectedBusLineId,
   lines,
@@ -25,16 +25,16 @@ export default observers;
 function stations(stas) {
   const mapCtx = this.mapCtx;
   const { selectedStation } = this.props;
-  const { stationMarkers: oldStationMarkers, scale } = this.data;
+  const { stationMarkers: oldStationMarkers, length } = this.data;
   mapCtx.clearRoute();
-  const stationMarkers = changeStationMarkers(mapCtx, stas, selectedStation, scale, oldStationMarkers);
+  const stationMarkers = changeStationMarkers(mapCtx, stas, selectedStation, length, oldStationMarkers);
   this.setData({
     stationMarkers,
     displayMode: true,
   });
 }
 
-function scale(s) {
+function length(s) {
   const mapCtx = this.mapCtx;
   const { stations, selectedStation } = this.props;
   const { stationMarkers: oldStationMarkers } = this.data;
