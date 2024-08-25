@@ -1,5 +1,6 @@
-import { STATION_ID_LABEL, UNION_LENGTH } from "/options/props/defaults";
+import { DEFAULT_CAMPUS, STATION_ID_LABEL, UNION_LENGTH } from "/options/props/defaults";
 import { flip } from "/util/client";
+import { setNearestCampusIndex } from "/util/setters";
 
 export const methods = {
   onMarkerTap,
@@ -35,13 +36,16 @@ function onJumpSearch() {
 }
 
 function onRegionChange(e) {
-  const { scale } = e;
+  const { scale, longitude, latitude } = e;
   const length = UNION_LENGTH(scale);
+  const campusIndex = setNearestCampusIndex(DEFAULT_CAMPUS, { longitude, latitude });
+  if (campusIndex !== this.data.campusIndex) this.setData({ campusIndex });
   if (this.data.length == length) return;
   this.setData({ length });
 }
 
 function onSelectLocation(campusIndex) {
+  this.mapCtx.moveToLocation(this.data.campus[campusIndex]);
   this.setData({ campusIndex });
 }
 
