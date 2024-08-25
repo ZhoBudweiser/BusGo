@@ -9,7 +9,7 @@ import {
   setStationObj,
   setSysQueryFrequency,
 } from "/util/setters";
-import { popNoCar } from "/util/notification";
+import { popMatchStationNearBy, popNoCar } from "/util/notification";
 import { DEFAULT_POSITION } from "/options/props/defaults";
 
 const observers = {
@@ -42,6 +42,7 @@ async function queriedStations(stations) {
   const stationId = setNearestStationId(stations, sourcePosition);
   const selectedStation = await setStation(activeIndex, stationId);
   console.log("已用", sourcePosition, "匹配最近站点", selectedStation);
+  popMatchStationNearBy();
   this.setData({ selectedStation });
 }
 

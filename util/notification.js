@@ -52,6 +52,13 @@ export function popStationNearBy() {
   });
 }
 
+export function popMatchStationNearBy() {
+  my.showToast({
+    content: "已匹配最近的站点",
+    duration: DEFAULT_SHOW_DURATION,
+  });
+}
+
 export function popTooFrequent() {
   my.showToast({
     content: "查询过于频繁，\n请稍后再试",
