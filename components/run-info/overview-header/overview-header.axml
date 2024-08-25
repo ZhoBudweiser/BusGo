@@ -24,7 +24,7 @@
     <!-- 校车 -->
     <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
       <view
-        a:if="{{item.runBusInfo[0].about_minute}}"
+        a:if="{{item.runBusInfo != null && item.station_map[item.runBusInfo[0].next_station] <= item.station_map[selectedStation.id]}}"
         class="item-bus-object"
         style="left: {{item.runBusInfo[0].about_minute > 15 ? '5%' : (35 - item.runBusInfo[0].about_minute/35 * 100) + '%'}}"
         onTap="onActiveTime"

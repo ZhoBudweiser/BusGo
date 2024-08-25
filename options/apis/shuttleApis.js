@@ -166,7 +166,7 @@ function matchShuttleRunInfo(lines, poses, infos) {
         const info = infos[i].find((i) => pos.vehiNum === i.vehiNum);
         return {
           ...lineInfo,
-          runBusInfo: [
+          runBusInfo: info ? [
             {
               vehi_num: info ? info.vehiNum : "ZJU" + label++,
               near_distance: info ? info.costStationCount : 1,
@@ -176,7 +176,7 @@ function matchShuttleRunInfo(lines, poses, infos) {
               py: pos.py,
               vehicleType: pos.vehicleType + (info ? "" : "1"),
             },
-          ],
+          ] : null,
         };
       });
       return runInfos;

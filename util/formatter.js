@@ -184,7 +184,7 @@ function fmtShuttleLine(shuttleLine) {
     end_address: extractAlias(stations[endIndex]),
     runBusInfo: null,
     line_alias: item.line_alias,
-    duration: item.line_alias,
+    duration: "间隔发车",
     remark: "",
   };
 }
