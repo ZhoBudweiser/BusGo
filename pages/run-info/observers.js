@@ -9,8 +9,7 @@ import {
   setStationObj,
   setSysQueryFrequency,
 } from "/util/setters";
-import { popMatchStationNearBy, popNoCar } from "/util/notification";
-import { DEFAULT_POSITION } from "/options/props/defaults";
+import { popMatchStationNearBy } from "/util/notification";
 
 const observers = {
   activeIndex,
@@ -25,6 +24,7 @@ export default observers;
 async function activeIndex(i) {
   this.setData({
     ...dynamicData,
+    carLines: this.data.carLines,
     queriedStations: await queryBackend("allStations", i, []),
     userPosition: this.data.userPosition,
   });
@@ -63,7 +63,6 @@ function thisResetCarTimer() {
 
 async function queriedLineIds(ids) {
   if (!ids) return;
-  if (ids.length === 0) popNoCar();
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   if (selectedStation.id == "") return;
   const queriedStations = await setLineStations(ids, activeIndex);

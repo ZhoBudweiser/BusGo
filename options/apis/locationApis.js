@@ -1,4 +1,22 @@
+import { second2minute } from "/util/formatter";
 
+export async function calculateDistance(
+  startPosition,
+  endPosition,
+  searchType = "walk",
+) {
+  return new Promise((resolve, reject) =>
+    my.calculateRoute({
+      startLat: startPosition.latitude,
+      startLng: startPosition.longitude,
+      endLat: endPosition.latitude,
+      endLng: endPosition.longitude,
+      searchType,
+      success: (res) => resolve(second2minute(res.duration)),
+      fail: reject,
+    }),
+  );
+}
 
 // 由于跳转到系统设置页无法监听用户最终是否打开系统定位及对支付宝授权位置信息，因此请在生命周期 onShow 中调用定位授权准备方法。
 export async function authGuideLocation() {
@@ -48,9 +66,7 @@ export async function authGuideLocation() {
   // 获取用户是否授权过当前小程序使用定位
   const isLocationMPAuthorized = async () => {
     const settingInfo = await myGetSetting();
-    return (
-      settingInfo.authSetting.location
-    );
+    return settingInfo.authSetting.location;
   };
 
   // 若用户未授权当前小程序使用定位，则引导用户跳转至小程序设置页开启定位权限

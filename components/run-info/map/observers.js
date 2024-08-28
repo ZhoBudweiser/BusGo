@@ -1,3 +1,4 @@
+import { calculateDistance } from "/options/apis/locationApis";
 import { DEFAULT_ROUTE } from "/options/props/defaults";
 import { second2minute } from "/util/formatter";
 import {
@@ -103,27 +104,17 @@ function position(pos) {
   const { position, onMainData } = this.props;
   const { selectedStationPosition } = this.data;
   if (!selectedStationPosition) return;
-  my.calculateRoute({
-    startLat: position.latitude,
-    startLng: position.longitude,
-    endLat: selectedStationPosition.latitude,
-    endLng: selectedStationPosition.longitude,
-    success: (res) => onMainData("userTimeCost", second2minute(res.duration)),
-    fail: (err) => console.log("路程计算错误：", err),
-  });
+  calculateDistance(position, selectedStationPosition).then((userTimeCost) =>
+    onMainData("userTimeCost", userTimeCost),
+  );
 }
 
 function selectedStationPosition(sp) {
   if (!sp) return;
   const { position, onMainData } = this.props;
-  my.calculateRoute({
-    startLat: position.latitude,
-    startLng: position.longitude,
-    endLat: sp.latitude,
-    endLng: sp.longitude,
-    success: (res) => onMainData("userTimeCost", second2minute(res.duration)),
-    fail: (err) => console.log("路程计算错误：", err),
-  });
+  calculateDistance(position, sp).then((userTimeCost) =>
+    onMainData("userTimeCost", userTimeCost),
+  );
 }
 
 function displayMode(mode) {

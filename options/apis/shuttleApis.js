@@ -1,5 +1,5 @@
-import { CAR_START_LABEL } from "../props/defaults";
 import { baseURL, nop } from "./apiConfig";
+import { calculateDistance } from "./locationApis";
 import { LRUArray } from "/beans/LRUArray";
 import cache, { lru } from "/util/cache";
 import {
@@ -11,18 +11,23 @@ import {
   stripData,
 } from "/util/formatter";
 import { popQueryError } from "/util/notification";
+import { setStationObj } from "/util/setters";
 
 const derivedURL = baseURL + "/xbc/";
 
 export async function getShuttleAllStations() {
   if (cache.shuttleAllStations != null) return cache.shuttleAllStations;
   const lineStations = await getShuttleALLLineStations();
-  cache.shuttleAllStations = removeOutdateStations(distinctStations(Object.values(lineStations)), 1);
+  cache.shuttleAllStations = removeOutdateStations(
+    distinctStations(Object.values(lineStations)),
+    1,
+  );
   return cache.shuttleAllStations;
 }
 
 export async function getShuttleLinesByStationId(sid) {
   const lines = await getShuttleALLLines();
+  const stationObj = await setStationObj(1, sid);
   const filteredLines = findShttleLinesByStationId(lines, sid);
   const filteredPoses = await Promise.all(
     await filteredLines.map(async (flines) =>
@@ -34,7 +39,12 @@ export async function getShuttleLinesByStationId(sid) {
       getShuttleInfoByLineIdAndStationId(flines.bid, sid),
     ),
   );
-  return matchShuttleRunInfo(filteredLines, filteredPoses, filteredInfos);
+  return await matchShuttleRunInfo(
+    filteredLines,
+    filteredPoses,
+    filteredInfos,
+    stationObj,
+  );
 }
 
 export async function getShuttleLineIdsByEnds(
@@ -60,7 +70,8 @@ export function getShuttleStationMapByShuttleId(lid, stations) {
     return cache.shuttleStationMap[lid];
   cache.shuttleStationMap[lid] = {};
   stations.forEach(
-    (station, i) => (cache.shuttleStationMap[lid][station.station_alias_no] = i),
+    (station, i) =>
+      (cache.shuttleStationMap[lid][station.station_alias_no] = i),
   );
   return cache.shuttleStationMap[lid];
 }
@@ -88,47 +99,53 @@ async function getShuttleALLLineStations() {
 
 async function getShuttleALLLines() {
   if (cache.shuttleAllLines != null) return cache.shuttleAllLines;
-  cache.shuttleAllLines = await my.request({
-    url: derivedURL + "getXbcLine",
-    method: "POST",
-    success: nop,
-    fail: (err) => popQueryError(err, "校车站点"),
-    complete: nop,
-  }).then((res) => fmtShuttleLines(stripData(res)));
+  cache.shuttleAllLines = await my
+    .request({
+      url: derivedURL + "getXbcLine",
+      method: "POST",
+      success: nop,
+      fail: (err) => popQueryError(err, "校车站点"),
+      complete: nop,
+    })
+    .then((res) => fmtShuttleLines(stripData(res)));
   return cache.shuttleAllLines;
 }
 
 async function getShuttleInfoByLineIdAndStationId(lid, sid) {
-  return await my.request({
-    url: derivedURL + "getXbcVehicleRun",
-    method: "POST",
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    data: {
-      lid: lid,
-      stationAliasNo: sid,
-    },
-    success: nop,
-    fail: (err) => popQueryError(err, "班车信息"),
-    complete: nop,
-  }).then(stripData);
+  return await my
+    .request({
+      url: derivedURL + "getXbcVehicleRun",
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+      data: {
+        lid: lid,
+        stationAliasNo: sid,
+      },
+      success: nop,
+      fail: (err) => popQueryError(err, "班车信息"),
+      complete: nop,
+    })
+    .then(stripData);
 }
 
 async function getShuttlePositionByLineId(lid) {
-  return await my.request({
-    url: derivedURL + "getXbcVehicleByLine",
-    method: "POST",
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    data: {
-      lid: lid,
-    },
-    success: nop,
-    fail: (err) => popQueryError(err, "班车位置"),
-    complete: nop,
-  }).then(stripData);
+  return await my
+    .request({
+      url: derivedURL + "getXbcVehicleByLine",
+      method: "POST",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+      data: {
+        lid: lid,
+      },
+      success: nop,
+      fail: (err) => popQueryError(err, "班车位置"),
+      complete: nop,
+    })
+    .then(stripData);
 }
 
 function findShttleLinesByEnds(lines, startStationName, endStationName) {
@@ -158,28 +175,37 @@ function findShttleLinesByStationId(lines, sid) {
   return filteredLines;
 }
 
-function matchShuttleRunInfo(lines, poses, infos) {
-  let label = CAR_START_LABEL;
-  return lines
-    .map((lineInfo, i) => {
-      const runInfos = poses[i].map((pos) => {
-        const info = infos[i].find((i) => pos.vehiNum === i.vehiNum);
-        return {
-          ...lineInfo,
-          runBusInfo: info ? [
-            {
-              vehi_num: info ? info.vehiNum : "ZJU" + label++,
-              near_distance: info ? info.costStationCount : 1,
-              about_minute: info ? info.costMinute : 0,
-              next_station: info ? info.nextStation : 0,
-              px: pos.px,
-              py: pos.py,
-              vehicleType: pos.vehicleType + (info ? "" : "1"),
-            },
-          ] : null,
-        };
-      });
-      return runInfos;
-    })
-    .flat(1);
+async function matchShuttleRunInfo(lines, poses, infos, stationObj) {
+  return (
+    await Promise.all(
+      lines.map(async (lineInfo, i) => {
+        return await Promise.all(
+          poses[i].map(async (pos) => {
+            const info = infos[i].find((i) => pos.vehiNum === i.vehiNum);
+            return {
+              ...lineInfo,
+              runBusInfo: info
+                ? [
+                    {
+                      vehi_num: info.vehiNum,
+                      near_distance: await calculateDistance(
+                        stationObj,
+                        {
+                          longitude: pos.px,
+                          latitude: pos.py,
+                        },
+                        "drive",
+                      ),
+                      about_minute: info.costMinute,
+                      next_station: info.nextStation,
+                      ...pos,
+                    },
+                  ]
+                : null,
+            };
+          }),
+        );
+      }),
+    )
+  ).flat(1);
 }
