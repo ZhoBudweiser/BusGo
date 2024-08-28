@@ -2,6 +2,9 @@ import { extractAddressName, removeCampusPrefix } from "./formatter";
 import { queryBackend } from "/options/apis/carApis";
 import {
   BUS_IMG_PATH,
+  DEFAULT_CAR_QUERY_FREQUENCY_NOCAR,
+  DEFAULT_CAR_QUERY_FREQUENCY_RUNING,
+  DEFAULT_CAR_QUERY_FREQUENCY_WAIT,
   DEFAULT_ROUTE,
   DEFAULT_STATION,
   NOP,
@@ -24,12 +27,12 @@ export function setState(targetY, stateBoders) {
 
 export function setSysQueryFrequency(lines) {
   if (lines.length == 0) {
-    return 600000;
+    return DEFAULT_CAR_QUERY_FREQUENCY_NOCAR;
   } else {
     if (lines.find((line) => line.runBusInfo !== null)) {
-      return 10000;
+      return DEFAULT_CAR_QUERY_FREQUENCY_RUNING;
     } else {
-      return 60000;
+      return DEFAULT_CAR_QUERY_FREQUENCY_WAIT;
     }
   }
 }
@@ -104,7 +107,7 @@ export async function setCarLines(
 
 export async function setStationObj(activeIndex, sid) {
   if (sid == "") return null;
-  const stations = await queryBackend("allStations", activeIndex, []);
+  const stations = await queryBackend("allStations", activeIndex, [], false);
   const ret = stations.find((item) => item.station_alias_no === sid);
   return ret
     ? { ...ret, longitude: ret.station_long, latitude: ret.station_lat }
@@ -127,7 +130,7 @@ export async function setStation(activeIndex, sid) {
 export async function setLineStations(lineIds, activeIndex) {
   const allStations = await Promise.all(
     lineIds.map(
-      async (id) => await queryBackend("stationsByLineId", activeIndex, [id]),
+      async (id) => await queryBackend("stationsByLineId", activeIndex, [id], false),
     ),
   );
   const queriedStations = [];
@@ -184,10 +187,6 @@ export function setCarMarkers(lines) {
         return WHITE_SHUTTLE_IMG_PATH;
       case "3":
         return RED_SHUTTLE_IMG_PATH;
-      case "21":
-        return WHITE_SHUTTLE_IMG_PATH;
-      case "31":
-        return RED_SHUTTLE_IMG_PATH;
       default:
         return BUS_IMG_PATH;
     }
@@ -235,7 +234,7 @@ export function drawCarPositions(mapCtx, carMarkers, add) {
           latitude: Number(item.latitude),
         },
         autoRotate: true,
-        duration: 9000,
+        duration: DEFAULT_CAR_QUERY_FREQUENCY_RUNING * 0.8,
         animationEnd: NOP,
         success: NOP,
         fail: (err) => console.log("汽车动画遇到错误：", item, err),
