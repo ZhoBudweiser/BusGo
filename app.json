@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/run-info/run-info",
     "pages/time-table/time-table"
   ],
