@@ -61,8 +61,7 @@ export function setNearestCampusIndex(stations, userPosition) {
   if (stations.length === 0) return "";
   const { latitude, longitude } = userPosition;
   const stationDistances = stations.map((item) => {
-    const { latitude: stationLatitude, longitude: stationLongitude } =
-      item;
+    const { latitude: stationLatitude, longitude: stationLongitude } = item;
     const dist =
       (stationLatitude - latitude) * (stationLatitude - latitude) +
       (stationLongitude - longitude) * (stationLongitude - longitude);
@@ -130,7 +129,8 @@ export async function setStation(activeIndex, sid) {
 export async function setLineStations(lineIds, activeIndex) {
   const allStations = await Promise.all(
     lineIds.map(
-      async (id) => await queryBackend("stationsByLineId", activeIndex, [id], false),
+      async (id) =>
+        await queryBackend("stationsByLineId", activeIndex, [id], false),
     ),
   );
   const queriedStations = [];
@@ -146,14 +146,24 @@ export async function setLineStations(lineIds, activeIndex) {
   return queriedStations;
 }
 
-export function changeStationMarkers(mapCtx, stations, selectedStation, length, oldStationMarkers) {
+export function changeStationMarkers(
+  mapCtx,
+  stations,
+  selectedStation,
+  length,
+  oldStationMarkers,
+) {
   if (oldStationMarkers.length !== 0) {
     mapCtx.changeMarkers({
       remove: oldStationMarkers,
     });
     console.log("清空了站点：", oldStationMarkers);
   }
-  const stationMarkers = setStationMarkers(stations, selectedStation.id, length);
+  const stationMarkers = setStationMarkers(
+    stations,
+    selectedStation.id,
+    length,
+  );
   mapCtx.changeMarkers({
     add: stationMarkers,
   });
@@ -219,7 +229,7 @@ export function drawRoute(mapCtx, stations) {
   });
 }
 
-export function drawCarPositions(mapCtx, carMarkers, add) {
+export function drawCarPositions_old(mapCtx, carMarkers, add) {
   if (add) {
     mapCtx.changeMarkers({
       add: carMarkers,
@@ -243,6 +253,30 @@ export function drawCarPositions(mapCtx, carMarkers, add) {
     });
     console.log("汽车发生了移动：", carMarkers);
   }
+}
+
+export function drawCarPositions(mapCtx, newCarMarkers, oldCarMarkers) {
+  const carIds = new Set(newCarMarkers.map((item) => item.id));
+  mapCtx.changeMarkers({
+    remove: oldCarMarkers.filter((item) => !carIds.has(item.id)),
+    add: oldCarMarkers.filter((item) => carIds.has(item.id)),
+  });
+  newCarMarkers.forEach((item) => {
+    mapCtx.translateMarker({
+      markerId: item.id,
+      destination: {
+        longitude: item.longitude,
+        latitude: item.latitude,
+      },
+      autoRotate: true,
+      duration: DEFAULT_CAR_QUERY_FREQUENCY_RUNING * 0.8,
+      animationEnd: NOP,
+      success: NOP,
+      fail: (err) => console.log("汽车动画遇到错误：", item, err),
+      complete: NOP,
+    });
+  });
+  console.log("汽车发生了移动：", newCarMarkers);
 }
 
 export function setCardHeights(lines) {
@@ -323,34 +357,44 @@ function mergeSimilarStations(allStations, minMatchLength) {
   const stations = allStations.concat();
   if (minMatchLength > 20) return stations;
   while (stations.length > 0) {
-      const currentStation = stations.shift();
-      let merged = false;
-      for (let i = 0; i < mergedStations.length; i++) {
-          const mergedStation = mergedStations[i];
-          const commonSubstring = findCommonSubstring(currentStation.station_alias, mergedStation.station_alias);
-          const matchLength = commonSubstring.length;
-          if (matchLength >= minMatchLength || matchLength == currentStation.station_alias.length) {
-              mergedStations[i] = mergeStations(mergedStation, currentStation, commonSubstring);
-              merged = true;
-              break;
-          }
+    const currentStation = stations.shift();
+    let merged = false;
+    for (let i = 0; i < mergedStations.length; i++) {
+      const mergedStation = mergedStations[i];
+      const commonSubstring = findCommonSubstring(
+        currentStation.station_alias,
+        mergedStation.station_alias,
+      );
+      const matchLength = commonSubstring.length;
+      if (
+        matchLength >= minMatchLength ||
+        matchLength == currentStation.station_alias.length
+      ) {
+        mergedStations[i] = mergeStations(
+          mergedStation,
+          currentStation,
+          commonSubstring,
+        );
+        merged = true;
+        break;
       }
-      if (!merged) {
-          mergedStations.push(currentStation);
-      }
+    }
+    if (!merged) {
+      mergedStations.push(currentStation);
+    }
   }
   return mergedStations;
 }
 
 function findCommonSubstring(str1, str2) {
-  let common = '';
+  let common = "";
   for (let i = 0; i < str1.length; i++) {
-      for (let j = i; j < str1.length; j++) {
-          const substring = str1.substring(i, j + 1);
-          if (str2.indexOf(substring) !== -1 && substring.length > common.length) {
-              common = substring;
-          }
+    for (let j = i; j < str1.length; j++) {
+      const substring = str1.substring(i, j + 1);
+      if (str2.indexOf(substring) !== -1 && substring.length > common.length) {
+        common = substring;
       }
+    }
   }
   return common;
 }
@@ -359,7 +403,7 @@ function mergeStations(stationA, stationB, commonSubstring) {
   return {
     station_alias: commonSubstring,
     station_alias_no: stationA.station_alias_no,
-    station_long: (stationA.station_long+stationB.station_long)/2,
-    station_lat: (stationA.station_lat+stationB.station_lat)/2
+    station_long: (stationA.station_long + stationB.station_long) / 2,
+    station_lat: (stationA.station_lat + stationB.station_lat) / 2,
   };
 }

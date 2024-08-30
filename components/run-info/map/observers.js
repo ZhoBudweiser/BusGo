@@ -60,17 +60,17 @@ function length(s) {
 
 function selectedStationId(sid) {
   const mapCtx = this.mapCtx;
-  const { carMarkers: oldCarMarkers } = this.data;
+  const { carMarkers: oldCarMarkers, stationMarkers: oldStationMarkers } = this.data;
   mapCtx.clearRoute();
   const carMarkers = [];
   const { selectedStationPosition, stationMarkers } = updateStationMarkers(
-    this.data.stationMarkers,
+    oldStationMarkers,
     sid,
   );
   mapCtx.changeMarkers({
-    remove: oldCarMarkers,
     update: stationMarkers,
   });
+  drawCarPositions(mapCtx, carMarkers, oldCarMarkers);
   this.setData({
     carMarkers,
     stationMarkers,
@@ -88,12 +88,8 @@ function selectedBusLineId(bid) {
 
 function lines(ls) {
   const carMarkers = setCarMarkers(ls);
-  if (carMarkers.length !== 0)
-    drawCarPositions(
-      this.mapCtx,
-      carMarkers,
-      this.data.carMarkers.length === 0,
-    );
+  const oldCarMarkers = this.data.carMarkers;
+  drawCarPositions(this.mapCtx, carMarkers, oldCarMarkers);
   this.setData({
     carMarkers,
   });
