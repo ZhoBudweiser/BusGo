@@ -2,7 +2,7 @@ import { getBusTimeTable } from "/options/apis/timeTableApis";
 import { load } from "/util/cache";
 import { isThrottle } from "/util/client";
 import { isSameQuery } from "/util/formatter";
-import { alertData, popNoCar } from "/util/notification";
+import { popNoCar } from "/util/notification";
 import { setTimeTableNearestStation } from "/util/setters";
 
 const eventHandlers = {
@@ -42,5 +42,4 @@ async function onLoad(query) {
     const initStart = await setTimeTableNearestStation();
     this.setData({ initStart });
   }
-  !load("dataAlert").data && alertData();
 }

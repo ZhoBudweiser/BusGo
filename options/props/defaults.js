@@ -77,6 +77,7 @@ export const DEFAULT_SHUTTLE_ALL_ENDS = [
   "西教学区",
   "化学楼北往南",
   "化学楼南往北",
+  "云峰东侧",
   "云峰北侧",
 ];
 export const DEFAULT_QUERY_ALL_ENDS = [
@@ -189,6 +190,29 @@ export const DEFAULT_QUERY_ALL_ENDS_POSITIONS = [
     station_lat: 30.273428,
     station_long: 120.111596,
     station_alias_no: "丰谭中学",
+  },
+];
+export const GUIDANCE_IMGS = [
+  {
+    left: 0,
+    top: 0,
+    imageStyle: "width: 90vw; height: 85vh",
+    imageUrl: "/images/guidance-1.png",
+    imageMode: "aspectFill",
+  },
+  {
+    left: 0,
+    top: 0,
+    imageStyle: "width: 100vw; height: 85vh",
+    imageUrl: "/images/guidance-2.png",
+    imageMode: "aspectFill",
+  },
+  {
+    left: 0,
+    top: 0,
+    imageStyle: "width: 100vw; height: 85vh",
+    imageUrl: "/images/guidance-3.png",
+    imageMode: "aspectFill",
   },
 ];
 

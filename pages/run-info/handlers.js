@@ -8,13 +8,14 @@ import {
   setLocationTimer,
 } from "/util/client";
 import { load, loadCache, store, storeCache } from "/util/cache";
-import { alertLocationNotAuthed, alertStart } from "/util/notification";
+import { alertLocationNotAuthed } from "/util/notification";
 
 const eventHandlers = {
   onMainData,
   onFlip,
   onRollback,
   onSelectStation,
+  onCloseGuidance,
 };
 
 const lifeHandlers = {
@@ -52,11 +53,17 @@ async function onSelectStation(sid) {
   this.setData({ selectedStation });
 }
 
+function onCloseGuidance() {
+  const guidanceShowed = true;
+  this.setData({ guidanceShowed });
+  store("guidanceShowed", guidanceShowed);
+}
+
 function onLoad(query) {
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   loadAndSet(this, "activeIndex");
+  loadAndSet(this, "guidanceShowed");
   loadCache();
-  !load("noticeShow").data && alertStart();
 }
 
 async function onShow() {

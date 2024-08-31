@@ -3,6 +3,7 @@
     "schoolmap":"/components/run-info/map/map",
     "tabs": "/components/run-info/tabs/tabs",
     "overview": "/components/run-info/overview/overview",
-    "movable": "/components/run-info/movable-view/movable-view"
+    "movable": "/components/run-info/movable-view/movable-view",
+    "ant-guide-tour": "antd-mini/es/GuideTour/index"
   }
 }

@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "ant-guide-tour": "antd-mini/es/GuideTour/index"
+  },
   "styleIsolation": "apply-shared"
+  
 }

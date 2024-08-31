@@ -51,4 +51,11 @@
       <image mode="aspectFill" src="/images/click2.png" class="box-img" />
     </view>
   </view>
+  <ant-guide-tour
+    maskStyle="background-color: rgba(0, 0, 0, 0.85)"
+    items="{{ [welcomeImg] }}"
+    visible="{{ !welcomeShowed }}"
+    onCancel="onCloseTour"
+  >
+  </ant-guide-tour>
 </view>

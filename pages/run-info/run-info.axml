@@ -27,4 +27,11 @@
     >
     </overview>
   </movable>
+  <ant-guide-tour
+    maskStyle="background-color: rgba(0, 0, 0, 0.85)"
+    items="{{ guidanceImgs }}"
+    visible="{{ !guidanceShowed }}"
+    onCancel="onCloseGuidance"
+  >
+  </ant-guide-tour>
 </view>
