@@ -34,14 +34,14 @@
 .infos,
 .router {
   width: 90%;
-  border: 3rpx rgb(211, 210, 210) solid;
+  border: 3rpx #6BBBFFCC solid;
   padding: 10rpx;
   box-sizing: border-box;
 }
 
 .infos {
   z-index: 5;
-  height: 16vh;
+  height: 19vh;
   border-radius: 50rpx;
   background-color: rgba(255, 255, 255, 0.8);
   margin-top: -5vh;
@@ -76,17 +76,27 @@
 }
 
 .week,
-.date {
+.date,
+.greeting {
   text-align: center;
 }
 
 .week {
-  font-size: 4.5vh;
-  margin: 0.8vh 0;
+  font-size: 4.2vh;
+  margin: 0.6vh 0;
 }
 
 .date {
-  font-size: 3vh;
+  font-size: 2.5vh;
+  color: #838383;
+}
+
+.greeting {
+  margin: 0.3vh auto;
+  font-size: 2.4vh;
+  width: 90%;
+  overflow-x: auto;
+  white-space: nowrap;
   color: #838383;
 }
 
@@ -106,8 +116,8 @@
   position: relative;
   width: 95%;
   margin: 1.5vh auto;
-  height: 20vh;
-  border: #838383 1rpx solid;
+  height: 19vh;
+  border: #6BBBFFCC 1rpx solid;
   padding: 10rpx 20rpx;
   box-sizing: border-box;
   border-radius: 10rpx;

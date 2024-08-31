@@ -91,14 +91,6 @@ function onSubmit() {
 }
 
 function didMount() {
-  const startName = DEFAULT_QUERY_ALL_ENDS.find(
-    (address) => this.props.initStart.indexOf(address) !== -1,
-  );
-  this.setData({
-    startName: startName ? startName : "",
-    startOptions: DEFAULT_QUERY_ALL_ENDS,
-    endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
-  });
   my.getServerTime({
     success: (res) => setData(this, "startTime", fmtTime(res.time, "hh:mm")),
   });

@@ -1,6 +1,7 @@
 console.log = true ? console.log : () => {};
 
 App({
+  locationAuthed: false,
   async onLaunch(options) {
     console.log("小程序启动");
     //使用function的方式进行初始化

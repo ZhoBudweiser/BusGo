@@ -8,7 +8,7 @@ import {
   setLocationTimer,
 } from "/util/client";
 import { load, loadCache, store, storeCache } from "/util/cache";
-import { alertStart } from "/util/notification";
+import { alertLocationNotAuthed, alertStart } from "/util/notification";
 
 const eventHandlers = {
   onMainData,
@@ -60,7 +60,10 @@ function onLoad(query) {
 }
 
 async function onShow() {
-  const locationAuthed = await authGuideLocation();
+  const app = getApp();
+  // const locationAuthed = await authGuideLocation();
+  const locationAuthed = app.locationAuthed;
+  if (!locationAuthed) alertLocationNotAuthed();
   const locationTimer = locationAuthed ? setLocationTimer(this) : null;
   this.setData({
     locationTimer,
@@ -74,6 +77,7 @@ async function onShow() {
 
 function onUnload() {
   clearInterval(this.data.locationTimer);
+  clearInterval(this.data.carTimer);
   console.log("已清除定时器");
   storeCache();
 }

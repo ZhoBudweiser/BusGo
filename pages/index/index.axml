@@ -23,6 +23,9 @@
       <view class="date">
         {{ date }}
       </view>
+      <view class="greeting">
+        {{ greeting }}
+      </view>
     </view>
   </view>
   <view class="router">

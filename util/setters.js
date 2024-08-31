@@ -5,8 +5,10 @@ import {
   DEFAULT_CAR_QUERY_FREQUENCY_NOCAR,
   DEFAULT_CAR_QUERY_FREQUENCY_RUNING,
   DEFAULT_CAR_QUERY_FREQUENCY_WAIT,
+  DEFAULT_QUERY_ALL_ENDS_POSITIONS,
   DEFAULT_ROUTE,
   DEFAULT_STATION,
+  GREETINGS,
   NOP,
   RED_SHUTTLE_IMG_PATH,
   SELECTED_STATION_IMG_PATH,
@@ -16,6 +18,15 @@ import {
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
 
+export function setDate(time) {
+  const d = new Date(time);
+  const datelist = ["日", "一", "二", "三", "四", "五", "六"];
+  const date = d.getMonth() + 1 + " 月 " + d.getDate() + " 日";
+  const week = "星期" + datelist[d.getDay()];
+  const greeting = setGreeting(d.getHours(), d.getDay());
+  return { date, week, greeting };
+}
+
 export function setState(targetY, stateBoders) {
   for (let i = stateBoders.length - 1; i >= 0; --i) {
     if (targetY > stateBoders[i]) {
@@ -23,6 +34,16 @@ export function setState(targetY, stateBoders) {
     }
   }
   return 0;
+}
+
+export function setTimeTableNearestStation() {
+  return new Promise((resolve, reject) =>
+    my.getLocation({
+      type: 0,
+      success: (userPosition) => resolve(setNearestStationId(DEFAULT_QUERY_ALL_ENDS_POSITIONS ,userPosition)),
+      fail: reject,
+    }),
+  );
 }
 
 export function setSysQueryFrequency(lines) {
@@ -302,6 +323,18 @@ export function setCardHeights(lines) {
       return [minH + "rpx", maxH + "rpx"];
     }
   });
+}
+
+function setGreeting(hour, day) {
+  let hGreeting = "晚上";
+  if (hour >= 5 && hour < 11) {
+    hGreeting = "早上";
+  } else if (hour >= 11 && hour < 13) {
+    hGreeting = "中午";
+  } else if (hour >= 13 && hour < 18) {
+    hGreeting = "下午";
+  }
+  return hGreeting + "好！" + GREETINGS[day];
 }
 
 function setRoute(stations) {

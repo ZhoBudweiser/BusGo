@@ -5,7 +5,6 @@ import { setNearestCampusIndex } from "/util/setters";
 export const methods = {
   onMarkerTap,
   onSwitchMode,
-  onJumpSearch,
   onRegionChange,
   onSelectLocation
 };
@@ -27,12 +26,6 @@ function onMarkerTap(e) {
 
 function onSwitchMode() {
   flip(this, "displayMode");
-}
-
-function onJumpSearch() {
-  my.navigateTo({
-    url: "/pages/time-table/time-table?start=" + this.props.selectedStation.name,
-  });
 }
 
 function onRegionChange(e) {

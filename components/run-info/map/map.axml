@@ -21,5 +21,4 @@
     style="{{ `background-image: url(${displayMode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}"
   >
   </view>
-  <view class="float-icon loc-search" onTap="onJumpSearch"> </view>
 </view>

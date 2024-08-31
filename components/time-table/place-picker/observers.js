@@ -1,7 +1,8 @@
 import { DEFAULT_QUERY_ALL_ENDS } from "/options/props/defaults";
 
 const observers = {
-  historyAddress
+  historyAddress,
+  initStart,
 };
 
 export default observers;
@@ -15,5 +16,16 @@ function historyAddress(history) {
     startOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== endName),
     endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
     edited: true,
+  });
+}
+
+function initStart() {
+  const startName = DEFAULT_QUERY_ALL_ENDS.find(
+    (address) => this.props.initStart.indexOf(address) !== -1,
+  );
+  this.setData({
+    startName: startName ? startName : "",
+    startOptions: DEFAULT_QUERY_ALL_ENDS,
+    endOptions: DEFAULT_QUERY_ALL_ENDS.filter((item) => item !== startName),
   });
 }

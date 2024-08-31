@@ -30,6 +30,15 @@ export function alertData() {
   });
 }
 
+export function alertLocationNotAuthed() {
+  my.alert({
+    title: "提醒",
+    content:
+      "当前定位未开启，如需定位，请在右上角「···」中打开并重新启动小程序",
+    buttonText: "确认",
+  });
+}
+
 export function popQueryError(error, name) {
   console.log("fail: ", error);
   my.showToast({

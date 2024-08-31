@@ -3,6 +3,7 @@ import { load } from "/util/cache";
 import { isThrottle } from "/util/client";
 import { isSameQuery } from "/util/formatter";
 import { alertData, popNoCar } from "/util/notification";
+import { setTimeTableNearestStation } from "/util/setters";
 
 const eventHandlers = {
   onSubmitQuery,
@@ -33,12 +34,13 @@ function onSetHistoryAddress(historyAddress) {
   this.setData({ historyAddress });
 }
 
-function onLoad(query) {
+async function onLoad(query) {
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
-  if (query.start) {
-    this.setData({
-      initStart: query.start,
-    });
+  const app = getApp();
+  const locationAuthed = app.locationAuthed;
+  if (locationAuthed) {
+    const initStart = await setTimeTableNearestStation();
+    this.setData({ initStart });
   }
   !load("dataAlert").data && alertData();
 }
