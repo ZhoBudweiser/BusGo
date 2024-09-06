@@ -1,5 +1,98 @@
 # Changelog
 
+## [2.0.0](https://github.com/ZhoBudweiser/BusGo/compare/v1.1.0...v2.0.0) (2024-09-06)
+
+
+### ✨新功能
+
+* guidance ([b927da7](https://github.com/ZhoBudweiser/BusGo/commit/b927da774f5aacef833659bf50585d136544bc2e))
+* index handlers ([8b9fa47](https://github.com/ZhoBudweiser/BusGo/commit/8b9fa47550da0a0e6584cad4f3358c60be3703c8))
+* LRU array ([9903d7d](https://github.com/ZhoBudweiser/BusGo/commit/9903d7d9ba20031c48c8b1d5ac88719bee44e598))
+* move to campus ([c0d2b69](https://github.com/ZhoBudweiser/BusGo/commit/c0d2b69d8e5eda21252928e1062017fe9c9c991f))
+* pop station near by ([27a00a9](https://github.com/ZhoBudweiser/BusGo/commit/27a00a96bb18e2f056239c4a877419ac71b8f076))
+* record query edition ([9a697b4](https://github.com/ZhoBudweiser/BusGo/commit/9a697b4b0f54d92ef8ab61953a9a09c41c71950d))
+* remove outdate stations ([510bf25](https://github.com/ZhoBudweiser/BusGo/commit/510bf25caf8bdb772760209fb36091bced70d4d0))
+* scale station markers ([4def654](https://github.com/ZhoBudweiser/BusGo/commit/4def65477cc5f2a99c7940a1e31d9ca77a7ea5b7))
+* standard apis ([90feca8](https://github.com/ZhoBudweiser/BusGo/commit/90feca889fd58227b00e69ca47625d49a58f112f))
+* up arrow ([4f55ef4](https://github.com/ZhoBudweiser/BusGo/commit/4f55ef4a2d518af807bd631626659c732e2c7695))
+
+
+### ✅变动
+
+* add line query api ([bfc82c0](https://github.com/ZhoBudweiser/BusGo/commit/bfc82c0d4263eaa71515ae58187b1b7b3d64448d))
+* add location api ([6e04cb8](https://github.com/ZhoBudweiser/BusGo/commit/6e04cb82d1b281125afddea6c6357977e03f983e))
+* add station map ([7f82e86](https://github.com/ZhoBudweiser/BusGo/commit/7f82e86862945c3f774704a717ce4ea18fb14faa))
+* adjust translation speed ([2dfcc6c](https://github.com/ZhoBudweiser/BusGo/commit/2dfcc6cc4378bb55b16b93b47c932660393975ab))
+* adopt campus jump ([c19383f](https://github.com/ZhoBudweiser/BusGo/commit/c19383f327c49833093f9473855e85e81e442340))
+* **bus:** format fetched data ([29a15e9](https://github.com/ZhoBudweiser/BusGo/commit/29a15e9592b3dda9aa9fa11c1dfaedaa82deb50a))
+* cache settings ([b33f75b](https://github.com/ZhoBudweiser/BusGo/commit/b33f75ba0e2aff483b15a163bac2e5c27dc492fa))
+* delete qrcode ([c08d405](https://github.com/ZhoBudweiser/BusGo/commit/c08d4055e3306e6e48b11ff68e4ccbde38d276e4))
+* delete redundancy ([d2fb999](https://github.com/ZhoBudweiser/BusGo/commit/d2fb99987782c5e10a6381a91e75ace95d621c2a))
+* delete redundancy ([6863098](https://github.com/ZhoBudweiser/BusGo/commit/6863098db38fd4546b03e76127135af25c2e1441))
+* delete scroll-view ([6807ab6](https://github.com/ZhoBudweiser/BusGo/commit/6807ab6a5a67736ce91389d1955a5e3dcc91c06b))
+* delete unnecessary state ([a31b71f](https://github.com/ZhoBudweiser/BusGo/commit/a31b71f968edddd32f1dca4242f3865993c3f8dd))
+* flip util ([155a3ce](https://github.com/ZhoBudweiser/BusGo/commit/155a3ce4ab9accfab9b4b116cbcba1231da3e80a))
+* format code ([b96fffa](https://github.com/ZhoBudweiser/BusGo/commit/b96fffa731cf13041773dd3a4197adbfb6907044))
+* **index:** refactor handlers ([f4e0d9e](https://github.com/ZhoBudweiser/BusGo/commit/f4e0d9e5e6c6798802e48f18efa707ac5e020476))
+* init cache ([48e7efd](https://github.com/ZhoBudweiser/BusGo/commit/48e7efdf0ef9d76651b5ec9ed81a326d7624b70e))
+* init index ([835b662](https://github.com/ZhoBudweiser/BusGo/commit/835b6629916f8fa59ca591a28e3ad44ea1c518dc))
+* line stations ([9a39d22](https://github.com/ZhoBudweiser/BusGo/commit/9a39d22e224ead68a4f75e7d57c1d3e4791f522a))
+* manually calculate shuttle distance ([37305cd](https://github.com/ZhoBudweiser/BusGo/commit/37305cd5afc5f50010fe2feaaf978e7a1cf556fc))
+* **map:** refactor functions ([98908bd](https://github.com/ZhoBudweiser/BusGo/commit/98908bdab26ce280f527b5011bc57549b33c032d))
+* **map:** refactor handlers ([d97f933](https://github.com/ZhoBudweiser/BusGo/commit/d97f9339533b7e6b23768df5ae36eeabbed3fdf2))
+* **map:** refactor observers ([0b8801d](https://github.com/ZhoBudweiser/BusGo/commit/0b8801dd6feb411096390a08d86112c489a77603))
+* **map:** refactor observers ([6cbc373](https://github.com/ZhoBudweiser/BusGo/commit/6cbc3734d9cb2db0ae331e9eb28f3c2566cbe8ca))
+* nearest station ([dff2bce](https://github.com/ZhoBudweiser/BusGo/commit/dff2bce9d91f3d796a2f19c29e1ae27fe4656ee6))
+* optimize preview height ([176777a](https://github.com/ZhoBudweiser/BusGo/commit/176777adcbd75f02326c52a68b1d852d3b06dafe))
+* overview caption height ([2e09179](https://github.com/ZhoBudweiser/BusGo/commit/2e091797301bc6c346cc93dd3c09191e6d847272))
+* **overview:** refactor  observers ([cd9a2b0](https://github.com/ZhoBudweiser/BusGo/commit/cd9a2b0947a5be1a4f100ecc8bef65fc467ddd8c))
+* **overview:** refactor body ([6a468e6](https://github.com/ZhoBudweiser/BusGo/commit/6a468e67711a2380d8445bce054032b8b3836cf2))
+* **overview:** refactor handlers ([b883920](https://github.com/ZhoBudweiser/BusGo/commit/b883920bfa94e5bde35f3ed6a58b64d1f85e0e60))
+* **overview:** refactor header html ([cfe4843](https://github.com/ZhoBudweiser/BusGo/commit/cfe48439598029f59d16457eef16ac2d022fde44))
+* refactor api ([b777d48](https://github.com/ZhoBudweiser/BusGo/commit/b777d4862f83cd4cb4488df41683cf8fdccbf7b0))
+* refactor file arc ([30aaf8d](https://github.com/ZhoBudweiser/BusGo/commit/30aaf8da47d045d9af9ec8442d8b39d718ced7b1))
+* refactor footer ([996079c](https://github.com/ZhoBudweiser/BusGo/commit/996079cb8f21a93784bd788fd7b8686eb031f2a3))
+* refactor observers ([1181124](https://github.com/ZhoBudweiser/BusGo/commit/118112490be3762fa271e5e941eaa678789fb4d1))
+* refactor place-picker ([2bb19c0](https://github.com/ZhoBudweiser/BusGo/commit/2bb19c00ed7a857664d09fa960f8f3b91161be06))
+* refactor props ([345d027](https://github.com/ZhoBudweiser/BusGo/commit/345d0276ddc888a995a939076e9af2a868e65469))
+* refactor query-history ([92ff070](https://github.com/ZhoBudweiser/BusGo/commit/92ff070db2d078fd46d1fa92b9b50bf1decf036c))
+* refactor query-result ([81dd91c](https://github.com/ZhoBudweiser/BusGo/commit/81dd91c0c595aa58ab64ca382b7e8429b7b77e7a))
+* refactor tabs ([c134b6a](https://github.com/ZhoBudweiser/BusGo/commit/c134b6ab4531c1d05b5deefbae9bb37f1344f15a))
+* refactor time-table ([5895d1f](https://github.com/ZhoBudweiser/BusGo/commit/5895d1f0fe3c8083b71ebdde8a5a06f8eab3261b))
+* refactor timer ([1da356b](https://github.com/ZhoBudweiser/BusGo/commit/1da356b8a3213df3811769eb155a68161a888231))
+* refator location ([864d06a](https://github.com/ZhoBudweiser/BusGo/commit/864d06ab690d577cff1b511fb86e263e29d5caf8))
+* reloc files ([299e1f5](https://github.com/ZhoBudweiser/BusGo/commit/299e1f596398fd602642d00b82dd60ba71a27dc8))
+* remove antd-mini ([1910640](https://github.com/ZhoBudweiser/BusGo/commit/191064008a47e2db138c438d92d9af6084b54b6d))
+* remove no signal shuttle ([e4de417](https://github.com/ZhoBudweiser/BusGo/commit/e4de417cad932af147299be7aadfb79d6de10b83))
+* rename var ([8d639d4](https://github.com/ZhoBudweiser/BusGo/commit/8d639d46f6a990af5c15d8fb860b593b4b1b7c74))
+* rename var ([a59f262](https://github.com/ZhoBudweiser/BusGo/commit/a59f26232e986fee8f3a2c79a424456cfd20fc42))
+* restruct index.js ([265bb70](https://github.com/ZhoBudweiser/BusGo/commit/265bb70571f0ac4e18b963d3e2f94aa70d1792d6))
+* store and load cache ([ef5b570](https://github.com/ZhoBudweiser/BusGo/commit/ef5b570bbe59ac4745c80845cf958e8c65592c1c))
+* uni client ([6734552](https://github.com/ZhoBudweiser/BusGo/commit/67345526ed4fdd5e9b77af3bdb915dc915ea391d))
+* uni func ([906f717](https://github.com/ZhoBudweiser/BusGo/commit/906f717eae28c77c0d14c681f93174fa37c36ce0))
+* uni position ([48d0a39](https://github.com/ZhoBudweiser/BusGo/commit/48d0a3987a1bb7584da283311208c6bd2c43f405))
+* uni station ([664b4ce](https://github.com/ZhoBudweiser/BusGo/commit/664b4ceff83420d7561e81c81d33ea28bc22e9f0))
+* uni store ([b4124b2](https://github.com/ZhoBudweiser/BusGo/commit/b4124b2b5c87137fa189f6c97aa22de8f968fc28))
+* update services ([9ac83e7](https://github.com/ZhoBudweiser/BusGo/commit/9ac83e75807f1d36dc524a2886020bd305b697d5))
+
+
+### 🐛问题修复
+
+* auto locate failed ([94d56fa](https://github.com/ZhoBudweiser/BusGo/commit/94d56fa50263586320e01cd62fcfa0ca9e5e1160))
+* build error ([0ba936a](https://github.com/ZhoBudweiser/BusGo/commit/0ba936ace77fd27fe16e75234914115d54002505))
+* car drifting ([bf2ad63](https://github.com/ZhoBudweiser/BusGo/commit/bf2ad63063b864d236584d6b9d904268ebabb152))
+* crrunt station missing ([0cfa1b6](https://github.com/ZhoBudweiser/BusGo/commit/0cfa1b6c32e33cd120a0e5d0761849e3c46927c8))
+* draw route error ([c2ab6fa](https://github.com/ZhoBudweiser/BusGo/commit/c2ab6fa029515b950e1e1f46786af6ea38566570))
+* overview click fail ([8f07383](https://github.com/ZhoBudweiser/BusGo/commit/8f0738343d85eff5b4a09eba21d614047fed83b7))
+* **overview:** station name float ([e9039bc](https://github.com/ZhoBudweiser/BusGo/commit/e9039bca70d684ddf0b6fbf724a0db22a8fe6b3c))
+* stations display ([283249b](https://github.com/ZhoBudweiser/BusGo/commit/283249bf71b4b623eecef87d018581b23a815951))
+* this missing ([faaec03](https://github.com/ZhoBudweiser/BusGo/commit/faaec039bd60027a961b978fef1997dd10a0af1a))
+
+
+### 📚文档
+
+* intro ([c7bcf5a](https://github.com/ZhoBudweiser/BusGo/commit/c7bcf5af3d4b78b658d530f3acdf7219399ac099))
+
 ## [1.1.0](https://github.com/ZhoBudweiser/BusGo/compare/v1.0.0...v1.1.0) (2024-06-03)
 
 
