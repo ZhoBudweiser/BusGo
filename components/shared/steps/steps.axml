@@ -1,0 +1,27 @@
+<scroll-view
+  class="am-hor-steps"
+  scroll-x="{{true}}"
+  scroll-into-view="{{'point'+(flagIndex - 3 >= 0 ? flagIndex - 3 : 0)}}"
+>
+  <view class="am-hor-step" a:for="{{items}}" style="width: 20%">
+    <view
+      class="am-hor-step-line {{index < activeIndex - 1 ? index === activeIndex - 2 && index < items.length - 2 ? 'is-active-last' : 'is-active' : ''}} {{index >= items.length - 1 ? 'is-last' : ''}}"
+    >
+      <view
+        id="{{'point'+index}}"
+        class="am-hor-step-icon {{index <= activeIndex - 1 ? 'is-active' : ''}}  {{index == flagIndex - 1 ? 'is-flag' : ''}} {{item.start ? 'is-start' : ''}} {{item.end ? 'is-end' : ''}}"
+      ></view>
+    </view>
+    <view class="am-hor-step-text">
+      <view class="am-hor-step-title">
+        <text>{{item.station_alias}}</text>
+        <view
+          class="am-hor-step-description"
+          style="visibility: {{close ? 'hidden' : ''}}"
+        >
+          <text>{{item.time ? item.time : "停靠"}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

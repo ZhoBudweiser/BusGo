@@ -1,0 +1,22 @@
+<movable-area>
+  <movable-view
+    y="{{currentY}}"
+    direction="vertical"
+    friction="{{0.1}}"
+    inertia="{{true}}"
+    animation="{{true}}"
+    damping="{{50}}"
+    onChangeEnd="onMove"
+  >
+    <view class="touch-container">
+      <view class="touch-bar">
+        <view class="img-container {{state == 0 ? 'rotate' : ''}}">
+          <image class="img" mode="aspectFit" src="/images/up_arrow.svg" />
+        </view>
+      </view>
+    </view>
+    <slot>
+      <view>default slot & default value</view>
+    </slot>
+  </movable-view>
+</movable-area>

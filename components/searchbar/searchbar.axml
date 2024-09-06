@@ -1,4 +1,0 @@
-<view class="searchbar">
-  <!-- <icon class="icon" type="search" size="14" color="#1D1D1D" /> -->
-  <text class="placeholder">搜索你想了解的地方</text>
-</view>

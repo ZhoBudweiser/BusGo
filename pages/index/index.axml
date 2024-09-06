@@ -1,50 +1,61 @@
 <view class="container">
-  <!-- <notice
-    class="notice"
-    show="{{noticeShow}}"
-    type="active"
-    mode="closable"
-    onClick="noticeClick"
-  >
-    班车调整|关于调整元旦期间班车运行的通知
-  </notice> -->
-  <schoolmap
-    class="schoolmap"
-    longitude="{{longitude}}"
-    latitude="{{latitude}}"
-    stops="{{stops}}"
-    lines="{{busLines}}"
-    selectedStopName={{selectedStopName}}
-    selectedStop="{{selectedStop}}"
-    selectedBusLine="{{selectedBusLine}}"
-    showPath={{showPath}}
-    showPosition={{showPosition}}
-    onSelectedStop="onSelectedStop"
-    onSetTimeCost="onSetTimeCost"
-  >
-  </schoolmap>
-  <movable class="previa" onStateChange="onStateChange">
-    <view id="content">
-      <searchbar></searchbar>
-      <tabs activeTab={{activeIndex}} onActive="onActive"></tabs>
-      <overview
-        activeTab={{activeIndex}}
-        state={{currentState}}
-        busLines={{busLines}}
-        shuttleLines={{shuttleLines}}
-        destinations={{stops}}
-        nearest_stop_id={{selectedStop}}
-        nearest_stop_name={{selectedStopName}}
-        time_left_human_walk={{timeCost}}
-        onClearTimer="onClearTimer"
-        onActive="onActive"
-        onSetBusLines="onSetBusLines"
-        onSetSelectedBusLine="onSetSelectedBusLine"
-        onSetShowPosition="onSetShowPosition"
-        onSetShowPath="onSetShowPath"
-        onRollback="onRollback"
-      >
-      </overview>
+  <view class="mask" />
+  <view class="imgs">
+    <swiper
+      indicator-dots="{{false}}"
+      autoplay="{{true}}"
+      vertical="{{false}}"
+      circular="{{true}}"
+    >
+      <swiper-item a:for="{{ imgs }}" class="img-item">
+        <image mode="aspectFill" src="{{'/images/' + item}}" class="img" />
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="infos">
+    <view class="location {{ locationAuthed ? 'green' : 'red' }}">
+      {{ locationAuthed ? "定位已开启" : "定位未开启" }}
     </view>
-  </movable>
+    <view class="time">
+      <view class="week">
+        {{ week }}
+      </view>
+      <view class="date">
+        {{ date }}
+      </view>
+      <view class="greeting">
+        {{ greeting }}
+      </view>
+    </view>
+  </view>
+  <view class="router">
+    <view class="remark">
+      班次偶尔会出现调整，请以实际运行和学校通知为准
+    </view>
+    <view class="click-box" onTap="onRunInfo">
+      <view class="title">
+        实时班车
+      </view>
+      <view class="subtitle">
+        位置、到站
+      </view>
+      <image mode="aspectFill" src="/images/click1.png" class="box-img" />
+    </view>
+    <view class="click-box" onTap="onTimeTable">
+      <view class="title">
+        时刻表
+      </view>
+      <view class="subtitle">
+        班次、换乘
+      </view>
+      <image mode="aspectFill" src="/images/click2.png" class="box-img" />
+    </view>
+  </view>
+  <ant-guide-tour
+    maskStyle="background-color: rgba(0, 0, 0, 0.85)"
+    items="{{ [welcomeImg] }}"
+    visible="{{ !welcomeShowed }}"
+    onCancel="onCloseTour"
+  >
+  </ant-guide-tour>
 </view>

@@ -1,0 +1,124 @@
+.swiper-item {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin: 5rpx 20rpx;
+  padding: 5rpx;
+  border: gray solid 5rpx;
+  border-radius: 15rpx;
+  height: 240rpx;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.item-header-remark:first-child {
+  background-color: #eee;
+}
+
+/* -----overview-------- */
+.item-destination-name {
+  margin-left: 10rpx;
+  padding: 5rpx;
+  border: gray solid 3rpx;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.item-destination-arrow::before {
+  content: "";
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 10rpx;
+  background-image: url("/images/arrow.svg");
+  background-size: contain;
+}
+
+/* -------line------- */
+
+.item-bus-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 245rpx;
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.item-body-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.item-bus-line-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  overflow-y: auto;
+  margin: 0 auto;
+  margin-top: 10rpx;
+  flex-wrap: nowrap;
+}
+
+.item-bus-remark {
+  display: block;
+  position: absolute;
+  z-index: 20;
+  bottom: 5rpx;
+  width: 95%;
+  height: 30rpx;
+  font-size: 24rpx;
+  margin: 0 15rpx;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.item-bus-remarks {
+  display: block;
+  width: 95%;
+  height: 30rpx;
+  font-size: 24rpx;
+  margin: 10rpx 15rpx;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+.item-bus-name {
+  width: 180rpx;
+  margin: 0 20rpx;
+  font-size: 28rpx;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.item-bus-time {
+  width: 180rpx;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-left: 15rpx;
+  font-size: 28rpx;
+}
+
+.item-bus-label {
+  display: inline-block;
+  width: 15rpx;
+  height: 15rpx;
+  line-height: 15rpx;
+  font-size: 24rpx;
+  color: gray;
+}

@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search/search",
-    "pages/news/news"
+    "pages/run-info/run-info",
+    "pages/time-table/time-table"
   ],
   "window": {
     "defaultTitle": "校车行",
     "v8WorkerPlugins": "gcanvas_runtime",
-    "allowsBounceVertical":"NO"
+    "allowsBounceVertical": "NO"
   },
   "behavior": {
     "requestReferrerStrategy": "page",

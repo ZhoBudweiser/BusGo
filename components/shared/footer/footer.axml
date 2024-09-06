@@ -1,0 +1,11 @@
+<view class="am-footer am-footer__end">
+  <block>
+    <view class="am-footer-end">
+      <view class="am-footer-end__divider"></view>
+      <view class="am-footer-end__text">
+        {{content ? content : '已经到底了'}}
+      </view>
+      <view class="am-footer-end__divider"></view>
+    </view>
+  </block>
+</view>

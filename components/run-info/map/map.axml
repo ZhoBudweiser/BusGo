@@ -1,0 +1,24 @@
+<view class="container">
+  <map
+    id="map"
+    longitude="{{120.090178}}"
+    latitude="{{30.303975}}"
+    show-compass="{{true}}"
+    show-scale="{{true}}"
+    scale="{{17}}"
+    onMarkerTap="onMarkerTap"
+    onRegionChange="onRegionChange"
+    show-location
+    style="width: 100%; height: 100%"
+  >
+  </map>
+  <view class="header">
+    <locate locationIndex="{{campusIndex}}" locations="{{campus}}" onSelectLocation="onSelectLocation" />
+  </view>
+  <view
+    class="float-icon see-mode"
+    onTap="onSwitchMode"
+    style="{{ `background-image: url(${displayMode ? '/images/hide.svg' : '/images/all_flags.svg'});`}}"
+  >
+  </view>
+</view>

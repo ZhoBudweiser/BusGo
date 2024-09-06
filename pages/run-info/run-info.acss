@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+}
+
+.schoolmap {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.previa {
+  z-index: 99;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.icon {
+  float: left;
+}
+
+.placeholder {
+  margin-left: 12rpx;
+  color: rgba(153, 153, 153, 0);
+  font-size: 28rpx;
+}

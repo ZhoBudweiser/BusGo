@@ -1,11 +1,7 @@
 {
   "usingComponents": {
-    "scroll":"/components/scroll-view/scroll-view",
-    "notice":"/components/notice/index",
-    "schoolmap":"/components/map/map",
-    "searchbar": "/components/searchbar/searchbar",
-    "tabs": "/components/tabs/tabs",
-    "overview": "/components/overview/overview",
-    "movable": "/components/movable-view/movable-view"
-  }
+    "ant-guide-tour": "antd-mini/es/GuideTour/index"
+  },
+  "styleIsolation": "apply-shared"
+  
 }

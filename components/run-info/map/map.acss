@@ -1,0 +1,34 @@
+.container {
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 3vh;
+  position: fixed;
+  top: 0rpx;
+}
+
+.float-icon {
+  width: 60rpx;
+  height: 60rpx;
+  position: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  background-color: white;
+  border: gray solid 5rpx;
+  border-radius: 15rpx;
+  background-size: contain;
+}
+
+.see-mode {
+  bottom: 40%;
+  left: 10rpx;
+}
+
+.loc-search {
+  bottom: 40%;
+  right: 10rpx;
+  background-image: url("/images/search.svg");
+}

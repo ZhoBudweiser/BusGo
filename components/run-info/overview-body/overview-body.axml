@@ -1,0 +1,41 @@
+<view class="overview-body" id="body" capture-catchTouchMove="onMove">
+  <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
+    <view class="swiper-container-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.station_map[item.runBusInfo[0].next_station] <= item.station_map[selectedStation.id] ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
+      <!-- 班车基本信息 -->
+      <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
+        <!-- 班车名称 -->
+        <view class="item-bus-name">
+          {{item.runBusInfo !== null ? item.runBusInfo[0].vehi_num :
+        item.line_alias}}
+        </view>
+        <!-- 班车去向 -->
+        <view class="item-bus-line">
+          <view class="item-destination-name">
+            {{item.start_address}}
+          </view>
+          <view class="item-destination-arrow"></view>
+          <view class="item-destination-name">
+            {{item.end_address}}
+          </view>
+        </view>
+        <!-- 班车时间 -->
+        <view class="item-bus-time"> {{item.duration}}</view>
+      </view>
+      <!-- 详细站点 -->
+      <view a:if="{{ activeCards[jndex] }}" class="item-bus-line-detail">
+        <steps
+          items="{{item.stations}}"
+          close="{{true}}"
+          activeIndex="{{item.runBusInfo ? item.station_map[item.runBusInfo[0].next_station] : 0}}"
+          flagIndex="{{1+item.station_map[selectedStation.id]}}"
+        >
+        </steps>
+      </view>
+      <!-- 班车备注 -->
+      <view class="{{item.remark ? 'item-bus-remark' : ''}}">
+        {{item.remark}}
+      </view>
+    </view>
+  </block>
+  <footer />
+</view>

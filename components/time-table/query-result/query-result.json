@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+      "steps": "/components/shared/steps/steps"
+  },
+  "styleIsolation": "apply-shared"
+}

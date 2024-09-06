@@ -4,7 +4,11 @@
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^8.0.1",
+    "prettier": "^3.3.2",
     "release-it": "^17.1.1"
   },
-  "version": "1.1.0"
+  "version": "1.1.0",
+  "dependencies": {
+    "antd-mini": "^2.36.5"
+  }
 }

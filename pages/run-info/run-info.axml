@@ -1,0 +1,37 @@
+<view class="container">
+  <schoolmap
+    class="schoolmap"
+    position="{{userPosition}}"
+    stations="{{queriedStations}}"
+    lines="{{carLines}}"
+    selectedStation="{{selectedStation}}"
+    selectedBusLineId="{{selectedLineId}}"
+    showNavigationPath="{{showNavigationPath}}"
+    moveToUserPosition="{{moveToUserPosition}}"
+    onSelectStation="onSelectStation"
+    onMainData="onMainData"
+  >
+  </schoolmap>
+  <movable class="previa">
+    <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData">
+    </tabs>
+    <overview
+      tabs="{{tabs}}"
+      activeIndex="{{activeIndex}}"
+      carLines="{{carLines}}"
+      selectedStation="{{selectedStation}}"
+      userTimeCost="{{userTimeCost}}"
+      onMainData="onMainData"
+      onFlip="onFlip"
+      onRollback="onRollback"
+    >
+    </overview>
+  </movable>
+  <ant-guide-tour
+    maskStyle="background-color: rgba(0, 0, 0, 0.85)"
+    items="{{ guidanceImgs }}"
+    visible="{{ !guidanceShowed }}"
+    onCancel="onCloseGuidance"
+  >
+  </ant-guide-tour>
+</view>

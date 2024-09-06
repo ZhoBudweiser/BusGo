@@ -1,0 +1,18 @@
+<view class="search-container">
+  <view class="picker">
+    <place-picker
+      initStart="{{initStart}}"
+      historyAddress="{{historyAddress}}"
+      onSubmitQuery="onSubmitQuery"
+    />
+  </view>
+  <view class="queries">
+    <query-result lines="{{lines}}" />
+    <query-history
+      style="{{`display: ${ queried ? 'none': '' }`}}"
+      appendedItem="{{queried}}"
+      onSetHistoryAddress="onSetHistoryAddress"
+    />
+    <footer a:if="{{ queried }}" />
+  </view>
+</view>

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "header": "/components/run-info/overview-header/overview-header",
+    "body": "/components/run-info/overview-body/overview-body"
+  }
+}

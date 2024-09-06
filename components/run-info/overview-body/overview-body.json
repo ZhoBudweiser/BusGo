@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "steps": "/components/shared/steps/steps",
+    "footer": "/components/shared/footer/footer"
+  }
+}
