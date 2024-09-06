@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.1](https://github.com/ZhoBudweiser/BusGo/compare/v2.0.0...v2.0.1) (2024-09-06)
+
+
+### ✅变动
+
+* **deps:** bump braces from 3.0.2 to 3.0.3 ([84bcfd2](https://github.com/ZhoBudweiser/BusGo/commit/84bcfd2068cbadec5c51fd98ccecf5d53ead4166))
+
+
+### 🐛问题修复
+
+* location missing ([a29f4f3](https://github.com/ZhoBudweiser/BusGo/commit/a29f4f3a3585a228164e6fb040ead34f4e51f836))
+
 ## [2.0.0](https://github.com/ZhoBudweiser/BusGo/compare/v1.1.0...v2.0.0) (2024-09-06)
 
 
