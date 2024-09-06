@@ -1,4 +1,4 @@
-console.log = true ? console.log : () => {};
+console.log = false ? console.log : () => {};
 
 App({
   locationAuthed: false,

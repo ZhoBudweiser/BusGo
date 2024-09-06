@@ -60,24 +60,38 @@ export async function authGuideLocation() {
   // 获取用户是否开启系统定位及授权支付宝使用定位
   const isLocationEnabled = async () => {
     const systemInfo = await myGetSystemInfo();
-    return systemInfo.locationEnabled && systemInfo.locationAuthorized;
+    return !!(systemInfo.locationEnabled && systemInfo.locationAuthorized);
+  };
+
+  // 若用户未开启系统定位或未授权支付宝使用定位，则跳转至系统设置页
+  const showAuthGuideIfNeeded = async () => {
+    if (!(await isLocationEnabled())) {
+      my.showAuthGuide({
+        authType: "LBS",
+      });
+      return false;
+    }
+    return true;
   };
 
   // 获取用户是否授权过当前小程序使用定位
   const isLocationMPAuthorized = async () => {
     const settingInfo = await myGetSetting();
-    return settingInfo.authSetting.location;
+    return (
+      settingInfo.authSetting.location === undefined ||
+      settingInfo.authSetting.location
+    );
   };
 
   // 若用户未授权当前小程序使用定位，则引导用户跳转至小程序设置页开启定位权限
   const requestLocationPermission = async () => {
-    await myAlert("当前定位未开启");
+    await myAlert("定位未开启");
     const openSettingInfo = await myOpenSetting();
     return openSettingInfo.authSetting.location;
   };
 
   try {
-    if (!(await isLocationEnabled())) {
+    if (!(await showAuthGuideIfNeeded())) {
       return false;
     }
     if (await isLocationMPAuthorized()) {
@@ -88,7 +102,7 @@ export async function authGuideLocation() {
     }
     return false;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return false;
   }
 }
