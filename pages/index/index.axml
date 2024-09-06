@@ -8,7 +8,7 @@
       circular="{{true}}"
     >
       <swiper-item a:for="{{ imgs }}" class="img-item">
-        <image mode="aspectFill" src="{{"/images/" + item}}" class="img" />
+        <image mode="aspectFill" src="{{'/images/' + item}}" class="img" />
       </swiper-item>
     </swiper>
   </view>
