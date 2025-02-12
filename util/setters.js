@@ -17,6 +17,11 @@ import {
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
 
+/**
+ * 设置日期、星期、问候语
+ * @param {Number} time 时间戳
+ * @returns {Object} 日期、星期、问候语
+ */
 export function setDate(time) {
   const d = new Date(time);
   const datelist = ["日", "一", "二", "三", "四", "五", "六"];
@@ -41,6 +46,10 @@ export function setState(targetY, stateBoders) {
   return 0;
 }
 
+/**
+ * 设置时间表最近的站点
+ * @returns {Promise} 最近的站点
+ */
 export function setTimeTableNearestStation() {
   return new Promise((resolve, reject) =>
     my.getLocation({
@@ -51,6 +60,11 @@ export function setTimeTableNearestStation() {
   );
 }
 
+/**
+ * 设置查询的频率
+ * @param {object[]} lines 班车路线数组
+ * @returns {number} 查询的频率
+ */
 export function setSysQueryFrequency(lines) {
   if (lines.length == 0) {
     return DEFAULT_CAR_QUERY_FREQUENCY_NOCAR;
@@ -63,6 +77,12 @@ export function setSysQueryFrequency(lines) {
   }
 }
 
+/**
+ * 根据用户的位置返回最近的站点 id
+ * @param {object[]} stations 站点数组
+ * @param {Object} userPosition 用户的位置
+ * @returns {string} 最近的站点 id
+ */
 export function setNearestStationId(stations, userPosition) {
   if (stations.length === 0) return "";
   const { latitude, longitude } = userPosition;
@@ -83,6 +103,12 @@ export function setNearestStationId(stations, userPosition) {
   return stations[minIndex].station_alias_no;
 }
 
+/**
+ * 根据用户的位置返回最近的校区索引
+ * @param {object[]} stations 校区中心点位置数组
+ * @param {Object} userPosition 用户的位置
+ * @returns 最近的校区索引
+ */
 export function setNearestCampusIndex(stations, userPosition) {
   if (stations.length === 0) return "";
   const { latitude, longitude } = userPosition;
@@ -147,6 +173,12 @@ export async function setCarLines(
   return newBusLineIds;
 }
 
+/**
+ * 设置站点对象
+ * @param {number} activeIndex 班车类型
+ * @param {string} sid 站点 id
+ * @returns {object} 站点对象
+ */
 export async function setStationObj(activeIndex, sid) {
   if (sid == "") return null;
   const stations = await queryBackend("allStations", activeIndex, [], false);
@@ -156,6 +188,12 @@ export async function setStationObj(activeIndex, sid) {
     : ret;
 }
 
+/**
+ * 设置所选站点
+ * @param {number} activeIndex 班车类型
+ * @param {string} sid 站点 id
+ * @returns {object} 所选站点
+ */
 export async function setStation(activeIndex, sid) {
   if (sid == "") return DEFAULT_STATION;
   const stationObj = await setStationObj(activeIndex, sid);
@@ -169,6 +207,12 @@ export async function setStation(activeIndex, sid) {
   return selectedStation;
 }
 
+/**
+ * 根据路线 id 查询途径站点
+ * @param {number[]} lineIds 路线 id 数组
+ * @param {number} activeIndex 班车类型
+ * @returns {object[]} 查询路线的途径站点数组
+ */
 export async function setLineStations(lineIds, activeIndex) {
   const allStations = await Promise.all(
     lineIds.map(
@@ -302,6 +346,12 @@ export function drawRoute(mapCtx, stations) {
   });
 }
 
+/**
+ * @deprecated 请使用 drawCarPositions
+ * @param {Object} mapCtx 地图上下文
+ * @param {object[]} carMarkers 班车标记数组
+ * @param {boolean} add 是否添加新的班车标记
+ */
 export function drawCarPositions_old(mapCtx, carMarkers, add) {
   if (add) {
     mapCtx.changeMarkers({
@@ -360,6 +410,11 @@ export function drawCarPositions(mapCtx, newCarMarkers, oldCarMarkers) {
   console.log("汽车发生了移动：", newCarMarkers);
 }
 
+/**
+ * 设置班车卡片高度
+ * @param {object[]} lines 班车路线数组
+ * @returns {object[]} 班车卡片高度数组
+ */
 export function setCardHeights(lines) {
   return lines.map((item) => {
     if (!item.length) {
@@ -385,6 +440,12 @@ export function setCardHeights(lines) {
   });
 }
 
+/**
+ * 设置问候语
+ * @param {number} hour 小时
+ * @param {Number} day 星期
+ * @returns {string} 问候语
+ */
 function setGreeting(hour, day) {
   let hGreeting = "晚上";
   if (hour >= 5 && hour < 11) {
@@ -423,6 +484,13 @@ function setRoute(stations) {
   return { throughPoints, startPoint, endPoint };
 }
 
+/**
+ * 设置站点标记数组
+ * @param {object[]} stations 站点数组
+ * @param {number} selectedStationId 选择的站点 id
+ * @param {number} length 站点之间合并的最短距离
+ * @returns {object[]} 站点标记数组
+ */
 function setStationMarkers(stations, selectedStationId, length) {
   const markers = mergeSimilarStations(stations, length).map((item) => {
     return {
@@ -450,10 +518,17 @@ function setStationMarkers(stations, selectedStationId, length) {
   return markers;
 }
 
+/**
+ * 合并所有相似站点
+ * @param {object[]} allStations 所有站点
+ * @param {number} minMatchLength 最短合并站点名称距离
+ * @returns {object[]} 合并后的站点
+ */
 function mergeSimilarStations(allStations, minMatchLength) {
   const mergedStations = [];
   const stations = allStations.concat();
   if (minMatchLength > 20) return stations;
+  // TODO: 优化合并算法复杂度
   while (stations.length > 0) {
     const currentStation = stations.shift();
     let merged = false;
@@ -464,6 +539,7 @@ function mergeSimilarStations(allStations, minMatchLength) {
         mergedStation.station_alias,
       );
       const matchLength = commonSubstring.length;
+      // 合并站点
       if (
         matchLength >= minMatchLength ||
         matchLength == currentStation.station_alias.length
@@ -484,6 +560,12 @@ function mergeSimilarStations(allStations, minMatchLength) {
   return mergedStations;
 }
 
+/**
+ * 获取两个字符串的公共子串
+ * @param {string} str1 字符串1
+ * @param {string} str2 字符串2
+ * @returns 公共子串
+ */
 function findCommonSubstring(str1, str2) {
   let common = "";
   for (let i = 0; i < str1.length; i++) {
@@ -497,6 +579,13 @@ function findCommonSubstring(str1, str2) {
   return common;
 }
 
+/**
+ * 合并两个站点
+ * @param {object} stationA 站点 A
+ * @param {object} stationB 站点 B
+ * @param {string} commonSubstring 公共名称
+ * @returns {object} 合并后的站点
+ */
 function mergeStations(stationA, stationB, commonSubstring) {
   return {
     station_alias: commonSubstring,
