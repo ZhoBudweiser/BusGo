@@ -6,6 +6,10 @@ import { popQueryError } from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
 
+/**
+ * 获取校车所有的站点
+ * @returns {object[]} 所有班车站点
+ */
 export async function getBusAllStations() {
   if (cache.busAllStations != null) return cache.busAllStations;
   cache.busAllStations = await my.request({
@@ -18,6 +22,11 @@ export async function getBusAllStations() {
   return cache.busAllStations;
 }
 
+/**
+ * 获取经过某站点的所有校车路线
+ * @param {string} sid 站点 id
+ * @returns {object[]} 该站点的所有校车路线
+ */
 export async function getBusLinesByStationId(sid) {
   return await my.request({
     url: derivedURL + "getBcByStationName?bid=&stationName=" + sid,
@@ -28,6 +37,12 @@ export async function getBusLinesByStationId(sid) {
   }).then(async (res) => await fmtBusLines(stripData(res)));
 }
 
+/**
+ * 根据起点终点获取校车路线 id 数组
+ * @param {string} startStationName 起点站点名
+ * @param {string} endStationName 终点站点名
+ * @returns {string[]} 起点终点之间的校车路线 id 数组
+ */
 export async function getBusLineIdsByEnds(startStationName, endStationName) {
   return await my.request({
     url: derivedURL + "searchLine",
@@ -47,6 +62,11 @@ export async function getBusLineIdsByEnds(startStationName, endStationName) {
   }).then((res) => extractLineIds(stripData(res)));
 }
 
+/**
+ * 根据校车路线 id 获取校车路线的所有站点
+ * @param {string} bid 校车路线 id
+ * @returns {object[]} 校车路线的所有站点
+ */
 export async function getBusStationsByBusId(bid) {
   if (cache.busLineStations.hasOwnProperty(bid))
     return cache.busLineStations[bid];
@@ -60,6 +80,11 @@ export async function getBusStationsByBusId(bid) {
   return cache.busLineStations[bid];
 }
 
+/**
+ * 根据校车 id 获取校车站点映射
+ * @param {string} bid 校车 id
+ * @returns 校车站点映射
+ */
 export async function getBusStationMapByBusId(bid) {
   if (cache.busStationMap.hasOwnProperty(bid))
     return cache.busStationMap[bid];
@@ -71,6 +96,11 @@ export async function getBusStationMapByBusId(bid) {
   return cache.busStationMap[bid];
 }
 
+/**
+ * 获取校车路线的所有站点
+ * @param {string} selectedStation 所选择的站点
+ * @returns 所有的校车终点站点
+ */
 export async function getBusAllEnds(selectedStation) {
   if (cache.busEnds.buffer == null) {
     // TODO: 云端获取

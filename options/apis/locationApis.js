@@ -25,6 +25,10 @@ export async function calculateDistance(
   );
 }
 
+/**
+ * 获取用户定位授权状态
+ * @returns {boolean} 是否授权成功
+ */
 // 由于跳转到系统设置页无法监听用户最终是否打开系统定位及对支付宝授权位置信息，因此请在生命周期 onShow 中调用定位授权准备方法。
 export async function authGuideLocation() {
   const myGetSystemInfo = () => {
