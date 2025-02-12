@@ -14,7 +14,9 @@
     </view>
     <view class="am-hor-step-text">
       <view class="am-hor-step-title">
+        <!-- 站点名称 -->
         <text>{{item.station_alias}}</text>
+        <!-- 站点时间 -->
         <view
           class="am-hor-step-description"
           style="visibility: {{close ? 'hidden' : ''}}"
