@@ -14,7 +14,7 @@ export const lifeHanders = {
 };
 
 /**
- * 地图标记点击事件
+ * @event 点击班车站点标记
  * @param {*} e 带标记 id 的事件对象
  */
 function onMarkerTap(e) {
@@ -32,14 +32,14 @@ function onMarkerTap(e) {
 }
 
 /**
- * 切换站点显示模式
+ * @event 切换站点显示模式
  */
 function onSwitchMode() {
   flip(this, "displayMode");
 }
 
 /**
- * 地图缩放时修改站点图标显示最小距离
+ * @event 地图缩放时修改站点图标显示最小距离
  * @param {*} e 带缩放比例、经纬度的事件对象
  */
 function onRegionChange(e) {
@@ -52,7 +52,7 @@ function onRegionChange(e) {
 }
 
 /**
- * 点击校区切换地图中心
+ * @event 点击校区切换地图中心
  * @param {number} campusIndex 校区索引
  */
 function onSelectLocation(campusIndex) {

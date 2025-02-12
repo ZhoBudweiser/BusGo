@@ -1,7 +1,9 @@
 <view class="locate-container">
+  <!-- 左箭头 -->
   <view a:if="{{ locations.length > 1}}" class="btn left" onTap="onTapLeft">
     <image class="img" mode="aspectFit" src="/images/up_arrow_gray.svg" />
   </view>
+  <!-- 校区显示 -->
   <view class="location">
     <view class="remark">
       当前校区
@@ -10,6 +12,7 @@
       {{ locations[locationIndex].name }}
     </view>
   </view>
+  <!-- 右箭头 -->
   <view a:if="{{ locations.length > 1}}" class="btn right" onTap="onTapRight">
     <image class="img" mode="aspectFit" src="/images/up_arrow_gray.svg" />
   </view>
