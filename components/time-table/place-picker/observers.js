@@ -7,6 +7,10 @@ const observers = {
 
 export default observers;
 
+/**
+ * 选择历史记录的地址
+ * @param {object} history 历史记录
+ */
 function historyAddress(history) {
   if (!history.startAddress || !history.endAddress) return;
   const { startAddress: startName, endAddress: endName } = history;
@@ -19,6 +23,9 @@ function historyAddress(history) {
   });
 }
 
+/**
+ * 初始化起点
+ */
 function initStart() {
   const startName = DEFAULT_QUERY_ALL_ENDS.find(
     (address) => this.props.initStart.indexOf(address) !== -1,

@@ -1,6 +1,8 @@
 <view class="picker-container">
+  <!-- 地址框 -->
   <view class="picker-destinations">
     <view class="picker-address">
+      <!-- 起点 -->
       <picker onChange="onPickStart" range="{{startOptions}}">
         <view class="row row-start">
           <view class="row-title">起点</view>
@@ -9,6 +11,7 @@
           </view>
         </view>
       </picker>
+      <!-- 终点 -->
       <picker onChange="onPickEnd" range="{{endOptions}}">
         <view class="row row-end">
           <view class="row-title">终点</view>
@@ -18,18 +21,24 @@
         </view>
       </picker>
     </view>
+    <!-- 操作面板 -->
     <view class="picker-operation">
+      <!-- 切换起止点 -->
       <view class="picker-icon picker-switch" onTap="onSwitchAddress"></view>
+      <!-- 提交 -->
       <view class="picker-icon picker-submit {{edited ? 'edited' : ''}}" onTap="onSubmit"></view>
     </view>
   </view>
   <view class="picker-filter">
+    <!-- 选择时间 -->
     <view class="picker-option time" onTap="onTimePick"> {{startTime}}</view>
+    <!-- 选择工作日/周末 -->
     <view class="picker-option day" onTap="onDayPick">
       {{isWeekend ? "周末" : "工作日"}}
     </view>
     <view class="picker-filter-title"> 出发</view>
     <view class="picker-option div"></view>
+    <!-- 选择是否换乘 -->
     <view class="picker-option trans" onTap="onTransPick">
       {{canTrans ? "允许换乘" : "不允许换乘"}}
     </view>

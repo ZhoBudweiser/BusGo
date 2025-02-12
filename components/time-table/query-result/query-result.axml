@@ -1,14 +1,17 @@
 <block a:for="{{ lines }}" a:for-index="index" key="bus-line-{{index}}">
+  <!-- 非换乘 -->
   <view
     a:if="{{ !item.length }}"
     class="swiper-item"
     style="{{`height: ${cardHeights[index][activeCards[index]]}`}}"
   >
+    <!-- 班车信息 -->
     <view
       class="item-header item-header-remark"
       data-i="{{index}}"
       onTap="onToggleCard"
     >
+      <!-- 对齐占位符 -->
       <view class="item-bus-label" style="visibility: hidden"> </view>
       <view class="item-bus-name"> {{item.busName}} </view>
       <view class="item-bus-line">
@@ -19,6 +22,7 @@
       <view class="item-bus-time"> {{item.startTime+'-'+item.endTime}} </view>
     </view>
     <view class="item-body-child">
+      <!-- 途径点 -->
       <view a:if="{{ activeCards[index] }}" class="item-bus-line-detail">
         <steps
           items="{{item.stations}}"
@@ -26,24 +30,29 @@
           flagIndex="{{}}"
         />
       </view>
+      <!-- 备注 -->
       <view a:if="{{ item.remark }}" class="item-bus-remark">
         {{item.remark}}
       </view>
     </view>
   </view>
+  <!-- 换乘 -->
   <view
     a:else
     class="swiper-item"
     style="{{`height: ${cardHeights[index][activeCards[index]]}`}}"
   >
     <view class="item-headers" data-i="{{index}}" onTap="onToggleCard">
+      <!-- 班车信息 -->
       <view
         a:for="{{ item }}"
         a:for-index="jndex"
         a:for-item="jtem"
         class="item-header-remark"
       >
+        <!-- 班车信息 -->
         <view class="item-header">
+          <!-- 序号 -->
           <view
             class="item-bus-label"
             style="{{`${jndex ? '' : 'visibility: hidden'}`}}"
@@ -62,11 +71,13 @@
             {{jtem.startTime+'-'+jtem.endTime}}
           </view>
         </view>
+        <!-- 备注 -->
         <view a:if="{{ jtem.remark }}" class="item-bus-remarks">
           {{jtem.remark}}
         </view>
       </view>
     </view>
+    <!-- 途径点信息 -->
     <view
       a:for="{{ item }}"
       a:for-index="jndex"
