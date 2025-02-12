@@ -240,6 +240,7 @@ export const OUTDATE_STATION_IDS = [
   new Set([]),
 ];
 
+// 根据尺度返回合并站点需要的最短距离
 export const UNION_LENGTH = (scale) => {
   let length = 4;
   if (scale >= 16) {

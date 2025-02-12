@@ -1,5 +1,12 @@
 import { second2minute } from "/util/formatter";
 
+/**
+ * 计算两点之间花费的时间
+ * @param {object} startPosition 起点经纬度
+ * @param {object} endPosition 终点经纬度
+ * @param {string} searchType 行经类型
+ * @returns 花费的时间
+ */
 export async function calculateDistance(
   startPosition,
   endPosition,

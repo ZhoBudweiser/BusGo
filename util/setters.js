@@ -13,7 +13,6 @@ import {
   RED_SHUTTLE_IMG_PATH,
   SELECTED_STATION_IMG_PATH,
   STATION_ID_LABEL,
-  UNION_LENGTH,
   UNSELECTED_STATION_IMG_PATH,
   WHITE_SHUTTLE_IMG_PATH,
 } from "/options/props/defaults";
@@ -167,6 +166,15 @@ export async function setLineStations(lineIds, activeIndex) {
   return queriedStations;
 }
 
+/**
+ * 替换站点标记数组
+ * @param {object} mapCtx 地图上下文
+ * @param {object[]} stations 站点数组
+ * @param {number} selectedStation 所选的站点
+ * @param {number} length 最短的合并站点距离
+ * @param {object[]} oldStationMarkers 旧的站点标记数组
+ * @returns 新的站点标记数组
+ */
 export function changeStationMarkers(
   mapCtx,
   stations,
@@ -174,12 +182,14 @@ export function changeStationMarkers(
   length,
   oldStationMarkers,
 ) {
+  // 清空旧站点
   if (oldStationMarkers.length !== 0) {
     mapCtx.changeMarkers({
       remove: oldStationMarkers,
     });
     console.log("清空了站点：", oldStationMarkers);
   }
+  // 添加新站点
   const stationMarkers = setStationMarkers(
     stations,
     selectedStation.id,
@@ -192,11 +202,18 @@ export function changeStationMarkers(
   return stationMarkers;
 }
 
+/**
+ * 根据所选站点 id 更新地图上的图标
+ * @param {object[]} oldStationMarkers 旧的站点标记数组
+ * @param {number} selectedStationId 所选站点的 id
+ * @returns 所选站点的经纬度和新的站点标记数组
+ */
 export function updateStationMarkers(oldStationMarkers, selectedStationId) {
   let selectedStationPosition;
   const sid = STATION_ID_LABEL + selectedStationId;
   const stationMarkers = oldStationMarkers.map((item) => {
     const match = item.id === sid;
+    // 找到所选站点的经纬度
     if (match) {
       selectedStationPosition = {
         latitude: item.latitude,
@@ -205,12 +222,18 @@ export function updateStationMarkers(oldStationMarkers, selectedStationId) {
     }
     return {
       ...item,
+      // 更新图标路径
       iconPath: match ? SELECTED_STATION_IMG_PATH : UNSELECTED_STATION_IMG_PATH,
     };
   });
   return { selectedStationPosition, stationMarkers };
 }
 
+/**
+ * 根据班车位置设置班车标记数组
+ * @param {object[]} lines 班车线路数组
+ * @returns 班车标记数组
+ */
 export function setCarMarkers(lines) {
   const iconPathSelection = (type) => {
     switch (type) {
@@ -224,6 +247,7 @@ export function setCarMarkers(lines) {
   };
   const carPositions = [];
   lines.forEach((item) => {
+    // 班车正在运行
     if (item.runBusInfo) {
       carPositions.push({
         iconPath: iconPathSelection(item.runBusInfo[0].vehicleType),
@@ -239,6 +263,11 @@ export function setCarMarkers(lines) {
   return carPositions;
 }
 
+/**
+ * 绘制班车路线
+ * @param {object} mapCtx 地图上下文
+ * @param {object[]} stations 站点数组
+ */
 export function drawRoute(mapCtx, stations) {
   const { throughPoints, startPoint, endPoint } = setRoute(stations);
   mapCtx.showRoute({
@@ -276,12 +305,20 @@ export function drawCarPositions_old(mapCtx, carMarkers, add) {
   }
 }
 
+/**
+ * 绘制班车位置
+ * @param {object} mapCtx 地图上下文
+ * @param {object[]} newCarMarkers 新的汽车标记数组
+ * @param {object[]} oldCarMarkers 旧的汽车标记数组
+ */
 export function drawCarPositions(mapCtx, newCarMarkers, oldCarMarkers) {
   const carIds = new Set(newCarMarkers.map((item) => item.id));
+  // 去除消失的汽车标记，添加新的汽车标记
   mapCtx.changeMarkers({
     remove: oldCarMarkers.filter((item) => !carIds.has(item.id)),
     add: oldCarMarkers.filter((item) => carIds.has(item.id)),
   });
+  // 移动汽车标记
   newCarMarkers.forEach((item) => {
     mapCtx.translateMarker({
       markerId: item.id,
@@ -337,6 +374,11 @@ function setGreeting(hour, day) {
   return hGreeting + "好！" + GREETINGS[day];
 }
 
+/**
+ * 根据站点数组获取路径参数
+ * @param {object[]} stations 站点数组
+ * @returns 途径站点数组、起点、终点
+ */
 function setRoute(stations) {
   const n = stations.length;
   const throughPoints = stations
