@@ -26,6 +26,12 @@ export function setDate(time) {
   return { date, week, greeting };
 }
 
+/**
+ * 根据目标Y坐标和状态边界数组设置状态
+ * @param {number} targetY 目标Y坐标
+ * @param {number[]} stateBoders 状态边界数组
+ * @returns 状态
+ */
 export function setState(targetY, stateBoders) {
   for (let i = stateBoders.length - 1; i >= 0; --i) {
     if (targetY > stateBoders[i]) {

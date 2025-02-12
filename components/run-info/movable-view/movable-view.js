@@ -7,6 +7,9 @@ Component({
     stateHeights: [],
     stateBoders: [],
   },
+  /**
+   * 获取组件高度
+   */
   didMount() {
     let contentHeight;
     my.createSelectorQuery()
@@ -37,12 +40,18 @@ Component({
       });
   },
   methods: {
+    /**
+     * @event 拖动框拖动事件
+     * @param {object} e 带y属性的事件对象
+     */
     onMove(e) {
       const { y } = e.detail;
       const { stateBoders, stateHeights } = this.data;
+      // 更新状态
       const state = setState(y, stateBoders);
       this.setData({
         state,
+        // 添加扰动，强制更新高度
         currentY: stateHeights[state] + Math.random(),
       });
     }
