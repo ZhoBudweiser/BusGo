@@ -38,6 +38,12 @@ export function extractLineIds(carLines) {
   return carLines.map((carLine) => carLine.bid);
 }
 
+/**
+ * 提取校区名
+ * @param {string} name 带校区和站点的全称
+ * @param {number} dataType 类型
+ * @returns 提取校区名
+ */
 export function extractAddressName(name, dataType) {
   if (dataType == 1) return name;
   return name.indexOf("华家池") === -1 ? removeCampusSuffix(name) : "华家池";
@@ -167,6 +173,11 @@ function removeSeconds(time) {
   return time ? time.replace(/:\d{2}$/, "") : DEFAULT_TIME;
 }
 
+/**
+ * 去除校区名之外的后缀
+ * @param {string} address 带站点的校区全称
+ * @returns 校区名
+ */
 function removeCampusSuffix(address) {
   return address ? address.replace(/校区(.*)/g, "") : "";
 }

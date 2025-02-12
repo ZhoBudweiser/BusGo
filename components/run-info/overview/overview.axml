@@ -1,4 +1,5 @@
 <view class="list-container">
+  <!-- 左右滑动框 -->
   <swiper
     previousMargin="10px"
     nextMargin="10px"
@@ -14,6 +15,7 @@
   >
     <swiper-item a:for="{{tabs}}" key="swiper-item-{{index}}">
       <view class="swiper-container">
+        <!-- 预览框 -->
         <header
           activeIndex="{{activeIndex}}"
           carLines="{{carLines}}"
@@ -23,7 +25,7 @@
           onFlip="onFlip"
           onRollback="onRollback"
         />
-        <!-- 班车路线 -->
+        <!-- 班车详细路线 -->
         <body carLines="{{carLines}}" selectedStation="{{selectedStation}}" />
       </view>
     </swiper-item>

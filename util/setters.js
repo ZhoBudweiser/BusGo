@@ -102,10 +102,20 @@ export function setNearestCampusIndex(stations, userPosition) {
   return minIndex;
 }
 
+/**
+ * 展开正在运行的班车卡片
+ * @param {object[]} lines 班车路线数组
+ * @returns 班车卡片激活数组
+ */
 export function setActiveCards(lines) {
   return lines.map((item) => item.runBusInfo !== null);
 }
 
+/**
+ * 设置用户在概览卡片中的位置
+ * @param {number} t 时间花费
+ * @returns 位置（百分位）
+ */
 export function setHumanDistance(t) {
   const tt = Number(t);
   if (tt > 15) {
@@ -116,6 +126,13 @@ export function setHumanDistance(t) {
   }
 }
 
+/**
+ * 根据起止点查询班车线路
+ * @param {number} activeIndex 班车类型
+ * @param {string} startStationName 起点名称
+ * @param {string} endStationName 终点名称
+ * @returns 查询的班车线路 id 数组
+ */
 export async function setCarLines(
   activeIndex,
   startStationName,
