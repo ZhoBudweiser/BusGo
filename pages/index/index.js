@@ -19,21 +19,33 @@ Page({
       imageMode: "aspectFill",
     },
   },
+  /**
+   * @event 跳转到实时班车查询页面
+   */
   onRunInfo() {
     my.navigateTo({
       url: "/pages/run-info/run-info",
     });
   },
+  /**
+   * @event 跳转到校车时刻表页面
+   */
   onTimeTable() {
     my.navigateTo({
       url: "/pages/time-table/time-table",
     });
   },
+  /**
+   * @event 取消显示引导页
+   */
   onCloseTour() {
     const welcomeShowed = true;
     this.setData({ welcomeShowed });
     store("welcomeShowed", welcomeShowed);
   },
+  /**
+   * 获取当前时间并加载数据，获取定位权限
+   */
   async onLoad() {
     const app = getApp();
     my.getServerTime({

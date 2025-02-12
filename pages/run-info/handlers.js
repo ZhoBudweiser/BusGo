@@ -31,14 +31,26 @@ const handlers = {
 
 export default handlers;
 
+/**
+ * @event 设置根组件数据
+ * @param {string} key 键名
+ * @param {object} data 值
+ */
 function onMainData(key, data) {
   setData(this, key, data);
 }
 
+/**
+ * @event 切换根组件数据
+ * @param {string} field 键名
+ */
 function onFlip(field) {
   flip(this, field);
 }
 
+/**
+ * @event 回滚选择的目的地
+ */
 async function onRollback() {
   const { activeIndex } = this.data;
   this.setData({
@@ -47,18 +59,29 @@ async function onRollback() {
   });
 }
 
+/**
+ * @event 选择站点
+ * @param {string} sid 站点 id
+ */
 async function onSelectStation(sid) {
   const { activeIndex } = this.data;
   const selectedStation = await setStation(activeIndex, sid);
   this.setData({ selectedStation });
 }
 
+/**
+ * @event 关闭引导
+ */
 function onCloseGuidance() {
   const guidanceShowed = true;
   this.setData({ guidanceShowed });
   store("guidanceShowed", guidanceShowed);
 }
 
+/**
+ * 导入缓存
+ * @param {object} query 查询参数
+ */
 function onLoad(query) {
   console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
   loadAndSet(this, "activeIndex");
@@ -66,6 +89,9 @@ function onLoad(query) {
   loadCache();
 }
 
+/**
+ * 设置自动定位定时器
+ */
 async function onShow() {
   const app = getApp();
   // const locationAuthed = await authGuideLocation();
@@ -82,6 +108,9 @@ async function onShow() {
   });
 }
 
+/**
+ * 清除定时器，保存缓存到本地
+ */
 function onUnload() {
   clearInterval(this.data.locationTimer);
   clearInterval(this.data.carTimer);

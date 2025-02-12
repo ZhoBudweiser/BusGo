@@ -21,6 +21,10 @@ const observers = {
 
 export default observers;
 
+/**
+ * 重置页面数据
+ * @param {number} i 班车类型
+ */
 async function activeIndex(i) {
   this.setData({
     ...dynamicData,
@@ -31,6 +35,10 @@ async function activeIndex(i) {
   store("activeIndex", i);
 }
 
+/**
+ * 匹配最近站点
+ * @param {object} stations 查询到的站点数组
+ */
 async function queriedStations(stations) {
   if (!stations || !stations.length) return;
   const { activeIndex, selectedStation: oldSelectedStation } = this.data;
@@ -46,6 +54,10 @@ async function queriedStations(stations) {
   this.setData({ selectedStation });
 }
 
+/**
+ * 更新班车查询频率
+ * @param {object} lines 班车线路数组
+ */
 function carLines(lines) {
   if (!lines) return;
   const freq = setSysQueryFrequency(lines);
@@ -55,12 +67,19 @@ function carLines(lines) {
     });
 }
 
+/**
+ * 重置班车查询定时器
+ */
 function thisResetCarTimer() {
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
   if (selectedStation.id == "") return;
   resetCarTimer(this, activeIndex, selectedStation.id, sysQueryFrequency);
 }
 
+/**
+ * 更新查询的线路id对应的站点
+ * @param {number[]} ids 查询的线路id数组
+ */
 async function queriedLineIds(ids) {
   if (!ids) return;
   const { activeIndex, selectedStation, sysQueryFrequency } = this.data;
