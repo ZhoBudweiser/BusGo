@@ -240,6 +240,7 @@ export async function setLineStations(lineIds, activeIndex) {
  * @param {number} selectedStation 所选的站点
  * @param {number} length 最短的合并站点距离
  * @param {object[]} oldStationMarkers 旧的站点标记数组
+ * @param {boolean} displayMode 站点显示模式，true 为显示，false 为隐藏
  * @returns 新的站点标记数组
  */
 export function changeStationMarkers(
@@ -248,6 +249,7 @@ export function changeStationMarkers(
   selectedStation,
   length,
   oldStationMarkers,
+  displayMode,
 ) {
   // 清空旧站点
   if (oldStationMarkers.length !== 0) {
@@ -262,9 +264,12 @@ export function changeStationMarkers(
     selectedStation.id,
     length,
   );
-  mapCtx.changeMarkers({
-    add: stationMarkers,
-  });
+  // 显示站点
+  if (displayMode) {
+    mapCtx.changeMarkers({
+      add: stationMarkers,
+    });
+  }
   console.log("添加了站点：", stationMarkers);
   return stationMarkers;
 }

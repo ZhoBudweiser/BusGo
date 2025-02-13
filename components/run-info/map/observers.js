@@ -30,7 +30,7 @@ export default observers;
 function stations(stas) {
   const mapCtx = this.mapCtx;
   const { selectedStation } = this.props;
-  const { stationMarkers: oldStationMarkers, length } = this.data;
+  const { stationMarkers: oldStationMarkers, length, displayMode } = this.data;
   mapCtx.clearRoute();
   const stationMarkers = changeStationMarkers(
     mapCtx,
@@ -38,6 +38,7 @@ function stations(stas) {
     selectedStation,
     length,
     oldStationMarkers,
+    displayMode,
   );
   this.setData({
     stationMarkers,
@@ -52,7 +53,7 @@ function stations(stas) {
 function length(s) {
   const mapCtx = this.mapCtx;
   const { stations, selectedStation } = this.props;
-  const { stationMarkers: oldStationMarkers } = this.data;
+  const { stationMarkers: oldStationMarkers, displayMode } = this.data;
   // 设置新的站点图标数组
   const stationMarkers = changeStationMarkers(
     mapCtx,
@@ -60,6 +61,7 @@ function length(s) {
     selectedStation,
     s,
     oldStationMarkers,
+    displayMode,
   );
   this.setData({
     stationMarkers,
@@ -149,9 +151,11 @@ function selectedStationPosition(sp) {
  */
 function displayMode(mode) {
   // 排除所选站点
-  const stationMarkers = this.data.stationMarkers.filter(
-    (item) => item.station_alias_no != this.props.selectedStation.id,
-  );
+  // const stationMarkers = this.data.stationMarkers.filter(
+  //   (item) => item.station_alias_no != this.props.selectedStation.id,
+  // );
+  // 控制所有的站点
+  const stationMarkers = this.data.stationMarkers;
   const option = mode ? "add" : "remove";
   // 显示或隐藏其他站点图标
   this.mapCtx.changeMarkers({

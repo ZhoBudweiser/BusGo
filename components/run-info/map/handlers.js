@@ -45,6 +45,7 @@ function onSwitchMode() {
 function onRegionChange(e) {
   const { scale, longitude, latitude } = e;
   const length = UNION_LENGTH(scale);
+  // 更新最近校区索引
   const campusIndex = setNearestCampusIndex(DEFAULT_CAMPUS, { longitude, latitude });
   if (campusIndex !== this.data.campusIndex) this.setData({ campusIndex });
   if (this.data.length == length) return;
