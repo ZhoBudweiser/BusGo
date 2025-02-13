@@ -157,14 +157,14 @@ function queryLinesByStationId(client, dataType, sid) {
     const notfiltered = (bid) =>
       queriedLineIds == null || queriedLineIds.indexOf(bid) !== -1;
     // TODO: 可能是稳定排序
-    const cmpRunAndDuration = (la, lb) => {
-      return Number(lb.runBusInfo != null) - Number(la.runBusInfo != null);
-    };
+    // const cmpRunAndDuration = (la, lb) => {
+    //   return Number(lb.runBusInfo != null) - Number(la.runBusInfo != null);
+    // };
     const carLines = (
       await queryBackend("linesByStationId", dataType, [sid], false)
     )
-      .filter((line) => notfiltered(line.bid))
-      .toSorted(cmpRunAndDuration);
+      .filter((line) => notfiltered(line.bid));
+      // .toSorted(cmpRunAndDuration);
     client.setData({ carLines });
     console.log("查询到班次：", carLines);
   };
