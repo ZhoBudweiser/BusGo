@@ -98,21 +98,21 @@ function onTransPick() {
 /**
  * @event 提交查询
  */
-function onSubmit() {
+async function onSubmit() {
   const { startName, endName, startTime, isWeekend, canTrans } = this.data;
   // 未选择起点和终点
   if (startName === "" || endName === "") {
     popNoAddress();
     return;
   }
-  this.props.onSubmitQuery({
+  const state = await this.props.onSubmitQuery({
     startAddress: startName,
     endAddress: endName,
     startTime: Number(startTime.replace(":", "")),
     startDay: isWeekend ? "6,7" : "1,2,3,4,5",
     canTrans: canTrans,
   });
-  this.setData({ edited: false });
+  if (state) this.setData({ edited: false });
 }
 
 /**

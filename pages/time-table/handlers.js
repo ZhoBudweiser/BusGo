@@ -24,14 +24,16 @@ export default handlers;
 /**
  * 查询班车信息
  * @param {object} queried 查询条件
+ * @returns {boolean} 查询是否成功，true-成功，false-失败
  */
 async function onSubmitQuery(queried) {
   console.log("查询班车信息：", queried);
-  if (isThrottle(this)) return;
-  if (isSameQuery(queried, this.data.queried)) return;
+  if (isThrottle(this)) return false;
+  if (isSameQuery(queried, this.data.queried)) return true;
   const lines = await getBusTimeTable(queried);
   if (lines && lines.length === 0) popNoCar();
   this.setData({ lines, queried });
+  return true;
 }
 
 /**
