@@ -5,7 +5,7 @@ exports.main = async (event, context) => {
   const { startAddress, endAddress, startTime, startDay, canTrans } = event;
 
   // 初始化云服务
-  cloud.init();
+  // cloud.init();
   const db = cloud.database();
   const collectionName = "bus-time-line-time";
   const collection = db.collection(collectionName);
