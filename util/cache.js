@@ -107,8 +107,8 @@ function loadValue(key) {
  */
 function setExpiration() {
   const expiration = new Date();
-  // 默认一个月后过期
-  expiration.setMonth(expiration.getMonth() + 1);
+  // 默认一周后过期
+  expiration.setDate(expiration.getDate() + 7);
   store("expiration", expiration.getTime());
 }
 
