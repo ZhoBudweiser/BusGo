@@ -8,13 +8,13 @@ import {
 // 校车目的地
 const busEnds = {
   buffer: DEFAULT_BUS_BUFFER_ENDS,
-  all: DEFAULT_BUS_ALL_ENDS
+  all: DEFAULT_BUS_ALL_ENDS,
 };
 
 // 小白车目的地
 const shuttleEnds = {
   buffer: DEFAULT_SHUTTLE_BUFFER_ENDS,
-  all: DEFAULT_SHUTTLE_ALL_ENDS
+  all: DEFAULT_SHUTTLE_ALL_ENDS,
 };
 
 const cache = {
@@ -60,6 +60,10 @@ export function load(key) {
  * 缓存所有数据
  */
 export function storeCache() {
+  // 如果没有设置过期时间，则设置
+  if (!loadValue("expiration").state) {
+    setExpiration();
+  }
   if (lru.bus != null) cache.busEnds.buffer = lru.bus.getBuffer();
   if (lru.shuttle != null) cache.shuttleEnds.buffer = lru.shuttle.getBuffer();
   Object.keys(cache).forEach((key) => store(key, cache[key]));
@@ -69,6 +73,11 @@ export function storeCache() {
  * 读取所有缓存数据
  */
 export function loadCache() {
+  // 如果缓存过期，则清空所有缓存
+  if (isExpired()) {
+    clearAllCache();
+    return;
+  }
   Object.keys(cache).forEach((key) => {
     const { state, data } = loadValue(key);
     if (state) {
@@ -84,10 +93,43 @@ export function loadCache() {
  */
 function loadValue(key) {
   const res = load(key);
-  let state = false, data = null;
+  let state = false,
+    data = null;
   if (res.success && res.data !== null) {
     data = res.data;
     state = true;
   }
   return { state, data };
+}
+
+/**
+ * 设置缓存过期时间
+ */
+function setExpiration() {
+  const expiration = new Date();
+  // 默认一个月后过期
+  expiration.setMonth(expiration.getMonth() + 1);
+  store("expiration", expiration.getTime());
+}
+
+/**
+ * 检查缓存是否过期
+ * @returns {boolean} 是否过期
+ */
+function isExpired() {
+  const { state, data: expiration } = loadValue("expiration");
+  console.log("缓存过期时间：", new Date(expiration));
+  if (!state) return true;
+  return Date.now() > expiration;
+}
+
+/**
+ * 清空所有缓存
+ */
+function clearAllCache() {
+  Object.keys(cache).forEach((key) => {
+    my.removeStorage({ key });
+  });
+  my.removeStorage({ key: "expiration" });
+  console.log("所有缓存已清空");
 }

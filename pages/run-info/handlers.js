@@ -1,13 +1,12 @@
 import { setStation } from "/util/setters";
 import { flip } from "/util/client";
-import { authGuideLocation } from "/options/apis/locationApis";
 import { queryBackend } from "/options/apis/carApis";
 import {
   loadAndSet,
   setData,
   setLocationTimer,
 } from "/util/client";
-import { load, loadCache, store, storeCache } from "/util/cache";
+import { loadCache, store, storeCache } from "/util/cache";
 import { alertLocationNotAuthed } from "/util/notification";
 
 const eventHandlers = {
