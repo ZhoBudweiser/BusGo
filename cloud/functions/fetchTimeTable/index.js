@@ -1,34 +1,118 @@
 const cloud = require("@alipay/faas-server-sdk");
+const axios = require('axios');
 
-const DEFAULT_BUS_END_PAIRS = [
-  { startStationName:  "紫金港校区", endStationName: "玉泉校区" }, 
-  { startStationName:  "紫金港校区", endStationName: "西溪校区" }, 
-  { startStationName:  "紫金港校区", endStationName: "华家池校区" }, 
-  { startStationName:  "紫金港校区", endStationName: "之江校区" }, 
-  { startStationName:  "紫金港校区", endStationName: "湖滨" }, 
-  { startStationName:  "紫金港校区", endStationName: "紫金文苑" }, 
-  { startStationName:  "紫金港校区", endStationName: "雅仕苑" }, 
-  { startStationName:  "紫金港校区", endStationName: "丰谭路高教二期" }, 
-  { startStationName:  "紫金港校区", endStationName: "南都德加东" }, 
-  { startStationName:  "紫金港校区", endStationName: "城市心境" }, 
-  { startStationName:  "紫金港校区", endStationName: "高教一期" }, 
-  { startStationName:  "紫金港校区", endStationName: "恩济花园" }, 
-  { startStationName:  "紫金港校区", endStationName: "高教二期" }, 
-  { startStationName:  "紫金港校区", endStationName: "丰谭中学" }, 
-  { startStationName:  "玉泉校区", endStationName: "紫金港校区" }, 
-  { startStationName:  "玉泉校区", endStationName: "西溪校区" }, 
-  { startStationName:  "玉泉校区", endStationName: "华家池校区" }, 
-  { startStationName:  "玉泉校区", endStationName: "之江校区" }, 
-  { startStationName:  "西溪校区", endStationName: "紫金港校区" }, 
-  { startStationName:  "西溪校区", endStationName: "玉泉校区" }, 
-  { startStationName:  "西溪校区", endStationName: "华家池校区" }, 
-  { startStationName:  "西溪校区", endStationName: "之江校区" }, 
-  { startStationName:  "之江校区", endStationName: "紫金港校区" }, 
-  { startStationName:  "之江校区", endStationName: "玉泉校区" }, 
-  { startStationName:  "之江校区", endStationName: "西溪校区" }, 
-  { startStationName:  "华家池校区", endStationName: "紫金港校区" }, 
-  { startStationName:  "华家池校区", endStationName: "玉泉校区" }, 
-  { startStationName:  "华家池校区", endStationName: "西溪校区" }, 
+const DEFAULT_BUS_END_PAIRS = [{
+    startStationName: "紫金港校区",
+    endStationName: "玉泉校区"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "西溪校区"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "华家池校区"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "之江校区"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "湖滨"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "紫金文苑"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "雅仕苑"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "丰谭路高教二期"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "南都德加东"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "城市心境"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "高教一期"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "恩济花园"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "高教二期"
+  },
+  {
+    startStationName: "紫金港校区",
+    endStationName: "丰谭中学"
+  },
+  {
+    startStationName: "玉泉校区",
+    endStationName: "紫金港校区"
+  },
+  {
+    startStationName: "玉泉校区",
+    endStationName: "西溪校区"
+  },
+  {
+    startStationName: "玉泉校区",
+    endStationName: "华家池校区"
+  },
+  {
+    startStationName: "玉泉校区",
+    endStationName: "之江校区"
+  },
+  {
+    startStationName: "西溪校区",
+    endStationName: "紫金港校区"
+  },
+  {
+    startStationName: "西溪校区",
+    endStationName: "玉泉校区"
+  },
+  {
+    startStationName: "西溪校区",
+    endStationName: "华家池校区"
+  },
+  {
+    startStationName: "西溪校区",
+    endStationName: "之江校区"
+  },
+  {
+    startStationName: "之江校区",
+    endStationName: "紫金港校区"
+  },
+  {
+    startStationName: "之江校区",
+    endStationName: "玉泉校区"
+  },
+  {
+    startStationName: "之江校区",
+    endStationName: "西溪校区"
+  },
+  {
+    startStationName: "华家池校区",
+    endStationName: "紫金港校区"
+  },
+  {
+    startStationName: "华家池校区",
+    endStationName: "玉泉校区"
+  },
+  {
+    startStationName: "华家池校区",
+    endStationName: "西溪校区"
+  },
 ];
 
 const derivedURL = "https://bccx.zju.edu.cn/schoolbus_wx/manage/";
@@ -36,44 +120,85 @@ const derivedURL = "https://bccx.zju.edu.cn/schoolbus_wx/manage/";
 exports.main = async (event, context) => {
   cloud.init();
   const db = cloud.database();
-  const collectionName = "bus-run-infos";
-  const collection = db.collection(collectionName);
+  // const collection = db.collection(collectionName);
   // insertData(collection);
-  updateData(collection);
+  updateData(db);
 };
 
+/**
+ * 插入模拟的数据
+ * @param {object} collection 集合
+ */
 async function insertData(collection) {
   const data = await fetchData(true);
   console.log(collection, "insert data: ", data);
   try {
     // 使用 add 方法批量插入数据
-    const result = await collection.add({ data });
+    const result = await collection.add({
+      data
+    });
     console.log("Data inserted successfully:", result);
   } catch (error) {
     console.error("Error inserting data:", error);
   }
 }
 
-async function updateData(collection) {
-  const data = await fetchData(true);
-  console.log(collection, "update data: ", data);
+/**
+ * 更新班车时刻表数据库
+ * @param {object} db 数据库
+ */
+function updateData(db) {
+  fetchData(false).then(async (data) => {
+    // console.log("data: ", data);
+    const collectionName = "bus-run-infos";
+    try {
+      await db.runTransaction(async transaction => {
+        const collection = transaction.collection(collectionName);
+        await collection.remove();
+        console.log("Data removed successfully:");
+        await collection.add({
+          data
+        });
+        console.log("Data added successfully:");
+      });
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  });
+}
+
+/**
+ * 删除集合中的所有记录
+ * @param {object} collection 集合
+ */
+async function removeData(collection) {
   try {
-    // 使用 update 方法批量更新数据
-    const result = await collection.add({ data });
-    console.log("Data updated successfully:", result);
+    const result = await collection.remove();
+    console.log("Data removed successfully:", result);
   } catch (error) {
-    console.error("Error updating data:", error);
+    console.error("Error removing data:", error);
   }
 }
 
+/**
+ * 获取当天的校车班次数据
+ * @param {boolean} mock 是否模拟数据，true-模拟，false-不模拟
+ */
 async function fetchData(mock) {
-  const data = [];
-  DEFAULT_BUS_END_PAIRS.forEach(async (pairs, _id) => {
-      const { startStationName, endStationName } = pairs;
-      const ids = mock ? [_id + 1] : await getBusLineIdsByEnds(startStationName, endStationName);
-      data.push({ _id, startStationName, endStationName, ids });
+  const data = await DEFAULT_BUS_END_PAIRS.map(async (pairs, _id) => {
+    const {
+      startStationName,
+      endStationName
+    } = pairs;
+    const ids = mock ? [_id + 1] : await getBusLineIdsByEnds(startStationName, endStationName);
+    return {
+      _id,
+      startStationName,
+      endStationName,
+      ids
+    };
   });
-  return data;
+  return Promise.all(data);
 }
 
 /**
@@ -83,7 +208,7 @@ async function fetchData(mock) {
  * @returns {string[]} 起点终点之间的校车路线 id 数组
  */
 async function getBusLineIdsByEnds(startStationName, endStationName) {
-  return await my.request({
+  return await axios.request({
     url: derivedURL + "searchLine",
     method: "POST",
     data: {
@@ -102,7 +227,7 @@ async function getBusLineIdsByEnds(startStationName, endStationName) {
 }
 
 function nop() {
-
+  // console.log("done: ", e);
 }
 
 /**
@@ -111,6 +236,7 @@ function nop() {
  * @returns 提取的数据
  */
 function stripData(res) {
+  // console.log("raw data: ", res.data.data);
   return res.data.data;
 }
 
