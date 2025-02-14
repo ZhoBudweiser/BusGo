@@ -1,51 +1,79 @@
-
-
 const cloud = require("@alipay/faas-server-sdk");
-const DEFAULT_BUS_ALL_ENDS = [
-  "紫金港校区",
-  "玉泉校区",
-  "西溪校区",
-  "华家池校区",
-  "之江校区",
-  "湖滨",
-  "紫金文苑",
-  "雅仕苑",
-  "丰谭路高教二期",
-  "南都德加东",
-  "城市心境",
-  "高教一期",
-  "恩济花园",
-  "高教二期",
-  "丰谭中学",
+
+const DEFAULT_BUS_END_PAIRS = [
+  { startStationName:  "紫金港校区", endStationName: "玉泉校区" }, 
+  { startStationName:  "紫金港校区", endStationName: "西溪校区" }, 
+  { startStationName:  "紫金港校区", endStationName: "华家池校区" }, 
+  { startStationName:  "紫金港校区", endStationName: "之江校区" }, 
+  { startStationName:  "紫金港校区", endStationName: "湖滨" }, 
+  { startStationName:  "紫金港校区", endStationName: "紫金文苑" }, 
+  { startStationName:  "紫金港校区", endStationName: "雅仕苑" }, 
+  { startStationName:  "紫金港校区", endStationName: "丰谭路高教二期" }, 
+  { startStationName:  "紫金港校区", endStationName: "南都德加东" }, 
+  { startStationName:  "紫金港校区", endStationName: "城市心境" }, 
+  { startStationName:  "紫金港校区", endStationName: "高教一期" }, 
+  { startStationName:  "紫金港校区", endStationName: "恩济花园" }, 
+  { startStationName:  "紫金港校区", endStationName: "高教二期" }, 
+  { startStationName:  "紫金港校区", endStationName: "丰谭中学" }, 
+  { startStationName:  "玉泉校区", endStationName: "紫金港校区" }, 
+  { startStationName:  "玉泉校区", endStationName: "西溪校区" }, 
+  { startStationName:  "玉泉校区", endStationName: "华家池校区" }, 
+  { startStationName:  "玉泉校区", endStationName: "之江校区" }, 
+  { startStationName:  "西溪校区", endStationName: "紫金港校区" }, 
+  { startStationName:  "西溪校区", endStationName: "玉泉校区" }, 
+  { startStationName:  "西溪校区", endStationName: "华家池校区" }, 
+  { startStationName:  "西溪校区", endStationName: "之江校区" }, 
+  { startStationName:  "之江校区", endStationName: "紫金港校区" }, 
+  { startStationName:  "之江校区", endStationName: "玉泉校区" }, 
+  { startStationName:  "之江校区", endStationName: "西溪校区" }, 
+  { startStationName:  "华家池校区", endStationName: "紫金港校区" }, 
+  { startStationName:  "华家池校区", endStationName: "玉泉校区" }, 
+  { startStationName:  "华家池校区", endStationName: "西溪校区" }, 
 ];
 
 const derivedURL = "https://bccx.zju.edu.cn/schoolbus_wx/manage/";
 
 exports.main = async (event, context) => {
-  insertData();
+  cloud.init();
+  const db = cloud.database();
+  const collectionName = "bus-run-infos";
+  const collection = db.collection(collectionName);
+  // insertData(collection);
+  updateData(collection);
 };
 
-async function insertData() {
-  const collection = cloud.database().collection('bus-run-infos');
-  const data = await fetchData(true).map((item) => {
-    return {
-      insertOne: {
-        document: item
-      }
-    };
-  });
-  collection.bulkWrite(data);
+async function insertData(collection) {
+  const data = await fetchData(true);
+  console.log(collection, "insert data: ", data);
+  try {
+    // 使用 add 方法批量插入数据
+    const result = await collection.add({ data });
+    console.log("Data inserted successfully:", result);
+  } catch (error) {
+    console.error("Error inserting data:", error);
+  }
+}
+
+async function updateData(collection) {
+  const data = await fetchData(true);
+  console.log(collection, "update data: ", data);
+  try {
+    // 使用 update 方法批量更新数据
+    const result = await collection.add({ data });
+    console.log("Data updated successfully:", result);
+  } catch (error) {
+    console.error("Error updating data:", error);
+  }
 }
 
 async function fetchData(mock) {
   const data = [];
-  DEFAULT_BUS_ALL_ENDS.forEach((startStationName) => {
-    DEFAULT_BUS_ALL_ENDS.forEach(async (endStationName) => {
-      if (startStationName === endStationName) return;
-      const ids = mock ? [] : await getBusLineIdsByEnds(startStationName, endStationName);
-      data.push({ startStationName, endStationName, ids });
-    })
+  DEFAULT_BUS_END_PAIRS.forEach(async (pairs, _id) => {
+      const { startStationName, endStationName } = pairs;
+      const ids = mock ? [_id + 1] : await getBusLineIdsByEnds(startStationName, endStationName);
+      data.push({ _id, startStationName, endStationName, ids });
   });
+  return data;
 }
 
 /**
