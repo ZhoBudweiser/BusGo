@@ -12,7 +12,7 @@
   margin: 0rpx 15rpx;
   padding: 10rpx;
   border-radius: 15rpx;
-  height: 20vh;
+  height: 280rpx;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -73,14 +73,14 @@
 
 .item-stop-caption {
   position: absolute;
-  bottom: 7.5vh;
+  bottom: 100rpx;
   font-size: 26rpx;
   white-space: nowrap;
 }
 
 .item-stop-caption-over {
   position: absolute;
-  bottom: 10vh;
+  bottom: 135rpx;
   font-size: 20rpx;
   color: gray;
   white-space: nowrap;
@@ -88,7 +88,7 @@
 
 .item-bus-caption {
   position: absolute;
-  bottom: 5vh;
+  bottom: 65rpx;
   font-size: 26rpx;
   white-space: nowrap;
 }

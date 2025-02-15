@@ -1,4 +1,6 @@
-import { setState } from "/util/setters";
+import {
+  setState
+} from "/util/setters";
 
 Component({
   data: {
@@ -11,32 +13,38 @@ Component({
    * 获取组件高度
    */
   didMount() {
-    let contentHeight;
     my.createSelectorQuery()
-      .select("#body")
+      .select("#overview-header")
       .boundingClientRect()
       .exec((ret) => {
-        contentHeight = ret[0].height;
+        const contentHeight = ret[0].height;
         console.log("班车列表高度：", contentHeight);
-        this.setData({
-          contentHeight,
-        });
-      });
-    my.createSelectorQuery()
-      .selectViewport()
-      .boundingClientRect()
-      .exec((ret) => {
-        const height = ret[0].height;
-        console.log("当前手机高度：", height);
-        this.setData({
-          state: 1,
-          currentY: contentHeight,
-          stateHeights: [0, contentHeight, height],
-          stateBoders: [
-            (contentHeight) / 2,
-            (height + contentHeight / 2) / 2,
-          ],
-        });
+        my.createSelectorQuery()
+          .select("#moveable")
+          .boundingClientRect()
+          .exec((ret) => {
+            const moveableHeight = ret[0].height;
+            console.log("Tabs高度：", moveableHeight);
+            my.createSelectorQuery()
+              .selectViewport()
+              .boundingClientRect()
+              .exec((ret) => {
+                const height = ret[0].height;
+                console.log("当前手机高度：", height);
+                const overviewPosition = height - contentHeight - moveableHeight;
+                console.log("概览窗口位置：", overviewPosition);
+                this.setData({
+                  state: 1,
+                  contentHeight,
+                  currentY: overviewPosition,
+                  stateHeights: [0, overviewPosition, height],
+                  stateBoders: [
+                    (overviewPosition) / 2,
+                    (height + overviewPosition / 2) / 2,
+                  ],
+                });
+              });
+          });
       });
   },
   methods: {
@@ -45,8 +53,13 @@ Component({
      * @param {object} e 带y属性的事件对象
      */
     onMove(e) {
-      const { y } = e.detail;
-      const { stateBoders, stateHeights } = this.data;
+      const {
+        y
+      } = e.detail;
+      const {
+        stateBoders,
+        stateHeights
+      } = this.data;
       // 更新状态
       const state = setState(y, stateBoders);
       this.setData({

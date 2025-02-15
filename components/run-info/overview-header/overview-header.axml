@@ -1,4 +1,4 @@
-<view class="swiper-container-item">
+<view class="swiper-container-item" id="overview-header">
   <!-- 目的地选择 -->
   <view class="item-header">
     <view a:if="{{selectedEnd}}" class="item-destinations">

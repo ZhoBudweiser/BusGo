@@ -1,5 +1,4 @@
 import { extractAddressName, removeCampusPrefix } from "./formatter";
-import { popNoCar } from "./notification";
 import { queryBackend } from "/options/apis/carApis";
 import {
   BUS_IMG_PATH,
@@ -171,7 +170,6 @@ export async function setCarLines(
     sname,
     ename,
   ]);
-  if (!newBusLineIds || newBusLineIds.length === 0) popNoCar();
   return newBusLineIds;
 }
 

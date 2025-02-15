@@ -10,18 +10,15 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding: 0 12px;
-  padding: 0 var(--am-footer-divider-paddingLR, 12px);
-  font-size: 13px;
-  font-size: var(--am-footer-content-fontSize, 13px);
+  padding: 0 24rpx;
+  font-size: 26rpx;
   color: #ccc;
-  color: var(--am-footer-content-color, #ccc);
   box-sizing: border-box;
 }
 .am-footer-end__divider {
   position: relative;
   flex: 1 1 auto;
-  height: 2px;
+  height: 4rpx;
   box-sizing: border-box;
 }
 .am-footer-end__divider::after {
@@ -33,12 +30,11 @@
   right: 0;
   bottom: 0;
   left: 0;
-  height: 1px;
+  height: 2rpx;
   transform: scaleY(0.5);
 }
 .am-footer-end__text {
   white-space: nowrap;
-  padding: 20px 12px;
-  padding: var(--am-footer-divider-content-paddingTB, 20px)
-    var(--am-footer-divider-content-paddingLR, 12px);
+  font-size: 24rpx;
+  padding: 40rpx 24rpx;
 }

@@ -1,6 +1,6 @@
 import { queryBackend } from "/options/apis/carApis";
 import { extractAddressName } from "/util/formatter";
-import { popStationNearBy } from "/util/notification";
+import { popStationNearBy, popNoCar, popQuerySuccess } from "/util/notification";
 import { setCarLines, setHumanDistance } from "/util/setters";
 
 const observers = {
@@ -62,7 +62,10 @@ async function selectedEnd(endName) {
   const startName = this.props.selectedStation.name;
   onMainData("selectedLineId", "");
   // 设置班车路径
-  onMainData("queriedLineIds", await setCarLines(activeIndex, startName, endName));
+  const lineIds = await setCarLines(activeIndex, startName, endName);
+  if (!lineIds || lineIds.length === 0) popNoCar();
+  else popQuerySuccess();
+  onMainData("queriedLineIds", lineIds);
   this.setData({
     // 更新目的地
     destinations: (await queryBackend("allEnds", activeIndex, [endName])),

@@ -43,7 +43,9 @@
       <view class="subtitle">
         位置、到站
       </view>
-      <image mode="aspectFill" src="/images/click1.png" class="box-img" />
+      <view class="box-img">
+        <image mode="aspectFill" src="/images/click1.png" class="box-in-img" />
+      </view>
     </view>
     <!-- 时刻表 -->
     <view class="click-box" onTap="onTimeTable">
@@ -53,7 +55,9 @@
       <view class="subtitle">
         班次、换乘
       </view>
-      <image mode="aspectFill" src="/images/click2.png" class="box-img" />
+      <view class="box-img">
+        <image mode="aspectFill" src="/images/click2.png" class="box-in-img" />
+      </view>
     </view>
   </view>
   <!-- 新手引导 -->

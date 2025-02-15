@@ -8,6 +8,7 @@
     animation="{{true}}"
     damping="{{50}}"
     onChangeEnd="onMove"
+    id="moveable"
   >
     <view class="touch-container">
       <!-- 拖动柄 -->

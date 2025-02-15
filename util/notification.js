@@ -2,7 +2,6 @@ import { DEFAULT_SHOW_DURATION } from "/options/props/defaults";
 
 /**
  * 显示加载提示
- * @param {number} loonger 加载类型，0为长时间加载，1为短时间加载
  */
 export function showQuerying() {
   my.showLoading({
@@ -37,6 +36,13 @@ export function alertLocationNotAuthed() {
 export function popQueryError(error, name) {
   console.log("fail: ", error);
   pop(`当前${name}异常，请保持网络稳定`);
+}
+
+/**
+ * 显示查询成功
+ */
+export function popQuerySuccess() {
+  pop("查询成功");
 }
 
 /**
