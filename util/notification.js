@@ -4,9 +4,9 @@ import { DEFAULT_SHOW_DURATION } from "/options/props/defaults";
  * 显示加载提示
  * @param {number} loonger 加载类型，0为长时间加载，1为短时间加载
  */
-export function showQuerying(loonger=1) {
+export function showQuerying() {
   my.showLoading({
-    content: loonger === 0 ? "此次查询预计需要 10 秒左右" : "加载中...",
+    content: "加载中...",
   });
 }
 

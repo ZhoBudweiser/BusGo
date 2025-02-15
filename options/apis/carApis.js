@@ -36,7 +36,7 @@ const funcMap = {
  * @returns {Promise} 查询结果
  */
 export async function queryBackend(dataName, dataType, parm, show=true) {
-  if (show) showQuerying(dataType);
+  if (show) showQuerying();
   const ret = await funcMap[dataName][dataType](...parm);
   if (show) hideLoading();
   return ret;
