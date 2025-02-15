@@ -1,7 +1,7 @@
 <view class="history-container">
   <view class="history-title"> 历史记录 </view>
   <view class="history-body">
-    <block
+    <view
       a:for="{{ queryHistory }}"
       a:for-index="index"
       key="history-{{index}}"
@@ -21,7 +21,7 @@
         >
         </view>
       </view>
-    </block>
+    </view>
     <!-- 有历史记录时显示 -->
     <view
       class="history-clear"

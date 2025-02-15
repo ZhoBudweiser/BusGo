@@ -42,7 +42,7 @@ export const lru = {
  * @param {object} data 数据
  */
 export function store(key, data) {
-  my.setStorageSync({ key, data });
+  my.setStorage({ key, data });
   console.log("已缓存：", key, data);
 }
 

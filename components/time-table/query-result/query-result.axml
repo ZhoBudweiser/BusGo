@@ -1,4 +1,4 @@
-<block a:for="{{ lines }}" a:for-index="index" key="bus-line-{{index}}">
+<view a:for="{{ lines }}" a:for-index="index" key="bus-line-{{index}}">
   <!-- 非换乘 -->
   <view
     a:if="{{ !item.length }}"
@@ -99,4 +99,4 @@
       </view>
     </view>
   </view>
-</block>
+</view>
