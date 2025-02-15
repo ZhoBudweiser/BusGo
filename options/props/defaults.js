@@ -309,23 +309,23 @@ export const GUIDANCE_IMGS = [
   {
     left: 0,
     top: 0,
-    imageStyle: "width: 90vw; height: 85vh",
+    imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-1.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
   {
     left: 0,
     top: 0,
     imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-2.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
   {
     left: 0,
     top: 0,
     imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-3.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
 ];
 
