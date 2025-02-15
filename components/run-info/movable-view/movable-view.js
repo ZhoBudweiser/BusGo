@@ -39,8 +39,8 @@ Component({
                   currentY: overviewPosition,
                   stateHeights: [0, overviewPosition, height],
                   stateBoders: [
-                    (overviewPosition) / 2,
-                    (height + overviewPosition / 2) / 2,
+                    (overviewPosition * 0.6),
+                    (overviewPosition + contentHeight / 2),
                   ],
                 });
               });
@@ -56,6 +56,7 @@ Component({
       const {
         y
       } = e.detail;
+      console.log(e);
       const {
         stateBoders,
         stateHeights
