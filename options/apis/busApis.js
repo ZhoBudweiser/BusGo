@@ -1,8 +1,27 @@
-import { baseURL, nop } from "./apiConfig";
-import { LRUArray } from "/beans/LRUArray";
-import cache, { lru } from "/util/cache";
-import { extractLineIds, fmtBusLines, fmtBusStations, removeOutdateStations, stripData } from "/util/formatter";
-import { popQueryError } from "/util/notification";
+import {
+  DEFAULT_BUS_END_PAIRS
+} from "../props/defaults";
+import {
+  baseURL,
+  nop
+} from "./apiConfig";
+import {
+  LRUArray
+} from "/beans/LRUArray";
+import cache, {
+  lru
+} from "/util/cache";
+import {
+  extractLineIds,
+  fmtBusLines,
+  fmtBusStations,
+  removeOutdateStations,
+  stripData,
+  stripCloudData
+} from "/util/formatter";
+import {
+  popQueryError
+} from "/util/notification";
 
 const derivedURL = baseURL + "/manage/";
 
@@ -44,22 +63,15 @@ export async function getBusLinesByStationId(sid) {
  * @returns {string[]} 起点终点之间的校车路线 id 数组
  */
 export async function getBusLineIdsByEnds(startStationName, endStationName) {
-  return await my.request({
-    url: derivedURL + "searchLine",
-    method: "POST",
-    data: {
-      begin_station: startStationName,
-      end_station: endStationName,
-      date: "00",
-      time: "00",
-    },
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    success: nop,
-    fail: (err) => popQueryError(err, "路线搜索"),
-    complete: nop,
-  }).then((res) => extractLineIds(stripData(res)));
+  const onCloud = DEFAULT_BUS_END_PAIRS.find(
+    (item) => item.startStationName.includes(startStationName) &&
+    item.endStationName.includes(endStationName)
+  );
+  console.log("云函数查询：", onCloud);
+  const ids = onCloud ? await getBusLineIdsByEndsCloud(onCloud.startStationName, onCloud.endStationName)
+   : await getBusLineIdsByEndsURL(startStationName, endStationName);
+  console.log("查询实时班车结果：", ids);
+  return ids;
 }
 
 /**
@@ -112,4 +124,51 @@ export async function getBusAllEnds(selectedStation) {
     lru.bus = new LRUArray(cache.busEnds.buffer, cache.busEnds.all);
   }
   return lru.bus.update(selectedStation);
+}
+
+/**
+ * 通过 URL 直接根据起点终点获取校车路线 id 数组
+ * @param {string} startStationName 起点站点名
+ * @param {string} endStationName 终点站点名
+ * @returns {string[]} 起点终点之间的校车路线 id 数组
+ */
+async function getBusLineIdsByEndsURL(startStationName, endStationName) {
+  return await my.request({
+    url: derivedURL + "searchLine",
+    method: "POST",
+    data: {
+      begin_station: startStationName,
+      end_station: endStationName,
+      date: "00",
+      time: "00",
+    },
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+    },
+    success: nop,
+    fail: (err) => popQueryError(err, "路线搜索"),
+    complete: nop,
+  }).then((res) => extractLineIds(stripData(res)));
+}
+
+/**
+ * 通过云函数直接根据起点终点获取校车路线 id 数组
+ * @param {string} startStationName 起点站点名
+ * @param {string} endStationName 终点站点名
+ * @returns {string[]} 起点终点之间的校车路线 id 数组
+ */
+async function getBusLineIdsByEndsCloud(startStationName, endStationName) {
+  const context = await my.getCloudContext();
+  return await new Promise((resolve, reject) =>
+    context.callFunction({
+      name: "queryTimeTable",
+      data: {
+        startStationName,
+        endStationName,
+      },
+      success: (res) => resolve(stripCloudData(res)[0].ids),
+      fail: (err) => reject(console.log("查询实时班车错误：", err)),
+      complete: nop,
+    }),
+  );
 }

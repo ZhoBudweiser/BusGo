@@ -191,8 +191,10 @@ async function fetchData(mock) {
       endStationName
     } = pairs;
     const ids = mock ? [_id + 1] : await getBusLineIdsByEnds(startStationName, endStationName);
+    const timestamp = Date.now();
     return {
       _id,
+      timestamp,
       startStationName,
       endStationName,
       ids
