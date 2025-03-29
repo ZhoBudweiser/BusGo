@@ -64,11 +64,11 @@ export async function getBusLinesByStationId(sid) {
  */
 export async function getBusLineIdsByEnds(startStationName, endStationName) {
   const onCloud = DEFAULT_BUS_END_PAIRS.find(
-    (item) => item.startStationName.includes(startStationName) &&
-    item.endStationName.includes(endStationName)
+    (item) => item.startStationName.indexOf(startStationName) != -1 &&
+    item.endStationName.indexOf(endStationName) != -1
   );
   console.log("云函数查询：", onCloud);
-  const ids = onCloud ? await getBusLineIdsByEndsCloud(onCloud.startStationName, onCloud.endStationName)
+  const ids = isWeekDay() && onCloud ? await getBusLineIdsByEndsCloud(onCloud.startStationName, onCloud.endStationName)
    : await getBusLineIdsByEndsURL(startStationName, endStationName);
   console.log("查询实时班车结果：", ids);
   return ids;
@@ -171,4 +171,10 @@ async function getBusLineIdsByEndsCloud(startStationName, endStationName) {
       complete: nop,
     }),
   );
+}
+
+function isWeekDay() {
+  const d = (new Date()).getDay();
+  console.log("星期", d);
+  return d != 0 && d != 6;
 }
