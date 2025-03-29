@@ -4,6 +4,7 @@
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^8.0.1",
+    "axios": "^1.8.4",
     "prettier": "^3.3.2",
     "release-it": "^17.1.1"
   },
