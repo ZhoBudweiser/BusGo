@@ -26,7 +26,7 @@ movable-view {
   bottom: -5rpx;
   background-color: #fff;
   border: 2rpx white solid;
-  border-radius: 15rpx 0;
+  border-radius: 25rpx;
   box-shadow: 0rpx -5rpx 20rpx rgba(0, 0, 0, 0.3);
 }
 
