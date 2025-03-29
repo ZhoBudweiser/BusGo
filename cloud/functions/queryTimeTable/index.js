@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
       startStationName,
       endStationName,
     })
-    .limit(10)
+    .limit(100)
     .get();
 
   return {
