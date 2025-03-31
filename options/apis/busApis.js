@@ -173,6 +173,10 @@ async function getBusLineIdsByEndsCloud(startStationName, endStationName) {
   );
 }
 
+/**
+ * 判断是否为工作日
+ * @returns {boolean} 是否为工作日
+ */
 function isWeekDay() {
   const d = (new Date()).getDay();
   console.log("星期", d);
