@@ -52,6 +52,9 @@ Page({
     });
     loadAndSet(this, "welcomeShowed");
   },
+  /**
+   * 获取定位权限
+   */
   async onShow() {
     const app = getApp();
     const locationAuthed = await authGuideLocation(this.data.locationAuthed);
