@@ -9,7 +9,7 @@ Page({
     week: "星期一",
     date: "08 月 30 日",
     greeting: "早上好！",
-    locationAuthed: false,
+    locationAuthed: null,
     welcomeShowed: false,
     welcomeImg: {
       left: 0,
@@ -46,14 +46,16 @@ Page({
   /**
    * 获取当前时间并加载数据，获取定位权限
    */
-  async onLoad() {
-    const app = getApp();
+  onLoad() {
     my.getServerTime({
       success: (res) => this.setData(setDate(res.time)),
     });
     loadAndSet(this, "welcomeShowed");
-    const locationAuthed = await authGuideLocation();
+  },
+  async onShow() {
+    const app = getApp();
+    const locationAuthed = await authGuideLocation(this.data.locationAuthed);
     this.setData({ locationAuthed });
     app.locationAuthed = locationAuthed;
-  },
+  }
 });

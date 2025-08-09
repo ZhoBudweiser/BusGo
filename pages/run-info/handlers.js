@@ -93,7 +93,6 @@ function onLoad(query) {
  */
 async function onShow() {
   const app = getApp();
-  // const locationAuthed = await authGuideLocation();
   const locationAuthed = app.locationAuthed;
   if (!locationAuthed) alertLocationNotAuthed();
   const locationTimer = locationAuthed ? setLocationTimer(this) : null;
