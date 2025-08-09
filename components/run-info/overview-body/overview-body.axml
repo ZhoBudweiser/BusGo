@@ -1,5 +1,5 @@
-<view class="overview-body" id="body" capture-catchTouchMove="onMove">
-  <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
+<view class="overview-body" capture-catchTouchMove="onMove">
+  <view a:for="{{ carLines }}" a:for-index="jndex" key="bus-line-{{jndex}}">
     <view class="swiper-container-item" style="{{`border-color: ${ item.runBusInfo === null ? 'gray': item.station_map[item.runBusInfo[0].next_station] <= item.station_map[selectedStation.id] ? 'orange' : 'red' }; height: ${activeCards[jndex] ? (item.remark ? '240rpx': '200rpx') : (item.remark ? '85rpx': '50rpx')}`}}">
       <!-- 班车基本信息 -->
       <view class="item-header" data-i="{{jndex}}" onTap="onToggleCard">
@@ -36,6 +36,6 @@
         {{item.remark}}
       </view>
     </view>
-  </block>
+  </view>
   <footer />
 </view>

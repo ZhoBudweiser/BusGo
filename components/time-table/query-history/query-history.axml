@@ -1,17 +1,19 @@
 <view class="history-container">
   <view class="history-title"> 历史记录 </view>
   <view class="history-body">
-    <block
+    <view
       a:for="{{ queryHistory }}"
       a:for-index="index"
       key="history-{{index}}"
     >
       <view class="history-line" data-i="{{index}}" onTap="onChoose">
+        <!-- 名称 -->
         <view class="history-item">
           <view class="history-destination-name"> {{item.startAddress}} </view>
           <view class="history-destination-arrow"></view>
           <view class="history-destination-name"> {{item.endAddress}} </view>
         </view>
+        <!-- 操作 -->
         <view
           class="history-delete"
           data-i="{{index}}"
@@ -19,7 +21,8 @@
         >
         </view>
       </view>
-    </block>
+    </view>
+    <!-- 有历史记录时显示 -->
     <view
       class="history-clear"
       a:if="{{ queryHistory.length }}"
@@ -27,6 +30,7 @@
     >
       <view class="history-clear-icon"> </view> 清空
     </view>
+    <!-- 没有历史记录时显示 -->
     <view class="history-clear" a:else> 暂无历史数据 </view>
   </view>
 </view>

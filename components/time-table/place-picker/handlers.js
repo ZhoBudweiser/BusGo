@@ -20,6 +20,10 @@ export const lifeHanders = {
   didUnmount,
 };
 
+/**
+ * @event 选择起点
+ * @param {object} e 带有起点序号的事件对象
+ */
 function onPickStart(e) {
   const startName = this.data.startOptions[e.detail.value];
   this.setData({
@@ -29,6 +33,10 @@ function onPickStart(e) {
   });
 }
 
+/**
+ * @event 选择终点
+ * @param {object} e 带有终点序号的事件对象
+ */
 function onPickEnd(e) {
   const endName = this.data.endOptions[e.detail.value];
   this.setData({
@@ -38,8 +46,12 @@ function onPickEnd(e) {
   });
 }
 
+/**
+ * @event 切换起终点
+ */
 function onSwitchAddress() {
   const { startName, endName, startOptions, endOptions } = this.data;
+  // 未选择起点和终点
   if (startName === "" && endName === "") {
     popNoAddress();
     return;
@@ -53,6 +65,9 @@ function onSwitchAddress() {
   });
 }
 
+/**
+ * @event 选择时间
+ */
 function onTimePick() {
   my.datePicker({
     format: "HH:mm",
@@ -64,32 +79,45 @@ function onTimePick() {
   this.setData({ edited: true });
 }
 
+/**
+ * @event 选择工作日/周末
+ */
 function onDayPick() {
   flip(this, "isWeekend");
   this.setData({ edited: true });
 }
 
+/**
+ * @event 选择是否换乘
+ */
 function onTransPick() {
   flip(this, "canTrans");
   this.setData({ edited: true });
 }
 
-function onSubmit() {
+/**
+ * @event 提交查询
+ */
+async function onSubmit() {
   const { startName, endName, startTime, isWeekend, canTrans } = this.data;
+  // 未选择起点和终点
   if (startName === "" || endName === "") {
     popNoAddress();
     return;
   }
-  this.props.onSubmitQuery({
+  const state = await this.props.onSubmitQuery({
     startAddress: startName,
     endAddress: endName,
     startTime: Number(startTime.replace(":", "")),
     startDay: isWeekend ? "6,7" : "1,2,3,4,5",
     canTrans: canTrans,
   });
-  this.setData({ edited: false });
+  if (state) this.setData({ edited: false });
 }
 
+/**
+ * 获取当前时间并初始化
+ */
 function didMount() {
   my.getServerTime({
     success: (res) => setData(this, "startTime", fmtTime(res.time, "hh:mm")),
@@ -98,6 +126,9 @@ function didMount() {
   loadAndSet(this, "canTrans");
 }
 
+/**
+ * 组件卸载时保存状态
+ */
 function didUnmount() {
   const { isWeekend, canTrans } = this.data;
   store("isWeekend", isWeekend);

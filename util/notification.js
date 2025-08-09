@@ -1,16 +1,24 @@
-import { store } from "./cache";
 import { DEFAULT_SHOW_DURATION } from "/options/props/defaults";
 
-export function showQuerying(loonger=1) {
+/**
+ * 显示加载提示
+ */
+export function showQuerying() {
   my.showLoading({
-    content: loonger === 0 ? "此次查询预计需要 10 秒左右" : "加载中...",
+    content: "加载中...",
   });
 }
 
+/**
+ * 隐藏加载提示
+ */
 export function hideLoading() {
   my.hideLoading();
 }
 
+/**
+ * 提醒用户定位未授权
+ */
 export function alertLocationNotAuthed() {
   my.alert({
     title: "提醒",
@@ -20,52 +28,68 @@ export function alertLocationNotAuthed() {
   });
 }
 
+/**
+ * 显示查询错误信息
+ * @param {string} error 查询错误信息
+ * @param {string} name 错误类型
+ */
 export function popQueryError(error, name) {
   console.log("fail: ", error);
-  my.showToast({
-    content: `当前${name}异常，先试试其他功能吧`,
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop(`当前${name}异常，请保持网络稳定`);
 }
 
+/**
+ * 显示查询成功
+ */
+export function popQuerySuccess() {
+  pop("查询成功");
+}
+
+/**
+ * 显示班车暂无信息
+ */
 export function popNoCar() {
-  my.showToast({
-    content: "暂无班车信息",
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop("暂无班车信息");
 }
 
+/**
+ * 显示目的地在站点附近
+ */
 export function popStationNearBy() {
-  my.showToast({
-    content: "目的地在站点附近",
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop("目的地在站点附近");
 }
 
+/**
+ * 显示匹配了最近站点
+ */
 export function popMatchStationNearBy() {
-  my.showToast({
-    content: "已匹配最近的站点",
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop("已匹配最近的站点");
 }
 
+/**
+ * 显示班车查询过于频繁
+ */
 export function popTooFrequent() {
-  my.showToast({
-    content: "查询过于频繁，\n请稍后再试",
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop("查询过于频繁，\n请稍后再试");
 }
 
+/**
+ * 显示班车查询结果相同
+ */
 export function popIsSame() {
-  my.showToast({
-    content: "结果已给出，\n请更新查询",
-    duration: DEFAULT_SHOW_DURATION,
-  });
+  pop("结果已给出，\n请更新查询");
 }
 
+/**
+ * 显示未输入地点信息
+ */
 export function popNoAddress() {
+  pop("请填写地点信息");
+}
+
+function pop(content) {
   my.showToast({
-    content: "请填写地点信息",
+    content,
     duration: DEFAULT_SHOW_DURATION,
   });
 }

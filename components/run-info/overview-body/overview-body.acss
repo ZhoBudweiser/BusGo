@@ -1,7 +1,7 @@
 .overview-body {
-  height: 64vh;
+  height: 65vh;
   overflow-y: auto;
-  margin-top: 1vh;
+  margin-top: 5rpx;
 }
 
 .item-header {

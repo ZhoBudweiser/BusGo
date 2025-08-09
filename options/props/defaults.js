@@ -100,6 +100,119 @@ export const DEFAULT_QUERY_ALL_ENDS = [
   "高教二期",
   "丰谭中学",
 ];
+export const DEFAULT_BUS_END_PAIRS = [{
+  startStationName: "紫金港校区",
+  endStationName: "玉泉校区"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "西溪校区"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "华家池校区"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "之江校区"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "湖滨"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "紫金文苑"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "雅仕苑"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "丰谭路高教二期"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "南都德加东"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "城市心境"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "高教一期"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "恩济花园"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "高教二期"
+},
+{
+  startStationName: "紫金港校区",
+  endStationName: "丰谭中学"
+},
+{
+  startStationName: "玉泉校区",
+  endStationName: "紫金港校区"
+},
+{
+  startStationName: "玉泉校区",
+  endStationName: "西溪校区"
+},
+{
+  startStationName: "玉泉校区",
+  endStationName: "华家池校区"
+},
+{
+  startStationName: "玉泉校区",
+  endStationName: "之江校区"
+},
+{
+  startStationName: "西溪校区",
+  endStationName: "紫金港校区"
+},
+{
+  startStationName: "西溪校区",
+  endStationName: "玉泉校区"
+},
+{
+  startStationName: "西溪校区",
+  endStationName: "华家池校区"
+},
+{
+  startStationName: "西溪校区",
+  endStationName: "之江校区"
+},
+{
+  startStationName: "之江校区",
+  endStationName: "紫金港校区"
+},
+{
+  startStationName: "之江校区",
+  endStationName: "玉泉校区"
+},
+{
+  startStationName: "之江校区",
+  endStationName: "西溪校区"
+},
+{
+  startStationName: "华家池校区",
+  endStationName: "紫金港校区"
+},
+{
+  startStationName: "华家池校区",
+  endStationName: "玉泉校区"
+},
+{
+  startStationName: "华家池校区",
+  endStationName: "西溪校区"
+},
+];
 export const DEFAULT_QUERY_ALL_ENDS_POSITIONS = [
   {
     station_lat: 30.300897,
@@ -196,23 +309,23 @@ export const GUIDANCE_IMGS = [
   {
     left: 0,
     top: 0,
-    imageStyle: "width: 90vw; height: 85vh",
+    imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-1.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
   {
     left: 0,
     top: 0,
     imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-2.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
   {
     left: 0,
     top: 0,
     imageStyle: "width: 100vw; height: 85vh",
     imageUrl: "/images/guidance-3.png",
-    imageMode: "aspectFill",
+    imageMode: "aspectFit",
   },
 ];
 
@@ -240,6 +353,7 @@ export const OUTDATE_STATION_IDS = [
   new Set([]),
 ];
 
+// 根据尺度返回合并站点需要的最短距离
 export const UNION_LENGTH = (scale) => {
   let length = 4;
   if (scale >= 16) {

@@ -19,8 +19,8 @@
 
 .am-hor-step-line {
   position: relative;
-  margin: 6px 0;
-  height: 1px;
+  margin: 12rpx 0;
+  height: 2rpx;
   background-color: #e5e5e5;
   background-color: var(--am-steps-bg-color, #e5e5e5);
 }
@@ -46,8 +46,8 @@
   z-index: 10;
   top: 50%;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 16rpx;
+  height: 16rpx;
   transform: translate(-50%, -50%);
   border-radius: 50vh;
   border-radius: var(--am-steps-icon-border-radius, 50vh);

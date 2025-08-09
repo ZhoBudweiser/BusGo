@@ -6,14 +6,14 @@ movable-area {
 }
 
 movable-view {
-  height: 15vh;
+  height: 150rpx;
   width: 100%;
   pointer-events: auto;
 }
 
 .touch-container {
   position: relative;
-  height: 8vh;
+  height: 50rpx;
   background-color: #fff0;
 }
 
@@ -22,11 +22,11 @@ movable-view {
   justify-content: center;
   position: absolute;
   width: 100%;
-  height: 50%;
+  height: 85%;
   bottom: -5rpx;
   background-color: #fff;
   border: 2rpx white solid;
-  border-radius: 15rpx;
+  border-radius: 25rpx;
   box-shadow: 0rpx -5rpx 20rpx rgba(0, 0, 0, 0.3);
 }
 

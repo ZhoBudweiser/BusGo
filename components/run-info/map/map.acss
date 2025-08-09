@@ -23,7 +23,7 @@
 }
 
 .see-mode {
-  bottom: 40%;
+  bottom: 45%;
   left: 10rpx;
 }
 

@@ -1,4 +1,5 @@
 <view class="container">
+  <!-- 地图 -->
   <schoolmap
     class="schoolmap"
     position="{{userPosition}}"
@@ -13,8 +14,10 @@
   >
   </schoolmap>
   <movable class="previa">
+    <!-- 切换卡 -->
     <tabs activeIndex="{{activeIndex}}" tabs="{{tabs}}" onMainData="onMainData">
     </tabs>
+    <!-- 班车信息 -->
     <overview
       tabs="{{tabs}}"
       activeIndex="{{activeIndex}}"
@@ -27,6 +30,7 @@
     >
     </overview>
   </movable>
+  <!-- 新手引导 -->
   <ant-guide-tour
     maskStyle="background-color: rgba(0, 0, 0, 0.85)"
     items="{{ guidanceImgs }}"

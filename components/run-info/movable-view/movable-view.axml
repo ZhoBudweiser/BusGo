@@ -1,4 +1,5 @@
 <movable-area>
+  <!-- 拖动框 -->
   <movable-view
     y="{{currentY}}"
     direction="vertical"
@@ -7,8 +8,10 @@
     animation="{{true}}"
     damping="{{50}}"
     onChangeEnd="onMove"
+    id="moveable"
   >
     <view class="touch-container">
+      <!-- 拖动柄 -->
       <view class="touch-bar">
         <view class="img-container {{state == 0 ? 'rotate' : ''}}">
           <image class="img" mode="aspectFit" src="/images/up_arrow.svg" />

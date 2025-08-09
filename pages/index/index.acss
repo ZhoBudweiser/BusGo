@@ -139,6 +139,11 @@
   position: absolute;
   right: 20rpx;
   bottom: 10rpx;
-  width: 250rpx;
-  height: 250rpx;
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.box-in-img {
+  width: 100%;
+  height: 100%;
 }

@@ -1,4 +1,5 @@
 <view class="search-container">
+  <!-- 查询框 -->
   <view class="picker">
     <place-picker
       initStart="{{initStart}}"
@@ -7,7 +8,9 @@
     />
   </view>
   <view class="queries">
+    <!-- 查询结果 -->
     <query-result lines="{{lines}}" />
+    <!-- 查询历史，当查询时隐藏 -->
     <query-history
       style="{{`display: ${ queried ? 'none': '' }`}}"
       appendedItem="{{queried}}"

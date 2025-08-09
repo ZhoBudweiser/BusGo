@@ -1,4 +1,4 @@
-<view class="swiper-container-item">
+<view class="swiper-container-item" id="overview-header">
   <!-- 目的地选择 -->
   <view class="item-header">
     <view a:if="{{selectedEnd}}" class="item-destinations">
@@ -22,7 +22,7 @@
   <!-- 校车进展 -->
   <view class="item-body-main">
     <!-- 校车 -->
-    <block a:for="{{ carLines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
+    <view a:for="{{ carLines }}" a:for-index="jndex" key="bus-coming-line-{{jndex}}">
       <view
         a:if="{{item.runBusInfo != null && item.station_map[item.runBusInfo[0].next_station] <= item.station_map[selectedStation.id]}}"
         class="item-bus-object"
@@ -37,7 +37,7 @@
         <view class="{{`item-bus-icon ${item.runBusInfo[0].vehicleType ? (item.runBusInfo[0].vehicleType === '2' ? 'shuttle':'babybus') : 'bus'}`}}">
         </view>
       </view>
-    </block>
+    </view>
     <!-- 站点 -->
     <view class="item-bus-object" style="left: 50%">
       <view class="item-stop-caption-over"> 所选站点</view>

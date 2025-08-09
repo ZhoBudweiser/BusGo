@@ -1,5 +1,5 @@
 {
-  "name": "queryBusLinesByAddresses",
+  "name": "queryTimeTable",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,3 +10,4 @@
     "@alipay/faas-server-sdk": "^1.0.0"
   }
 }
+

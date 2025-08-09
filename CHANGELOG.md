@@ -1,5 +1,59 @@
 # Changelog
 
+## [2.1.0](https://github.com/ZhoBudweiser/BusGo/compare/v2.0.0...v2.1.0) (2025-08-09)
+
+
+### ✨新功能
+
+* cache expiration ([a24f316](https://github.com/ZhoBudweiser/BusGo/commit/a24f31695ee296165d6083e239bd5f5e297854ae))
+* fetch time table ([55b6b8a](https://github.com/ZhoBudweiser/BusGo/commit/55b6b8a9aec78d960a5b7e421beccbbf95794db8))
+* query run table ([adb957d](https://github.com/ZhoBudweiser/BusGo/commit/adb957d052ec88794e23d507046b15a06ec598d6))
+
+
+### ✅变动
+
+* 更新缓存获取方式 ([cd8d78b](https://github.com/ZhoBudweiser/BusGo/commit/cd8d78b9bc803f2f3fab2fd9b2f3ca66f884ba7d))
+* 设置圆角样式 ([e325b88](https://github.com/ZhoBudweiser/BusGo/commit/e325b88e7d579f548679a19a0b7461fd768cdd0e))
+* 为函数添加注释 ([52f7d4d](https://github.com/ZhoBudweiser/BusGo/commit/52f7d4d900e215bbe76d9dd2c0772ccb7baf77a4))
+* 周末查询不走云服务 ([6a687fd](https://github.com/ZhoBudweiser/BusGo/commit/6a687fd9a04b9aafbaa8b4157d4166da3f22a07f))
+* add time table ([5792331](https://github.com/ZhoBudweiser/BusGo/commit/579233159f57972b861e900e89ea74a22f150525))
+* **apis:** add annotation ([645ef0d](https://github.com/ZhoBudweiser/BusGo/commit/645ef0d9d4c52d28cd9cf123d6c62cfa1e3b4ed9))
+* cache expiration in a week ([464b649](https://github.com/ZhoBudweiser/BusGo/commit/464b649be6a5998a0a791dd668f0ad49bdc67646))
+* del long query notification ([a743ac1](https://github.com/ZhoBudweiser/BusGo/commit/a743ac10965dde4b5264ffc8b771f446c8399d00))
+* **deps:** bump braces from 3.0.2 to 3.0.3 ([84bcfd2](https://github.com/ZhoBudweiser/BusGo/commit/84bcfd2068cbadec5c51fd98ccecf5d53ead4166))
+* fetch time table ([a2d7653](https://github.com/ZhoBudweiser/BusGo/commit/a2d7653f2a66d28c529934098e5136c5a4955c5a))
+* format cloud func ([2f1d227](https://github.com/ZhoBudweiser/BusGo/commit/2f1d2274ea8a50d9bf7ea326e05019e83429c6bf))
+* format notification ([23c4a6b](https://github.com/ZhoBudweiser/BusGo/commit/23c4a6bb169410a7ffb5d2344de211571d1aba27))
+* init bus time table fetch ([32c9f3a](https://github.com/ZhoBudweiser/BusGo/commit/32c9f3a9ec7a8df08df494e91304e0ec06014754))
+* **map:** add @ ([f072ca0](https://github.com/ZhoBudweiser/BusGo/commit/f072ca05e3b1bf605af4a1381a7c7547d0c513b4))
+* **map:** add annotation ([8e5cc72](https://github.com/ZhoBudweiser/BusGo/commit/8e5cc72c3addbb55188673ba84cd2d9b5951095d))
+* **movable:** add annotation ([22d30ee](https://github.com/ZhoBudweiser/BusGo/commit/22d30eedd7a08818d6313a223f5d5e5a84853358))
+* **overview:** add annotation ([d5aa372](https://github.com/ZhoBudweiser/BusGo/commit/d5aa3725ea222bd5cbed2b740d0f2fee24df81d9))
+* **pages:** add annotation ([86ecad6](https://github.com/ZhoBudweiser/BusGo/commit/86ecad6f74fcfdadb0be6734ac7fcaac3415aa7f))
+* **steps:** add annotation ([d0a0c57](https://github.com/ZhoBudweiser/BusGo/commit/d0a0c57397f4275fb402d765ca008b3c9398b6d3))
+* **tabs:** add annotation ([29fcc6c](https://github.com/ZhoBudweiser/BusGo/commit/29fcc6c5f76850a7fd66fa75e022fbc274d27916))
+* **tag:** release v2.0.1 ([c8145e1](https://github.com/ZhoBudweiser/BusGo/commit/c8145e1b20baf4265a1ece4b80a60171ab11a268))
+* **time-table:** add annotation ([3f9b055](https://github.com/ZhoBudweiser/BusGo/commit/3f9b055179bf62baebd0bddf404d2a8f3f05c8ca))
+* **util:** add annotation ([4a1153b](https://github.com/ZhoBudweiser/BusGo/commit/4a1153b9cee93fcd476007f21b0414824b22971d))
+
+
+### 🐛问题修复
+
+* 频繁请求位置授权 ([bc0c574](https://github.com/ZhoBudweiser/BusGo/commit/bc0c57448c13877970f49876f69c5d58a7ff595e))
+* block error ([9322f0f](https://github.com/ZhoBudweiser/BusGo/commit/9322f0f47979664a244db4a65188d74f15500aca))
+* click slide ([8c01fe5](https://github.com/ZhoBudweiser/BusGo/commit/8c01fe5e9cb1a29d47cc9d3e57ba9b4bf7ffedab))
+* display mode bug ([04612a8](https://github.com/ZhoBudweiser/BusGo/commit/04612a8a6fad9da6b6e829d14fa199a772bca729))
+* edited in throttle ([fd27465](https://github.com/ZhoBudweiser/BusGo/commit/fd27465e6dbba96b7b0c70dc16530f28c47279e5))
+* guide scale ([85191e4](https://github.com/ZhoBudweiser/BusGo/commit/85191e4b4a1ecb538925685a8114974faab8718b))
+* location missing ([a29f4f3](https://github.com/ZhoBudweiser/BusGo/commit/a29f4f3a3585a228164e6fb040ead34f4e51f836))
+* low scale of data ([bb51e75](https://github.com/ZhoBudweiser/BusGo/commit/bb51e757598cab16e07b52e939af3ea38fe5e957))
+* wh style ([176a83a](https://github.com/ZhoBudweiser/BusGo/commit/176a83a5877af900da36ffb7a969c7c81a9bd5df))
+
+
+### 📚文档
+
+* 注释 ([422a6a6](https://github.com/ZhoBudweiser/BusGo/commit/422a6a6d3ea176742def528ea4014dd09ea6cd53))
+
 ## [2.0.1](https://github.com/ZhoBudweiser/BusGo/compare/v2.0.0...v2.0.1) (2024-09-06)
 
 

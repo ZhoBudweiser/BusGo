@@ -1,5 +1,12 @@
 import { second2minute } from "/util/formatter";
 
+/**
+ * 计算两点之间花费的时间
+ * @param {object} startPosition 起点经纬度
+ * @param {object} endPosition 终点经纬度
+ * @param {string} searchType 行经类型
+ * @returns 花费的时间
+ */
 export async function calculateDistance(
   startPosition,
   endPosition,
@@ -18,8 +25,15 @@ export async function calculateDistance(
   );
 }
 
+/**
+ * 获取用户定位授权状态
+ * @returns {boolean} 是否授权成功
+ */
 // 由于跳转到系统设置页无法监听用户最终是否打开系统定位及对支付宝授权位置信息，因此请在生命周期 onShow 中调用定位授权准备方法。
-export async function authGuideLocation() {
+export async function authGuideLocation(called) {
+  if (called != null) {
+    return called;
+  }
   const myGetSystemInfo = () => {
     return new Promise((resolve, reject) => {
       my.getSystemInfo({

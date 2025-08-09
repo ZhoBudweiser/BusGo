@@ -1,5 +1,6 @@
 <view class="container">
   <view class="mask" />
+  <!-- 班车轮播图 -->
   <view class="imgs">
     <swiper
       indicator-dots="{{false}}"
@@ -12,6 +13,7 @@
       </swiper-item>
     </swiper>
   </view>
+  <!-- 用户配置信息 -->
   <view class="infos">
     <view class="location {{ locationAuthed ? 'green' : 'red' }}">
       {{ locationAuthed ? "定位已开启" : "定位未开启" }}
@@ -28,10 +30,12 @@
       </view>
     </view>
   </view>
+  <!-- 路由 -->
   <view class="router">
     <view class="remark">
       班次偶尔会出现调整，请以实际运行和学校通知为准
     </view>
+    <!-- 实时班车 -->
     <view class="click-box" onTap="onRunInfo">
       <view class="title">
         实时班车
@@ -39,8 +43,11 @@
       <view class="subtitle">
         位置、到站
       </view>
-      <image mode="aspectFill" src="/images/click1.png" class="box-img" />
+      <view class="box-img">
+        <image mode="aspectFill" src="/images/click1.png" class="box-in-img" />
+      </view>
     </view>
+    <!-- 时刻表 -->
     <view class="click-box" onTap="onTimeTable">
       <view class="title">
         时刻表
@@ -48,9 +55,12 @@
       <view class="subtitle">
         班次、换乘
       </view>
-      <image mode="aspectFill" src="/images/click2.png" class="box-img" />
+      <view class="box-img">
+        <image mode="aspectFill" src="/images/click2.png" class="box-in-img" />
+      </view>
     </view>
   </view>
+  <!-- 新手引导 -->
   <ant-guide-tour
     maskStyle="background-color: rgba(0, 0, 0, 0.85)"
     items="{{ [welcomeImg] }}"

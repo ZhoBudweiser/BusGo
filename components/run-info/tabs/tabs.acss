@@ -1,6 +1,6 @@
 .tabs {
-  height: 5vh;
-  padding-bottom: 2vh;
+  height: 60rpx;
+  padding-bottom: 10rpx;
   position: sticky;
   background-color: #fff;
   z-index: 1;
