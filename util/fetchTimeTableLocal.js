@@ -1,4 +1,6 @@
 const axios = require('axios');
+const fs     = require('fs-extra');
+const readline = require('readline');
 
 const DEFAULT_BUS_END_PAIRS = [{
     startStationName: "紫金港校区",
@@ -114,86 +116,72 @@ const DEFAULT_BUS_END_PAIRS = [{
   },
 ];
 
-const derivedURL = "https://bccx.zju.edu.cn/schoolbus_wx/manage/";
-updateData();
+const DATA_FILE = './bus_lines._json_';   // JSON Lines 文件
+const API_BASE  = 'https://bccx.zju.edu.cn/schoolbus_wx/manage/';
 
-/**
- * 更新班车时刻表数据库
- * @param {object} db 数据库
- */
-function updateData() {
-  fetchData(false).then(async (data) => {
-    console.log("data: ", data);
-  });
-}
+(async () => {
+  // 1. 读取已有记录到内存 Map：key = "start@end"
+  const recordMap = new Map();
+  if (await fs.pathExists(DATA_FILE)) {
+    const rl = readline.createInterface({
+      input: fs.createReadStream(DATA_FILE, 'utf8'),
+      crlfDelay: Infinity
+    });
+    for await (const line of rl) {
+      if (!line.trim()) continue;
+      const doc = JSON.parse(line);
+      const key = `${doc.startStationName}@${doc.endStationName}`;
+      recordMap.set(key, doc);
+    }
+  }
 
-/**
- * 获取当天的校车班次数据
- * @param {boolean} mock 是否模拟数据，true-模拟，false-不模拟
- */
-async function fetchData(mock) {
-  const data = await DEFAULT_BUS_END_PAIRS.map(async (pairs, _id) => {
-    const {
-      startStationName,
-      endStationName
-    } = pairs;
-    const ids = mock ? [_id + 1] : await getBusLineIdsByEnds(startStationName, endStationName);
-    const timestamp = Date.now();
-    return {
-      _id,
-      timestamp,
-      startStationName,
-      endStationName,
-      ids
-    };
-  });
-  return Promise.all(data);
-}
+  // 2. 逐条更新
+  for (const pair of DEFAULT_BUS_END_PAIRS) {
+    const { startStationName, endStationName } = pair;
+    const key = `${startStationName}@${endStationName}`;
+    let doc = recordMap.get(key);
 
-/**
- * 根据起点终点获取校车路线 id 数组
- * @param {string} startStationName 起点站点名
- * @param {string} endStationName 终点站点名
- * @returns {string[]} 起点终点之间的校车路线 id 数组
- */
+    if (!doc) {
+      doc = {
+        _id: String(recordMap.size),
+        timestamp: Date.now(),
+        startStationName,
+        endStationName,
+        ids: []
+      };
+      recordMap.set(key, doc);
+    }
+
+    try {
+      const freshIds = await getBusLineIdsByEnds(startStationName, endStationName);
+      const set = new Set(doc.ids);
+      freshIds.forEach(id => set.add(id));
+      doc.ids = Array.from(set).sort();
+      doc.timestamp = Date.now();
+    } catch (e) {
+      console.error(`查询失败：${startStationName} -> ${endStationName}`, e.message);
+    }
+  }
+
+  // 3. 写回 JSON Lines
+  const lines = Array.from(recordMap.values())
+                     .sort((a, b) => +a._id - +b._id)
+                     .map(d => JSON.stringify(d));
+  await fs.writeFile(DATA_FILE, lines.join('\n') + '\n');
+  console.log('更新完成');
+})();
+
+// 根据起终站获取线路 id 列表
 async function getBusLineIdsByEnds(startStationName, endStationName) {
-  return await axios.request({
-    url: derivedURL + "searchLine",
-    method: "POST",
-    data: {
+  const { data: res } = await axios.post(
+    API_BASE + 'searchLine',
+    new URLSearchParams({
       begin_station: startStationName,
       end_station: endStationName,
-      date: "00",
-      time: "00",
-    },
-    headers: {
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    success: nop,
-    fail: (err) => console.log("查询失败", err, startStationName, endStationName),
-    complete: nop,
-  }).then((res) => extractLineIds(stripData(res)));
-}
-
-function nop() {
-  // console.log("done: ", e);
-}
-
-/**
- * 提取api返回的数据
- * @param {object} res api返回的数据
- * @returns 提取的数据
- */
-function stripData(res) {
-  // console.log("raw data: ", res.data.data);
-  return res.data.data;
-}
-
-/**
- * 提取班车线路ID
- * @param {object[]} carLines 班车线路数组
- * @returns 班车线路id数组
- */
-function extractLineIds(carLines) {
-  return carLines.map((carLine) => carLine.bid);
+      date: '00',
+      time: '00'
+    }),
+    { headers: { 'content-type': 'application/x-www-form-urlencoded' } }
+  );
+  return (res.data || []).map(item => item.bid);
 }
