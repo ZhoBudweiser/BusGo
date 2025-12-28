@@ -338,7 +338,7 @@ function convertNameStyle(str) {
  * @returns 去除校区前缀的地址
  */
 export function removeCampusPrefix(address) {
-  return address ? address.replace(/(.*?)校区(?=.)/g, "") : "";
+  return address ? address.replace(/(.*?)校区(?=.)/, "") : "";
 }
 
 /**
