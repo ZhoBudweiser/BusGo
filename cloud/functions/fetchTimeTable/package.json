@@ -8,6 +8,6 @@
   "license": "ISC",
   "dependencies": {
     "@alipay/faas-server-sdk": "^1.0.0",
-    "axios": "^1.12.0"
+    "axios": "^1.13.5"
   }
 }
